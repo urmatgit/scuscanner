@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{0982937D-D8F4-422A-AA8C-C14A4115434A}</ProjectGuid>
+    <ProjectGuid>{9A0FE121-7684-4ECD-BC28-3FA636D8A985}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SCUScanner.UWP</RootNamespace>
@@ -148,13 +148,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xam.Plugins.Settings">
-      <Version>3.1.1</Version>
-    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.121934" />
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.1" />
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.1"/>
   </ItemGroup>
-  <Import Project="..\SCUScanner\SCUScanner.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\SCUScanner\SCUScanner.csproj">
+      <Project>{A39F639C-F967-4C66-8F21-34C899DA5026}</Project>
+      <Name>SCUScanner</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

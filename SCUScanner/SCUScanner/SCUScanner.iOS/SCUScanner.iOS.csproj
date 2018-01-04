@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FAC353DA-904C-410C-8042-24BF36AC6232}</ProjectGuid>
+    <ProjectGuid>{39B614B8-951F-4358-A50D-CE6461432357}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Exe</OutputType>
     <RootNamespace>SCUScanner.iOS</RootNamespace>
@@ -119,11 +119,13 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xam.Plugins.Settings">
-      <Version>3.1.1</Version>
-    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.121934" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <Import Project="..\SCUScanner\SCUScanner.projitems" Label="Shared" />
+  <ItemGroup>
+    <ProjectReference Include="..\SCUScanner\SCUScanner.csproj">
+      <Project>{A39F639C-F967-4C66-8F21-34C899DA5026}</Project>
+      <Name>SCUScanner</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
