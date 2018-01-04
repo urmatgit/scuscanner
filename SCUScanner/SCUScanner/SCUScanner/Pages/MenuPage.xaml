@@ -4,7 +4,8 @@
              x:Class="SCUScanner.Pages.MenuPage"
              Title="Master">
   <StackLayout>
-    <ListView x:Name="MenuItemsListView"
+        
+        <ListView x:Name="MenuItemsListView"
               SeparatorVisibility="None"
               HasUnevenRows="true"
               ItemsSource="{Binding MenuItems}">
