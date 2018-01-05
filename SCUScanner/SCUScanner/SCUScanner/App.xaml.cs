@@ -1,4 +1,5 @@
-﻿using SCUScanner.Resources;
+﻿using SCUScanner.Models;
+using SCUScanner.Resources;
 using SCUScanner.Services;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace SCUScanner
             {
                 AppResource.Culture = DependencyService.Get<ILocalizeService>()
                                     .GetCurrentCultureInfo();
+                Settings.SelectedLanguageCode = AppResource.Culture.Name;
             }
             MainPage = new SCUScanner.Pages.MainMasterDetailPage();
 		}

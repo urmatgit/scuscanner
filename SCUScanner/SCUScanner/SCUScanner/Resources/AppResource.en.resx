@@ -118,15 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ContinuousScanText" xml:space="preserve">
-    <value>ContinuousScan</value>
+    <value>Continuous scan</value>
   </data>
   <data name="ManualScanText" xml:space="preserve">
-    <value>ManualScan</value>
+    <value>Manual scan</value>
   </data>
   <data name="SelectedLanguageCodeText" xml:space="preserve">
     <value>Language</value>
   </data>
   <data name="SettingsText" xml:space="preserve">
-    <value>Настройки</value>
+    <value>SettingsEn</value>
   </data>
 </root>

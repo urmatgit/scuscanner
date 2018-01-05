@@ -31,14 +31,24 @@
       </ListView.Header>-->
       <ListView.ItemTemplate>
         <DataTemplate>
-          <ViewCell>
+                    <ViewCell>
+                        <Grid Padding="5,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Source="{Binding IconSource}" />
+                        <Label Grid.Column="1" Text="{Binding Title}" />
+                    </Grid>
+                    </ViewCell>
+                    <!--<ViewCell>
             <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
               <Label VerticalOptions="FillAndExpand" 
                     VerticalTextAlignment="Center" 
                     Text="{Binding Title}" 
                     FontSize="24"/>
             </StackLayout>
-          </ViewCell>
+          </ViewCell>-->
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>

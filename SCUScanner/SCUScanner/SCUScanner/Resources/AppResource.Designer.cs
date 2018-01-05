@@ -61,6 +61,33 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Continuous scan.
+        /// </summary>
+        internal static string ContinuousScanText {
+            get {
+                return ResourceManager.GetString("ContinuousScanText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual scan.
+        /// </summary>
+        internal static string ManualScanText {
+            get {
+                return ResourceManager.GetString("ManualScanText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        internal static string SelectedLanguageCodeText {
+            get {
+                return ResourceManager.GetString("SelectedLanguageCodeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         internal static string SettingsText {
