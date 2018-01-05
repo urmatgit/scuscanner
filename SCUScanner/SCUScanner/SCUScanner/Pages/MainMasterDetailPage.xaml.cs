@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using SCUScanner.Models;
+using SCUScanner.Services;
+
 namespace SCUScanner.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainMasterDetailPage : MasterDetailPage
     {
+        MasterDetailPageMenuItem selectedPage = null;
+        Page CurrentPage = null;
         public MainMasterDetailPage()
         {
             InitializeComponent();
@@ -20,6 +24,17 @@ namespace SCUScanner.Pages
             {
                 MasterBehavior = MasterBehavior.Popover;
             }
+            MessagingCenter.Subscribe<object, CultureChangedMessage>(this, string.Empty, (sender, agr) =>
+            {
+
+                var arg = agr;
+                if (arg is CultureChangedMessage)
+                {
+                    BindingContext = null;
+                    SCUScanner.Models.Settings settings = sender as SCUScanner.Models.Settings;
+                    CurrentPage.Title = settings.Resources[selectedPage.PageCode];
+                }
+            });
         }
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -27,11 +42,11 @@ namespace SCUScanner.Pages
             var item = e.SelectedItem as MasterDetailPageMenuItem;
             if (item == null)
                 return;
-
-            var page = (Page)Activator.CreateInstance(item.TargetType);
-            page.Title = item.Title;
+            selectedPage = item;
+            CurrentPage = (Page)Activator.CreateInstance(item.TargetType);
+            CurrentPage.Title = item.Title;
             
-            Detail = new NavigationPage(page);
+            Detail = new NavigationPage(CurrentPage);
             
             IsPresented = false;
 

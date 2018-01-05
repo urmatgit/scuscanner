@@ -58,11 +58,11 @@ namespace SCUScanner.Pages
              return new ObservableCollection<MasterDetailPageMenuItem>(
                    new[]
                        {
-                            new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 0, Title =settings==null?SCUScanner.Resources.AppResource.DataText : settings.Resources["DataText"] },
-                            new MasterDetailPageMenuItem(typeof(Settings)) { Id = 1, Title =settings==null?SCUScanner.Resources.AppResource.SettingsText : settings.Resources["SettingsText"]},
-                            new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 1, Title = settings==null?SCUScanner.Resources.AppResource.HelpText : settings.Resources["HelpText"]  },
-                            new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 2, Title = settings==null?SCUScanner.Resources.AppResource.MaintenanceText : settings.Resources["MaintenanceText"]  },
-                            new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 3, Title = settings==null?SCUScanner.Resources.AppResource.SparesText : settings.Resources["SparesText"]  }
+                            new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 0,PageCode="DataText",  Title =settings==null?SCUScanner.Resources.AppResource.DataText : settings.Resources["DataText"] },
+                            new MasterDetailPageMenuItem(typeof(Settings)) { Id = 1, PageCode="SettingsText",Title =settings==null?SCUScanner.Resources.AppResource.SettingsText : settings.Resources["SettingsText"]},
+                            new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 1,PageCode="HelpText", Title = settings==null?SCUScanner.Resources.AppResource.HelpText : settings.Resources["HelpText"]  },
+                            new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 2,PageCode="MaintenanceText", Title = settings==null?SCUScanner.Resources.AppResource.MaintenanceText : settings.Resources["MaintenanceText"]  },
+                            new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 3,PageCode="SparesText", Title = settings==null?SCUScanner.Resources.AppResource.SparesText : settings.Resources["SparesText"]  }
                        });
         }
 
