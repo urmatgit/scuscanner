@@ -1,62 +1,56 @@
 ﻿using SCUScanner.Models;
+using SCUScanner.Pages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows.Input;
+using Xamarin.Forms;
+
+//using Xamarin.Forms;
 
 namespace SCUScanner.ViewModels
 {
-   public class SettingViewModel: INotifyPropertyChanged
+   public class SettingViewModel: BaseViewModel
     {
-        
-        public bool ContinuousScan
-        {
-            get
-            {
-                return Settings.ContinuousScan;
 
-            }
-            set
-            {
-                if (Settings.ContinuousScan == value) return;
-                Settings.ContinuousScan = value;
-                OnPropertyChanged();
-                
-            }
-        }
-        public bool ManualScan
+        INavigation Navigation;
+        public ICommand SelectLangCommnad
         {
-            get => Settings.ManualScan;
-            set
-            {
-                if (Settings.ManualScan == value) return;
-                Settings.ManualScan = value;
-                OnPropertyChanged();
-
-            }
-        }
-        public string SelectedLang
-        {
-
-            get => Settings.SelectedLanguageCode;
-            set
-            {
-                if (Settings.SelectedLanguageCode == value) return;
-                Settings.SelectedLanguageCode = value;
-                OnPropertyChanged();
-            }
+            protected set;
+            get;
         }
 
-        #region INotifyPropertyChanged Implementation
-        public event PropertyChangedEventHandler PropertyChanged;
-        void OnPropertyChanged([CallerMemberName] string propertyName = "")
+            public SettingViewModel(INavigation NavPage)
         {
-            if (PropertyChanged == null)
-                return;
-
-            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Navigation = NavPage;
+            SelectLangCommnad = new Command(OpenSettingsLanguagePage);
+                                //new Command(OpenSettingsLanguagePage);
+            Debug.WriteLine("SelectLangCommnad created");
         }
-        #endregion
+           
+
+        public  async void OpenSettingsLanguagePage()
+        {
+            Debug.WriteLine("OpenSettingsLanguagePage");
+            await Navigation.PushAsync(new NavigationPage(new SettingsLanguagePage(Navigation)));
+            //Application.Current.MainPage.Navigation.PushAsync(new NavigationPage( new SettingsLanguagePage()));
+         
+        }
+
+       
+     //  public ICommand SelectLangPageCommnad=>new Command()
+        //#region INotifyPropertyChanged Implementation
+        //public event PropertyChangedEventHandler PropertyChanged;
+        //void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        //{
+        //    if (PropertyChanged == null)
+        //        return;
+
+        //    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        //}
+        //#endregion
     }
 }

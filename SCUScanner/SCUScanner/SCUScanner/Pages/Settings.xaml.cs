@@ -16,7 +16,8 @@ namespace SCUScanner.Pages
 		public Settings ()
 		{
 			InitializeComponent();
-            BindingContext = new SettingViewModel();
+            //Application.Current.MainPage as MasterDetailPage
+            BindingContext = new SettingViewModel(Navigation);
 
         }
 	}

@@ -1,4 +1,5 @@
-﻿using SCUScanner.ViewModels;
+﻿using SCUScanner.Models;
+using SCUScanner.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,24 +14,27 @@ namespace SCUScanner.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SettingsLanguagePage : ContentPage
     {
-        public ObservableCollection<string> Items { get; set; }
-
-        public SettingsLanguagePage()
+        INavigation NavPage;
+        LanguageItemViewModel viewModel;
+        public SettingsLanguagePage(INavigation navPage )
         {
+            NavPage = navPage;
             InitializeComponent();
 
-            BindingContext = new LanguageItemViewModel();
+            BindingContext = viewModel= new LanguageItemViewModel();
         }
 
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             if (e.Item == null)
                 return;
-
-            await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
-
+            LanguageItem selected = e.Item as LanguageItem;
+            //await DisplayAlert("Item Tapped", $"An item was tapped.{selected.Name}", "OK");
+            viewModel.Settings.Settings.SelectedLang = selected.Kod;
+            await NavPage.PopAsync();
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
+            
         }
     }
 }

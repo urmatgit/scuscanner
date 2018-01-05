@@ -9,7 +9,7 @@ using System.Text;
 namespace SCUScanner.ViewModels
 {
 
-    public class LanguageItemViewModel : INotifyPropertyChanged
+    public class LanguageItemViewModel : BaseViewModel
     {
         public ObservableCollection<LanguageItem> LanguageItems { get; set; }
         public LanguageItemViewModel()
@@ -30,16 +30,16 @@ namespace SCUScanner.ViewModels
                  );
             
         }
+        
+        //#region INotifyPropertyChanged Implementation
+        //public event PropertyChangedEventHandler PropertyChanged;
+        //void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        //{
+        //    if (PropertyChanged == null)
+        //        return;
 
-        #region INotifyPropertyChanged Implementation
-        public event PropertyChangedEventHandler PropertyChanged;
-        void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            if (PropertyChanged == null)
-                return;
-
-            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
+        //    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        //}
+        //#endregion
     }
 }

@@ -3,31 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SCUScanner.Pages.SettingsLanguagePage">
   <ListView x:Name="MyListView"
-            ItemsSource="{Binding Items}"
+            ItemsSource="{Binding LanguageItems}"
             ItemTapped="Handle_ItemTapped"
             CachingStrategy="RecycleElement">
             
     <!--Built in Cells-->
-    <ListView.ItemTemplate>
+    <!--<ListView.ItemTemplate>
         <DataTemplate>
-            <TextCell Text="{Binding .}" />
+            <TextCell Text="{Binding Name}" />
         </DataTemplate>
-    </ListView.ItemTemplate>
+    </ListView.ItemTemplate>-->
     
     <!--Custom View Cells-->
-    <!--
+    
     <ListView.ItemTemplate>
       <DataTemplate>
         <ViewCell>
-          <StackLayout>
-            <Label Text="{Binding Text}" 
-                   Style="{DynamicResource ListItemTextStyle}" />
-            <Label Text="{Binding Detail}" 
-                   Style="{DynamicResource ListItemDetailTextStyle}"/>
-          </StackLayout>
+                    <Grid Margin="100,10" Padding="5,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="30" />
+                            
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Name}" />
+                        <Label Grid.Column="1" Text="{Binding Kod}" />
+                    </Grid>
+                    
+            
         </ViewCell>
       </DataTemplate>
     </ListView.ItemTemplate>
-    -->
+    
   </ListView>
 </ContentPage>

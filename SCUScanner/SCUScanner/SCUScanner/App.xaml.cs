@@ -19,7 +19,7 @@ namespace SCUScanner
             {
                 AppResource.Culture = DependencyService.Get<ILocalizeService>()
                                     .GetCurrentCultureInfo();
-                Settings.SelectedLanguageCode = AppResource.Culture.Name;
+                Settings.Current.SelectedLang = AppResource.Culture.Name;
             }
             MainPage = new SCUScanner.Pages.MainMasterDetailPage();
 		}

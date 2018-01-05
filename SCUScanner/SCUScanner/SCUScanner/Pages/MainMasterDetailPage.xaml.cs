@@ -32,6 +32,7 @@ namespace SCUScanner.Pages
             page.Title = item.Title;
             
             Detail = new NavigationPage(page);
+            
             IsPresented = false;
 
             MasterPage.ListView.SelectedItem = null;
