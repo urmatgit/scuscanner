@@ -36,6 +36,7 @@ namespace SCUScanner.ViewModels
 
         public BaseViewModel()
         {
+            
             Resources = new LocalizedResources(typeof(AppResource), App.CurrentLanguage);//  App.CurrentLanguage);
         }
         public void SetResourcesLang(string lang)

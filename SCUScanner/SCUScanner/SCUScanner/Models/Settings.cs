@@ -45,6 +45,7 @@ namespace SCUScanner.Models
             set
             {
                 var orinal = SelectedLang;
+                
                 if (AppSettings.AddOrUpdateValue(nameof(SelectedLang), value))
                 {
                     App.CurrentLanguage = value;

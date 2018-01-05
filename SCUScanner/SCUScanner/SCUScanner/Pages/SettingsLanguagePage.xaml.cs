@@ -31,6 +31,7 @@ namespace SCUScanner.Pages
                 return;
             LanguageItem selected = e.Item as LanguageItem;
             //await DisplayAlert("Item Tapped", $"An item was tapped.{selected.Name}", "OK");
+           
             viewModel.Settings.Settings.SelectedLang = selected.Kod;
             //    viewModel.SetResourcesLang(viewModel.Settings.Settings.SelectedLang);
             //App.CurrentLanguage = SelectedLanguage;
