@@ -1,10 +1,12 @@
 ﻿using SCUScanner.Models;
+using SCUScanner.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SCUScanner.ViewModels
 {
@@ -30,7 +32,8 @@ namespace SCUScanner.ViewModels
                  );
             
         }
-        
+
+       
         //#region INotifyPropertyChanged Implementation
         //public event PropertyChangedEventHandler PropertyChanged;
         //void OnPropertyChanged([CallerMemberName] string propertyName = "")

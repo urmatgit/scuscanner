@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-
+using System.Threading;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -21,6 +21,17 @@ namespace SCUScanner.Droid.Services
             var androidLocale = Java.Util.Locale.Default;
             var netLanguage = androidLocale.ToString().Replace("_", "-");
             return new System.Globalization.CultureInfo(netLanguage);
+        }
+
+        public CultureInfo SetLocale(string ci)
+        {
+            var cultureINfor = CultureInfo.GetCultureInfo(ci);
+            if (cultureINfor != null)
+            {
+                Thread.CurrentThread.CurrentCulture = cultureINfor;
+                Thread.CurrentThread.CurrentUICulture = cultureINfor;
+            }
+            return cultureINfor;
         }
     }
 }

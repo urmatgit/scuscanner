@@ -70,6 +70,33 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        internal static string DataText {
+            get {
+                return ResourceManager.GetString("DataText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help.
+        /// </summary>
+        internal static string HelpText {
+            get {
+                return ResourceManager.GetString("HelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maintenance.
+        /// </summary>
+        internal static string MaintenanceText {
+            get {
+                return ResourceManager.GetString("MaintenanceText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manual scan.
         /// </summary>
         internal static string ManualScanText {
@@ -93,6 +120,15 @@ namespace SCUScanner.Resources {
         internal static string SettingsText {
             get {
                 return ResourceManager.GetString("SettingsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spares.
+        /// </summary>
+        internal static string SparesText {
+            get {
+                return ResourceManager.GetString("SparesText", resourceCulture);
             }
         }
     }

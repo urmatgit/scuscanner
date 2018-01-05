@@ -12,18 +12,27 @@ namespace SCUScanner
 {
 	public partial class App : Application
 	{
-		public App ()
+        public static string CurrentLanguage = "EN";
+        public App ()
 		{
 			InitializeComponent();
             if (Device.RuntimePlatform != Device.WinPhone)
             {
-                AppResource.Culture = DependencyService.Get<ILocalizeService>()
-                                    .GetCurrentCultureInfo();
-                Settings.Current.SelectedLang = AppResource.Culture.Name;
+                if (!string.IsNullOrEmpty(Settings.Current.SelectedLang))
+                {
+                    AppResource.Culture = DependencyService.Get<ILocalizeService>().SetLocale(Settings.Current.SelectedLang);
+                    CurrentLanguage = AppResource.Culture.Name;
+                }
+                else
+                {
+                    AppResource.Culture = DependencyService.Get<ILocalizeService>().GetCurrentCultureInfo();
+                    Settings.Current.SelectedLang = CurrentLanguage = AppResource.Culture.Name;
+                }
+                
             }
             MainPage = new SCUScanner.Pages.MainMasterDetailPage();
 		}
-
+        
 		protected override void OnStart ()
 		{
 			// Handle when your app starts

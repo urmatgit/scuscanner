@@ -1,9 +1,12 @@
 ﻿using SCUScanner.Models;
+using SCUScanner.Resources;
+using SCUScanner.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SCUScanner.ViewModels
 {
@@ -25,6 +28,20 @@ namespace SCUScanner.ViewModels
             return true;
         }
 
+        public LocalizedResources Resources
+        {
+            get;
+            private set;
+        }
+
+        public BaseViewModel()
+        {
+            Resources = new LocalizedResources(typeof(AppResource), App.CurrentLanguage);//  App.CurrentLanguage);
+        }
+        public void SetResourcesLang(string lang)
+        {
+            Resources = new LocalizedResources(typeof(AppResource), lang);//  App.CurrentLanguage);
+        }
         #region INotifyPropertyChanged implementation
 
         public event PropertyChangedEventHandler PropertyChanged;

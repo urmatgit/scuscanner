@@ -1,10 +1,11 @@
 ﻿using Foundation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-
+using System.Threading;
 
 [assembly: Xamarin.Forms.Dependency(typeof(SCUScanner.iOS.Services.LocalizeService))]
 namespace SCUScanner.iOS.Services
@@ -30,6 +31,18 @@ namespace SCUScanner.iOS.Services
                 ci = new System.Globalization.CultureInfo(prefLanguage);
             }
             return ci;
+        }
+
+        public CultureInfo SetLocale(string ci)
+        {
+            CultureInfo culture = CultureInfo.GetCultureInfo(ci);// GetCultureInfo()
+            if (culture != null)
+            {
+                Debug.WriteLine($"Set language- {culture.DisplayName}");
+                Thread.CurrentThread.CurrentCulture = culture;
+                Thread.CurrentThread.CurrentUICulture = culture;
+            }
+            return culture;
         }
     }
 }

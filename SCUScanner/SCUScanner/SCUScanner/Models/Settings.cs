@@ -1,9 +1,11 @@
 ﻿using Plugin.Settings;
 using Plugin.Settings.Abstractions;
+using SCUScanner.Services;
 using SCUScanner.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SCUScanner.Models
 {
@@ -44,7 +46,13 @@ namespace SCUScanner.Models
             {
                 var orinal = SelectedLang;
                 if (AppSettings.AddOrUpdateValue(nameof(SelectedLang), value))
+                {
+                    App.CurrentLanguage = value;
+                    SetResourcesLang(value);
+                
+
                     SetProperty(ref orinal, value);
+                }
             }
         }
     }

@@ -31,8 +31,8 @@
       </ListView.Header>-->
       <ListView.ItemTemplate>
         <DataTemplate>
-                    <ViewCell>
-                        <Grid Padding="5,10">
+            <ViewCell>
+                    <Grid Padding="5,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="*" />

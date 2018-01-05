@@ -8,5 +8,6 @@ namespace SCUScanner.Services
     public interface ILocalizeService
     {
         CultureInfo GetCurrentCultureInfo();
+        CultureInfo SetLocale(string ci);
     }
 }

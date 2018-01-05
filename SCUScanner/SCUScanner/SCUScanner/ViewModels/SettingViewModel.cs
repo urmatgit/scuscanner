@@ -35,19 +35,19 @@ namespace SCUScanner.ViewModels
         public  async void OpenSettingsLanguagePage()
         {
             Debug.WriteLine("OpenSettingsLanguagePage");
-            await Navigation.PushAsync(new NavigationPage(new SettingsLanguagePage(Navigation)));
+            await Navigation.PushAsync(new  SettingsLanguagePage(Navigation));
             //Application.Current.MainPage.Navigation.PushAsync(new NavigationPage( new SettingsLanguagePage()));
          
         }
+         
 
-       
      //  public ICommand SelectLangPageCommnad=>new Command()
-        //#region INotifyPropertyChanged Implementation
-        //public event PropertyChangedEventHandler PropertyChanged;
-        //void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        //{
-        //    if (PropertyChanged == null)
-        //        return;
+     //#region INotifyPropertyChanged Implementation
+     //public event PropertyChangedEventHandler PropertyChanged;
+     //void OnPropertyChanged([CallerMemberName] string propertyName = "")
+     //{
+     //    if (PropertyChanged == null)
+     //        return;
 
         //    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         //}

@@ -120,6 +120,15 @@
   <data name="ContinuousScanText" xml:space="preserve">
     <value>Continuous scan</value>
   </data>
+  <data name="DataText" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="HelpText" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="MaintenanceText" xml:space="preserve">
+    <value>Maintenance</value>
+  </data>
   <data name="ManualScanText" xml:space="preserve">
     <value>Manual scan</value>
   </data>
@@ -128,5 +137,8 @@
   </data>
   <data name="SettingsText" xml:space="preserve">
     <value>SettingsEn</value>
+  </data>
+  <data name="SparesText" xml:space="preserve">
+    <value>Spares</value>
   </data>
 </root>

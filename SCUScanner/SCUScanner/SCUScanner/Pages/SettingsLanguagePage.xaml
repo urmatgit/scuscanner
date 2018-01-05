@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SCUScanner.Pages.SettingsLanguagePage">
+    <StackLayout>
+        
   <ListView x:Name="MyListView"
             ItemsSource="{Binding LanguageItems}"
             ItemTapped="Handle_ItemTapped"
@@ -19,11 +21,10 @@
     <ListView.ItemTemplate>
       <DataTemplate>
         <ViewCell>
-                    <Grid Margin="100,10" Padding="5,10">
+                    <Grid  Padding="5,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="30" />
-                            
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Text="{Binding Name}" />
                         <Label Grid.Column="1" Text="{Binding Kod}" />
@@ -35,4 +36,5 @@
     </ListView.ItemTemplate>
     
   </ListView>
+    </StackLayout>
 </ContentPage>

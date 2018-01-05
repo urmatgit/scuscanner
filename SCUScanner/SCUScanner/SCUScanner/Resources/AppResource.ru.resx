@@ -120,6 +120,15 @@
   <data name="ContinuousScanText" xml:space="preserve">
     <value>Автоматически режим</value>
   </data>
+  <data name="DataText" xml:space="preserve">
+    <value>Данные</value>
+  </data>
+  <data name="HelpText" xml:space="preserve">
+    <value>Помощь</value>
+  </data>
+  <data name="MaintenanceText" xml:space="preserve">
+    <value>Обслуживание</value>
+  </data>
   <data name="ManualScanText" xml:space="preserve">
     <value>Ручной режим</value>
     <comment> </comment>
@@ -129,5 +138,8 @@
   </data>
   <data name="SettingsText" xml:space="preserve">
     <value>Настройки</value>
+  </data>
+  <data name="SparesText" xml:space="preserve">
+    <value>Запчасти</value>
   </data>
 </root>
