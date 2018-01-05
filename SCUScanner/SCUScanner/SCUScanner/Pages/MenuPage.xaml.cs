@@ -33,7 +33,7 @@ namespace SCUScanner.Pages
             {
                 MenuItems = new ObservableCollection<MasterDetailPageMenuItem>(new[]
                 {
-                    new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 0, Title = "Page 1" },
+                    new MasterDetailPageMenuItem(typeof(Settings)) { Id = 0, Title = "Settings" },
                     new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 1, Title = "Page 2" },
                     new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 2, Title = "Page 3" } 
                 });

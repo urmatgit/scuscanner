@@ -13,10 +13,10 @@ namespace SCUScanner.Resources
     public class TranslateExtension : IMarkupExtension
     {
         private readonly CultureInfo _cultureInfo;
-        const string ResourceId = "LocalizeApp.Resource";
+       
         public TranslateExtension()
         {
-            _cultureInfo = DependencyService.Get<Services.ILocalizeService>().GetCurrentCultureInfo();
+           AppResource.Culture = DependencyService.Get<Services.ILocalizeService>().GetCurrentCultureInfo();
         }
 
         public string Text { get; set; }
@@ -27,9 +27,8 @@ namespace SCUScanner.Resources
             {
                 return null;
             }
-            ResourceManager resmgr = new ResourceManager(ResourceId,
-                      typeof(TranslateExtension).GetTypeInfo().Assembly);
-            var translation = resmgr.GetString(Text, _cultureInfo);
+            
+            var translation = AppResource.ResourceManager.GetString(Text, _cultureInfo);
 
 #if DEBUG
             if (translation == null)

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SCUScanner.Resources;
+using SCUScanner.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +14,12 @@ namespace SCUScanner
 		public App ()
 		{
 			InitializeComponent();
-
-			MainPage = new SCUScanner.Pages.MainMasterDetailPage();
+            if (Device.RuntimePlatform != Device.WinPhone)
+            {
+                AppResource.Culture = DependencyService.Get<ILocalizeService>()
+                                    .GetCurrentCultureInfo();
+            }
+            MainPage = new SCUScanner.Pages.MainMasterDetailPage();
 		}
 
 		protected override void OnStart ()
