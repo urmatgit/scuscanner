@@ -15,17 +15,22 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
-                    
+                    <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <!--Text="{local:Translate ContinuousScanText}}"-->
                 <Label  Grid.Column="0" Grid.Row="0" Text="{Binding Resources[ContinuousScanText]}" VerticalTextAlignment="Center" />
                 <Switch BindingContext="{Binding Settings}" Grid.Column="1" Grid.Row="0" IsToggled="{Binding ScanMode}"/>
-                <Label Grid.Column="2" Grid.Row="0" Text="{Binding Resources[ManualScanText]}" VerticalTextAlignment="Center"/>
+                
+                <Label Grid.Column="0" Grid.Row="1" Text="{Binding Resources[ManualScanText]}" VerticalTextAlignment="Center"/>
+                <Switch BindingContext="{Binding Settings}" Grid.Column="1" Grid.Row="1" IsToggled="{Binding ManualScan}"/>
 
-
-                <StackLayout Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Grid.ColumnSpan="2" >
-                    <Label  Text="{Binding Resources[SelectedLanguageCodeText]}"  VerticalTextAlignment="Center"/>
+                <StackLayout Grid.Column="0" Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2" >
+                    <Label  Text="{Binding Resources[SelectedLanguageCodeText]}"  VerticalTextAlignment="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectLangCommnad}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
                     <Label  BindingContext="{Binding Settings}" Text="{Binding SelectedLang}" VerticalTextAlignment="Center" />
                 </StackLayout>
 

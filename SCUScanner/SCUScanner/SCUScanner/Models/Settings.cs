@@ -26,19 +26,23 @@ namespace SCUScanner.Models
             {
                 var original = ScanMode;
                 if (AppSettings.AddOrUpdateValue(nameof(ScanMode), value))
+                {
                     SetProperty(ref original, value);
+                    OnPropertyChanged("ManualScan");
+                }
             }
         }
-        //public  bool ManualScan
-        //{
-        //    get => AppSettings.GetValueOrDefault(nameof(ManualScan), false);
-        //    set {
-        //        var orinal = ManualScan;
-        //        if (AppSettings.AddOrUpdateValue(nameof(ManualScan), value))
-        //            SetProperty(ref orinal, value);
-        //            }
+        public bool ManualScan
+        {
+            get => !ScanMode;
+            set
+            {
+                var orinal = ManualScan;
+                ScanMode = !value;
+                OnPropertyChanged();   
+            }
 
-        //}
+        }
         public  string SelectedLang
         {
             get => AppSettings.GetValueOrDefault(nameof(SelectedLang), "");

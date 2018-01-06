@@ -23,8 +23,8 @@
         <ViewCell>
                     <Grid  Padding="5,5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="30*"/>
+                            <ColumnDefinition Width="10*" />
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Text="{Binding Name}" />
                         <Label Grid.Column="1" Text="{Binding Kod}" />
