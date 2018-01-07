@@ -132,6 +132,9 @@
   <data name="ManualScanText" xml:space="preserve">
     <value>Manual scan</value>
   </data>
+  <data name="ScanText" xml:space="preserve">
+    <value>Scan</value>
+  </data>
   <data name="SelectedLanguageCodeText" xml:space="preserve">
     <value>Language</value>
   </data>

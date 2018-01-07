@@ -58,7 +58,7 @@ namespace SCUScanner.Pages
              return new ObservableCollection<MasterDetailPageMenuItem>(
                    new[]
                        {
-                            new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 0,PageCode="DataText",  Title =settings==null?SCUScanner.Resources.AppResource.DataText : settings.Resources["DataText"] },
+                            new MasterDetailPageMenuItem(typeof(ScanBluetoothPage)) { Id = 0,PageCode="DataText",  Title =settings==null?SCUScanner.Resources.AppResource.DataText : settings.Resources["DataText"] },
                             new MasterDetailPageMenuItem(typeof(Settings)) { Id = 1, PageCode="SettingsText",Title =settings==null?SCUScanner.Resources.AppResource.SettingsText : settings.Resources["SettingsText"]},
                             new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 1,PageCode="HelpText", Title = settings==null?SCUScanner.Resources.AppResource.HelpText : settings.Resources["HelpText"]  },
                             new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 2,PageCode="MaintenanceText", Title = settings==null?SCUScanner.Resources.AppResource.MaintenanceText : settings.Resources["MaintenanceText"]  },
