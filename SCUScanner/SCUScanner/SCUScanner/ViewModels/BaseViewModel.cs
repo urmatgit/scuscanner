@@ -28,7 +28,7 @@ namespace SCUScanner.ViewModels
             return true;
         }
 
-        public LocalizedResources Resources
+        public virtual LocalizedResources Resources
         {
             get;
             private set;

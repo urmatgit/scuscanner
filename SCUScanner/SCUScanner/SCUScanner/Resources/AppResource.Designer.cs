@@ -61,6 +61,16 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bluetooth not available.
+        ///Turn On Bluetooth and press .
+        /// </summary>
+        internal static string BlueToothTornOffText {
+            get {
+                return ResourceManager.GetString("BlueToothTornOffText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continuous scan.
         /// </summary>
         internal static string ContinuousScanText {

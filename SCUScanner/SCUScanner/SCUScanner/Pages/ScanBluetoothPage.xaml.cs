@@ -1,4 +1,7 @@
-﻿using SCUScanner.Helpers;
+﻿
+using Plugin.BluetoothLE;
+using SCUScanner.Helpers;
+using SCUScanner.Services;
 using SCUScanner.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,11 +18,24 @@ namespace SCUScanner.Pages
 	public partial class ScanBluetoothPage : ContentPage
     {
         bool IsBluetoothEnabled = false;
+        
+
 		public ScanBluetoothPage ()
 		{
 			InitializeComponent ();
-            //BindingContext = new ScanBluetoothViewModel();
-//            Init();
+            //MessagingCenter.Subscribe<object, CultureChangedMessage>(this, string.Empty, (sender, agr) =>
+            //{
+
+            //    var arg = agr;
+            //    if (arg is CultureChangedMessage)
+            //    {
+            //        BindingContext = null;
+            //        SCUScanner.Models.Settings settings = sender as SCUScanner.Models.Settings;
+
+            //    }
+            //});
+            BindingContext = new ScanBluetoothViewModel();
+            //            Init();
         }
 
 //        private void Init()

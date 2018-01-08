@@ -6,13 +6,17 @@
                               
              Title="SCUScanner">
     <ContentPage.ToolbarItems  >
-        <controls:HideableToolbarItem  IsVisible="False"  Text="{Binding Resources[ScanText]}" Command="{Binding Command}" Order="Primary" Priority="1"    />
+        <controls:HideableToolbarItem  IsVisible="{Binding IsVisible}"  Text="{Binding ResourcesEx[ScanText]}" Command="{Binding Command}" Order="Primary" Priority="1"    />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding IsVisibleBlueToothTornOff}">
+            <Label Text="{Binding Resources[BlueToothTornOffText]}" 
+               />
+            <Label Text=" " 
+               />
+            <Label Text="{Binding Resources[ScanText]}"  VerticalTextAlignment="End"
+               />
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
