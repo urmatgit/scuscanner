@@ -117,28 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BlueToothTornOffText" xml:space="preserve">
+    <value>Bluetooth n'est pas disponible.
+Activer Bluetooth et appuyez sur</value>
+  </data>
   <data name="ContinuousScanText" xml:space="preserve">
-    <value>Continuous scan</value>
+    <value>Balayage continu</value>
   </data>
   <data name="DataText" xml:space="preserve">
-    <value>Data</value>
+    <value>Données</value>
   </data>
   <data name="HelpText" xml:space="preserve">
-    <value>Help</value>
+    <value>Aider</value>
   </data>
   <data name="MaintenanceText" xml:space="preserve">
-    <value>Maintenance</value>
+    <value>Entretien</value>
   </data>
   <data name="ManualScanText" xml:space="preserve">
-    <value>Manual scan</value>
+    <value>Scan manuel</value>
   </data>
   <data name="SelectedLanguageCodeText" xml:space="preserve">
-    <value>Language</value>
+    <value>Langue</value>
+  </data>
+  <data name="SetHintBluetoothAndroidText" xml:space="preserve">
+    <value>Sur votre appareil Android, sélectionnez Paramètres &gt; Connectivité &gt; Bluetooth et assurez-vous que le Bluetooth est en position «On».</value>
+  </data>
+  <data name="SetHintBluetoothIOSText" xml:space="preserve">
+    <value>Sur votre appareil iOS, touchez Réglages &gt; Bluetooth et assurez-vous que le Bluetooth est en position «Marche».</value>
   </data>
   <data name="SettingsText" xml:space="preserve">
-    <value>SettingsFR</value>
+    <value>Paramètres</value>
   </data>
   <data name="SparesText" xml:space="preserve">
-    <value>Spares</value>
+    <value>Pièces de rechange</value>
   </data>
 </root>

@@ -6,17 +6,33 @@
                               
              Title="SCUScanner">
     <ContentPage.ToolbarItems  >
-        <controls:HideableToolbarItem  IsVisible="{Binding IsVisible}"  Text="{Binding ResourcesEx[ScanText]}" Command="{Binding Command}" Order="Primary" Priority="1"    />
+        <controls:HideableToolbarItem   IsVisible="{Binding IsVisible}"  Text="{Binding ResourcesEx[ScanText]}" Command="{Binding Command}" Order="Primary" Priority="1"    />
+        
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Orientation="Horizontal" IsVisible="{Binding IsVisibleBlueToothTornOff}">
-            <Label Text="{Binding Resources[BlueToothTornOffText]}" 
-               />
-            <Label Text=" " 
-               />
-            <Label Text="{Binding Resources[ScanText]}"  VerticalTextAlignment="End"
-               />
-            
+        <StackLayout Padding="10,10" Orientation="Vertical" IsVisible="{Binding IsVisibleBlueToothTornOff}">
+            <Label Text="{Binding BlueToothTornOffText}"/>
+            <Label/>
+            <Label x:Name="lblHintBluetoothAndroidText" Text="{Binding Resources[SetHintBluetoothAndroidText]}">
+                <!--<Label.IsVisible>
+                    <OnPlatform x:TypeArguments="x:Boolean">
+                        <OnPlatform.iOS>false</OnPlatform.iOS>
+                        <OnPlatform.Android>true</OnPlatform.Android>
+                        <OnPlatform.WinPhone>false</OnPlatform.WinPhone>
+                    </OnPlatform>
+                </Label.IsVisible>-->
+            </Label>
+            <Label x:Name="lblHintBluetoothIOSText"  Text="{Binding Resources[SetHintBluetoothIOSText]}">
+                <!--<Label.IsVisible>
+                    <OnPlatform x:TypeArguments="x:Boolean">
+                        <OnPlatform.iOS>true</OnPlatform.iOS>
+                        <OnPlatform.Android>false</OnPlatform.Android>
+                        <OnPlatform.WinPhone>false</OnPlatform.WinPhone>
+                    </OnPlatform>
+                </Label.IsVisible>-->
+            </Label>
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

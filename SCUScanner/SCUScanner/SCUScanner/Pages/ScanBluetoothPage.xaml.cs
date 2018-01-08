@@ -35,19 +35,10 @@ namespace SCUScanner.Pages
             //    }
             //});
             BindingContext = new ScanBluetoothViewModel();
+            lblHintBluetoothAndroidText.IsVisible = !(lblHintBluetoothIOSText.IsVisible = Device.RuntimePlatform == Device.iOS);
+            
             //            Init();
         }
 
-//        private void Init()
-//        {
-//#if DEBUG
-//            IsBluetoothEnabled = true;
-//#endif
-//            if (IsBluetoothEnabled)
-//            {
-//                var toolScan = new ToolbarItem();
-//                var bindingText = new Binding(path: "Resources[ScanText]");
-
-//        }
     }
 }

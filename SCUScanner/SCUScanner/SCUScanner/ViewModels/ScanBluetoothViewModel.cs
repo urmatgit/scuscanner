@@ -23,6 +23,10 @@ namespace SCUScanner.ViewModels
             }
 
         }
+        public string BlueToothTornOffText
+        {
+            get { return $"{Resources["BlueToothTornOffText"]} {Resources["ScanText"]}" ; }
+        }
         public bool IsVisibleBlueToothTornOff
         {
             get {

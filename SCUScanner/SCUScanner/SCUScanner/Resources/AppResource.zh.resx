@@ -117,28 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BlueToothTornOffText" xml:space="preserve">
+    <value>蓝牙不可用。
+打开蓝牙和新闻</value>
+  </data>
   <data name="ContinuousScanText" xml:space="preserve">
-    <value>Continuous scan</value>
+    <value>连续扫描</value>
   </data>
   <data name="DataText" xml:space="preserve">
-    <value>Data</value>
+    <value>数据</value>
   </data>
   <data name="HelpText" xml:space="preserve">
-    <value>Help</value>
+    <value>帮助</value>
   </data>
   <data name="MaintenanceText" xml:space="preserve">
-    <value>Maintenance</value>
+    <value>维护</value>
   </data>
   <data name="ManualScanText" xml:space="preserve">
-    <value>Manual scan</value>
+    <value>手动扫描</value>
+  </data>
+  <data name="ScanTect" xml:space="preserve">
+    <value>扫描</value>
   </data>
   <data name="SelectedLanguageCodeText" xml:space="preserve">
-    <value>Language</value>
+    <value>语言</value>
+  </data>
+  <data name="SetHintBluetoothAndroidText" xml:space="preserve">
+    <value>上装置选择"设置"&gt;"通信"&gt;蓝牙，并确保蓝牙开关在位置"On"。</value>
+  </data>
+  <data name="SetHintBluetoothIOSText" xml:space="preserve">
+    <value>你的iOS装置、挖掘设置&gt;蓝牙，并确保蓝牙开关在位置"On"。</value>
   </data>
   <data name="SettingsText" xml:space="preserve">
-    <value>SettingsEn</value>
+    <value>设置</value>
   </data>
   <data name="SparesText" xml:space="preserve">
-    <value>Spares</value>
+    <value>备件</value>
   </data>
 </root>

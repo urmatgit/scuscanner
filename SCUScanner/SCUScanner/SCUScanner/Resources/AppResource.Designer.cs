@@ -134,6 +134,24 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to On the Android device select &quot;Settings&quot; &gt; &quot;Communication&quot; &gt; Bluetooth and make sure Bluetooth switch is in position &quot;On&quot;..
+        /// </summary>
+        internal static string SetHintBluetoothAndroidText {
+            get {
+                return ResourceManager.GetString("SetHintBluetoothAndroidText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On your iOS device, tap Settings &gt; Bluetooth and make sure Bluetooth switch is in position &quot;On&quot;..
+        /// </summary>
+        internal static string SetHintBluetoothIOSText {
+            get {
+                return ResourceManager.GetString("SetHintBluetoothIOSText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         internal static string SettingsText {

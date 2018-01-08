@@ -117,28 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BlueToothTornOffText" xml:space="preserve">
+    <value>Bluetooth não disponível.
+Ligue o Bluetooth e prima</value>
+  </data>
   <data name="ContinuousScanText" xml:space="preserve">
-    <value>Continuous scan</value>
+    <value>A digitalização contínua</value>
   </data>
   <data name="DataText" xml:space="preserve">
-    <value>Data</value>
+    <value>Dados</value>
   </data>
   <data name="HelpText" xml:space="preserve">
-    <value>Help</value>
+    <value>Ajuda</value>
   </data>
   <data name="MaintenanceText" xml:space="preserve">
-    <value>Maintenance</value>
+    <value>Manutenção</value>
   </data>
   <data name="ManualScanText" xml:space="preserve">
-    <value>Manual scan</value>
+    <value>Manual de digitalização</value>
   </data>
   <data name="SelectedLanguageCodeText" xml:space="preserve">
-    <value>Language</value>
+    <value>Idioma</value>
+  </data>
+  <data name="SetHintBluetoothAndroidText" xml:space="preserve">
+    <value>Em seu dispositivo Android, selecione a opção "Configurações" &gt; "Link" &gt; Bluetooth e certifique-se de que o interruptor Bluetooth está na posição "Ligado".</value>
+  </data>
+  <data name="SetHintBluetoothIOSText" xml:space="preserve">
+    <value>No seu dispositivo iOS, toque em Definições &gt; Bluetooth e certifique-se de que o interruptor Bluetooth está na posição "Ligado".</value>
   </data>
   <data name="SettingsText" xml:space="preserve">
-    <value>SettingsEn</value>
+    <value>Definições</value>
   </data>
   <data name="SparesText" xml:space="preserve">
-    <value>Spares</value>
+    <value>Peças sobressalentes</value>
   </data>
 </root>

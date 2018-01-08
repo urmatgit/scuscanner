@@ -142,6 +142,12 @@ Turn On Bluetooth and press </value>
   <data name="SelectedLanguageCodeText" xml:space="preserve">
     <value>Language</value>
   </data>
+  <data name="SetHintBluetoothAndroidText" xml:space="preserve">
+    <value>On the Android device select "Settings" &gt; "Communication" &gt; Bluetooth and make sure Bluetooth switch is in position "On".</value>
+  </data>
+  <data name="SetHintBluetoothIOSText" xml:space="preserve">
+    <value>On your iOS device, tap Settings &gt; Bluetooth and make sure Bluetooth switch is in position "On".</value>
+  </data>
   <data name="SettingsText" xml:space="preserve">
     <value>SettingsEn</value>
   </data>
