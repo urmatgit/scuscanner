@@ -6,7 +6,7 @@
                               
              Title="SCUScanner">
     <ContentPage.ToolbarItems  >
-        <controls:HideableToolbarItem   IsVisible="{Binding IsVisible}"  Text="{Binding ResourcesEx[ScanText]}" Command="{Binding Command}" Order="Primary" Priority="1"    />
+        <controls:HideableToolbarItem     IsVisible="{Binding IsVisible}"  Text="{Binding ResourcesEx[ScanText]}" Command="{Binding Command}" Order="Primary" Priority="1"    />
         
     </ContentPage.ToolbarItems>
     <ContentPage.Content>

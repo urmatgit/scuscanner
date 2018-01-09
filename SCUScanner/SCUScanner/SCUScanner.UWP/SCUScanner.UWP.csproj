@@ -105,6 +105,12 @@
     <None Include="SCUScanner.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\bluetooth.png" />
+    <Content Include="Assets\cogwheel.png" />
+    <Content Include="Assets\graduation.png" />
+    <Content Include="Assets\Spares.png" />
+    <Content Include="Assets\settings.png" />
+    <Content Include="Assets\technology.png" />
     <Content Include="Properties\Default.rd.xml">
       <SubType>Designer</SubType>
     </Content>

@@ -40,8 +40,10 @@
                             <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Image Source="{Binding IconSource}" />
-                        <Label Grid.Column="1" Text="{Binding Title}" />
+                            <Image Source="{Binding IconSource}" >
+                               
+                            </Image>
+                            <Label Grid.Column="1" Text="{Binding Title}" VerticalTextAlignment="Center" />
                     </Grid>
                     </ViewCell>
                     <!--<ViewCell>
