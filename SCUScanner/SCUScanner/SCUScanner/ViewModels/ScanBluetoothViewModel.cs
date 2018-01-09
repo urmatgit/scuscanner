@@ -1,18 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 using Plugin.BluetoothLE;
 using SCUScanner.Services;
+using Xamarin.Forms;
 
 namespace SCUScanner.ViewModels
 {
     public class ScanBluetoothViewModel:BaseViewModel
     {
-       
-        public ScanBluetoothViewModel()
+
+        IAdapter CurrentAdapter;
+        public ScanBluetoothViewModel(Page page)
         {
-            var status = CrossBleAdapter.Current.Status;
+            CurrentAdapter = CrossBleAdapter.Current;
+            if(CurrentAdapter.Status == AdapterStatus.Unsupported)
+            {
+                IsVisible = false;
+                 page.DisplayAlert("Блютуз не поддериживатся ", "", "OK");
+                return;
+            }
+            if ( !CheckStatus(CurrentAdapter.Status) && CurrentAdapter.CanControlAdapterState())
+            {
+                CurrentAdapter.SetAdapterState(true);
+                Debug.WriteLine("CurrentAdapter.SetAdapterState(true);");
+            }
+            
+            CrossBleAdapter.Current.WhenStatusChanged().Subscribe(st=>
+            {
+                CheckStatus(st);
+            });
+        }
+        private bool CheckStatus(AdapterStatus status)
+        {
             if (status == AdapterStatus.PoweredOn)
             {
                 IsVisible = true;
@@ -21,7 +43,7 @@ namespace SCUScanner.ViewModels
             {
                 IsVisible = false;
             }
-
+            return isVisible;
         }
         public string BlueToothTornOffText
         {
@@ -42,6 +64,7 @@ namespace SCUScanner.ViewModels
                 isVisible = value;
                 OnPropertyChanged();
                 OnPropertyChanged("IsVisibleBlueToothTornOff");
+                OnPropertyChanged("ResourcesEx");
             }
         }
         public  LocalizedResources ResourcesEx

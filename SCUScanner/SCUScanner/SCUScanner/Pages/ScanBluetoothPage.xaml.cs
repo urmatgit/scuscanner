@@ -34,7 +34,7 @@ namespace SCUScanner.Pages
 
             //    }
             //});
-            BindingContext = new ScanBluetoothViewModel();
+            BindingContext = new ScanBluetoothViewModel(this);
             lblHintBluetoothAndroidText.IsVisible = !(lblHintBluetoothIOSText.IsVisible = Device.RuntimePlatform == Device.iOS);
             
             //            Init();
