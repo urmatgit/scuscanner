@@ -11,6 +11,8 @@
 *.userprefs
 
 # Build results
+SCUScanner/*/bin/
+SCUScanner/*/obj/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/

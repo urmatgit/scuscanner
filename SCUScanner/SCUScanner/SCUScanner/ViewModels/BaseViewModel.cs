@@ -12,7 +12,7 @@ namespace SCUScanner.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-         public Settings Settings => Settings.Current;
+        //public Settings Settings => Settings.Current;
 
         protected bool SetProperty<T>(
             ref T backingStore, T value,
@@ -27,11 +27,21 @@ namespace SCUScanner.ViewModels
             OnPropertyChanged(propertyName);
             return true;
         }
-
+        protected LocalizedResources resources;
         public virtual LocalizedResources Resources
         {
-            get;
-            private set;
+            get
+            {
+                return resources;
+            }
+            private set
+            {
+                if (resources != value)
+                {
+                    resources = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         public BaseViewModel()

@@ -31,13 +31,13 @@ namespace SCUScanner.Pages
                 return;
             LanguageItem selected = e.Item as LanguageItem;
             //await DisplayAlert("Item Tapped", $"An item was tapped.{selected.Name}", "OK");
-           
-            viewModel.Settings.Settings.SelectedLang = selected.Kod;
+
+            Models.Settings.Current.SelectedLang = selected.Kod;
             //    viewModel.SetResourcesLang(viewModel.Settings.Settings.SelectedLang);
             //App.CurrentLanguage = SelectedLanguage;
             DependencyService.Get<ILocalizeService>().SetLocale(selected.Kod);
-            MessagingCenter.Send<object, CultureChangedMessage>(viewModel.Settings.Settings,
-                string.Empty, new CultureChangedMessage(viewModel.Settings.Settings.SelectedLang));
+            MessagingCenter.Send<object, CultureChangedMessage>(Models.Settings.Current,
+                string.Empty, new CultureChangedMessage(Models.Settings.Current. SelectedLang));
             
             await NavPage.PopAsync();
             //Deselect Item
