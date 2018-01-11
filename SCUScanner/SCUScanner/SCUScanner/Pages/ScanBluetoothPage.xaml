@@ -6,7 +6,7 @@
                               
              Title="SCUScanner">
     <ContentPage.ToolbarItems  >
-        <controls:HideableToolbarItem     IsVisible="{Binding IsVisible}"  Text="{Binding ResourcesEx[ScanText]}" Command="{Binding Scan}" Order="Primary" Priority="1"    />
+        <controls:HideableToolbarItem     IsVisible="{Binding IsVisible}"  Text="{Binding ScanText}" Command="{Binding ScanToggle}" Order="Primary" Priority="1"    />
         
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
@@ -21,16 +21,48 @@
                
             </Label>
         </StackLayout>
-        <StackLayout IsVisible="{Binding IsVisible}">
-            <ActivityIndicator IsRunning="{Binding IsBusy}" VerticalOptions="Center" />
-            <ListView ItemsSource="{Binding Adapters}" SelectedItem="{Binding Select}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding DeviceName}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+           
+            <StackLayout IsVisible="{Binding IsVisibleLayout}">
+                <Label Text="Devices11"/>
+                <controls:ListViewEx ItemsSource="{Binding Devices}" RowHeight="160" ItemClickCommand="{Binding SelectDevice}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View  >
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30" />
+                                            <RowDefinition Height="30" />
+                                            <RowDefinition Height="30" />
+                                            <RowDefinition Height="30" />
+                                            <RowDefinition Height="30" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" FontAttributes="Bold" FontSize="15" />
+                                        <Label Text="{Binding Rssi, StringFormat='RSSI: {0}'}" Grid.Row="0" Grid.Column="1" TextColor="Red" />
+                                        <Label Text="{Binding Uuid, StringFormat='UUID: {0}'}" Grid.Row="1" Grid.ColumnSpan="2" FontAttributes="Italic" />
+
+                                        <Label Text="{Binding IsConnectable, StringFormat='Connectable: {0}'}" Grid.Row="2" Grid.Column="0" />
+                                        <Label Text="{Binding ServiceCount, StringFormat='{0} Services'}" Grid.Row="2" Grid.Column="1" />
+
+                                        <Label Text="{Binding ManufacturerData, StringFormat='Manufactuer Data: {0}'}" Grid.Row="3" Grid.ColumnSpan="2" />
+
+                                        <Label Text="{Binding LocalName, StringFormat='Local Name: {0}'}" Grid.Row="4" Grid.Column="0" />
+
+                                        <Label Text="Device Connected" IsVisible="{Binding IsConnected}" BackgroundColor="Yellow" TextColor="Black"  HorizontalTextAlignment="Center" Grid.ColumnSpan="2" Grid.Row="4" />
+                                    </Grid>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </controls:ListViewEx>
+                <ActivityIndicator IsRunning="{Binding IsScanning}" />
+            </StackLayout>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

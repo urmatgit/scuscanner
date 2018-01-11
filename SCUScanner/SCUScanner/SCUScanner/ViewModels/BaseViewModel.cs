@@ -11,7 +11,23 @@ using Xamarin.Forms;
 
 namespace SCUScanner.ViewModels
 {
-    public  class BaseViewModel : ReactiveObject, IViewModel
+    public abstract class AbstractViewModel : ReactiveObject, IViewModel
+    {
+        public virtual void Init(object args)
+        {
+        }
+
+
+        public virtual void OnActivate()
+        {
+        }
+
+
+        public virtual void OnDeactivate()
+        {
+        }
+    }
+    public  class BaseViewModel : AbstractViewModel
     {
         public Settings Settings => Settings.Current;
 
@@ -43,19 +59,6 @@ namespace SCUScanner.ViewModels
             Resources = new LocalizedResources(typeof(AppResource), lang);//  App.CurrentLanguage);
         }
 
-        public virtual void Init(object args = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void OnActivate()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void OnDeactivate()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

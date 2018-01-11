@@ -17,14 +17,14 @@ namespace SCUScanner
         public static string CurrentLanguage = "EN";
         public static IUserDialogs Dialogs;
         public static IAdapter BleAdapter;
-        public static IAdapterScanner BleAdapterScanner;
+        
         
         public App ()
 		{
 			InitializeComponent();
             Dialogs = UserDialogs.Instance;
             BleAdapter = CrossBleAdapter.Current;
-            BleAdapterScanner = CrossBleAdapter.AdapterScanner;
+            
             if (Device.RuntimePlatform != Device.WinPhone)
             {
                 if (!string.IsNullOrEmpty(Settings.Current.SelectedLang))

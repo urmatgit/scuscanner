@@ -168,5 +168,14 @@ namespace SCUScanner.Resources {
                 return ResourceManager.GetString("SparesText", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop Scan.
+        /// </summary>
+        internal static string StopScanText {
+            get {
+                return ResourceManager.GetString("StopScanText", resourceCulture);
+            }
+        }
     }
 }

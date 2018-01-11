@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -14,102 +15,155 @@ using Xamarin.Forms;
 
 namespace SCUScanner.ViewModels
 {
-    public class ScanBluetoothViewModel:  BaseViewModel
+    public class ScanBluetoothViewModel : BaseViewModel
     {
+        IDisposable scan;
+        IDisposable connect;
 
-        
-        public ObservableCollection<IAdapter> Adapters { get; } = new ObservableCollection<IAdapter>();
-        public ICommand Select { get; }
-        public ICommand Scan { get; }
+        public ObservableCollection<ScanResultViewModel> Devices { get; }
 
+        public ICommand ScanToggle { get; }
+        public ICommand SelectDevice { get; }
         public ScanBluetoothViewModel(Page page)
         {
-        
-            IsVisible = CrossBleAdapter.AdapterScanner.IsSupported;
-            this.WhenAnyValue(vm => vm.IsVisible).ToProperty(this, x => x.IsVisibleBlueToothTornOff);
-            this.WhenAnyValue(vm => vm.IsVisible).Subscribe(s =>
+            Devices=new ObservableCollection<ScanResultViewModel>();
+            IsVisibleLayout = true;//  App.BleAdapter.Status != AdapterStatus.PoweredOn;
+            this.WhenAnyValue(vm => vm.IsVisibleLayout).ToProperty(this, x => x.IsVisibleBlueToothTornOff);
+            this.WhenAnyValue(vm => vm.IsVisibleLayout).Subscribe(s =>
             {
-                ResourcesEx = Resources;
+                if (s)
+                    ResourcesEx = Resources;
+                else
+                    ResourcesEx = null;
             });
-
-            //    OnPropertyChanged("IsVisibleBlueToothTornOff");
-            //    OnPropertyChanged("ResourcesEx");
-            //});
-
-
-            CrossBleAdapter.Current.WhenStatusChanged().Subscribe(st=>
+            this.WhenAnyValue(vm => vm.Resources).Subscribe(val =>
             {
-                CheckStatus(st);
+                ScanTextChange(App.BleAdapter.IsScanning);
                 
             });
-            this.Select =new Command( () =>
+            App.BleAdapter.WhenStatusChanged()
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(st =>
             {
-               this.IsBusy = true;
-            //    var ad = adapter;
-                App.Dialogs.AlertAsync("Selected");
-                //CrossBleAdapter.Current = adapter;
-                IsBusy = false;
-            });
-            this.Scan = new Command(ScanCommand);
-            
-        }
-        public async void ScanCommand()
-        {
-            
-                  this.IsBusy = true;
-                App.BleAdapterScanner
-                    .FindAdapters()
-                    //  .ObserveOn(RxApp.MainThreadScheduler)
-                    .Subscribe(
-                        this.Adapters.Add,
-                        async () =>
-                        {
-                                        this.IsBusy = false;
-                            switch (this.Adapters.Count)
-                            {
-                                case 0:
-                                    App.Dialogs.Alert("No BluetoothLE Adapters Found");
-                                    break;
+                CheckStatus(st);
 
-                                case 1:
-                                    CrossBleAdapter.Current = this.Adapters.First();
-                                    // await vmManager.Push<MainViewModel>();
-                                    break;
-                            }
-                        }
-                    );
+            });
             
+            App.BleAdapter.WhenScanningStatusChanged()
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(on =>
+                {
+                    this.IsScanning = on;
+                    ScanTextChange(on);
+                });
+            this.ScanToggle = ReactiveCommand.Create(
+                () =>
+                {
+                    if (this.IsScanning)
+                    {
+                        this.scan?.Dispose();
+                    }
+                    else
+                    {
+                        this.Devices.Clear();
+                        ScanTextChange(true);
+                        //this.ScanText = Resources["ScanText"];
+
+                        this.scan = App.BleAdapter
+                            .Scan()
+                            .ObserveOn(RxApp.MainThreadScheduler)
+                            .Subscribe(this.OnScanResult);
+                    }
+                }
+                //,
+                //this.WhenAny(
+                //    x => x.IsSupported,
+                //    x => x.Value
+                //)
+            );
+
+
+        }
+        public override void OnActivate()
+        {
+            base.OnActivate();
+            App.BleAdapter
+                .WhenStatusChanged()
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(x =>
+                {
+                   CheckStatus(x);
+                });
+        }
+        void OnScanResult(IScanResult result)
+        {
+            var dev = this.Devices.FirstOrDefault(x => x.Uuid.Equals(result.Device.Uuid));
+            if (dev != null)
+            {
+                dev.TrySet(result);
+            }
+            else
+            {
+                dev = new ScanResultViewModel();
+                dev.TrySet(result);
+                this.Devices.Add(dev);
+            }
+        }
+        public void ScanTextChange(bool scaning)
+        {
+            if (scaning)
+                ScanText = Resources["StopScanText"];
+            else
+                ScanText = Resources["ScanText"];
+        }
+        
+        bool scanning;
+        public bool IsScanning
+        {
+            get => this.scanning;
+            private set => this.RaiseAndSetIfChanged(ref this.scanning, value);
         }
         private bool CheckStatus(AdapterStatus status)
         {
             if (status == AdapterStatus.PoweredOn)
             {
-                IsVisible = true;
+                IsVisibleLayout = true;
             }
             else
             {
-                IsVisible = false;
+                IsVisibleLayout = false;
             }
-            return isVisible;
+            return isVisibleLayout;
+        }
+        string scantext;
+        public string ScanText
+        {
+            get => scantext;
+            set => this.RaiseAndSetIfChanged(ref this.scantext, value);
         }
         public string BlueToothTornOffText
         {
             get { return $"{Resources["BlueToothTornOffText"]} {Resources["ScanText"]}" ; }
         }
-        
+        /// <summary>
+        /// Layout show when Bluetooth disabled
+        /// </summary>
         public bool IsVisibleBlueToothTornOff
         {
             get {
-                return !isVisible;
+                return !isVisibleLayout;
             }
         }
-        private bool isVisible=false;
-        public bool IsVisible
+        /// <summary>
+        /// Layout for scanning 
+        /// </summary>
+        private bool isVisibleLayout=false;
+        public bool IsVisibleLayout
         {
-            get  =>  isVisible; 
+            get  =>  isVisibleLayout; 
             set 
             {
-                this.RaiseAndSetIfChanged(ref this.isVisible, value);
+                this.RaiseAndSetIfChanged(ref this.isVisibleLayout, value);
                 
             
             }
@@ -124,10 +178,10 @@ namespace SCUScanner.ViewModels
             }
              set
             {
-                if (!isVisible)
-                    resourcesex = null;
-                else
-                    resourcesex = value;
+                //if (!isVisible)
+                //    resourcesex = null;
+                //else
+                //    resourcesex = value;
                 this.RaiseAndSetIfChanged(ref this.resourcesex, value);
             }
         }

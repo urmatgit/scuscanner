@@ -136,7 +136,7 @@
   <data name="ManualScanText" xml:space="preserve">
     <value>手动扫描</value>
   </data>
-  <data name="ScanTect" xml:space="preserve">
+  <data name="ScanText" xml:space="preserve">
     <value>扫描</value>
   </data>
   <data name="SelectedLanguageCodeText" xml:space="preserve">
