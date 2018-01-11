@@ -1,5 +1,6 @@
 ﻿using Plugin.Settings;
 using Plugin.Settings.Abstractions;
+using ReactiveUI;
 using SCUScanner.Services;
 using SCUScanner.ViewModels;
 using System;
@@ -16,33 +17,45 @@ namespace SCUScanner.Models
         static Settings settings;
         public static Settings Current =>
           settings ?? (settings = new Settings());
+        public Settings()
+        {
+            this.WhenAnyValue(vm => vm.ScanMode).Subscribe(val => { ManualScan = !val; });
+            this.WhenAnyValue(vm => vm.ManualScan).Subscribe(val => { ScanMode = !val; });
+        }
         /// <summary>
         /// if false =Continuouse, true -manual
         /// </summary>
+        bool scanmode;
         public  bool ScanMode
         {
             get => AppSettings.GetValueOrDefault(nameof(ScanMode), true);
-            set
+             set
             {
                 var original = ScanMode;
                 if (AppSettings.AddOrUpdateValue(nameof(ScanMode), value))
                 {
-                    SetProperty(ref original, value);
-                    OnPropertyChanged("ManualScan");
+                    //SetProperty(ref original, value);
+                    //OnPropertyChanged("ManualScan");
+                    this.RaiseAndSetIfChanged(ref this.scanmode, value);
+                 //   ManualScan = !this.scanmode;
                 }
+                
             }
         }
+        bool manualscan;
         public bool ManualScan
         {
-            get => !ScanMode;
+            get => manualscan;
             set
             {
-                var orinal = ManualScan;
-                ScanMode = !value;
-                OnPropertyChanged();   
+                
+                //ScanMode = !value;
+                this.RaiseAndSetIfChanged(ref this.manualscan, value);
+                //OnPropertyChanged();   
             }
 
         }
+        string selectedlang;
         public  string SelectedLang
         {
             get => AppSettings.GetValueOrDefault(nameof(SelectedLang), "");
@@ -54,9 +67,10 @@ namespace SCUScanner.Models
                 {
                     App.CurrentLanguage = value;
                     SetResourcesLang(value);
-                
 
-                    SetProperty(ref orinal, value);
+                    this.RaiseAndSetIfChanged(ref this.selectedlang, value);
+
+//                    SetProperty(ref orinal, value);
                 }
             }
         }

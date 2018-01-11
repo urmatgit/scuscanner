@@ -30,7 +30,17 @@ namespace SCUScanner.ViewModels
                                 //new Command(OpenSettingsLanguagePage);
             Debug.WriteLine("SelectLangCommnad created");
         }
-           
+        //public  bool ScanMode
+        //{
+        //    get => Models.Settings.Current.ScanMode;
+        //    set => Models.Settings.Current.ScanMode = value;
+            
+        //}
+        //public bool ManualScan
+        //{
+        //    get => Models.Settings.Current.ManualScan;
+        //    set => Models.Settings.Current.ManualScan = value;
+        //}
         /// <summary>
         /// Open Language select page
         /// </summary>

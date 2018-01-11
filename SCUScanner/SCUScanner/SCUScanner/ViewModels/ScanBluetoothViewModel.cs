@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Acr.UserDialogs;
 using Plugin.BluetoothLE;
+using ReactiveUI;
 using SCUScanner.Services;
 using Xamarin.Forms;
 
@@ -25,9 +26,17 @@ namespace SCUScanner.ViewModels
         {
         
             IsVisible = CrossBleAdapter.AdapterScanner.IsSupported;
-            
-            
-            
+            this.WhenAnyValue(vm => vm.IsVisible).ToProperty(this, x => x.IsVisibleBlueToothTornOff);
+            this.WhenAnyValue(vm => vm.IsVisible).Subscribe(s =>
+            {
+                ResourcesEx = Resources;
+            });
+
+            //    OnPropertyChanged("IsVisibleBlueToothTornOff");
+            //    OnPropertyChanged("ResourcesEx");
+            //});
+
+
             CrossBleAdapter.Current.WhenStatusChanged().Subscribe(st=>
             {
                 CheckStatus(st);
@@ -35,7 +44,7 @@ namespace SCUScanner.ViewModels
             });
             this.Select =new Command( () =>
             {
-                IsBusy = true;
+               this.IsBusy = true;
             //    var ad = adapter;
                 App.Dialogs.AlertAsync("Selected");
                 //CrossBleAdapter.Current = adapter;
@@ -87,6 +96,7 @@ namespace SCUScanner.ViewModels
         {
             get { return $"{Resources["BlueToothTornOffText"]} {Resources["ScanText"]}" ; }
         }
+        
         public bool IsVisibleBlueToothTornOff
         {
             get {
@@ -96,22 +106,31 @@ namespace SCUScanner.ViewModels
         private bool isVisible=false;
         public bool IsVisible
         {
-            get { return isVisible; }
-            set
+            get  =>  isVisible; 
+            set 
             {
-                isVisible = value;
-                OnPropertyChanged();
-                OnPropertyChanged("IsVisibleBlueToothTornOff");
-                OnPropertyChanged("ResourcesEx");
+                this.RaiseAndSetIfChanged(ref this.isVisible, value);
+                
+            
             }
         }
+        LocalizedResources resourcesex;
         public  LocalizedResources ResourcesEx
         {
             get
             {
-                if (!isVisible) return null;
-                return Resources;
+            
+                return resourcesex;
+            }
+             set
+            {
+                if (!isVisible)
+                    resourcesex = null;
+                else
+                    resourcesex = value;
+                this.RaiseAndSetIfChanged(ref this.resourcesex, value);
             }
         }
     }
 }
+

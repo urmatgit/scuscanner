@@ -127,8 +127,14 @@
     <PackageReference Include="Acr.UserDialogs">
       <Version>6.5.1</Version>
     </PackageReference>
+    <PackageReference Include="Autofac">
+      <Version>4.6.2</Version>
+    </PackageReference>
     <PackageReference Include="Plugin.BluetoothLE">
       <Version>5.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="ReactiveUI">
+      <Version>8.0.0-alpha0117</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.1.1</Version>

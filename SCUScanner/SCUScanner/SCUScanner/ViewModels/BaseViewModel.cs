@@ -1,4 +1,5 @@
-﻿using SCUScanner.Models;
+﻿using ReactiveUI;
+using SCUScanner.Models;
 using SCUScanner.Resources;
 using SCUScanner.Services;
 using System;
@@ -10,32 +11,16 @@ using Xamarin.Forms;
 
 namespace SCUScanner.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public  class BaseViewModel : ReactiveObject, IViewModel
     {
-        //public Settings Settings => Settings.Current;
+        public Settings Settings => Settings.Current;
 
-        protected bool SetProperty<T>(
-            ref T backingStore, T value,
-            [CallerMemberName]string propertyName = "",
-            Action onChanged = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(backingStore, value))
-                return false;
 
-            backingStore = value;
-            onChanged?.Invoke();
-            OnPropertyChanged(propertyName);
-            return true;
-        }
-        private bool isBusy;
+        bool busy;
         public bool IsBusy
         {
-            get =>  isBusy;
-            set
-            {
-                isBusy = value;
-                OnPropertyChanged();
-            }
+            get => this.busy;
+             set => this.RaiseAndSetIfChanged(ref this.busy, value);
         }
         protected LocalizedResources resources;
         public virtual LocalizedResources Resources
@@ -44,14 +29,8 @@ namespace SCUScanner.ViewModels
             {
                 return resources;
             }
-            private set
-            {
-                if (resources != value)
-                {
-                    resources = value;
-                    OnPropertyChanged();
-                }
-            }
+            private set => this.RaiseAndSetIfChanged(ref this.resources, value);
+            
         }
 
         public BaseViewModel()
@@ -63,13 +42,20 @@ namespace SCUScanner.ViewModels
         {
             Resources = new LocalizedResources(typeof(AppResource), lang);//  App.CurrentLanguage);
         }
-        #region INotifyPropertyChanged implementation
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string name = "") =>
-          PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        public virtual void Init(object args = null)
+        {
+            throw new NotImplementedException();
+        }
 
+        public virtual void OnActivate()
+        {
+            throw new NotImplementedException();
+        }
 
-        #endregion
+        public virtual void OnDeactivate()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
