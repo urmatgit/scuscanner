@@ -27,6 +27,16 @@ namespace SCUScanner.ViewModels
             OnPropertyChanged(propertyName);
             return true;
         }
+        private bool isBusy;
+        public bool IsBusy
+        {
+            get =>  isBusy;
+            set
+            {
+                isBusy = value;
+                OnPropertyChanged();
+            }
+        }
         protected LocalizedResources resources;
         public virtual LocalizedResources Resources
         {

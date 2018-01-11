@@ -2,36 +2,74 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Acr.UserDialogs;
 using Plugin.BluetoothLE;
 using SCUScanner.Services;
 using Xamarin.Forms;
 
 namespace SCUScanner.ViewModels
 {
-    public class ScanBluetoothViewModel:BaseViewModel
+    public class ScanBluetoothViewModel:  BaseViewModel
     {
 
-        IAdapter CurrentAdapter;
+        
+        public ObservableCollection<IAdapter> Adapters { get; } = new ObservableCollection<IAdapter>();
+        public ICommand Select { get; }
+        public ICommand Scan { get; }
+
         public ScanBluetoothViewModel(Page page)
         {
-            CurrentAdapter = CrossBleAdapter.Current;
-            if(CurrentAdapter.Status == AdapterStatus.Unsupported)
-            {
-                IsVisible = false;
-                 page.DisplayAlert("Блютуз не поддериживатся ", "", "OK");
-                return;
-            }
-            if ( !CheckStatus(CurrentAdapter.Status) && CurrentAdapter.CanControlAdapterState())
-            {
-                CurrentAdapter.SetAdapterState(true);
-                Debug.WriteLine("CurrentAdapter.SetAdapterState(true);");
-            }
+        
+            IsVisible = CrossBleAdapter.AdapterScanner.IsSupported;
+            
+            
             
             CrossBleAdapter.Current.WhenStatusChanged().Subscribe(st=>
             {
                 CheckStatus(st);
+                
             });
+            this.Select =new Command( () =>
+            {
+                IsBusy = true;
+            //    var ad = adapter;
+                App.Dialogs.AlertAsync("Selected");
+                //CrossBleAdapter.Current = adapter;
+                IsBusy = false;
+            });
+            this.Scan = new Command(ScanCommand);
+            
+        }
+        public async void ScanCommand()
+        {
+            
+                  this.IsBusy = true;
+                App.BleAdapterScanner
+                    .FindAdapters()
+                    //  .ObserveOn(RxApp.MainThreadScheduler)
+                    .Subscribe(
+                        this.Adapters.Add,
+                        async () =>
+                        {
+                                        this.IsBusy = false;
+                            switch (this.Adapters.Count)
+                            {
+                                case 0:
+                                    App.Dialogs.Alert("No BluetoothLE Adapters Found");
+                                    break;
+
+                                case 1:
+                                    CrossBleAdapter.Current = this.Adapters.First();
+                                    // await vmManager.Push<MainViewModel>();
+                                    break;
+                            }
+                        }
+                    );
+            
         }
         private bool CheckStatus(AdapterStatus status)
         {

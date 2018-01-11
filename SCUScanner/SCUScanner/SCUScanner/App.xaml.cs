@@ -1,4 +1,6 @@
-﻿using SCUScanner.Models;
+﻿using Acr.UserDialogs;
+using Plugin.BluetoothLE;
+using SCUScanner.Models;
 using SCUScanner.Resources;
 using SCUScanner.Services;
 using System;
@@ -10,12 +12,19 @@ using Xamarin.Forms;
 
 namespace SCUScanner
 {
-	public partial class App : Application
-	{
+    public partial class App : Application
+    {
         public static string CurrentLanguage = "EN";
+        public static IUserDialogs Dialogs;
+        public static IAdapter BleAdapter;
+        public static IAdapterScanner BleAdapterScanner;
+        
         public App ()
 		{
 			InitializeComponent();
+            Dialogs = UserDialogs.Instance;
+            BleAdapter = CrossBleAdapter.Current;
+            BleAdapterScanner = CrossBleAdapter.AdapterScanner;
             if (Device.RuntimePlatform != Device.WinPhone)
             {
                 if (!string.IsNullOrEmpty(Settings.Current.SelectedLang))
@@ -25,6 +34,7 @@ namespace SCUScanner
                 }
                 else
                 {
+                    
                     AppResource.Culture = DependencyService.Get<ILocalizeService>().GetCurrentCultureInfo();
                     Settings.Current.SelectedLang = CurrentLanguage = AppResource.Culture.Name;
                 }

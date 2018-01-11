@@ -31,7 +31,9 @@ namespace SCUScanner.ViewModels
             Debug.WriteLine("SelectLangCommnad created");
         }
            
-
+        /// <summary>
+        /// Open Language select page
+        /// </summary>
         public  async void OpenSettingsLanguagePage()
         {
             Debug.WriteLine("OpenSettingsLanguagePage");
@@ -39,18 +41,6 @@ namespace SCUScanner.ViewModels
             //Application.Current.MainPage.Navigation.PushAsync(new NavigationPage( new SettingsLanguagePage()));
          
         }
-         
-
-     //  public ICommand SelectLangPageCommnad=>new Command()
-     //#region INotifyPropertyChanged Implementation
-     //public event PropertyChangedEventHandler PropertyChanged;
-     //void OnPropertyChanged([CallerMemberName] string propertyName = "")
-     //{
-     //    if (PropertyChanged == null)
-     //        return;
-
-        //    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        //}
-        //#endregion
+      
     }
 }
