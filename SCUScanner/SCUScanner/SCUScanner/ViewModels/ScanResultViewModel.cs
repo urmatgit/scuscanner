@@ -12,7 +12,12 @@ namespace SCUScanner.ViewModels
         //IDisposable nameOb;
         public IDevice Device { get; private set; }
 
-
+        string buttonText;
+        public string ButtonText
+        {
+            get => buttonText;
+            set => this.RaiseAndSetIfChanged(ref this.buttonText, value);
+        }
         string name;
         public string Name
         {

@@ -22,12 +22,22 @@ namespace SCUScanner.ViewModels
 
         public ObservableCollection<ScanResultViewModel> Devices { get; }
 
-        public ICommand ScanToggle { get; }
-        public ICommand SelectDevice { get; }
+        public ICommand ScanToggleCommand { get; }
+        public ICommand SelectDeviceCommand { get; }
+        public ICommand  ConnectCommand { get; set; }
         public ScanBluetoothViewModel(Page page)
         {
             Devices=new ObservableCollection<ScanResultViewModel>();
-            IsVisibleLayout = true;//  App.BleAdapter.Status != AdapterStatus.PoweredOn;
+            IsVisibleLayout =  App.BleAdapter.Status != AdapterStatus.PoweredOn;
+            this.connect = App.BleAdapter
+                .WhenDeviceStatusChanged()
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(x =>
+                {
+                    var vm = this.Devices.FirstOrDefault(dev => dev.Uuid.Equals(x.Uuid));
+                    if (vm != null)
+                        vm.IsConnected = x.Status == ConnectionStatus.Connected;
+                });
             this.WhenAnyValue(vm => vm.IsVisibleLayout).ToProperty(this, x => x.IsVisibleBlueToothTornOff);
             this.WhenAnyValue(vm => vm.IsVisibleLayout).Subscribe(s =>
             {
@@ -41,6 +51,10 @@ namespace SCUScanner.ViewModels
                 ScanTextChange(App.BleAdapter.IsScanning);
                 
             });
+            this.WhenAnyValue(vm => vm.IsScanning).Subscribe(val =>
+            {
+                ScanTextChange(val);
+            });
             App.BleAdapter.WhenStatusChanged()
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(st =>
@@ -49,6 +63,7 @@ namespace SCUScanner.ViewModels
 
             });
             
+            
             App.BleAdapter.WhenScanningStatusChanged()
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(on =>
@@ -56,23 +71,37 @@ namespace SCUScanner.ViewModels
                     this.IsScanning = on;
                     ScanTextChange(on);
                 });
-            this.ScanToggle = ReactiveCommand.Create(
+            this.SelectDeviceCommand = ReactiveCommand.Create<ScanResultViewModel>(x =>
+            {
+                StopScan();
+                App.Dialogs.Alert($"Selected {x.Name}");
+                //services.VmManager.Push<DeviceViewModel>(x.Device);
+            });
+            this.ConnectCommand = ReactiveCommand.Create<ScanResultViewModel> ((o) =>
+            {
+                StopScan();
+                App.Dialogs.Alert($"Selected {o.Name}");
+            });
+            this.ScanToggleCommand = ReactiveCommand.Create(
                 () =>
                 {
                     if (this.IsScanning)
                     {
-                        this.scan?.Dispose();
+                        StopScan();
                     }
                     else
                     {
+
                         this.Devices.Clear();
-                        ScanTextChange(true);
+                        this.IsScanning = true ;
+                        
                         //this.ScanText = Resources["ScanText"];
 
                         this.scan = App.BleAdapter
                             .Scan()
                             .ObserveOn(RxApp.MainThreadScheduler)
                             .Subscribe(this.OnScanResult);
+                        Debug.WriteLine("End scanning");
                     }
                 }
                 //,
@@ -81,8 +110,14 @@ namespace SCUScanner.ViewModels
                 //    x => x.Value
                 //)
             );
+            if (Models.Settings.Current.ScanMode)
+                this.ScanToggleCommand.Execute(null);
 
-
+        }
+        private void StopScan()
+        {
+            this.scan?.Dispose();
+            this.IsScanning = false;
         }
         public override void OnActivate()
         {
@@ -125,13 +160,19 @@ namespace SCUScanner.ViewModels
         }
         private bool CheckStatus(AdapterStatus status)
         {
+            
             if (status == AdapterStatus.PoweredOn)
             {
                 IsVisibleLayout = true;
+                if (string.IsNullOrEmpty(ScanText))
+                    ScanText = Resources["ScanText"];
             }
             else
             {
                 IsVisibleLayout = false;
+                ScanText = "";
+                if (IsScanning)
+                    StopScan();
             }
             return isVisibleLayout;
         }
@@ -154,6 +195,7 @@ namespace SCUScanner.ViewModels
                 return !isVisibleLayout;
             }
         }
+        
         /// <summary>
         /// Layout for scanning 
         /// </summary>

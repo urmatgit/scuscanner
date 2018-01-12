@@ -23,22 +23,21 @@ namespace SCUScanner.Pages
 		public ScanBluetoothPage ()
 		{
 			InitializeComponent ();
-            //MessagingCenter.Subscribe<object, CultureChangedMessage>(this, string.Empty, (sender, agr) =>
-            //{
-
-            //    var arg = agr;
-            //    if (arg is CultureChangedMessage)
-            //    {
-            //        BindingContext = null;
-            //        SCUScanner.Models.Settings settings = sender as SCUScanner.Models.Settings;
-
-            //    }
-            //});
+            
             BindingContext = new ScanBluetoothViewModel(this);
             lblHintBluetoothAndroidText.IsVisible = !(lblHintBluetoothIOSText.IsVisible = Device.RuntimePlatform == Device.iOS);
             
-            //            Init();
+            
         }
-
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            (this.BindingContext as IViewModel)?.OnActivate();
+        }
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            (this.BindingContext as IViewModel)?.OnDeactivate();
+        }
     }
 }

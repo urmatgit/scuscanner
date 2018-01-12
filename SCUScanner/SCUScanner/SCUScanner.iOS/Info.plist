@@ -50,5 +50,7 @@
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>SCUScanner</string>
+  <key>NSBluetoothPeripheralUsageDescription</key>
+  <string>YOUR CUSTOM MESSAGE</string>
 </dict>
 </plist>

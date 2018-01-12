@@ -121,6 +121,9 @@
     <value>Bluetooth недоступен.
 Включите Bluetooth и нажмите</value>
   </data>
+  <data name="ConnectButtonText" xml:space="preserve">
+    <value>Подключить</value>
+  </data>
   <data name="ContinuousScanText" xml:space="preserve">
     <value>Автоматически режим</value>
   </data>

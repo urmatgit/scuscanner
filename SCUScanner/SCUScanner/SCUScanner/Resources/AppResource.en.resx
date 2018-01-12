@@ -121,6 +121,9 @@
     <value>Bluetooth not available.
 Turn On Bluetooth and press </value>
   </data>
+  <data name="ConnectButtonText" xml:space="preserve">
+    <value>Connect</value>
+  </data>
   <data name="ContinuousScanText" xml:space="preserve">
     <value>Continuous scan</value>
   </data>

@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SCUScanner.Pages.ScanBluetoothPage"
              xmlns:controls="clr-namespace:SCUScanner.Helpers"
-                              
+             x:Name="BleDevices"                 
              Title="SCUScanner">
     <ContentPage.ToolbarItems  >
-        <controls:HideableToolbarItem     IsVisible="{Binding IsVisible}"  Text="{Binding ScanText}" Command="{Binding ScanToggle}" Order="Primary" Priority="1"    />
+        <controls:HideableToolbarItem     IsVisible="{Binding IsVisible}"  Text="{Binding ScanText}" Command="{Binding ScanToggleCommand}" Order="Primary" Priority="1"    />
         
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout VerticalOptions="FillAndExpand">
         <StackLayout Padding="10,10" Orientation="Vertical" IsVisible="{Binding IsVisibleBlueToothTornOff}">
             <Label Text="{Binding BlueToothTornOffText}"/>
             <Label/>
@@ -20,22 +20,21 @@
             <Label x:Name="lblHintBluetoothIOSText"  Text="{Binding Resources[SetHintBluetoothIOSText]}">
                
             </Label>
-        </StackLayout>
-           
-            <StackLayout IsVisible="{Binding IsVisibleLayout}">
-                <Label Text="Devices11"/>
-                <controls:ListViewEx ItemsSource="{Binding Devices}" RowHeight="160" ItemClickCommand="{Binding SelectDevice}">
-                    <ListView.ItemTemplate>
+        </StackLayout >
+            <StackLayout IsVisible="{Binding IsVisibleLayout}"   VerticalOptions="FillAndExpand">
+                <controls:ListViewEx ItemsSource="{Binding Devices}"  HasUnevenRows = "true"   x:Name="DeviceList">
+                        <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.View  >
-                                    <Grid>
+                                    <Grid Margin="5">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="30" />
-                                            <RowDefinition Height="30" />
-                                            <RowDefinition Height="30" />
-                                            <RowDefinition Height="30" />
-                                            <RowDefinition Height="30" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="40" />
+                                            <RowDefinition Height="40" />
+                                            <RowDefinition Height="40" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
@@ -45,17 +44,19 @@
                                         <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" FontAttributes="Bold" FontSize="15" />
                                         <Label Text="{Binding Rssi, StringFormat='RSSI: {0}'}" Grid.Row="0" Grid.Column="1" TextColor="Red" />
                                         <Label Text="{Binding Uuid, StringFormat='UUID: {0}'}" Grid.Row="1" Grid.ColumnSpan="2" FontAttributes="Italic" />
+                                        <Label Text="Device Connected" IsVisible="{Binding IsConnected}" BackgroundColor="Yellow" TextColor="Black"  HorizontalTextAlignment="Center" Grid.Column="0" Grid.Row="2" />
+                                        <!--Command="{Binding BindingContext.EditEintragCommand, Source={x:Reference Name=MyPageName}}"-->
+                                        <Button  Grid.Row="2"  Grid.Column="1"  Text="{Binding BindingContext.Resources[ConnectButtonText],Source={x:Reference Name=BleDevices}}"  Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=BleDevices}  }" CommandParameter="{Binding}"  />
+                                        <Label Text="{Binding IsConnectable, StringFormat='Connectable: {0}'}" Grid.Row="3" Grid.Column="0" />
+                                        <Label Text="{Binding ServiceCount, StringFormat='{0} Services'}" Grid.Row="3" Grid.Column="1" />
 
-                                        <Label Text="{Binding IsConnectable, StringFormat='Connectable: {0}'}" Grid.Row="2" Grid.Column="0" />
-                                        <Label Text="{Binding ServiceCount, StringFormat='{0} Services'}" Grid.Row="2" Grid.Column="1" />
+                                        <Label Text="{Binding ManufacturerData, StringFormat='Manufactuer Data: {0}'}" Grid.Row="4" Grid.ColumnSpan="2" />
 
-                                        <Label Text="{Binding ManufacturerData, StringFormat='Manufactuer Data: {0}'}" Grid.Row="3" Grid.ColumnSpan="2" />
+                                        <Label Text="{Binding LocalName, StringFormat='Local Name: {0}'}" Grid.Row="5" Grid.Column="0" />
 
-                                        <Label Text="{Binding LocalName, StringFormat='Local Name: {0}'}" Grid.Row="4" Grid.Column="0" />
-
-                                        <Label Text="Device Connected" IsVisible="{Binding IsConnected}" BackgroundColor="Yellow" TextColor="Black"  HorizontalTextAlignment="Center" Grid.ColumnSpan="2" Grid.Row="4" />
+                                        
                                     </Grid>
-                                </ViewCell.View>
+                                    </ViewCell.View>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

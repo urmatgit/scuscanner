@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace SCUScanner.Helpers
 {
-    class ListViewEx : Xamarin.Forms.ListView
+   public class ListViewEx : Xamarin.Forms.ListView
     {
         public static readonly BindableProperty ItemClickCommandProperty = BindableProperty.Create(
             nameof(Command),

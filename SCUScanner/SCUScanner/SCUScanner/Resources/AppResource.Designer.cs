@@ -71,6 +71,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connect.
+        /// </summary>
+        internal static string ConnectButtonText {
+            get {
+                return ResourceManager.GetString("ConnectButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continuous scan.
         /// </summary>
         internal static string ContinuousScanText {
