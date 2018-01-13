@@ -121,6 +121,9 @@
     <value>Bluetooth não disponível.
 Ligue o Bluetooth e prima</value>
   </data>
+  <data name="ConnectButtonText" xml:space="preserve">
+    <value>Ligar</value>
+  </data>
   <data name="ContinuousScanText" xml:space="preserve">
     <value>A digitalização contínua</value>
   </data>
@@ -150,5 +153,8 @@ Ligue o Bluetooth e prima</value>
   </data>
   <data name="SparesText" xml:space="preserve">
     <value>Peças sobressalentes</value>
+  </data>
+  <data name="StopScanText" xml:space="preserve">
+    <value>Parar</value>
   </data>
 </root>

@@ -121,6 +121,9 @@
     <value>蓝牙不可用。
 打开蓝牙和新闻</value>
   </data>
+  <data name="ConnectButtonText" xml:space="preserve">
+    <value>连接</value>
+  </data>
   <data name="ContinuousScanText" xml:space="preserve">
     <value>连续扫描</value>
   </data>
@@ -153,5 +156,8 @@
   </data>
   <data name="SparesText" xml:space="preserve">
     <value>备件</value>
+  </data>
+  <data name="StopScanText" xml:space="preserve">
+    <value>停止</value>
   </data>
 </root>

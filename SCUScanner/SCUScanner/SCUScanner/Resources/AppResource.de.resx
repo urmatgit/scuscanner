@@ -121,6 +121,9 @@
     <value>Bluetooth nicht verfügbar.
 Schalten Sie Bluetooth und drücken Sie</value>
   </data>
+  <data name="ConnectButtonText" xml:space="preserve">
+    <value>Einschalten</value>
+  </data>
   <data name="ContinuousScanText" xml:space="preserve">
     <value>Kontinuierlicher scan</value>
   </data>
@@ -153,5 +156,8 @@ Schalten Sie Bluetooth und drücken Sie</value>
   </data>
   <data name="SparesText" xml:space="preserve">
     <value>Ersatzteile</value>
+  </data>
+  <data name="StopScanText" xml:space="preserve">
+    <value>Stoppen</value>
   </data>
 </root>

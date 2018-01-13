@@ -157,4 +157,7 @@ Turn On Bluetooth and press </value>
   <data name="SparesText" xml:space="preserve">
     <value>Spares</value>
   </data>
+  <data name="StopScanText" xml:space="preserve">
+    <value>Stop scan</value>
+  </data>
 </root>

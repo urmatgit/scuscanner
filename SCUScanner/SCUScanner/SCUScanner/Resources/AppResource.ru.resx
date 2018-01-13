@@ -157,4 +157,7 @@
   <data name="SparesText" xml:space="preserve">
     <value>Запчасти</value>
   </data>
+  <data name="StopScanText" xml:space="preserve">
+    <value>Остановить</value>
+  </data>
 </root>
