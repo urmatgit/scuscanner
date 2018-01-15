@@ -117,9 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AskBluetoothSetText" xml:space="preserve">
+    <value>Bluetooth не включен, включить Bluetooth?</value>
+  </data>
   <data name="BlueToothTornOffText" xml:space="preserve">
     <value>Bluetooth недоступен.
 Включите Bluetooth и нажмите</value>
+  </data>
+  <data name="BluetoothUnsupportText" xml:space="preserve">
+    <value>Bluetooth не поддерживается</value>
+  </data>
+  <data name="CancelText" xml:space="preserve">
+    <value>Cancel</value>
   </data>
   <data name="ConnectButtonText" xml:space="preserve">
     <value>Подключить</value>
@@ -138,6 +147,9 @@
   </data>
   <data name="ManualScanText" xml:space="preserve">
     <value>Ручной режим</value>
+  </data>
+  <data name="OkText" xml:space="preserve">
+    <value>Ok</value>
   </data>
   <data name="ScanText" xml:space="preserve">
     <value>Поиск</value>

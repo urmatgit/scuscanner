@@ -25,9 +25,14 @@ namespace SCUScanner.ViewModels
         public ICommand ScanToggleCommand { get; }
         public ICommand SelectDeviceCommand { get; }
         public ICommand  ConnectCommand { get; set; }
-        public ScanBluetoothViewModel(Page page)
+        public ScanBluetoothViewModel(Page page):base()
         {
             Devices=new ObservableCollection<ScanResultViewModel>();
+            if (App.BleAdapter.Status == AdapterStatus.Unsupported)
+            {
+                IsVisibleLayout = false;
+                return;
+            } 
             IsVisibleLayout =  App.BleAdapter.Status != AdapterStatus.PoweredOn;
             this.connect = App.BleAdapter
                 .WhenDeviceStatusChanged()
@@ -48,7 +53,8 @@ namespace SCUScanner.ViewModels
             });
             this.WhenAnyValue(vm => vm.Resources).Subscribe(val =>
             {
-                ScanTextChange(App.BleAdapter.IsScanning);
+                
+                    ScanTextChange(App.BleAdapter.IsScanning);
                 
             });
             this.WhenAnyValue(vm => vm.IsScanning).Subscribe(val =>
@@ -85,6 +91,10 @@ namespace SCUScanner.ViewModels
             this.ScanToggleCommand = ReactiveCommand.Create(
                 () =>
                 {
+                    if (!isVisibleLayout)
+                    {
+                        return;
+                    }
                     if (this.IsScanning)
                     {
                         StopScan();
@@ -99,7 +109,9 @@ namespace SCUScanner.ViewModels
 
                         this.scan = App.BleAdapter
                             .Scan()
+                           
                             .ObserveOn(RxApp.MainThreadScheduler)
+                            .Timeout(TimeSpan.FromSeconds(5))
                             .Subscribe(this.OnScanResult);
                         Debug.WriteLine("End scanning");
                     }

@@ -61,12 +61,39 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bluetooth is not enabled, enable Bluetooth?.
+        /// </summary>
+        internal static string AskBluetoothSetText {
+            get {
+                return ResourceManager.GetString("AskBluetoothSetText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bluetooth not available.
         ///Turn On Bluetooth and press .
         /// </summary>
         internal static string BlueToothTornOffText {
             get {
                 return ResourceManager.GetString("BlueToothTornOffText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bluetooth unsupported.
+        /// </summary>
+        internal static string BluetoothUnsupportText {
+            get {
+                return ResourceManager.GetString("BluetoothUnsupportText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string CancelText {
+            get {
+                return ResourceManager.GetString("CancelText", resourceCulture);
             }
         }
         
@@ -121,6 +148,15 @@ namespace SCUScanner.Resources {
         internal static string ManualScanText {
             get {
                 return ResourceManager.GetString("ManualScanText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        internal static string OkText {
+            get {
+                return ResourceManager.GetString("OkText", resourceCulture);
             }
         }
         

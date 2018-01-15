@@ -6,7 +6,7 @@
              x:Name="BleDevices"                 
              Title="SCUScanner">
     <ContentPage.ToolbarItems  >
-        <controls:HideableToolbarItem     IsVisible="{Binding IsVisible}"  Text="{Binding ScanText}" Command="{Binding ScanToggleCommand}" Order="Primary" Priority="1"    />
+        <controls:HideableToolbarItem     IsVisible="{Binding IsVisibleLayout}"  Text="{Binding ScanText}" Command="{Binding ScanToggleCommand}" Order="Primary" Priority="1"    />
         
     </ContentPage.ToolbarItems>
     <ContentPage.Content>

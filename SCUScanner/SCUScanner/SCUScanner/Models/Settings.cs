@@ -17,7 +17,7 @@ namespace SCUScanner.Models
         static Settings settings;
         public static Settings Current =>
           settings ?? (settings = new Settings());
-        public Settings()
+        public Settings():base()
         {
             this.WhenAnyValue(vm => vm.ScanMode).Subscribe(val => { ManualScan = !val; });
             this.WhenAnyValue(vm => vm.ManualScan).Subscribe(val => { ScanMode = !val; });

@@ -4,5 +4,6 @@
 	<application android:label="SCUScanner.Android"></application>
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<!--this is necessary for Android v6+ to get the device name and address-->
 </manifest>
