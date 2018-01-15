@@ -12,14 +12,15 @@ using Plugin.BluetoothLE;
 using ReactiveUI;
 using SCUScanner.Services;
 using Xamarin.Forms;
-
+using System.Timers;
 namespace SCUScanner.ViewModels
 {
     public class ScanBluetoothViewModel : BaseViewModel
     {
+        const int ScanningDuration = 20; //sec
         IDisposable scan;
         IDisposable connect;
-
+        Timer StopScanning = new Timer();
         public ObservableCollection<ScanResultViewModel> Devices { get; }
 
         public ICommand ScanToggleCommand { get; }
@@ -27,6 +28,8 @@ namespace SCUScanner.ViewModels
         public ICommand  ConnectCommand { get; set; }
         public ScanBluetoothViewModel(Page page):base()
         {
+            StopScanning.Interval = 1000 * ScanningDuration;
+            StopScanning.Elapsed += StopScanning_Elapsed;
             Devices=new ObservableCollection<ScanResultViewModel>();
             if (App.BleAdapter.Status == AdapterStatus.Unsupported)
             {
@@ -104,14 +107,13 @@ namespace SCUScanner.ViewModels
 
                         this.Devices.Clear();
                         this.IsScanning = true ;
-                        
-                        //this.ScanText = Resources["ScanText"];
 
+                        //this.ScanText = Resources["ScanText"];
+                        if (Models.Settings.Current.ManualScan)
+                            StopScanning.Start();
                         this.scan = App.BleAdapter
                             .Scan()
-                           
                             .ObserveOn(RxApp.MainThreadScheduler)
-                            .Timeout(TimeSpan.FromSeconds(5))
                             .Subscribe(this.OnScanResult);
                         Debug.WriteLine("End scanning");
                     }
@@ -125,11 +127,20 @@ namespace SCUScanner.ViewModels
             if (Models.Settings.Current.ScanMode)
                 this.ScanToggleCommand.Execute(null);
 
+
         }
+
+        private void StopScanning_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            StopScan();
+        }
+
         private void StopScan()
         {
+            StopScanning.Stop();
             this.scan?.Dispose();
             this.IsScanning = false;
+
         }
         public override void OnActivate()
         {
