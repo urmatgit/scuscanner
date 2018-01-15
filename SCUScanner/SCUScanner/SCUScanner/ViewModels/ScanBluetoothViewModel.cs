@@ -17,7 +17,7 @@ namespace SCUScanner.ViewModels
 {
     public class ScanBluetoothViewModel : BaseViewModel
     {
-        const int ScanningDuration = 20; //sec
+        const int ScanningDuration = 30; //sec
         IDisposable scan;
         IDisposable connect;
         Timer StopScanning = new Timer();
