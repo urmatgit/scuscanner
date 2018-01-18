@@ -12,8 +12,9 @@
   <MasterDetailPage.Detail>
     <NavigationPage>
       <x:Arguments>
-                <pages:ScanBluetoothPage />
-      </x:Arguments>
+                <!--<pages:ScanBluetoothPage />-->
+                <pages:DevicesTabbedPage/>
+            </x:Arguments>
     </NavigationPage>
   </MasterDetailPage.Detail>
 </MasterDetailPage>

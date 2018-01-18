@@ -58,7 +58,9 @@ namespace SCUScanner.Pages
              return new ObservableCollection<MasterDetailPageMenuItem>(
                    new[]
                        {
-                            new MasterDetailPageMenuItem(typeof(ScanBluetoothPage)) { Id = 0, IconSource="technology.png", PageCode="DataText",  Title =settings==null?SCUScanner.Resources.AppResource.DataText : settings.Resources["DataText"] },
+                       
+                            new MasterDetailPageMenuItem(typeof(DevicesTabbedPage)) { Id = 0, IconSource="technology.png", PageCode="DataText",  Title =settings==null?SCUScanner.Resources.AppResource.DataText : settings.Resources["DataText"] },
+                            //new MasterDetailPageMenuItem(typeof(ScanBluetoothPage)) { Id = 0, IconSource="technology.png", PageCode="DataText",  Title =settings==null?SCUScanner.Resources.AppResource.DataText : settings.Resources["DataText"] },
                             new MasterDetailPageMenuItem(typeof(Settings)) { Id = 1,IconSource="cogwheel.png",PageCode="SettingsText",Title =settings==null?SCUScanner.Resources.AppResource.SettingsText : settings.Resources["SettingsText"]},
                             new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 1,IconSource="graduation.png", PageCode="HelpText", Title = settings==null?SCUScanner.Resources.AppResource.HelpText : settings.Resources["HelpText"]  },
                             new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 2,IconSource="settings.png", PageCode="MaintenanceText", Title = settings==null?SCUScanner.Resources.AppResource.MaintenanceText : settings.Resources["MaintenanceText"]  },

@@ -21,13 +21,22 @@ namespace SCUScanner.ViewModels
         IDisposable scan;
         IDisposable connect;
         Timer StopScanning = new Timer();
+
+        TabbedPage parentTabbed;
+        public TabbedPage ParentTabbed
+        {
+            get=> parentTabbed;
+            set => parentTabbed=value;
+        }
         public ObservableCollection<ScanResultViewModel> Devices { get; }
+
 
         public ICommand ScanToggleCommand { get; }
         public ICommand SelectDeviceCommand { get; }
         public ICommand  ConnectCommand { get; set; }
-        public ScanBluetoothViewModel(Page page):base()
+        public ScanBluetoothViewModel(TabbedPage page):base()
         {
+            parentTabbed = page;
             StopScanning.Interval = 1000 * ScanningDuration;
             StopScanning.Elapsed += StopScanning_Elapsed;
             Devices=new ObservableCollection<ScanResultViewModel>();
@@ -89,7 +98,11 @@ namespace SCUScanner.ViewModels
             this.ConnectCommand = ReactiveCommand.Create<ScanResultViewModel> ((o) =>
             {
                 StopScan();
-                App.Dialogs.Alert($"Selected {o.Name}");
+                var devPage = new ContentPage() { Title = o.Name };
+                parentTabbed.Children.Add(devPage);
+                parentTabbed.CurrentPage = devPage;
+                
+                //App.Dialogs.Alert($"Selected {o.Name}");
             });
             this.ScanToggleCommand = ReactiveCommand.Create(
                 () =>
