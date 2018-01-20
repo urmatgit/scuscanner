@@ -128,16 +128,31 @@
     <value>Bluetooth не поддерживается</value>
   </data>
   <data name="CancelText" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Отмена</value>
   </data>
   <data name="ConnectButtonText" xml:space="preserve">
     <value>Подключить</value>
+  </data>
+  <data name="ConnectingText" xml:space="preserve">
+    <value>Подключение...</value>
+  </data>
+  <data name="ConnectStatusText" xml:space="preserve">
+    <value>Connected</value>
   </data>
   <data name="ContinuousScanText" xml:space="preserve">
     <value>Автоматически режим</value>
   </data>
   <data name="DataText" xml:space="preserve">
     <value>Данные</value>
+  </data>
+  <data name="DevicesText" xml:space="preserve">
+    <value>Устройства</value>
+  </data>
+  <data name="DisConnectButtonText" xml:space="preserve">
+    <value>Разъединять</value>
+  </data>
+  <data name="DisconnectStatusText" xml:space="preserve">
+    <value>Disconnected</value>
   </data>
   <data name="HelpText" xml:space="preserve">
     <value>Помощь</value>

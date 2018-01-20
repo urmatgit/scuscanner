@@ -1,12 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:SCUScanner.Helpers"
              x:Class="SCUScanner.Pages.ConnectedDevicePage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0" Text="{Binding  Resources[StatusText]}"/>
+            <Label Grid.Column="1" Grid.Row="0" Text="{Binding  ConnectText}" TextColor="Red"/>
+            <Label Grid.Column="0" Grid.Row="1" Text="RSSI"/>
+            <Label Text="{Binding Rssi}" Grid.Row="1" Grid.Column="0" TextColor="Red" />
+            <Label Text="{Binding Address, StringFormat='Address: {0}'}" Grid.Row="1" Grid.Column="1" FontAttributes="Italic" />
+
+            <controls:ListViewEx
+                     ItemsSource="{Binding GattCharacteristics}"
+                     IsGroupingEnabled="true"
+                     GroupDisplayBinding="{Binding Name}"
+                     ItemClickCommand="{Binding SelectCharacteristic}"
+                     HasUnevenRows="true"
+                    Grid.Column="0"  Grid.ColumnSpan="2"
+                    Grid.Row="2"
+                    VerticalOptions="FillAndExpand"
+            >
+            <ListView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <ViewCell Height="30">
+                        <ContentView Padding="20,0,0,0">
+                            <Label Text="{Binding Name, StringFormat='Service {0}'}" FontSize="18" FontAttributes="Bold" />
+                        </ContentView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.GroupHeaderTemplate>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="200">
+                        <ViewCell.View>
+                            <StackLayout>
+                                <Label Text="{Binding Description}" FontAttributes="Bold" TextColor="Red" />
+                                <Label Text="{Binding Uuid, StringFormat='UUID: {0}'}" FontAttributes="Italic" />
+                                <Label Text="{Binding Properties, StringFormat='Properties: {0}'}" />
+                                <Label Text="{Binding IsNotifying, StringFormat='Notifying: {0}'}" IsVisible="{Binding CanNotify}" />
+                                <Label Text="{Binding Value, StringFormat='Value: {0}'}" IsVisible="{Binding IsValueAvailable}" />
+                                <Label Text="{Binding LastValue, StringFormat='Last Read: {0:hh:mm:ss tt}'}" IsVisible="{Binding IsValueAvailable}" />
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </controls:ListViewEx>
+        </Grid>
     </ContentPage.Content>
+    
 </ContentPage>

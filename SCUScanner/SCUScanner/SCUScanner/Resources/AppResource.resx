@@ -133,11 +133,26 @@ Turn On Bluetooth and press </value>
   <data name="ConnectButtonText" xml:space="preserve">
     <value>Connect</value>
   </data>
+  <data name="ConnectingText" xml:space="preserve">
+    <value>Connecting...</value>
+  </data>
+  <data name="ConnectStatusText" xml:space="preserve">
+    <value>Connected</value>
+  </data>
   <data name="ContinuousScanText" xml:space="preserve">
     <value>Continuous scan</value>
   </data>
   <data name="DataText" xml:space="preserve">
     <value>Data</value>
+  </data>
+  <data name="DevicesText" xml:space="preserve">
+    <value>Devices</value>
+  </data>
+  <data name="DisConnectButtonText" xml:space="preserve">
+    <value>Disconnect</value>
+  </data>
+  <data name="DisconnectedStatusText" xml:space="preserve">
+    <value>Disconnected</value>
   </data>
   <data name="HelpText" xml:space="preserve">
     <value>Help</value>
@@ -168,6 +183,9 @@ Turn On Bluetooth and press </value>
   </data>
   <data name="SparesText" xml:space="preserve">
     <value>Spares</value>
+  </data>
+  <data name="StatusText" xml:space="preserve">
+    <value>Status</value>
   </data>
   <data name="StopScanText" xml:space="preserve">
     <value>Stop Scan</value>

@@ -13,6 +13,10 @@ using ReactiveUI;
 using SCUScanner.Services;
 using Xamarin.Forms;
 using System.Timers;
+using SCUScanner.Pages;
+using System.Threading;
+using System.Reactive.Threading.Tasks;
+
 namespace SCUScanner.ViewModels
 {
     public class ScanBluetoothViewModel : BaseViewModel
@@ -20,7 +24,8 @@ namespace SCUScanner.ViewModels
         const int ScanningDuration = 30; //sec
         IDisposable scan;
         IDisposable connect;
-        Timer StopScanning = new Timer();
+       
+        System.Timers.Timer StopScanning = new System.Timers.Timer();
 
         TabbedPage parentTabbed;
         public TabbedPage ParentTabbed
@@ -34,8 +39,10 @@ namespace SCUScanner.ViewModels
         public ICommand ScanToggleCommand { get; }
         public ICommand SelectDeviceCommand { get; }
         public ICommand  ConnectCommand { get; set; }
+     
         public ScanBluetoothViewModel(TabbedPage page):base()
         {
+            
             parentTabbed = page;
             StopScanning.Interval = 1000 * ScanningDuration;
             StopScanning.Elapsed += StopScanning_Elapsed;
@@ -95,15 +102,49 @@ namespace SCUScanner.ViewModels
                 App.Dialogs.Alert($"Selected {x.Name}");
                 //services.VmManager.Push<DeviceViewModel>(x.Device);
             });
-            this.ConnectCommand = ReactiveCommand.Create<ScanResultViewModel> ((o) =>
+            this.ConnectCommand = ReactiveCommand.CreateFromTask<ScanResultViewModel> (async  (o) =>
             {
                 StopScan();
-                var devPage = new ContentPage() { Title = o.Name };
-                parentTabbed.Children.Add(devPage);
-                parentTabbed.CurrentPage = devPage;
-                
-                //App.Dialogs.Alert($"Selected {o.Name}");
+                IDevice device = o.Device;
+                try
+                {
+                    // don't cleanup connection - force user to d/c
+                    if ( device.Status == ConnectionStatus.Disconnected)
+                    {
+                        using (var cancelSrc = new CancellationTokenSource())
+                        {
+                            using (App.Dialogs.Loading(Resources["ConnectingText"], cancelSrc.Cancel,Resources["CancelText"]))
+                            {
+
+                                await device.Connect( 
+                                    
+                                    //,AutoConnect = false
+
+                                 ).ToTask(cancelSrc.Token);
+                                
+                                var devPage = new ConnectedDevicePage(o) { Title = o.Name };
+                                parentTabbed.Children.Add(devPage);
+                                parentTabbed.CurrentPage = devPage;
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        device.CancelConnection();
+                        o.IsConnected = false;
+                        var devicePage = parentTabbed.Children.FirstOrDefault(p => p.Title == o.Name);
+                        if (devicePage != null)
+                            parentTabbed.Children.Remove(devicePage);
+                    }
+                //   UpdateButtonText(o);
+                }
+                catch (Exception ex)
+                {
+                    App.Dialogs.Alert(ex.ToString());
+                }
             });
+            
             this.ScanToggleCommand = ReactiveCommand.Create(
                 () =>
                 {
@@ -165,7 +206,12 @@ namespace SCUScanner.ViewModels
                 {
                    CheckStatus(x);
                 });
+
         }
+        //void UpdateButtonText(ScanResultViewModel dev)
+        //{
+        //    dev.ConnectButtonText = dev.IsConnected ? Resources["DisConnectButtonText"] : Resources["ConnectButtonText"];
+        //}
         void OnScanResult(IScanResult result)
         {
             var dev = this.Devices.FirstOrDefault(x => x.Uuid.Equals(result.Device.Uuid));
@@ -177,8 +223,12 @@ namespace SCUScanner.ViewModels
             {
                 dev = new ScanResultViewModel();
                 dev.TrySet(result);
+                
+                
+                
                 this.Devices.Add(dev);
             }
+         //   UpdateButtonText(dev);
         }
         public void ScanTextChange(bool scaning)
         {
@@ -212,6 +262,7 @@ namespace SCUScanner.ViewModels
             }
             return isVisibleLayout;
         }
+       
         string scantext;
         public string ScanText
         {

@@ -107,6 +107,24 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connecting....
+        /// </summary>
+        internal static string ConnectingText {
+            get {
+                return ResourceManager.GetString("ConnectingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connected.
+        /// </summary>
+        internal static string ConnectStatusText {
+            get {
+                return ResourceManager.GetString("ConnectStatusText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continuous scan.
         /// </summary>
         internal static string ContinuousScanText {
@@ -121,6 +139,33 @@ namespace SCUScanner.Resources {
         internal static string DataText {
             get {
                 return ResourceManager.GetString("DataText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Devices.
+        /// </summary>
+        internal static string DevicesText {
+            get {
+                return ResourceManager.GetString("DevicesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disconnect.
+        /// </summary>
+        internal static string DisConnectButtonText {
+            get {
+                return ResourceManager.GetString("DisConnectButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disconnected.
+        /// </summary>
+        internal static string DisconnectedStatusText {
+            get {
+                return ResourceManager.GetString("DisconnectedStatusText", resourceCulture);
             }
         }
         
@@ -211,6 +256,15 @@ namespace SCUScanner.Resources {
         internal static string SparesText {
             get {
                 return ResourceManager.GetString("SparesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        internal static string StatusText {
+            get {
+                return ResourceManager.GetString("StatusText", resourceCulture);
             }
         }
         

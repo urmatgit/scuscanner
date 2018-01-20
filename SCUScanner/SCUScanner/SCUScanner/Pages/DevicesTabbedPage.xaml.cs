@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SCUScanner.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace SCUScanner.Pages
         public DevicesTabbedPage ()
         {
             InitializeComponent();
+            BindingContext = new BaseViewModel();
         }
     }
 }

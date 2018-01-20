@@ -7,11 +7,34 @@ using System.Text;
 
 namespace SCUScanner.ViewModels
 {
-    public class ScanResultViewModel : AbstractViewModel
+    public class ScanResultViewModel : BaseViewModel// AbstractViewModel
     {
         //IDisposable nameOb;
         public IDevice Device { get; private set; }
+        public ScanResultViewModel()
+        {
+            this.WhenAnyValue( x =>x.IsConnected).Subscribe(c=>
+            {
+                
+             ConnectButtonText=c? Resources["DisConnectButtonText"] : Resources["ConnectButtonText"];
+                
+            });
+        }
 
+        string connectButtonText;
+        public string ConnectButtonText
+        {
+            get => connectButtonText;
+            set => this.RaiseAndSetIfChanged(ref this.connectButtonText, value);
+        }
+
+        public string Address
+        {
+            get
+            {
+                return Device?.NativeDevice.ToString();
+            }
+        }
         string buttonText;
         public string ButtonText
         {

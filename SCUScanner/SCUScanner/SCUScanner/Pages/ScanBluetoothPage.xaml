@@ -35,7 +35,7 @@
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="40" />
                                             <RowDefinition Height="40" />
-                                            <RowDefinition Height="40" />
+                                            
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
@@ -43,19 +43,23 @@
                                         </Grid.ColumnDefinitions>
 
                                         <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" FontAttributes="Bold" FontSize="15" />
+                                        
                                         <Label Text="{Binding Rssi, StringFormat='RSSI: {0}'}" Grid.Row="0" Grid.Column="1" TextColor="Red" />
                                         <Label Text="{Binding Uuid, StringFormat='UUID: {0}'}" Grid.Row="1" Grid.ColumnSpan="2" FontAttributes="Italic" />
-                                        <Label Text="Device Connected" IsVisible="{Binding IsConnected}" BackgroundColor="Yellow" TextColor="Black"  HorizontalTextAlignment="Center" Grid.Column="0" Grid.Row="2" />
-                                        <!--Command="{Binding BindingContext.EditEintragCommand, Source={x:Reference Name=MyPageName}}"-->
-                                        <Button  Grid.Row="2"  Grid.Column="1"  Text="{Binding BindingContext.Resources[ConnectButtonText],Source={x:Reference Name=BleDevices}}"  Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=BleDevices}  }" CommandParameter="{Binding}"  />
+                                        <Label Text="Device Connected" IsVisible="{Binding IsConnected}" BackgroundColor="Yellow" TextColor="Black"  HorizontalTextAlignment="Center"
+                                               Grid.Column="0" Grid.Row="2" />
+                                        
+                                        <!--<Button  Grid.Row="2"  Grid.Column="1"  Text="{Binding BindingContext.Resources[ConnectButtonText],Source={x:Reference Name=BleDevices}}"  Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=BleDevices}  }" CommandParameter="{Binding}"  />-->
+                                        <Button  Grid.Row="2"  Grid.Column="1"  Text="{Binding ConnectButtonText}"  Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=BleDevices}  }" CommandParameter="{Binding}"  />
                                         <Label Text="{Binding IsConnectable, StringFormat='Connectable: {0}'}" Grid.Row="3" Grid.Column="0" />
+                                        
                                         <Label Text="{Binding ServiceCount, StringFormat='{0} Services'}" Grid.Row="3" Grid.Column="1" />
 
-                                        <Label Text="{Binding ManufacturerData, StringFormat='Manufactuer Data: {0}'}" Grid.Row="4" Grid.ColumnSpan="2" />
+                                        <!--<Label Text="{Binding ManufacturerData, StringFormat='Manufactuer Data: {0}'}" Grid.Row="4" Grid.ColumnSpan="2" />-->
 
-                                        <Label Text="{Binding LocalName, StringFormat='Local Name: {0}'}" Grid.Row="5" Grid.Column="0" />
+                                        <Label Text="{Binding LocalName, StringFormat='Local Name: {0}'}" Grid.Row="4" Grid.Column="0" />
+                                        <Label Text="{Binding Address}" Grid.Row="4" Grid.Column="1" />
 
-                                        
                                     </Grid>
                                     </ViewCell.View>
                             </ViewCell>
