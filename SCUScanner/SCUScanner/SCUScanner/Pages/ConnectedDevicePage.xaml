@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<pages:BaseTabPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:SCUScanner.Helpers"
+              xmlns:pages="clr-namespace:SCUScanner.Pages"
              x:Class="SCUScanner.Pages.ConnectedDevicePage">
     <ContentPage.Content>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
                 
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -18,9 +19,11 @@
             </Grid.RowDefinitions>
             <Label Grid.Column="0"  Grid.Row="0" Text="{Binding  Resources[StatusText]}"/>
             <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding  ConnectText}" TextColor="Red"/>
+            <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0"   Text="{Binding DeviceViewModel.ConnectButtonText}"
+                    Command="{Binding DisconnectCommand}" FontSize="Small"  IsEnabled="{Binding DeviceViewModel.IsConnected}"/>
             <Label Grid.Column="0" Grid.Row="1" Text="RSSI"/>
             <Label Text="{Binding Rssi}" Grid.Row="1" Grid.Column="1" TextColor="Red" />
-            <Label Text="{Binding Address, StringFormat='Address: {0}'}" Grid.Row="1" Grid.Column="3" FontAttributes="Italic" />
+            <Label Text="{Binding Address, StringFormat='Address: {0}'}" Grid.Row="1" Grid.Column="2" FontAttributes="Italic" />
 
             <controls:ListViewEx
                      ItemsSource="{Binding GattCharacteristics}"
@@ -28,27 +31,34 @@
                      GroupDisplayBinding="{Binding Name}"
                      ItemClickCommand="{Binding SelectCharacteristic}"
                      HasUnevenRows="true"
-                    Grid.Column="0"  Grid.ColumnSpan="3"
+                    Grid.Column="0"  Grid.ColumnSpan="4"
                     Grid.Row="2"
+                    
                     VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
             >
             <ListView.GroupHeaderTemplate>
                 <DataTemplate>
                     <ViewCell Height="30">
                         <ContentView Padding="20,0,0,0">
-                            <Label Text="{Binding Name, StringFormat='Service {0}'}" FontSize="18" FontAttributes="Bold" />
+                            <Label Text="{Binding Name, StringFormat='Service {0}'}"  FontAttributes="Bold" />
                         </ContentView>
                     </ViewCell>
                 </DataTemplate>
             </ListView.GroupHeaderTemplate>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell Height="200">
-                        <ViewCell.View>
+                    <ViewCell >
+                        <ViewCell.View >
                             <StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="CanRead" IsEnabled="{Binding CanRead}"/>
+                                        <Label Text="CanWrite" IsEnabled="{Binding CanWrite}"/>
+                                        <Label Text="CanNotify" IsEnabled="{Binding CanNotify}"/>
+                                    </StackLayout>
                                 <Label Text="{Binding Description}" FontAttributes="Bold" TextColor="Red" />
                                 <Label Text="{Binding Uuid, StringFormat='UUID: {0}'}" FontAttributes="Italic" />
-                                <Label Text="{Binding Properties, StringFormat='Properties: {0}'}" />
+                              
                                 <Label Text="{Binding IsNotifying, StringFormat='Notifying: {0}'}" IsVisible="{Binding CanNotify}" />
                                 <Label Text="{Binding Value, StringFormat='Value: {0}'}" IsVisible="{Binding IsValueAvailable}" />
                                 <Label Text="{Binding LastValue, StringFormat='Last Read: {0:hh:mm:ss tt}'}" IsVisible="{Binding IsValueAvailable}" />
@@ -61,4 +71,4 @@
         </Grid>
     </ContentPage.Content>
     
-</ContentPage>
+</pages:BaseTabPage>

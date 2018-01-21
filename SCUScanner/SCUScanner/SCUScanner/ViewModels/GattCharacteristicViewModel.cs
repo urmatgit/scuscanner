@@ -8,7 +8,7 @@ namespace SCUScanner.ViewModels
 {
    public class GattCharacteristicViewModel : BaseViewModel
     {
-        IGattCharacteristic Characteristic { get; }
+        public IGattCharacteristic Characteristic { get; }
         public GattCharacteristicViewModel(IGattCharacteristic characteristic)
         {
             Characteristic = characteristic;
@@ -25,7 +25,14 @@ namespace SCUScanner.ViewModels
             private set => this.RaiseAndSetIfChanged(ref this.value, value);
         }
 
-
+        public bool CanRead
+        {
+            get => this.Characteristic.CanRead();
+        }
+        public bool CanWrite {
+            get => this.Characteristic.CanWrite();
+        }
+       
         bool notifying;
         public bool IsNotifying
         {

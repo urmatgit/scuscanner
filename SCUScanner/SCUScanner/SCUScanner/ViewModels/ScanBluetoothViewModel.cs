@@ -60,7 +60,10 @@ namespace SCUScanner.ViewModels
                 {
                     var vm = this.Devices.FirstOrDefault(dev => dev.Uuid.Equals(x.Uuid));
                     if (vm != null)
+                    {
                         vm.IsConnected = x.Status == ConnectionStatus.Connected;
+
+                    }
                 });
             this.WhenAnyValue(vm => vm.IsVisibleLayout).ToProperty(this, x => x.IsVisibleBlueToothTornOff);
             this.WhenAnyValue(vm => vm.IsVisibleLayout).Subscribe(s =>
@@ -116,13 +119,14 @@ namespace SCUScanner.ViewModels
                             using (App.Dialogs.Loading(Resources["ConnectingText"], cancelSrc.Cancel,Resources["CancelText"]))
                             {
 
-                                await device.Connect( 
+                                await device.Connect(new GattConnectionConfig()
+                                {
+                                    Priority = ConnectionPriority.Low
                                     
-                                    //,AutoConnect = false
-
-                                 ).ToTask(cancelSrc.Token);
+                                }).ToTask(cancelSrc.Token);
                                 
                                 var devPage = new ConnectedDevicePage(o) { Title = o.Name };
+                                devPage.Tabbed = this.ParentTabbed;
                                 parentTabbed.Children.Add(devPage);
                                 parentTabbed.CurrentPage = devPage;
 

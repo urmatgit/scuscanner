@@ -7,21 +7,98 @@ using SCUScanner.Helpers;
 using ReactiveUI;
 using System.Reactive.Linq;
 using Xamarin.Forms;
+using System.Windows.Input;
+using System.Linq;
+using System.Reactive.Threading.Tasks;
+using System.Threading.Tasks;
 
 namespace SCUScanner.ViewModels
 {
     public class ConnectedDeviceViewModel : BaseViewModel
     {
+        IDisposable watcher;
+        bool? IsDisplayUtf8 = null;
         public ScanResultViewModel DeviceViewModel {get;set;}
         public ObservableCollection<Group<GattCharacteristicViewModel>> GattCharacteristics { get; } = new ObservableCollection<Group<GattCharacteristicViewModel>>();
         //public ObservableCollection<GattDescriptorViewModel> GattDescriptors { get; } = new ObservableCollection<GattDescriptorViewModel>();
+        public TabbedPage ParentTabbed { get; set; }
         readonly IList<IDisposable> cleanup = new List<IDisposable>();
         IDevice device;
-
+        public ICommand DisconnectCommand { get; }
+        public ICommand SelectCharacteristic { get; }
         public ConnectedDeviceViewModel(ScanResultViewModel selectedDevice)
         {
             device = selectedDevice.Device;
             DeviceViewModel = selectedDevice;
+
+            this.DisconnectCommand = ReactiveCommand.Create(() =>
+               {
+                   try
+                   {
+                       // don't cleanup connection - force user to d/c
+                       if (this.device.Status != ConnectionStatus.Disconnected)
+                       {
+                           this.device.CancelConnection();
+                           if (ParentTabbed != null)
+                           {
+                               //var connectedPage=ParentTabbed.Children.GetEnumerator().
+                               var connectedPage = ParentTabbed.Children.FirstOrDefault(p => p.Title == device.Name);
+                               if (connectedPage != null)
+                                   ParentTabbed.Children.Remove(connectedPage);
+
+                           }
+                       }
+
+                   }
+                   catch (Exception ex)
+                   {
+                       App.Dialogs.Alert(ex.ToString());
+                   }
+               });
+            this.SelectCharacteristic = ReactiveCommand.Create<GattCharacteristicViewModel>( x =>
+                                              SelectedGattCharacteristic(x)
+                                            );
+        }
+        async  void SelectedGattCharacteristic(GattCharacteristicViewModel gattCharacteristic)
+        {
+
+            if (gattCharacteristic.CanRead)
+            {
+                var value = await gattCharacteristic.Characteristic
+                      .Read()
+                      //.Timeout(TimeSpan.FromSeconds(3))
+                      .ToTask();
+                if (IsDisplayUtf8 == null)  
+                    IsDisplayUtf8 = await App.Dialogs.ConfirmAsync("Display Value as UTF8 or HEX?", okText: "UTF8", cancelText: "HEX");
+                this.SetReadValue(value, IsDisplayUtf8.Value);
+
+            }
+            if (gattCharacteristic.CanNotify)
+            {
+                if (IsDisplayUtf8 == null)
+                    IsDisplayUtf8 = await App.Dialogs.ConfirmAsync(
+                           "Display Value as UTF8 or HEX?",
+                           okText: "UTF8",
+                           cancelText: "HEX"
+                       );
+                this.watcher = gattCharacteristic.Characteristic
+                    .RegisterAndNotify()
+                    .Subscribe(x => this.SetReadValue(x, IsDisplayUtf8.Value));
+
+                
+            }
+        }
+        string value;
+        public string Value
+        {
+            get => this.value;
+            private set => this.RaiseAndSetIfChanged(ref this.value, value);
+        }
+        DateTime lastValue;
+        public DateTime LastValue
+        {
+            get => this.lastValue;
+            private set => this.RaiseAndSetIfChanged(ref this.lastValue, value);
         }
         public string Address
         {
@@ -70,8 +147,10 @@ namespace SCUScanner.ViewModels
                    switch (x)
                    {
                        case ConnectionStatus.Disconnecting:
+                           this.ConnectText = "Disconnecting";
+                           break;
                        case ConnectionStatus.Connecting:
-                           this.ConnectText =Resources["ConnectStatusText"];
+                           this.ConnectText = "Connecting";
                            break;
 
                        case ConnectionStatus.Disconnected:
@@ -82,7 +161,7 @@ namespace SCUScanner.ViewModels
                            break;
 
                        case ConnectionStatus.Connected:
-                           this.ConnectText = "Disconnect";
+                           this.ConnectText = Resources["ConnectStatusText"]; // "Disconnect";
                            break;
                    }
                })
@@ -124,7 +203,22 @@ namespace SCUScanner.ViewModels
                })
                );
         }
+        void SetReadValue(CharacteristicGattResult result, bool fromUtf8) => Device.BeginInvokeOnMainThread(() =>
+        {
+          
+            this.LastValue = DateTime.Now;
 
+            if (!result.Success)
+                this.Value = "ERROR - " + result.ErrorMessage;
+
+            else if (result.Data == null)
+                this.Value = "EMPTY";
+
+            else
+                this.Value = fromUtf8
+                    ? Encoding.UTF8.GetString(result.Data, 0, result.Data.Length)
+                    : BitConverter.ToString(result.Data);
+        });
         public override void OnDeactivate()
         {
             base.OnDeactivate();

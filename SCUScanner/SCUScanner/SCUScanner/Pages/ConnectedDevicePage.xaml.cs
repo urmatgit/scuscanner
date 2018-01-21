@@ -12,8 +12,8 @@ using Xamarin.Forms.Xaml;
 namespace SCUScanner.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ConnectedDevicePage : ContentPage
-	{
+	public partial class ConnectedDevicePage : BaseTabPage
+    {
 		public ConnectedDevicePage (ScanResultViewModel viewModel)
 		{
 			InitializeComponent ();
