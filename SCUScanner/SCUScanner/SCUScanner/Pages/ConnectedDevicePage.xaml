@@ -7,6 +7,7 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="*"/>
                 
             </Grid.ColumnDefinitions>
@@ -15,11 +16,11 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Grid.Column="0" Grid.Row="0" Text="{Binding  Resources[StatusText]}"/>
-            <Label Grid.Column="1" Grid.Row="0" Text="{Binding  ConnectText}" TextColor="Red"/>
+            <Label Grid.Column="0"  Grid.Row="0" Text="{Binding  Resources[StatusText]}"/>
+            <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding  ConnectText}" TextColor="Red"/>
             <Label Grid.Column="0" Grid.Row="1" Text="RSSI"/>
-            <Label Text="{Binding Rssi}" Grid.Row="1" Grid.Column="0" TextColor="Red" />
-            <Label Text="{Binding Address, StringFormat='Address: {0}'}" Grid.Row="1" Grid.Column="1" FontAttributes="Italic" />
+            <Label Text="{Binding Rssi}" Grid.Row="1" Grid.Column="1" TextColor="Red" />
+            <Label Text="{Binding Address, StringFormat='Address: {0}'}" Grid.Row="1" Grid.Column="3" FontAttributes="Italic" />
 
             <controls:ListViewEx
                      ItemsSource="{Binding GattCharacteristics}"
@@ -27,7 +28,7 @@
                      GroupDisplayBinding="{Binding Name}"
                      ItemClickCommand="{Binding SelectCharacteristic}"
                      HasUnevenRows="true"
-                    Grid.Column="0"  Grid.ColumnSpan="2"
+                    Grid.Column="0"  Grid.ColumnSpan="3"
                     Grid.Row="2"
                     VerticalOptions="FillAndExpand"
             >
