@@ -44,7 +44,10 @@ namespace SCUScanner.ViewModels
                                //var connectedPage=ParentTabbed.Children.GetEnumerator().
                                var connectedPage = ParentTabbed.Children.FirstOrDefault(p => p.Title == device.Name);
                                if (connectedPage != null)
+                               {
+                                   ParentTabbed.CurrentPage = ParentTabbed.Children[0];
                                    ParentTabbed.Children.Remove(connectedPage);
+                               }
 
                            }
                        }
@@ -68,14 +71,14 @@ namespace SCUScanner.ViewModels
                       .Read()
                       //.Timeout(TimeSpan.FromSeconds(3))
                       .ToTask();
-                if (IsDisplayUtf8 == null)  
+                
                     IsDisplayUtf8 = await App.Dialogs.ConfirmAsync("Display Value as UTF8 or HEX?", okText: "UTF8", cancelText: "HEX");
-                this.SetReadValue(value, IsDisplayUtf8.Value);
+                this.SetReadValue(gattCharacteristic, value, IsDisplayUtf8.Value);
 
             }
             if (gattCharacteristic.CanNotify)
             {
-                if (IsDisplayUtf8 == null)
+                
                     IsDisplayUtf8 = await App.Dialogs.ConfirmAsync(
                            "Display Value as UTF8 or HEX?",
                            okText: "UTF8",
@@ -83,7 +86,10 @@ namespace SCUScanner.ViewModels
                        );
                 this.watcher = gattCharacteristic.Characteristic
                     .RegisterAndNotify()
-                    .Subscribe(x => this.SetReadValue(x, IsDisplayUtf8.Value));
+                    .Subscribe(x =>
+                    {
+                        this.SetReadValue(gattCharacteristic, x, IsDisplayUtf8.Value);
+                    });
 
                 
             }
@@ -203,11 +209,12 @@ namespace SCUScanner.ViewModels
                })
                );
         }
-        void SetReadValue(CharacteristicGattResult result, bool fromUtf8) => Device.BeginInvokeOnMainThread(() =>
+        void  SetReadValue(GattCharacteristicViewModel selectedGatt, CharacteristicGattResult result, bool fromUtf8) => Device.BeginInvokeOnMainThread(() =>
         {
-          
-            this.LastValue = DateTime.Now;
 
+            
+            this.LastValue = DateTime.Now;
+            selectedGatt.LastValue = DateTime.Now;
             if (!result.Success)
                 this.Value = "ERROR - " + result.ErrorMessage;
 
@@ -217,8 +224,17 @@ namespace SCUScanner.ViewModels
             else
                 this.Value = fromUtf8
                     ? Encoding.UTF8.GetString(result.Data, 0, result.Data.Length)
-                    : BitConverter.ToString(result.Data);
+                    : ByteToString(result.Data);
+            //BitConverter.ToString(result.Data);
+            selectedGatt.Value = this.Value;
         });
+        private string ByteToString(byte[] bytes)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (byte b in bytes)
+                stringBuilder.AppendFormat("{0} ", b.ToString());
+            return stringBuilder.ToString();
+        }
         public override void OnDeactivate()
         {
             base.OnDeactivate();

@@ -114,16 +114,26 @@ namespace SCUScanner.ViewModels
                     // don't cleanup connection - force user to d/c
                     if ( device.Status == ConnectionStatus.Disconnected)
                     {
+                        //Only for LE Simulator
+                        if (!device.Features.HasFlag(DeviceFeatures.PairingRequests))
+                        {
+                            App.Dialogs.Alert("Pairing is not supported on this platform");
+                        }
+                        else if (device.PairingStatus == PairingStatus.Paired)
+                        {
+                            //App.Dialogs.Alert("Device is already paired");
+                        }
+                        else
+                        {
+                            await device.PairingRequest();
+                        }
+
                         using (var cancelSrc = new CancellationTokenSource())
                         {
                             using (App.Dialogs.Loading(Resources["ConnectingText"], cancelSrc.Cancel,Resources["CancelText"]))
                             {
 
-                                await device.Connect(new GattConnectionConfig()
-                                {
-                                    Priority = ConnectionPriority.Low
-                                    
-                                }).ToTask(cancelSrc.Token);
+                                await device.Connect().ToTask(cancelSrc.Token);
                                 
                                 var devPage = new ConnectedDevicePage(o) { Title = o.Name };
                                 devPage.Tabbed = this.ParentTabbed;
@@ -139,7 +149,11 @@ namespace SCUScanner.ViewModels
                         o.IsConnected = false;
                         var devicePage = parentTabbed.Children.FirstOrDefault(p => p.Title == o.Name);
                         if (devicePage != null)
+                        {
+                            parentTabbed.CurrentPage = parentTabbed.Children[0];
                             parentTabbed.Children.Remove(devicePage);
+                            
+                        }
                     }
                 //   UpdateButtonText(o);
                 }
@@ -171,8 +185,13 @@ namespace SCUScanner.ViewModels
                             StopScanning.Start();
                         this.scan = App.BleAdapter
                             .Scan()
+                            .Buffer(TimeSpan.FromSeconds(1))
                             .ObserveOn(RxApp.MainThreadScheduler)
-                            .Subscribe(this.OnScanResult);
+                            .Subscribe(results =>
+                            {
+                                foreach (var result in results)
+                                    this.OnScanResult(result);
+                            });
                         Debug.WriteLine("End scanning");
                     }
                 }

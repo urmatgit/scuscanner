@@ -13,8 +13,8 @@
                 
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label Grid.Column="0"  Grid.Row="0" Text="{Binding  Resources[StatusText]}"/>
@@ -60,8 +60,8 @@
                                 <Label Text="{Binding Uuid, StringFormat='UUID: {0}'}" FontAttributes="Italic" />
                               
                                 <Label Text="{Binding IsNotifying, StringFormat='Notifying: {0}'}" IsVisible="{Binding CanNotify}" />
-                                <Label Text="{Binding Value, StringFormat='Value: {0}'}" IsVisible="{Binding IsValueAvailable}" />
-                                <Label Text="{Binding LastValue, StringFormat='Last Read: {0:hh:mm:ss tt}'}" IsVisible="{Binding IsValueAvailable}" />
+                                <Label Text="{Binding Value, StringFormat='Value: {0}'}"   />
+                                <Label Text="{Binding LastValue, StringFormat='Last Read: {0:hh:mm:ss tt}'}"   />
                             </StackLayout>
                         </ViewCell.View>
                     </ViewCell>

@@ -22,7 +22,7 @@ namespace SCUScanner.ViewModels
         public string Value
         {
             get => this.value;
-            private set => this.RaiseAndSetIfChanged(ref this.value, value);
+             set => this.RaiseAndSetIfChanged(ref this.value, value);
         }
 
         public bool CanRead
@@ -53,7 +53,7 @@ namespace SCUScanner.ViewModels
         public DateTime LastValue
         {
             get => this.lastValue;
-            private set => this.RaiseAndSetIfChanged(ref this.lastValue, value);
+             set => this.RaiseAndSetIfChanged(ref this.lastValue, value);
         }
     }
 }
