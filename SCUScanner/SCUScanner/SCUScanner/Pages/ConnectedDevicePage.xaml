@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:SCUScanner.Helpers"
               xmlns:pages="clr-namespace:SCUScanner.Pages"
-             x:Class="SCUScanner.Pages.ConnectedDevicePage">
+             x:Class="SCUScanner.Pages.ConnectedDevicePage"
+                   x:Name="ConnectedDevice">
     <ContentPage.Content>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -39,33 +40,44 @@
             >
             <ListView.GroupHeaderTemplate>
                 <DataTemplate>
-                    <ViewCell Height="30">
-                        <ContentView Padding="20,0,0,0">
-                            <Label Text="{Binding Name, StringFormat='Service {0}'}"  FontAttributes="Bold" />
-                        </ContentView>
-                    </ViewCell>
-                </DataTemplate>
+                        <controls:ExtendedViewCell SelectedBackgroundColor="GreenYellow" Height="30">
+                            
+                                <ContentView Padding="20,0,0,0">
+                                    <Label Text="{Binding Name, StringFormat='Service {0}'}"  FontAttributes="Bold" TextColor="Blue"/>
+                                </ContentView>
+                            
+                        </controls:ExtendedViewCell>
+                    </DataTemplate>
             </ListView.GroupHeaderTemplate>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ViewCell >
+                        <controls:ExtendedViewCell SelectedBackgroundColor="GreenYellow">
+                    
                         <ViewCell.View >
-                            <StackLayout>
+                            <StackLayout >
                                     <StackLayout Orientation="Horizontal">
                                         <Label Text="CanRead" IsEnabled="{Binding CanRead}"/>
                                         <Label Text="CanWrite" IsEnabled="{Binding CanWrite}"/>
                                         <Label Text="CanNotify" IsEnabled="{Binding CanNotify}"/>
                                     </StackLayout>
-                                <Label Text="{Binding Description}" FontAttributes="Bold" TextColor="Red" />
-                                <Label Text="{Binding Uuid, StringFormat='UUID: {0}'}" FontAttributes="Italic" />
-                              
+                                    <!--<Label Text="{Binding Description}" FontAttributes="Bold" TextColor="Red" />-->
+                                    <Label Text="{Binding Uuid, StringFormat='UUID: {0}'}" FontAttributes="Italic" />
+                                
                                 <Label Text="{Binding IsNotifying, StringFormat='Notifying: {0}'}" IsVisible="{Binding CanNotify}" />
-                                <Label Text="{Binding Value, StringFormat='Value: {0}'}"   />
+                                <Label Text="{Binding Value, StringFormat='Read value: {0}'}"   />
                                 <Label Text="{Binding LastValue, StringFormat='Last Read: {0:hh:mm:ss tt}'}"   />
-                            </StackLayout>
+                                 <Label Text="Please enter a write value" IsVisible="{Binding CanWrite}" />
+                                <StackLayout Orientation="Horizontal" >
+                                        <Button Text="Read"  Command="{Binding  ReadCommand}" />
+                                        <Entry HeightRequest="50" WidthRequest="150" Text="{Binding ValueToWrite}" IsVisible="{Binding CanWrite}"/>
+                                        <Button Text="Send"  Command="{Binding  SendCommand }" IsVisible="{Binding CanWrite}"/>
+                                 </StackLayout>
+
+                                </StackLayout>
                         </ViewCell.View>
-                    </ViewCell>
-                </DataTemplate>
+                    
+                        </controls:ExtendedViewCell>
+                    </DataTemplate>
             </ListView.ItemTemplate>
         </controls:ListViewEx>
         </Grid>

@@ -11,13 +11,14 @@ using System.Windows.Input;
 using System.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace SCUScanner.ViewModels
 {
     public class ConnectedDeviceViewModel : BaseViewModel
     {
-        IDisposable watcher;
-        bool? IsDisplayUtf8 = null;
+        
+
         public ScanResultViewModel DeviceViewModel {get;set;}
         public ObservableCollection<Group<GattCharacteristicViewModel>> GattCharacteristics { get; } = new ObservableCollection<Group<GattCharacteristicViewModel>>();
         //public ObservableCollection<GattDescriptorViewModel> GattDescriptors { get; } = new ObservableCollection<GattDescriptorViewModel>();
@@ -26,6 +27,7 @@ namespace SCUScanner.ViewModels
         IDevice device;
         public ICommand DisconnectCommand { get; }
         public ICommand SelectCharacteristic { get; }
+        
         public ConnectedDeviceViewModel(ScanResultViewModel selectedDevice)
         {
             device = selectedDevice.Device;
@@ -39,6 +41,7 @@ namespace SCUScanner.ViewModels
                        if (this.device.Status != ConnectionStatus.Disconnected)
                        {
                            this.device.CancelConnection();
+                           selectedDevice.IsConnected = false;
                            if (ParentTabbed != null)
                            {
                                //var connectedPage=ParentTabbed.Children.GetEnumerator().
@@ -58,42 +61,12 @@ namespace SCUScanner.ViewModels
                        App.Dialogs.Alert(ex.ToString());
                    }
                });
-            this.SelectCharacteristic = ReactiveCommand.Create<GattCharacteristicViewModel>( x =>
-                                              SelectedGattCharacteristic(x)
+            this.SelectCharacteristic = ReactiveCommand.CreateFromTask <GattCharacteristicViewModel>(async x =>
+                                             await x.SelectedGattCharacteristic()
                                             );
+
         }
-        async  void SelectedGattCharacteristic(GattCharacteristicViewModel gattCharacteristic)
-        {
-
-            if (gattCharacteristic.CanRead)
-            {
-                var value = await gattCharacteristic.Characteristic
-                      .Read()
-                      //.Timeout(TimeSpan.FromSeconds(3))
-                      .ToTask();
-                
-                    IsDisplayUtf8 = await App.Dialogs.ConfirmAsync("Display Value as UTF8 or HEX?", okText: "UTF8", cancelText: "HEX");
-                this.SetReadValue(gattCharacteristic, value, IsDisplayUtf8.Value);
-
-            }
-            if (gattCharacteristic.CanNotify)
-            {
-                
-                    IsDisplayUtf8 = await App.Dialogs.ConfirmAsync(
-                           "Display Value as UTF8 or HEX?",
-                           okText: "UTF8",
-                           cancelText: "HEX"
-                       );
-                this.watcher = gattCharacteristic.Characteristic
-                    .RegisterAndNotify()
-                    .Subscribe(x =>
-                    {
-                        this.SetReadValue(gattCharacteristic, x, IsDisplayUtf8.Value);
-                    });
-
-                
-            }
-        }
+       
         string value;
         public string Value
         {
@@ -187,15 +160,20 @@ namespace SCUScanner.ViewModels
                .WhenServiceDiscovered()
                .Subscribe(service =>
                {
+                   if (string.IsNullOrEmpty(service.Uuid.ToString())) return; 
                    var group = new Group<GattCharacteristicViewModel>(service.Uuid.ToString());
                    service
                        .WhenCharacteristicDiscovered()
                        .ObserveOn(RxApp.MainThreadScheduler)
                        .Subscribe(character =>
                        {
-                           var vm = new GattCharacteristicViewModel( character);
-                           group.Add(vm);
-                           if (group.Count == 1)
+                           if (group.FirstOrDefault(f => f.Uuid==character.Uuid) == null)
+                           {
+                               var vm = new GattCharacteristicViewModel(character);
+                               
+                               group.Add(vm);
+                           }
+                           if (group.Count == 1 && this.GattCharacteristics.FirstOrDefault(g=>g.Name== group.Name)==null)
                                this.GattCharacteristics.Add(group);
 
                            //character
@@ -209,32 +187,7 @@ namespace SCUScanner.ViewModels
                })
                );
         }
-        void  SetReadValue(GattCharacteristicViewModel selectedGatt, CharacteristicGattResult result, bool fromUtf8) => Device.BeginInvokeOnMainThread(() =>
-        {
-
-            
-            this.LastValue = DateTime.Now;
-            selectedGatt.LastValue = DateTime.Now;
-            if (!result.Success)
-                this.Value = "ERROR - " + result.ErrorMessage;
-
-            else if (result.Data == null)
-                this.Value = "EMPTY";
-
-            else
-                this.Value = fromUtf8
-                    ? Encoding.UTF8.GetString(result.Data, 0, result.Data.Length)
-                    : ByteToString(result.Data);
-            //BitConverter.ToString(result.Data);
-            selectedGatt.Value = this.Value;
-        });
-        private string ByteToString(byte[] bytes)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            foreach (byte b in bytes)
-                stringBuilder.AppendFormat("{0} ", b.ToString());
-            return stringBuilder.ToString();
-        }
+      
         public override void OnDeactivate()
         {
             base.OnDeactivate();

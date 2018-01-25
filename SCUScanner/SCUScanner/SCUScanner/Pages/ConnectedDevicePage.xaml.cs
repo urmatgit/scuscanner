@@ -14,14 +14,16 @@ namespace SCUScanner.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ConnectedDevicePage : BaseTabPage
     {
-		public ConnectedDevicePage (ScanResultViewModel viewModel)
+        ConnectedDeviceViewModel connectedDeviceViewModel;
+        public ConnectedDevicePage (ScanResultViewModel viewModel)
 		{
 			InitializeComponent ();
-            BindingContext =new ConnectedDeviceViewModel(viewModel);
+            BindingContext = connectedDeviceViewModel=new ConnectedDeviceViewModel(viewModel);
 
         }
         protected override void OnAppearing()
         {
+            connectedDeviceViewModel.ParentTabbed = this.Tabbed;
             base.OnAppearing();
             (this.BindingContext as IViewModel)?.OnActivate();
         }

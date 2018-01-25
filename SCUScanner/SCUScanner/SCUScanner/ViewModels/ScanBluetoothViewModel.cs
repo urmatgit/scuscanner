@@ -38,7 +38,7 @@ namespace SCUScanner.ViewModels
 
         public ICommand ScanToggleCommand { get; }
         public ICommand SelectDeviceCommand { get; }
-        public ICommand  ConnectCommand { get; set; }
+        public ICommand  ConnectCommand { get;  }
      
         public ScanBluetoothViewModel(TabbedPage page):base()
         {
