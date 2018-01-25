@@ -51,7 +51,7 @@
             </ListView.GroupHeaderTemplate>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                        <controls:ExtendedViewCell SelectedBackgroundColor="GreenYellow">
+                        <ViewCell SelectedBackgroundColor="GreenYellow">
                     
                         <ViewCell.View >
                             <StackLayout >
@@ -76,7 +76,7 @@
                                 </StackLayout>
                         </ViewCell.View>
                     
-                        </controls:ExtendedViewCell>
+                        </ViewCell>
                     </DataTemplate>
             </ListView.ItemTemplate>
         </controls:ListViewEx>

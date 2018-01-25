@@ -94,7 +94,6 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Services\ExtendedViewCellRenderer.cs" />
     <Compile Include="Services\LocalizeService.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
