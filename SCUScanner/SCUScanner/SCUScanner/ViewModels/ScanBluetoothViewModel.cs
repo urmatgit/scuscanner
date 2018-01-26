@@ -47,7 +47,7 @@ namespace SCUScanner.ViewModels
             StopScanning.Interval = 1000 * ScanningDuration;
             StopScanning.Elapsed += StopScanning_Elapsed;
             Devices=new ObservableCollection<ScanResultViewModel>();
-            if (App.BleAdapter.Status == AdapterStatus.Unsupported)
+            if (App.BleAdapter.Status == AdapterStatus.Unsupported || App.BleAdapter.Status==AdapterStatus.Unknown)
             {
                 IsVisibleLayout = false;
                 return;
