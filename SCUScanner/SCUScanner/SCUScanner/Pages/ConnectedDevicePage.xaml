@@ -40,19 +40,18 @@
             >
             <ListView.GroupHeaderTemplate>
                 <DataTemplate>
-                        <controls:ExtendedViewCell SelectedBackgroundColor="GreenYellow" Height="30">
+                        <ViewCell Height="30">
                             
                                 <ContentView Padding="20,0,0,0">
                                     <Label Text="{Binding Name, StringFormat='Service {0}'}"  FontAttributes="Bold" TextColor="Blue"/>
                                 </ContentView>
                             
-                        </controls:ExtendedViewCell>
+                        </ViewCell>
                     </DataTemplate>
             </ListView.GroupHeaderTemplate>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                        <ViewCell SelectedBackgroundColor="GreenYellow">
-                    
+                        <ViewCell >
                         <ViewCell.View >
                             <StackLayout >
                                     <StackLayout Orientation="Horizontal">
