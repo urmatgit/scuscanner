@@ -187,4 +187,7 @@
   <data name="StopScanText" xml:space="preserve">
     <value>Остановить</value>
   </data>
+  <data name="InfoPermissionLocationText" xml:space="preserve">
+    <value>Чтобы получить доступ к аппаратным идентификаторам близлежащих внешних устройств через сканирование Bluetooth и Wi-Fi, ваше приложение должно теперь иметь разрешения ACCESS_FINE_LOCATION или ACCESS_COARSE_LOCATION</value>
+  </data>
 </root>

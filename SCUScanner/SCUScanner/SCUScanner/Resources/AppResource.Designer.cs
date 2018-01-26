@@ -179,6 +179,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To access the hardware identifiers of nearby external devices via Bluetooth and Wi-Fi scans, your app must now have the ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION permissions.
+        /// </summary>
+        internal static string InfoPermissionLocationText {
+            get {
+                return ResourceManager.GetString("InfoPermissionLocationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maintenance.
         /// </summary>
         internal static string MaintenanceText {

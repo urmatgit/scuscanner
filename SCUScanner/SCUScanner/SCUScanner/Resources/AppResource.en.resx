@@ -187,4 +187,7 @@ Turn On Bluetooth and press </value>
   <data name="StopScanText" xml:space="preserve">
     <value>Stop scan</value>
   </data>
+  <data name="InfoPermissionLocationText" xml:space="preserve">
+    <value>To access the hardware identifiers of nearby external devices via Bluetooth and Wi-Fi scans, your app must now have the ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION permissions</value>
+  </data>
 </root>

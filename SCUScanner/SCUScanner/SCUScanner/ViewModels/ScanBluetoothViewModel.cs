@@ -16,6 +16,8 @@ using System.Timers;
 using SCUScanner.Pages;
 using System.Threading;
 using System.Reactive.Threading.Tasks;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 
 namespace SCUScanner.ViewModels
 {
@@ -47,11 +49,14 @@ namespace SCUScanner.ViewModels
             StopScanning.Interval = 1000 * ScanningDuration;
             StopScanning.Elapsed += StopScanning_Elapsed;
             Devices=new ObservableCollection<ScanResultViewModel>();
+            
             if (App.BleAdapter.Status == AdapterStatus.Unsupported || App.BleAdapter.Status==AdapterStatus.Unknown)
             {
                 IsVisibleLayout = false;
                 return;
-            } 
+            }
+           
+
             IsVisibleLayout =  App.BleAdapter.Status != AdapterStatus.PoweredOn;
             this.connect = App.BleAdapter
                 .WhenDeviceStatusChanged()
@@ -114,12 +119,14 @@ namespace SCUScanner.ViewModels
                     // don't cleanup connection - force user to d/c
                     if ( device.Status == ConnectionStatus.Disconnected)
                     {
+                        Debug.WriteLine("connection");
                         //Only for LE Simulator
-                        if (!device.Features.HasFlag(DeviceFeatures.PairingRequests))
-                        {
-                            App.Dialogs.Alert("Pairing is not supported on this platform");
-                        }
-                        else if (device.PairingStatus == PairingStatus.Paired)
+                        //if (!device.Features.HasFlag(DeviceFeatures.PairingRequests))
+                        //{
+                        //    App.Dialogs.Alert("Pairing is not supported on this platform");
+                        //}
+                        //else 
+                        if (device.PairingStatus == PairingStatus.Paired)
                         {
                             //App.Dialogs.Alert("Device is already paired");
                         }
@@ -201,12 +208,12 @@ namespace SCUScanner.ViewModels
                 //    x => x.Value
                 //)
             );
-            if (Models.Settings.Current.ScanMode)
-                this.ScanToggleCommand.Execute(null);
+            //if (Models.Settings.Current.ScanMode)
+            //    this.ScanToggleCommand.Execute(null);
 
 
         }
-
+ 
         private void StopScanning_Elapsed(object sender, ElapsedEventArgs e)
         {
             StopScan();

@@ -12,6 +12,8 @@ using System.Linq;
 using System.Text;
 
 using Xamarin.Forms;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 
 namespace SCUScanner
 {
@@ -21,13 +23,13 @@ namespace SCUScanner
         public static IUserDialogs Dialogs;
         public static IAdapter BleAdapter;
         
-        
-        public App ()
-		{
-			InitializeComponent();
+
+        public App()
+        {
+            InitializeComponent();
             Dialogs = UserDialogs.Instance;
             BleAdapter = CrossBleAdapter.Current;
-            
+
             if (Device.RuntimePlatform != Device.WinPhone)
             {
                 if (!string.IsNullOrEmpty(Settings.Current.SelectedLang))
@@ -38,19 +40,39 @@ namespace SCUScanner
                 }
                 else
                 {
-                    
+
                     AppResource.Culture = DependencyService.Get<ILocalizeService>().GetCurrentCultureInfo();
                     Settings.Current.SelectedLang = CurrentLanguage = AppResource.Culture.Name;
                 }
-                
+
             }
 
             MainPage = new SCUScanner.Pages.MainMasterDetailPage();
-		}
-        
+        }
 
-		protected override async void OnStart ()
-		{
+
+        private async Task CheckLocationPermission()
+        {
+            var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+            if (status != PermissionStatus.Granted)
+            {
+                
+                string infoText = Settings.Current.Resources["InfoPermissionLocationText"];
+                if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
+                {
+                       await App.Dialogs.AlertAsync(infoText, "Info", "OK");
+                }
+
+                var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
+                //Best practice to always check that the key exists
+                if (results.ContainsKey(Permission.Location))
+                    status = results[Permission.Location];
+                
+            }
+        }
+
+        protected override async void OnStart()
+        {
             switch (BleAdapter.Status)
             {
                 case AdapterStatus.Unsupported:
@@ -67,6 +89,13 @@ namespace SCUScanner
                             BleAdapter.OpenSettings();
                     }
                     break;
+            }
+            //Check location permission
+            if (Device.Android == Device.RuntimePlatform)
+            {
+               
+                    await CheckLocationPermission();
+               
             }
             // Handle when your app starts
             //if (BleAdapter.Status == AdapterStatus.PoweredOff )
@@ -85,14 +114,14 @@ namespace SCUScanner
             //}
         }
 
-        protected override void OnSleep ()
-		{
-			// Handle when your app sleeps
-		}
+        protected override void OnSleep()
+        {
+            // Handle when your app sleeps
+        }
 
-		protected override void OnResume ()
-		{
-			// Handle when your app resumes
-		}
-	}
+        protected override void OnResume()
+        {
+            // Handle when your app resumes
+        }
+    }
 }
