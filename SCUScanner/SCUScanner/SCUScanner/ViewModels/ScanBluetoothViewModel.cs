@@ -126,24 +126,36 @@ namespace SCUScanner.ViewModels
                         //    App.Dialogs.Alert("Pairing is not supported on this platform");
                         //}
                         //else 
-                        if (device.PairingStatus == PairingStatus.Paired)
-                        {
-                            //App.Dialogs.Alert("Device is already paired");
-                        }
-                        else
-                        {
-                            await device.PairingRequest();
-                        }
+                        //if (device.PairingStatus == PairingStatus.Paired)
+                        //{
+                        //    //App.Dialogs.Alert("Device is already paired");
+                        //}
+                        //else
+                        //{
+                        //    await device.PairingRequest();
+                        //}
 
                         using (var cancelSrc = new CancellationTokenSource())
                         {
                             using (App.Dialogs.Loading(Resources["ConnectingText"], cancelSrc.Cancel,Resources["CancelText"]))
                             {
 
-                                await device.Connect().ToTask(cancelSrc.Token);
+                                await device.Connect(
+                                    new GattConnectionConfig() { AutoConnect = false }
+                                    ).ToTask(cancelSrc.Token);
                                 
                                 var devPage = new ConnectedDevicePage(o) { Title = o.Name };
+                                devPage.Kod = o.Name;
                                 devPage.Tabbed = this.ParentTabbed;
+
+                                {
+                                    var ListOfRemovePages = new List<BaseTabPage>();
+                                    foreach (BaseTabPage bPage in parentTabbed.Children)
+                                        if (bPage.Kod != SCUScanner.Helpers.GlobalConstants.MAIN_TAB_PAGE)
+                                            ListOfRemovePages.Add(bPage);
+                                    if (ListOfRemovePages.Count > 0)
+                                        ListOfRemovePages.ForEach(x => parentTabbed.Children.Remove(x));
+                                }
                                 parentTabbed.Children.Add(devPage);
                                 parentTabbed.CurrentPage = devPage;
 
