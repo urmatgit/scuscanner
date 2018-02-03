@@ -25,17 +25,17 @@ namespace SCUScanner.ViewModels
             get => this.valueToWrite;
             set => this.RaiseAndSetIfChanged(ref this.valueToWrite, value);
         }
-        public async  Task SelectedGattCharacteristic( )
+        public async  Task SelectedGattCharacteristic(bool? isDisplayUtf8=null)
         {
-            IsDisplayUtf8 = null;
+            IsDisplayUtf8 = isDisplayUtf8;
             if (CanRead)
             {
                 var value = await Characteristic
                       .Read()
                       //.Timeout(TimeSpan.FromSeconds(3))
                       .ToTask();
-
-                IsDisplayUtf8 = await App.Dialogs.ConfirmAsync("Display Value as UTF8 or HEX?", okText: "UTF8", cancelText: "HEX");
+                if (IsDisplayUtf8==null)
+                    IsDisplayUtf8 = await App.Dialogs.ConfirmAsync("Display Value as UTF8 or HEX?", okText: "UTF8", cancelText: "HEX");
                 this.SetReadValue(this, value, IsDisplayUtf8.Value);
 
             }

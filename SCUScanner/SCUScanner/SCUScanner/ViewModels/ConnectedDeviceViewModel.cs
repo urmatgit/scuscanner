@@ -161,25 +161,42 @@ namespace SCUScanner.ViewModels
                .Subscribe(service =>
                {
                    if (string.IsNullOrEmpty(service.Uuid.ToString())) return; 
+                   ///TODO filter 
                    var group = new Group<GattCharacteristicViewModel>(service.Uuid.ToString());
                    service
                        .WhenCharacteristicDiscovered()
                        .ObserveOn(RxApp.MainThreadScheduler)
                        .Subscribe(character =>
                        {
-                           if (group.FirstOrDefault(f => f.Uuid==character.Uuid) == null)
+                           Device.BeginInvokeOnMainThread(() =>
                            {
                                var vm = new GattCharacteristicViewModel(character);
-                               
+                               if (vm.CanRead || vm.CanNotify)
+                               {
+                                   Task.Run( async () =>
+                                   {
+                                       await vm.SelectedGattCharacteristic(true);
+                                   });
+                               }
                                group.Add(vm);
-                           }
-                           if (group.Count == 1 && this.GattCharacteristics.FirstOrDefault(g=>g.Name== group.Name)==null)
-                               this.GattCharacteristics.Add(group);
+                               //if (group.Count == 1)
+                               var gr = this.GattCharacteristics.FirstOrDefault(g => g.Name == group.Name);
+                               if (gr == null)
+                                   this.GattCharacteristics.Add(group);
+                               else
+                                   this.GattCharacteristics[this.GattCharacteristics.IndexOf(gr)] = group;
+
+
+                           });
+
+                           //if (group.Count == 1 && this.GattCharacteristics.FirstOrDefault(g=>g.Name== group.Name)==null)
+                           //    this.GattCharacteristics.Add(group);
 
                            //character
                            //    .WhenDescriptorDiscovered()
                            //    .Subscribe(desc => Device.BeginInvokeOnMainThread(() =>
                            //    {
+                           //        this.GattCharacteristics.add
                            //        var dvm = new GattDescriptorViewModel(this.Dialogs, desc);
                            //        this.GattDescriptors.Add(dvm);
                            //    }));
