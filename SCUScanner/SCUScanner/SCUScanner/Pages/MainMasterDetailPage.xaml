@@ -13,7 +13,7 @@
     <NavigationPage>
       <x:Arguments>
                 <!--<pages:ScanBluetoothPage />-->
-                <pages:DevicesTabbedPage/>
+                <pages:MainTabbedPage/>
             </x:Arguments>
     </NavigationPage>
   </MasterDetailPage.Detail>

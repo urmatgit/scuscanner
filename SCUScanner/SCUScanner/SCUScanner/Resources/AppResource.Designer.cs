@@ -197,6 +197,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Main.
+        /// </summary>
+        internal static string MainText {
+            get {
+                return ResourceManager.GetString("MainText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manual scan.
         /// </summary>
         internal static string ManualScanText {

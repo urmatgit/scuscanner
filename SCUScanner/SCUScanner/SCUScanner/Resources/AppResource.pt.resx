@@ -136,6 +136,9 @@ Ligue o Bluetooth e prima</value>
   <data name="MaintenanceText" xml:space="preserve">
     <value>Manutenção</value>
   </data>
+  <data name="MainText" xml:space="preserve">
+    <value>Principal</value>
+  </data>
   <data name="ManualScanText" xml:space="preserve">
     <value>Manual de digitalização</value>
   </data>

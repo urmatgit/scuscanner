@@ -11,9 +11,9 @@ using Xamarin.Forms.Xaml;
 namespace SCUScanner.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class DevicesTabbedPage : TabbedPage
+    public partial class MainTabbedPage : TabbedPage
     {
-        public DevicesTabbedPage ()
+        public MainTabbedPage ()
         {
             InitializeComponent();
             BindingContext = new BaseViewModel();

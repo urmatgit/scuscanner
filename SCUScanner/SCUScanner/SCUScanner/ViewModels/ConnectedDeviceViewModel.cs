@@ -158,6 +158,7 @@ namespace SCUScanner.ViewModels
             );
             this.cleanup.Add(this.device
                .WhenServiceDiscovered()
+               .Where(c=>c.Uuid.ToString()==GlobalConstants.SERVICEUUID)
                .Subscribe(service =>
                {
                    if (string.IsNullOrEmpty(service.Uuid.ToString())) return; 
@@ -165,9 +166,11 @@ namespace SCUScanner.ViewModels
                    var group = new Group<GattCharacteristicViewModel>(service.Uuid.ToString());
                    service
                        .WhenCharacteristicDiscovered()
+                       
                        .ObserveOn(RxApp.MainThreadScheduler)
                        .Subscribe(character =>
                        {
+                            
                            Device.BeginInvokeOnMainThread(() =>
                            {
                                var vm = new GattCharacteristicViewModel(character,device);

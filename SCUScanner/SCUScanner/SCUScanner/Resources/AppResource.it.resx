@@ -136,6 +136,9 @@ Attivare il Bluetooth e premere</value>
   <data name="MaintenanceText" xml:space="preserve">
     <value>Manutenzione</value>
   </data>
+  <data name="MainText" xml:space="preserve">
+    <value>Principale</value>
+  </data>
   <data name="ManualScanText" xml:space="preserve">
     <value>Scansione manuale</value>
   </data>
