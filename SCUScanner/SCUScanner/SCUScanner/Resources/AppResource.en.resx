@@ -190,7 +190,13 @@ Turn On Bluetooth and press </value>
   <data name="InfoPermissionLocationText" xml:space="preserve">
     <value>To access the hardware identifiers of nearby external devices via Bluetooth and Wi-Fi scans, your app must now have the ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION permissions</value>
   </data>
+  <data name="LocationNameText" xml:space="preserve">
+    <value>Location name</value>
+  </data>
   <data name="MainText" xml:space="preserve">
     <value>Main</value>
+  </data>
+  <data name="SaveText" xml:space="preserve">
+    <value>Save</value>
   </data>
 </root>

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:BaseTabPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:SCUScanner.Helpers"
+              xmlns:pages="clr-namespace:SCUScanner.Pages"
+             x:Class="SCUScanner.Pages.CharacterPage"
+                   x:Name="ConnectedDevice">
+    <TabbedPage.ToolbarItems  >
+        <controls:HideableToolbarItem     IsVisible="{Binding IsVisibleLayout}"  Text="{Binding  Resources[SaveText]}" Command="{Binding ScanToggleCommand}" Order="Primary" Priority="1"    />
+
+    </TabbedPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0"  Grid.Row="0" Text="{Binding  Resources[StatusText]}"/>
+            <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding  ConnectText}" TextColor="Red"/>
+            <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0"   Text="{Binding DeviceViewModel.ConnectButtonText}"
+                    Command="{Binding DisconnectCommand}" FontSize="Small"  IsEnabled="{Binding DeviceViewModel.IsConnected}"/>
+            <Label Grid.Column="0" Grid.Row="1" Text="RSSI"/>
+            <Label Text="{Binding Rssi}" Grid.Row="1" Grid.Column="1" TextColor="Red" />
+            <Label Text="{Binding Address, StringFormat='Address: {0}'}" Grid.Row="1" Grid.Column="2" FontAttributes="Italic" />
+            <Entry x:Name="tLocationName" Text="{Binding LocationName}" Placeholder="{Binding Resources[LocationNameText]}" HorizontalOptions="Fill" Grid.Column="0" Grid.ColumnSpan="3"  Grid.Row="2"     />
+            <Editor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="3" HeightRequest="50"  HorizontalOptions="Fill" />
+
+        </Grid>
+    </ContentPage.Content>
+    
+</pages:BaseTabPage>

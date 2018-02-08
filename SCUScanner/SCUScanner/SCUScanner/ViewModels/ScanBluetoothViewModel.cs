@@ -146,7 +146,7 @@ namespace SCUScanner.ViewModels
                                 
                                 var actual = await device.RequestMtu(512); //Read write size (default 20byte)
                               //  App.Dialogs.Alert("MTU Changed to " + actual);
-                                var devPage = new ConnectedDevicePage(o) { Title = o.Name };
+                                var devPage = new CharacterPage(o) { Title = o.Name };// ConnectedDevicePage(o) { Title = o.Name };
                                 devPage.Kod = o.Name;
                                 devPage.Tabbed = this.ParentTabbed;
 

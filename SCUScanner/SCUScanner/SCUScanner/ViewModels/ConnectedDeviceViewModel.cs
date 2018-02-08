@@ -32,7 +32,7 @@ namespace SCUScanner.ViewModels
         {
             device = selectedDevice.Device;
             DeviceViewModel = selectedDevice;
-
+            IsVisibleLayout = true;
             this.DisconnectCommand = ReactiveCommand.Create(() =>
                {
                    try
@@ -112,6 +112,23 @@ namespace SCUScanner.ViewModels
         {
             get => this.connectText;
             private set => this.RaiseAndSetIfChanged(ref this.connectText, value);
+        }
+        private bool isVisibleLayout = false;
+        public bool IsVisibleLayout
+        {
+            get => isVisibleLayout;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref this.isVisibleLayout, value);
+
+
+            }
+        }
+        private string locationName;
+        public string LocationName
+        {
+            get => locationName;
+            set => this.RaiseAndSetIfChanged(ref locationName, value);
         }
         public override void OnActivate()
         {

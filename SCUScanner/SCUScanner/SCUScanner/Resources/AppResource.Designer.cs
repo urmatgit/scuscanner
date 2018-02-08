@@ -188,6 +188,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Location name.
+        /// </summary>
+        internal static string LocationNameText {
+            get {
+                return ResourceManager.GetString("LocationNameText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maintenance.
         /// </summary>
         internal static string MaintenanceText {
@@ -220,6 +229,15 @@ namespace SCUScanner.Resources {
         internal static string OkText {
             get {
                 return ResourceManager.GetString("OkText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string SaveText {
+            get {
+                return ResourceManager.GetString("SaveText", resourceCulture);
             }
         }
         
