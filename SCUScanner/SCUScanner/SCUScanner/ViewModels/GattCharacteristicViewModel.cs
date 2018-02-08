@@ -14,6 +14,7 @@ namespace SCUScanner.ViewModels
 {
    public class GattCharacteristicViewModel : BaseViewModel
     {
+        IDevice BleDevice;
         IDisposable watcher;
         public IGattCharacteristic Characteristic { get; }
         public ICommand SendCommand { get; }
@@ -30,12 +31,18 @@ namespace SCUScanner.ViewModels
             IsDisplayUtf8 = isDisplayUtf8;
             if (CanRead)
             {
+                
                 var value = await Characteristic
                       .Read()
                       //.Timeout(TimeSpan.FromSeconds(3))
                       .ToTask();
+
                 if (IsDisplayUtf8==null)
                     IsDisplayUtf8 = await App.Dialogs.ConfirmAsync("Display Value as UTF8 or HEX?", okText: "UTF8", cancelText: "HEX");
+                if (BleDevice.Features.HasFlag(DeviceFeatures.MtuRequests))
+                {
+                    var actual = await BleDevice.RequestMtu(512);
+                }
                 this.SetReadValue(this, value, IsDisplayUtf8.Value);
 
             }
@@ -58,8 +65,9 @@ namespace SCUScanner.ViewModels
 
             }
         }
-        public GattCharacteristicViewModel(IGattCharacteristic characteristic)
+        public GattCharacteristicViewModel(IGattCharacteristic characteristic,IDevice device)
         {
+            BleDevice = device;
             Characteristic = characteristic;
             ReadCommand = ReactiveCommand.CreateFromTask(async () => {
                 await SelectedGattCharacteristic();
@@ -147,6 +155,7 @@ namespace SCUScanner.ViewModels
 
             this.LastValue = DateTime.Now;
             selectedGatt.LastValue = DateTime.Now;
+            
             if (!result.Success)
                 this.Value = "ERROR - " + result.ErrorMessage;
 

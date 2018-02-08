@@ -64,7 +64,7 @@
                                     <Label Text="{Binding Uuid, StringFormat='UUID: {0}'}" FontAttributes="Italic" />
                                 
                                 <Label Text="{Binding IsNotifying, StringFormat='Notifying: {0}'}" IsVisible="{Binding CanNotify}" />
-                                <Label Text="{Binding Value, StringFormat='Read value: {0}'}"   />
+                                <Label Text="{Binding Value, StringFormat='Value: {0}'}"   />
                                 <Label Text="{Binding LastValue, StringFormat='Last Read: {0:hh:mm:ss tt}'}"   />
                                  <Label Text="Please enter a write value" IsVisible="{Binding CanWrite}" />
                                 <StackLayout Orientation="Horizontal" >

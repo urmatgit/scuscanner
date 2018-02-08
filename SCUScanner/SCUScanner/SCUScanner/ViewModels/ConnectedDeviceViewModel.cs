@@ -170,7 +170,7 @@ namespace SCUScanner.ViewModels
                        {
                            Device.BeginInvokeOnMainThread(() =>
                            {
-                               var vm = new GattCharacteristicViewModel(character);
+                               var vm = new GattCharacteristicViewModel(character,device);
                                if (vm.CanRead || vm.CanNotify)
                                {
                                    Task.Run( async () =>
