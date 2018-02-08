@@ -59,7 +59,8 @@ namespace SCUScanner.ViewModels
                     .RegisterAndNotify()
                     .Subscribe(x =>
                     {
-                        this.SetReadValue(this, x, IsDisplayUtf8.Value);
+                        
+                        this.SetReadValue(this, x, IsDisplayUtf8 ?? true);
                     });
 
 
