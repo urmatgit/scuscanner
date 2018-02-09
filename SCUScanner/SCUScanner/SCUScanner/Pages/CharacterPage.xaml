@@ -24,15 +24,16 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Grid.Column="0"  Grid.Row="0" Text="{Binding  Resources[StatusText]}"/>
-            <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding  ConnectText}" TextColor="Red"/>
-            <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0"   Text="{Binding DeviceViewModel.ConnectButtonText}"
+            <Label  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding DeviceID}" Font="bold,16"/>
+            <Label Grid.Column="0"  Grid.Row="1" Text="{Binding  Resources[StatusText]}"/>
+            <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Text="{Binding  ConnectText}" TextColor="Red"/>
+            <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1"   Text="{Binding DeviceViewModel.ConnectButtonText}"
                     Command="{Binding DisconnectCommand}" FontSize="Small"  IsEnabled="{Binding DeviceViewModel.IsConnected}"/>
-            <Label Grid.Column="0" Grid.Row="1" Text="RSSI"/>
-            <Label Text="{Binding Rssi}" Grid.Row="1" Grid.Column="1" TextColor="Red" />
-            <Label Text="{Binding Address, StringFormat='Address: {0}'}" Grid.Row="1" Grid.Column="2" FontAttributes="Italic" />
-            <Entry x:Name="tLocationName" Text="{Binding LocationName}" Placeholder="{Binding Resources[LocationNameText]}" HorizontalOptions="Fill" Grid.Column="0" Grid.ColumnSpan="3"  Grid.Row="2"     />
-            <Editor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="3" HeightRequest="50"  HorizontalOptions="Fill" />
+            <Label Grid.Column="0" Grid.Row="2" Text="RSSI"/>
+            <Label Text="{Binding Rssi}" Grid.Row="2" Grid.Column="1" TextColor="Red" />
+            <Label Text="{Binding Address, StringFormat='Address: {0}'}" Grid.Row="2" Grid.Column="2" FontAttributes="Italic" />
+            <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="3"  x:Name="tLocationName" Text="{Binding LocationName}" Placeholder="{Binding Resources[LocationNameText]}" HorizontalOptions="Fill"     />
+            <controls:PlaceholderEditor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" Text="{Binding LocationName}" Placeholder="{Binding Resources[NoteText]}"  HeightRequest="80"  HorizontalOptions="Fill" />
 
         </Grid>
     </ContentPage.Content>

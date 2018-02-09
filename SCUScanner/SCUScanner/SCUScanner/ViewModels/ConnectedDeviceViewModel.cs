@@ -20,7 +20,8 @@ namespace SCUScanner.ViewModels
         
 
         public ScanResultViewModel DeviceViewModel {get;set;}
-        public ObservableCollection<Group<GattCharacteristicViewModel>> GattCharacteristics { get; } = new ObservableCollection<Group<GattCharacteristicViewModel>>();
+        public GattCharacteristicViewModel MDLCharacteristicViewModel { get; set; }
+    //    public ObservableCollection<Group<GattCharacteristicViewModel>> GattCharacteristics { get; } = new ObservableCollection<Group<GattCharacteristicViewModel>>();
         //public ObservableCollection<GattDescriptorViewModel> GattDescriptors { get; } = new ObservableCollection<GattDescriptorViewModel>();
         public TabbedPage ParentTabbed { get; set; }
         readonly IList<IDisposable> cleanup = new List<IDisposable>();
@@ -64,6 +65,7 @@ namespace SCUScanner.ViewModels
             this.SelectCharacteristic = ReactiveCommand.CreateFromTask <GattCharacteristicViewModel>(async x =>
                                              await x.SelectedGattCharacteristic()
                                             );
+            
 
         }
        
@@ -124,11 +126,24 @@ namespace SCUScanner.ViewModels
 
             }
         }
+        //
+        private string deviceID;
+        public string DeviceID
+        {
+            get => deviceID;
+            set => this.RaiseAndSetIfChanged(ref deviceID, value);
+        }
         private string locationName;
         public string LocationName
         {
             get => locationName;
             set => this.RaiseAndSetIfChanged(ref locationName, value);
+        }
+        private string note;
+        public string Note
+        {
+            get => note;
+            set => this.RaiseAndSetIfChanged(ref note, value);
         }
         public override void OnActivate()
         {
@@ -151,7 +166,8 @@ namespace SCUScanner.ViewModels
 
                        case ConnectionStatus.Disconnected:
                            this.ConnectText = Resources["DisconnectStatusText"];
-                           this.GattCharacteristics.Clear();
+                           this.MDLCharacteristicViewModel = null;
+                         //  this.GattCharacteristics.Clear();
                         //   this.GattDescriptors.Clear();
                            this.Rssi = 0;
                            break;
@@ -183,7 +199,7 @@ namespace SCUScanner.ViewModels
                    var group = new Group<GattCharacteristicViewModel>(service.Uuid.ToString());
                    service
                        .WhenCharacteristicDiscovered()
-                       
+                       .Where(c=>c.Uuid.ToString()==GlobalConstants.CHARACTERUUID)
                        .ObserveOn(RxApp.MainThreadScheduler)
                        .Subscribe(character =>
                        {
@@ -191,6 +207,7 @@ namespace SCUScanner.ViewModels
                            Device.BeginInvokeOnMainThread(() =>
                            {
                                var vm = new GattCharacteristicViewModel(character,device);
+
                                if (vm.CanRead || vm.CanNotify)
                                {
                                    Task.Run( async () =>
@@ -198,13 +215,14 @@ namespace SCUScanner.ViewModels
                                        await vm.SelectedGattCharacteristic(true);
                                    });
                                }
+                               MDLCharacteristicViewModel = vm;
                                group.Add(vm);
-                               //if (group.Count == 1)
-                               var gr = this.GattCharacteristics.FirstOrDefault(g => g.Name == group.Name);
-                               if (gr == null)
-                                   this.GattCharacteristics.Add(group);
-                               else
-                                   this.GattCharacteristics[this.GattCharacteristics.IndexOf(gr)] = group;
+                               ////if (group.Count == 1)
+                               //var gr = this.GattCharacteristics.FirstOrDefault(g => g.Name == group.Name);
+                               //if (gr == null)
+                               //    this.GattCharacteristics.Add(group);
+                               //else
+                               //    this.GattCharacteristics[this.GattCharacteristics.IndexOf(gr)] = group;
 
 
                            });

@@ -199,4 +199,7 @@
   <data name="SaveText" xml:space="preserve">
     <value>Сохранить</value>
   </data>
+  <data name="NoteText" xml:space="preserve">
+    <value>Примечание</value>
+  </data>
 </root>
