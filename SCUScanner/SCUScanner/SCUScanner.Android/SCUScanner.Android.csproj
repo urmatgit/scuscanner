@@ -78,6 +78,9 @@
     <PackageReference Include="ReactiveUI">
       <Version>8.0.0-alpha0117</Version>
     </PackageReference>
+    <PackageReference Include="sqlite-net-standard">
+      <Version>1.5.1</Version>
+    </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.1.1</Version>
     </PackageReference>
