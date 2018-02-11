@@ -12,16 +12,19 @@ using System.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
 using System.Threading;
+using SCUScanner.Models;
+using Newtonsoft.Json;
 
 namespace SCUScanner.ViewModels
 {
     public class ConnectedDeviceViewModel : BaseViewModel
     {
-        
 
+        IDisposable watcher;
         public ScanResultViewModel DeviceViewModel {get;set;}
-        public GattCharacteristicViewModel MDLCharacteristicViewModel { get; set; }
-    //    public ObservableCollection<Group<GattCharacteristicViewModel>> GattCharacteristics { get; } = new ObservableCollection<Group<GattCharacteristicViewModel>>();
+        SCUSendData ScuData { get; set; }
+
+        //    public ObservableCollection<Group<GattCharacteristicViewModel>> GattCharacteristics { get; } = new ObservableCollection<Group<GattCharacteristicViewModel>>();
         //public ObservableCollection<GattDescriptorViewModel> GattDescriptors { get; } = new ObservableCollection<GattDescriptorViewModel>();
         public TabbedPage ParentTabbed { get; set; }
         readonly IList<IDisposable> cleanup = new List<IDisposable>();
@@ -66,7 +69,7 @@ namespace SCUScanner.ViewModels
                                              await x.SelectedGattCharacteristic()
                                             );
             
-
+            
         }
        
         string value;
@@ -145,9 +148,22 @@ namespace SCUScanner.ViewModels
             get => note;
             set => this.RaiseAndSetIfChanged(ref note, value);
         }
+        private int? rpm;
+        public int? RPM
+        {
+            get => rpm;
+            set => this.RaiseAndSetIfChanged(ref rpm, value);
+        }
+        private int? alarmLimit;
+        public int? AlarmLimit
+        {
+            get => alarmLimit;
+            set => this.RaiseAndSetIfChanged(ref alarmLimit, value);
+        }
         public override void OnActivate()
         {
             base.OnActivate();
+            var count = cleanup.Count;
             this.cleanup.Add(this.device
                .WhenStatusChanged()
                .ObserveOn(RxApp.MainThreadScheduler)
@@ -166,7 +182,7 @@ namespace SCUScanner.ViewModels
 
                        case ConnectionStatus.Disconnected:
                            this.ConnectText = Resources["DisconnectStatusText"];
-                           this.MDLCharacteristicViewModel = null;
+                           
                          //  this.GattCharacteristics.Clear();
                         //   this.GattDescriptors.Clear();
                            this.Rssi = 0;
@@ -191,32 +207,57 @@ namespace SCUScanner.ViewModels
             );
             this.cleanup.Add(this.device
                .WhenServiceDiscovered()
-               .Where(c=>c.Uuid.ToString()==GlobalConstants.SERVICEUUID)
+               .Where(c=>c.Uuid.ToString()==GlobalConstants.UUID_MLDP_PRIVATE_SERVICE || c.Uuid.ToString()==GlobalConstants.UUID_TANSPARENT_PRIVATE_SERVICE)
                .Subscribe(service =>
                {
                    if (string.IsNullOrEmpty(service.Uuid.ToString())) return; 
                    ///TODO filter 
-                   var group = new Group<GattCharacteristicViewModel>(service.Uuid.ToString());
+                 //  var group = new Group<GattCharacteristicViewModel>(service.Uuid.ToString());
                    service
                        .WhenCharacteristicDiscovered()
-                       .Where(c=>c.Uuid.ToString()==GlobalConstants.CHARACTERUUID)
+                       .Where(c=> InListCharacters(c.Uuid.ToString()))
                        .ObserveOn(RxApp.MainThreadScheduler)
                        .Subscribe(character =>
                        {
                             
+                           
                            Device.BeginInvokeOnMainThread(() =>
                            {
-                               var vm = new GattCharacteristicViewModel(character,device);
 
-                               if (vm.CanRead || vm.CanNotify)
+                               if (character.CanRead())
                                {
-                                   Task.Run( async () =>
+                                   //Task.Run(async () =>
+                                   //{
+                                   var result = character.Read() .Subscribe(x =>
                                    {
-                                       await vm.SelectedGattCharacteristic(true);
+                                       GetValue(x);
                                    });
+                                   //});
+
                                }
-                               MDLCharacteristicViewModel = vm;
-                               group.Add(vm);
+                               if (character.CanNotify())
+                               {
+                                   
+                                   
+                                   this.watcher = character
+                                    .RegisterAndNotify()
+                                    .Subscribe(x =>
+                                        {
+                                            GetValue(x);
+                                        });
+                               }
+
+                               //var vm = new GattCharacteristicViewModel(character,device);
+
+                               //if (vm.CanRead || vm.CanNotify)
+                               //{
+                               //    Task.Run( async () =>
+                               //    {
+                               //        await vm.SelectedGattCharacteristic(true);
+                               //    });
+                               //}
+                               //MDLCharacteristicViewModel = vm;
+                             //  group.Add(vm);
                                ////if (group.Count == 1)
                                //var gr = this.GattCharacteristics.FirstOrDefault(g => g.Name == group.Name);
                                //if (gr == null)
@@ -242,12 +283,44 @@ namespace SCUScanner.ViewModels
                })
                );
         }
-      
+        private bool InListCharacters(string uuid)
+        {
+            
+            if (uuid.Equals(GlobalConstants.UUID_MLDP_DATA_PRIVATE_CHAR) || uuid.Equals(GlobalConstants.UUID_TRANSPARENT_RX_PRIVATE_CHAR) || uuid.Equals(GlobalConstants.UUID_TRANSPARENT_TX_PRIVATE_CHAR))
+                return true;
+            return false;
+                
+        }
+         private void GetValue(CharacteristicGattResult readresult)
+        {
+            this.LastValue = DateTime.Now;
+            ScuData = null;
+            if (!readresult.Success)
+                this.Value = "ERROR - " + readresult.ErrorMessage;
+
+            else if (readresult.Data == null)
+                this.Value = "EMPTY";
+
+            else
+            {
+                this.Value = Encoding.UTF8.GetString(readresult.Data, 0, readresult.Data.Length);
+                RPM = null;
+                AlarmLimit = null;
+                if (!string.IsNullOrEmpty(this.Value))
+                {
+                   ScuData=  JsonConvert.DeserializeObject<SCUSendData>(this.Value);
+                    RPM = ScuData.S;
+                    AlarmLimit = ScuData.A;
+                }
+
+            }
+        }
         public override void OnDeactivate()
         {
             base.OnDeactivate();
             foreach (var item in this.cleanup)
                 item.Dispose();
+            
         }
     }
 }

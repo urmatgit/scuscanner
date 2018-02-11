@@ -22,6 +22,10 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding DeviceID}" Font="bold,16"/>
@@ -34,6 +38,10 @@
             <Label Text="{Binding Address, StringFormat='Address: {0}'}" Grid.Row="2" Grid.Column="2" FontAttributes="Italic" />
             <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="3"  x:Name="tLocationName" Text="{Binding LocationName}" Placeholder="{Binding Resources[LocationNameText]}" HorizontalOptions="Fill"     />
             <controls:PlaceholderEditor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" Text="{Binding LocationName}" Placeholder="{Binding Resources[NoteText]}"  HeightRequest="80"  HorizontalOptions="Fill" />
+            <Label Text="{Binding Value}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5"/>
+            <Label   Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="6" Text="{Binding RPM, StringFormat='RPM: {0}'}"/>
+            <Label    Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="7" Text="{Binding AlarmLimit, StringFormat='Alarm limit: {0}'}"/>
+
 
         </Grid>
     </ContentPage.Content>
