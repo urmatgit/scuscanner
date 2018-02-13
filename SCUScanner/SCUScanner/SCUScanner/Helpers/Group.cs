@@ -13,7 +13,7 @@ namespace SCUScanner.Helpers
             this.ShortName = shortName;
         }
 
-
+        
         public string Name { get; }
         public string ShortName { get; }
     }

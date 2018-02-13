@@ -190,4 +190,13 @@
   <data name="InfoPermissionLocationText" xml:space="preserve">
     <value>Чтобы получить доступ к аппаратным идентификаторам близлежащих внешних устройств через сканирование Bluetooth и Wi-Fi, ваше приложение должно теперь иметь разрешения ACCESS_FINE_LOCATION или ACCESS_COARSE_LOCATION</value>
   </data>
+  <data name="LocationNameText" xml:space="preserve">
+    <value>Местоположения</value>
+  </data>
+  <data name="MainText" xml:space="preserve">
+    <value>Главный</value>
+  </data>
+  <data name="SaveText" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
 </root>

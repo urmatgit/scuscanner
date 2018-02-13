@@ -59,7 +59,7 @@ namespace SCUScanner.Pages
                    new[]
                        {
                        
-                            new MasterDetailPageMenuItem(typeof(DevicesTabbedPage)) { Id = 0, IconSource="technology.png", PageCode="DataText",  Title =settings==null?SCUScanner.Resources.AppResource.DataText : settings.Resources["DataText"] },
+                            new MasterDetailPageMenuItem(typeof(MainTabbedPage)) { Id = 0, IconSource="technology.png", PageCode="MainText",  Title =settings==null?SCUScanner.Resources.AppResource.MainText : settings.Resources["MainText"] },
                             //new MasterDetailPageMenuItem(typeof(ScanBluetoothPage)) { Id = 0, IconSource="technology.png", PageCode="DataText",  Title =settings==null?SCUScanner.Resources.AppResource.DataText : settings.Resources["DataText"] },
                             new MasterDetailPageMenuItem(typeof(Settings)) { Id = 1,IconSource="cogwheel.png",PageCode="SettingsText",Title =settings==null?SCUScanner.Resources.AppResource.SettingsText : settings.Resources["SettingsText"]},
                             new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 1,IconSource="graduation.png", PageCode="HelpText", Title = settings==null?SCUScanner.Resources.AppResource.HelpText : settings.Resources["HelpText"]  },

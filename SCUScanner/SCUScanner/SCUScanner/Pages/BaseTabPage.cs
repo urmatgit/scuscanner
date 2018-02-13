@@ -18,5 +18,6 @@ namespace SCUScanner.Pages
                 SetValue(TabbedProperty, value);
             }
         }
+        public string Kod { get; set; }
     }
 }

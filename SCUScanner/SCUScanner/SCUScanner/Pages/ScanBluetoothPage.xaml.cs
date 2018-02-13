@@ -23,7 +23,7 @@ namespace SCUScanner.Pages
 		public ScanBluetoothPage ()
 		{
 			InitializeComponent ();
-            
+            Kod = GlobalConstants.MAIN_TAB_PAGE;   
             BindingContext = new ScanBluetoothViewModel(Tabbed);
             lblHintBluetoothAndroidText.IsVisible = !(lblHintBluetoothIOSText.IsVisible = Device.RuntimePlatform == Device.iOS);
             

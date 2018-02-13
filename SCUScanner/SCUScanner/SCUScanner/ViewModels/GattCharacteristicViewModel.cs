@@ -14,6 +14,7 @@ namespace SCUScanner.ViewModels
 {
    public class GattCharacteristicViewModel : BaseViewModel
     {
+        IDevice BleDevice;
         IDisposable watcher;
         public IGattCharacteristic Characteristic { get; }
         public ICommand SendCommand { get; }
@@ -25,17 +26,23 @@ namespace SCUScanner.ViewModels
             get => this.valueToWrite;
             set => this.RaiseAndSetIfChanged(ref this.valueToWrite, value);
         }
-        public async  Task SelectedGattCharacteristic( )
+        public async  Task SelectedGattCharacteristic(bool? isDisplayUtf8=null)
         {
-            IsDisplayUtf8 = null;
+            IsDisplayUtf8 = isDisplayUtf8;
             if (CanRead)
             {
+                
                 var value = await Characteristic
                       .Read()
                       //.Timeout(TimeSpan.FromSeconds(3))
                       .ToTask();
 
-                IsDisplayUtf8 = await App.Dialogs.ConfirmAsync("Display Value as UTF8 or HEX?", okText: "UTF8", cancelText: "HEX");
+                if (IsDisplayUtf8==null)
+                    IsDisplayUtf8 = await App.Dialogs.ConfirmAsync("Display Value as UTF8 or HEX?", okText: "UTF8", cancelText: "HEX");
+                if (BleDevice.Features.HasFlag(DeviceFeatures.MtuRequests))
+                {
+                    var actual = await BleDevice.RequestMtu(512);
+                }
                 this.SetReadValue(this, value, IsDisplayUtf8.Value);
 
             }
@@ -52,14 +59,16 @@ namespace SCUScanner.ViewModels
                     .RegisterAndNotify()
                     .Subscribe(x =>
                     {
-                        this.SetReadValue(this, x, IsDisplayUtf8.Value);
+                        
+                        this.SetReadValue(this, x, IsDisplayUtf8 ?? true);
                     });
 
 
             }
         }
-        public GattCharacteristicViewModel(IGattCharacteristic characteristic)
+        public GattCharacteristicViewModel(IGattCharacteristic characteristic,IDevice device)
         {
+            BleDevice = device;
             Characteristic = characteristic;
             ReadCommand = ReactiveCommand.CreateFromTask(async () => {
                 await SelectedGattCharacteristic();
@@ -147,6 +156,7 @@ namespace SCUScanner.ViewModels
 
             this.LastValue = DateTime.Now;
             selectedGatt.LastValue = DateTime.Now;
+            
             if (!result.Success)
                 this.Value = "ERROR - " + result.ErrorMessage;
 

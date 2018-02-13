@@ -32,7 +32,7 @@ namespace SCUScanner.ViewModels
         {
             device = selectedDevice.Device;
             DeviceViewModel = selectedDevice;
-
+            IsVisibleLayout = true;
             this.DisconnectCommand = ReactiveCommand.Create(() =>
                {
                    try
@@ -113,6 +113,23 @@ namespace SCUScanner.ViewModels
             get => this.connectText;
             private set => this.RaiseAndSetIfChanged(ref this.connectText, value);
         }
+        private bool isVisibleLayout = false;
+        public bool IsVisibleLayout
+        {
+            get => isVisibleLayout;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref this.isVisibleLayout, value);
+
+
+            }
+        }
+        private string locationName;
+        public string LocationName
+        {
+            get => locationName;
+            set => this.RaiseAndSetIfChanged(ref locationName, value);
+        }
         public override void OnActivate()
         {
             base.OnActivate();
@@ -158,28 +175,48 @@ namespace SCUScanner.ViewModels
             );
             this.cleanup.Add(this.device
                .WhenServiceDiscovered()
+               .Where(c=>c.Uuid.ToString()==GlobalConstants.SERVICEUUID)
                .Subscribe(service =>
                {
                    if (string.IsNullOrEmpty(service.Uuid.ToString())) return; 
+                   ///TODO filter 
                    var group = new Group<GattCharacteristicViewModel>(service.Uuid.ToString());
                    service
                        .WhenCharacteristicDiscovered()
+                       
                        .ObserveOn(RxApp.MainThreadScheduler)
                        .Subscribe(character =>
                        {
-                           if (group.FirstOrDefault(f => f.Uuid==character.Uuid) == null)
+                            
+                           Device.BeginInvokeOnMainThread(() =>
                            {
-                               var vm = new GattCharacteristicViewModel(character);
-                               
+                               var vm = new GattCharacteristicViewModel(character,device);
+                               if (vm.CanRead || vm.CanNotify)
+                               {
+                                   Task.Run( async () =>
+                                   {
+                                       await vm.SelectedGattCharacteristic(true);
+                                   });
+                               }
                                group.Add(vm);
-                           }
-                           if (group.Count == 1 && this.GattCharacteristics.FirstOrDefault(g=>g.Name== group.Name)==null)
-                               this.GattCharacteristics.Add(group);
+                               //if (group.Count == 1)
+                               var gr = this.GattCharacteristics.FirstOrDefault(g => g.Name == group.Name);
+                               if (gr == null)
+                                   this.GattCharacteristics.Add(group);
+                               else
+                                   this.GattCharacteristics[this.GattCharacteristics.IndexOf(gr)] = group;
+
+
+                           });
+
+                           //if (group.Count == 1 && this.GattCharacteristics.FirstOrDefault(g=>g.Name== group.Name)==null)
+                           //    this.GattCharacteristics.Add(group);
 
                            //character
                            //    .WhenDescriptorDiscovered()
                            //    .Subscribe(desc => Device.BeginInvokeOnMainThread(() =>
                            //    {
+                           //        this.GattCharacteristics.add
                            //        var dvm = new GattDescriptorViewModel(this.Dialogs, desc);
                            //        this.GattDescriptors.Add(dvm);
                            //    }));

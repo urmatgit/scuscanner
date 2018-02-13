@@ -136,6 +136,9 @@
   <data name="MaintenanceText" xml:space="preserve">
     <value>维护</value>
   </data>
+  <data name="MainText" xml:space="preserve">
+    <value>主</value>
+  </data>
   <data name="ManualScanText" xml:space="preserve">
     <value>手动扫描</value>
   </data>
