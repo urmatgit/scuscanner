@@ -6,7 +6,7 @@
              x:Class="SCUScanner.Pages.CharacterPage"
                    x:Name="ConnectedDevice">
     <TabbedPage.ToolbarItems  >
-        <controls:HideableToolbarItem     IsVisible="{Binding IsVisibleLayout}"  Text="{Binding  Resources[SaveText]}" Command="{Binding ScanToggleCommand}" Order="Primary" Priority="1"    />
+        <controls:HideableToolbarItem     IsVisible="{Binding IsVisibleLayout}"  Text="{Binding  Resources[SaveText]}" Command="{Binding SaveCommand}" Order="Primary" Priority="1"    />
 
     </TabbedPage.ToolbarItems>
     <ContentPage.Content>
@@ -37,7 +37,7 @@
             <Label Text="{Binding Rssi}" Grid.Row="2" Grid.Column="1" TextColor="Red" />
             <Label Text="{Binding Address, StringFormat='Address: {0}'}" Grid.Row="2" Grid.Column="2" FontAttributes="Italic" />
             <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="3"  x:Name="tLocationName" Text="{Binding LocationName}" Placeholder="{Binding Resources[LocationNameText]}" HorizontalOptions="Fill"     />
-            <controls:PlaceholderEditor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" Text="{Binding LocationName}" Placeholder="{Binding Resources[NoteText]}"  HeightRequest="80"  HorizontalOptions="Fill" />
+            <controls:PlaceholderEditor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" Text="{Binding Note}" Placeholder="{Binding Resources[NoteText]}"  HeightRequest="80"  HorizontalOptions="Fill" />
             <Label Text="{Binding Value}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5"/>
             <Label   Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="6" Text="{Binding RPM, StringFormat='RPM: {0}'}"/>
             <Label    Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="7" Text="{Binding AlarmLimit, StringFormat='Alarm limit: {0}'}"/>

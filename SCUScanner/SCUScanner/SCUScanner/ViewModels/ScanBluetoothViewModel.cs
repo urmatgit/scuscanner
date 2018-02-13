@@ -120,20 +120,7 @@ namespace SCUScanner.ViewModels
                     if ( device.Status == ConnectionStatus.Disconnected)
                     {
                         Debug.WriteLine("connection");
-                        //Only for LE Simulator
-                        //if (!device.Features.HasFlag(DeviceFeatures.PairingRequests))
-                        //{
-                        //    App.Dialogs.Alert("Pairing is not supported on this platform");
-                        //}
-                        //else 
-                        //if (device.PairingStatus == PairingStatus.Paired)
-                        //{
-                        //    //App.Dialogs.Alert("Device is already paired");
-                        //}
-                        //else
-                        //{
-                        //    await device.PairingRequest();
-                        //}
+                        
 
                         using (var cancelSrc = new CancellationTokenSource())
                         {

@@ -31,9 +31,10 @@ namespace SCUScanner.ViewModels
         IDevice device;
         public ICommand DisconnectCommand { get; }
         public ICommand SelectCharacteristic { get; }
-        
+        public ICommand SaveCommand { get; }
         public ConnectedDeviceViewModel(ScanResultViewModel selectedDevice)
         {
+            
             device = selectedDevice.Device;
             DeviceViewModel = selectedDevice;
             IsVisibleLayout = true;
@@ -68,7 +69,29 @@ namespace SCUScanner.ViewModels
             this.SelectCharacteristic = ReactiveCommand.CreateFromTask <GattCharacteristicViewModel>(async x =>
                                              await x.SelectedGattCharacteristic()
                                             );
-            
+            SaveCommand = ReactiveCommand.CreateFromTask(async () =>
+              {
+                  if (ScuData == null) return;
+                  SCUItem scuitem = null;
+                  lock (ScuData)
+                  {
+                           scuitem = new SCUItem()
+                          {
+                              ID = ScuData.ID,
+                              MacAddress=Address,
+                              DateWithTime= this.LastValue,
+                              Speed=ScuData.S,
+                              Location=LocationName,
+                              Comment=Note,
+                              Operator=""
+                           };
+                          
+                      }
+                  
+                  await App.Database.SaveItemAsync(scuitem);
+
+
+              });
             
         }
        
@@ -308,7 +331,13 @@ namespace SCUScanner.ViewModels
                 AlarmLimit = null;
                 if (!string.IsNullOrEmpty(this.Value))
                 {
-                   ScuData=  JsonConvert.DeserializeObject<SCUSendData>(this.Value);
+                    try
+                    {
+                        ScuData = JsonConvert.DeserializeObject<SCUSendData>(this.Value);
+                    }catch (Exception er)
+                    {
+                        App.Dialogs.Alert("Deserialize datat error- \n" + er.Message);
+                    }
                     RPM = ScuData.S;
                     AlarmLimit = ScuData.A;
                 }
