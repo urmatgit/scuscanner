@@ -2,9 +2,15 @@
 <pages:BaseTabPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:SCUScanner.Helpers"
+             xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
               xmlns:pages="clr-namespace:SCUScanner.Pages"
              x:Class="SCUScanner.Pages.CharacterPage"
                    x:Name="ConnectedDevice">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <controls:GuageValueConverter x:Key="ValueToGuage" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <TabbedPage.ToolbarItems  >
         <controls:HideableToolbarItem     IsVisible="{Binding IsVisibleLayout}"  Text="{Binding  Resources[SaveText]}" Command="{Binding SaveCommand}" Order="Primary" Priority="1"    />
 
@@ -23,9 +29,9 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <!--<RowDefinition Height="auto"/>-->
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding DeviceID}" Font="bold,16"/>
@@ -37,12 +43,38 @@
             <Label Text="{Binding Rssi}" Grid.Row="2" Grid.Column="1" TextColor="Red" />
             <Label Text="{Binding Address, StringFormat='Address: {0}'}" Grid.Row="2" Grid.Column="2" FontAttributes="Italic" />
             <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="3"  x:Name="tLocationName" Text="{Binding LocationName}" Placeholder="{Binding Resources[LocationNameText]}" HorizontalOptions="Fill"     />
-            <controls:PlaceholderEditor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" Text="{Binding Note}" Placeholder="{Binding Resources[NoteText]}"  HeightRequest="80"  HorizontalOptions="Fill" />
-            <Label Text="{Binding Value}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5"/>
-            <Label   Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="6" Text="{Binding RPM, StringFormat='RPM: {0}'}"/>
-            <Label    Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="7" Text="{Binding AlarmLimit, StringFormat='Alarm limit: {0}'}"/>
-
-
+            <controls:PlaceholderEditor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" Text="{Binding Note}" Placeholder="{Binding Resources[NoteText]}"  HeightRequest="50"  HorizontalOptions="Fill" />
+            <!--<Label Text="{Binding Value}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5"/>-->
+            <Label   Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Text="{Binding RPM, StringFormat='RPM: {0}'}"/>
+            <Label    Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5" Text="{Binding AlarmLimit, StringFormat='Alarm limit: {0}'}"/>
+            <gauge:SfCircularGauge x:Name="circulargauge"  Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="4" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <gauge:SfCircularGauge.Scales  >
+                    <gauge:Scale    StartValue="0" EndValue="10" Interval="1"   LabelColor="Black" LabelOffset="0.8" LabelFontSize="16">
+                        <!--UseRangeColorForLabels="True"-->
+                        <gauge:Scale.MajorTickSettings>
+                            <gauge:TickSettings Length="26" Color ="Gray"  />
+                            
+                        </gauge:Scale.MajorTickSettings>
+                        
+                        <gauge:Scale.Ranges>
+                            <gauge:Range StartValue="0" EndValue="7" Thickness="10" Color="#2bbfb8" Offset="1" />
+                            <gauge:Range StartValue="7" EndValue="10" Thickness="10" Color="Red" Offset="1" />
+                    </gauge:Scale.Ranges>
+                        <gauge:Scale.Pointers>
+                            <gauge:NeedlePointer x:Name="pointer1" Value="{Binding RPM,Converter={StaticResource ValueToGuage}}"  Color="Blue"  EnableAnimation="False" LengthFactor="0.7"/>
+                            <gauge:NeedlePointer x:Name="pointer2" Value="{Binding AlarmLimit,Converter={StaticResource ValueToGuage}}"  Color="Red"  EnableAnimation="False" LengthFactor="0.7"/>
+                        </gauge:Scale.Pointers>
+                        <!--<gauge:Scale.Pointers>
+                            <gauge:NeedlePointer Value="6" KnobRadius="20" Color="Red" 
+                                    Thickness="5" KnobColor="#2bbfb8"  LengthFactor="0.8"/>
+                        </gauge:Scale.Pointers>
+                        <gauge:Scale.Pointers>
+                            <gauge:NeedlePointer Value="8" KnobRadius="20" Color="Blue" 
+                                    Thickness="5" KnobColor="#2bbfb8"  LengthFactor="0.8"/>
+                        </gauge:Scale.Pointers>-->
+                    </gauge:Scale>
+            </gauge:SfCircularGauge.Scales>
+            </gauge:SfCircularGauge>
         </Grid>
     </ContentPage.Content>
     

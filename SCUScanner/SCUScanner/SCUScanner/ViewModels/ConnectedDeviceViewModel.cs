@@ -23,7 +23,7 @@ namespace SCUScanner.ViewModels
         IDisposable watcher;
         public ScanResultViewModel DeviceViewModel {get;set;}
         SCUSendData ScuData { get; set; }
-
+        object forLock;
         //    public ObservableCollection<Group<GattCharacteristicViewModel>> GattCharacteristics { get; } = new ObservableCollection<Group<GattCharacteristicViewModel>>();
         //public ObservableCollection<GattDescriptorViewModel> GattDescriptors { get; } = new ObservableCollection<GattDescriptorViewModel>();
         public TabbedPage ParentTabbed { get; set; }
@@ -73,8 +73,7 @@ namespace SCUScanner.ViewModels
               {
                   if (ScuData == null) return;
                   SCUItem scuitem = null;
-                  lock (ScuData)
-                  {
+                  
                            scuitem = new SCUItem()
                           {
                               ID = ScuData.ID,
@@ -86,10 +85,10 @@ namespace SCUScanner.ViewModels
                               Operator=""
                            };
                           
-                      }
+                 
                   
-                  await App.Database.SaveItemAsync(scuitem);
-
+                var id=  await App.Database.SaveItemAsync(scuitem);
+                  await App.Dialogs.AlertAsync("Item saved");
 
               });
             
@@ -317,31 +316,44 @@ namespace SCUScanner.ViewModels
          private void GetValue(CharacteristicGattResult readresult)
         {
             this.LastValue = DateTime.Now;
-            ScuData = null;
-            if (!readresult.Success)
-                this.Value = "ERROR - " + readresult.ErrorMessage;
+           
+                ScuData = null;
+                if (!readresult.Success)
+                    this.Value = "ERROR - " + readresult.ErrorMessage;
 
-            else if (readresult.Data == null)
-                this.Value = "EMPTY";
+                else if (readresult.Data == null)
+                    this.Value = "EMPTY";
 
-            else
-            {
-                this.Value = Encoding.UTF8.GetString(readresult.Data, 0, readresult.Data.Length);
-                RPM = null;
-                AlarmLimit = null;
-                if (!string.IsNullOrEmpty(this.Value))
+                else
                 {
-                    try
+                    this.Value = Encoding.UTF8.GetString(readresult.Data, 0, readresult.Data.Length);
+                    RPM = null;
+                    AlarmLimit = null;
+                    if (!string.IsNullOrEmpty(this.Value))
                     {
-                        ScuData = JsonConvert.DeserializeObject<SCUSendData>(this.Value);
-                    }catch (Exception er)
-                    {
-                        App.Dialogs.Alert("Deserialize datat error- \n" + er.Message);
-                    }
-                    RPM = ScuData.S;
-                    AlarmLimit = ScuData.A;
-                }
+                        try
+                        {
+                            //
+                            string val = this.Value;
+                            if (!string.IsNullOrEmpty(val))
+                            {
+                                val = val
+                                    .Replace("\"ID\":", "\"ID\":\"")
+                                    .Replace(",\"SN\":", "\",\"SN\":\"")
+                                    .Replace(",\"C\":", "\",\"C\":");
+                                ScuData = JsonConvert.DeserializeObject<SCUSendData>(val);
+                            }
 
+                        }
+                        catch (Exception er)
+                        {
+                            App.Dialogs.Alert("Deserialize datat error- \n" + er.Message);
+                        }
+                        RPM = ScuData.S;
+                        AlarmLimit = ScuData.A;
+                    }
+
+               
             }
         }
         public override void OnDeactivate()

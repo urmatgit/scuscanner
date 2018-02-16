@@ -38,10 +38,10 @@ namespace SCUScanner.Services
         }
         public async Task<int> SaveItemAsync(SCUItem item)
         {
-            if (item.Id != 0)
+            if (item._Id != 0)
             {
                 await database.UpdateAsync(item);
-                return item.Id;
+                return item._Id;
             }
             else
             {

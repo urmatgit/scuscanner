@@ -12,6 +12,8 @@
     <PackageReference Include="Plugin.Permissions" Version="2.2.1" />
     <PackageReference Include="ReactiveUI" Version="8.0.0-alpha0117" />
     <PackageReference Include="sqlite-net-standard" Version="1.5.1" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="15.4.0.20" />
+    <PackageReference Include="Syncfusion.Xamarin.SfGauge" Version="15.4.0.20" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />
   </ItemGroup>
@@ -41,6 +43,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\ScanBluetoothPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\SCUItemsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\SettingsLanguagePage.xaml">

@@ -8,7 +8,7 @@ namespace SCUScanner.Models
     public class SCUItem
     {
         [PrimaryKey, AutoIncrement, Column("_id")]
-        public int Id { get; set; }
+        public int _Id { get; set; }
         public string ID { get; set; }
         public string MacAddress { get; set; }
         public DateTime DateWithTime { get; set; }

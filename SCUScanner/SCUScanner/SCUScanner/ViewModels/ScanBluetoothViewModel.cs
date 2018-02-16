@@ -193,6 +193,7 @@ namespace SCUScanner.ViewModels
                             StopScanning.Start();
                         this.scan = App.BleAdapter
                             .Scan()
+//                            .Where(r=>r.AdvertisementData.ServiceUuids!=null && r.AdvertisementData.ServiceUuids?.Length>0) //filter where service >0
                             .Buffer(TimeSpan.FromSeconds(1))
                             .ObserveOn(RxApp.MainThreadScheduler)
                             .Subscribe(results =>
@@ -256,8 +257,8 @@ namespace SCUScanner.ViewModels
                 dev.TrySet(result);
                 
                 
-                
-                this.Devices.Add(dev);
+              //  if (dev.ServiceCount>0)
+                    this.Devices.Add(dev);
             }
          //   UpdateButtonText(dev);
         }
