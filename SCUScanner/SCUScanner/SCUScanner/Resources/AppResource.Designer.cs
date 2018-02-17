@@ -107,6 +107,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connected Device.
+        /// </summary>
+        internal static string ConnectedDeviceCaptionText {
+            get {
+                return ResourceManager.GetString("ConnectedDeviceCaptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connecting....
         /// </summary>
         internal static string ConnectingText {
@@ -139,6 +148,15 @@ namespace SCUScanner.Resources {
         internal static string DataText {
             get {
                 return ResourceManager.GetString("DataText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Device Settings.
+        /// </summary>
+        internal static string DeviceSettingsCaptionText {
+            get {
+                return ResourceManager.GetString("DeviceSettingsCaptionText", resourceCulture);
             }
         }
         
@@ -220,6 +238,15 @@ namespace SCUScanner.Resources {
         internal static string ManualScanText {
             get {
                 return ResourceManager.GetString("ManualScanText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nearby Devices.
+        /// </summary>
+        internal static string NearbyDevicesCaptionText {
+            get {
+                return ResourceManager.GetString("NearbyDevicesCaptionText", resourceCulture);
             }
         }
         

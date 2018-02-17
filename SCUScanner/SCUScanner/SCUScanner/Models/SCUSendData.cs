@@ -17,5 +17,7 @@ namespace SCUScanner.Models
         public int W { get; set; }
         public int COpc { get; set; }
         public int CO { get; set; }
+        public int HR { get; set; }
+        public int EL { get; set; }
     }
 }

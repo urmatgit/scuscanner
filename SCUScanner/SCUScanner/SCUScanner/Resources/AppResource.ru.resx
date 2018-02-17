@@ -202,4 +202,13 @@
   <data name="NoteText" xml:space="preserve">
     <value>Примечание</value>
   </data>
+  <data name="ConnectedDeviceCaptionText" xml:space="preserve">
+    <value>Подключенное устройство</value>
+  </data>
+  <data name="DeviceSettingsCaptionText" xml:space="preserve">
+    <value>Параметры устройства</value>
+  </data>
+  <data name="NearbyDevicesCaptionText" xml:space="preserve">
+    <value>Близлежащие устройства</value>
+  </data>
 </root>
