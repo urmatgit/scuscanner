@@ -23,6 +23,7 @@ namespace SCUScanner.ViewModels
         IDisposable watcher;
         public ScanResultViewModel DeviceViewModel {get;set;}
         SCUSendData ScuData { get; set; }
+        System.Timers.Timer TimerAlarm;
         object forLock;
         //    public ObservableCollection<Group<GattCharacteristicViewModel>> GattCharacteristics { get; } = new ObservableCollection<Group<GattCharacteristicViewModel>>();
         //public ObservableCollection<GattDescriptorViewModel> GattDescriptors { get; } = new ObservableCollection<GattDescriptorViewModel>();
@@ -36,8 +37,9 @@ namespace SCUScanner.ViewModels
         {
             HRS = 250;
             AlarmHours = 700;
-
-
+            TimerAlarm = new System.Timers.Timer();
+            TimerAlarm.Interval = 500;
+            TimerAlarm.Elapsed += TimerAlarm_Elapsed;
             device = selectedDevice.Device;
             Name = device?.Name;
             DeviceViewModel = selectedDevice;
@@ -100,11 +102,44 @@ namespace SCUScanner.ViewModels
 
 
               });
-            
-            
+
+            this.WhenAnyValue(vm => vm.StatusColor).Subscribe(c =>
+            {
+                if (c == Color.Red || c == Color.Yellow)
+                {
+                    if (!TimerChangeColor)
+                        TimerAlarm.Start();
+                }
+                else
+                    TimerAlarm.Stop();
+            });
           //  StatusColor = Color.Green;
         }
+        Color oldColor=Color.White;
+        bool TimerChangeColor = false;
+        private void TimerAlarm_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            TimerAlarm.Stop();
+            if (StatusColor==Color.Red || StatusColor == Color.Yellow || StatusColor == Color.White)
+            {
+                TimerChangeColor = true;
+                if (StatusColor != Color.White)
+                {
+                    oldColor = StatusColor;
+                    StatusColor = Color.White;
+                }
+                else
+                {
+                    StatusColor = oldColor;
+                    oldColor = Color.White;
+                }
+                TimerChangeColor = false;
+                TimerAlarm.Start();
+            }
+              
 
+            
+        }
 
         string value;
         public string Value
@@ -412,6 +447,7 @@ namespace SCUScanner.ViewModels
                     SN = ScuData.SN;
                     Warning = ScuData.W;
                     StatusColor = ChangeStatusColor(RPM, Warning, AlarmLimit);
+                  
                 }
 
                
