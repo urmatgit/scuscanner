@@ -194,7 +194,7 @@ Turn On Bluetooth and press </value>
     <value>Location name</value>
   </data>
   <data name="MainText" xml:space="preserve">
-    <value>Main</value>
+    <value>Nearby Devices</value>
   </data>
   <data name="SaveText" xml:space="preserve">
     <value>Save</value>
@@ -210,5 +210,14 @@ Turn On Bluetooth and press </value>
   </data>
   <data name="NearbyDevicesCaptionText" xml:space="preserve">
     <value>Nearby Devices</value>
+  </data>
+  <data name="OperatorNameText" xml:space="preserve">
+    <value>Operator</value>
+  </data>
+  <data name="DownloadText" xml:space="preserve">
+    <value>Download Manual</value>
+  </data>
+  <data name="StatusText" xml:space="preserve">
+    <value>Status</value>
   </data>
 </root>

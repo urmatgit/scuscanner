@@ -188,6 +188,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download Manual.
+        /// </summary>
+        internal static string DownloadText {
+            get {
+                return ResourceManager.GetString("DownloadText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Help.
         /// </summary>
         internal static string HelpText {
@@ -224,7 +233,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Main.
+        ///   Looks up a localized string similar to Nearby Devices.
         /// </summary>
         internal static string MainText {
             get {
@@ -265,6 +274,15 @@ namespace SCUScanner.Resources {
         internal static string OkText {
             get {
                 return ResourceManager.GetString("OkText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operator.
+        /// </summary>
+        internal static string OperatorNameText {
+            get {
+                return ResourceManager.GetString("OperatorNameText", resourceCulture);
             }
         }
         

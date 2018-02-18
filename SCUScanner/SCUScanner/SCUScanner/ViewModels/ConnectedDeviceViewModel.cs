@@ -34,8 +34,12 @@ namespace SCUScanner.ViewModels
         public ICommand SaveCommand { get; }
         public ConnectedDeviceViewModel(ScanResultViewModel selectedDevice)
         {
-            
+            HRS = 250;
+            AlarmHours = 700;
+
+
             device = selectedDevice.Device;
+            Name = device?.Name;
             DeviceViewModel = selectedDevice;
             IsVisibleLayout = true;
             this.DisconnectCommand = ReactiveCommand.Create(() =>
@@ -71,6 +75,7 @@ namespace SCUScanner.ViewModels
                                             );
             SaveCommand = ReactiveCommand.CreateFromTask(async () =>
               {
+                  return;// пока отключаем
                   if (ScuData == null) return;
                   SCUItem scuitem = null;
                   
@@ -84,16 +89,23 @@ namespace SCUScanner.ViewModels
                               Comment=Note,
                               Operator=""
                            };
-                          
-                 
-                  
-                var id=  await App.Database.SaveItemAsync(scuitem);
-                  await App.Dialogs.AlertAsync("Item saved");
+
+
+
+                  using (App.Dialogs.Loading(Resources["SavingText"]))
+                  {
+                      var id = await App.Database.SaveItemAsync(scuitem);
+                  }
+                      
+
 
               });
             
+            
+          //  StatusColor = Color.Green;
         }
-       
+
+
         string value;
         public string Value
         {
@@ -158,6 +170,12 @@ namespace SCUScanner.ViewModels
             get => deviceID;
             set => this.RaiseAndSetIfChanged(ref deviceID, value);
         }
+        private string operatorName;
+        public string OperatorName
+        {
+            get => operatorName;
+            set => this.RaiseAndSetIfChanged(ref operatorName, value);
+        }
         private string locationName;
         public string LocationName
         {
@@ -170,18 +188,58 @@ namespace SCUScanner.ViewModels
             get => note;
             set => this.RaiseAndSetIfChanged(ref note, value);
         }
+        private int warning;
+        /// <summary>
+        /// W – Warning (уровень предупреждения) 
+        /// </summary>
+        public int Warning
+        {
+            get => warning;
+            set => this.RaiseAndSetIfChanged(ref warning, value);
+        }
         private int? rpm;
-        public int? RPM
+        /// <summary>
+        /// S-Speed текущая скорость вращения мотора, 
+        /// </summary>
+        public int? RPM 
         {
             get => rpm;
             set => this.RaiseAndSetIfChanged(ref rpm, value);
         }
         private int? alarmLimit;
+        /// <summary>
+        /// A -Alarm Level (уровень тревоги), 
+        /// </summary>
         public int? AlarmLimit
         {
             get => alarmLimit;
             set => this.RaiseAndSetIfChanged(ref alarmLimit, value);
         }
+        private string sn;
+        public string SN
+        {
+            get => sn;
+            set => this.RaiseAndSetIfChanged(ref sn, value);
+        }
+        private int hrs;
+        public int HRS
+        {
+            get => hrs;
+            set => this.RaiseAndSetIfChanged(ref hrs, value);
+        }
+        private int alarmHours;
+        public int AlarmHours
+        {
+            get => alarmHours;
+            set => this.RaiseAndSetIfChanged(ref alarmHours, value);
+        }
+        private Color statusColor;
+        public Color StatusColor
+        {
+            get => statusColor;
+            set => this.RaiseAndSetIfChanged(ref statusColor, value);
+        }
+        
         public override void OnActivate()
         {
             base.OnActivate();
@@ -327,34 +385,44 @@ namespace SCUScanner.ViewModels
                 else
                 {
                     this.Value = Encoding.UTF8.GetString(readresult.Data, 0, readresult.Data.Length);
-                    RPM = null;
-                    AlarmLimit = null;
-                    if (!string.IsNullOrEmpty(this.Value))
+                    //RPM = null;
+                    //AlarmLimit = null;
+                if (!string.IsNullOrEmpty(this.Value))
+                {
+                    try
                     {
-                        try
+                        //
+                        string val = this.Value;
+                        if (!string.IsNullOrEmpty(val))
                         {
-                            //
-                            string val = this.Value;
-                            if (!string.IsNullOrEmpty(val))
-                            {
-                                val = val
-                                    .Replace("\"ID\":", "\"ID\":\"")
-                                    .Replace(",\"SN\":", "\",\"SN\":\"")
-                                    .Replace(",\"C\":", "\",\"C\":");
-                                ScuData = JsonConvert.DeserializeObject<SCUSendData>(val);
-                            }
+                            val = val
+                                .Replace("\"ID\":", "\"ID\":\"")
+                                .Replace(",\"SN\":", "\",\"SN\":\"")
+                                .Replace(",\"C\":", "\",\"C\":");
+                            ScuData = JsonConvert.DeserializeObject<SCUSendData>(val);
+                        }
 
-                        }
-                        catch (Exception er)
-                        {
-                            App.Dialogs.Alert("Deserialize datat error- \n" + er.Message);
-                        }
-                        RPM = ScuData.S;
-                        AlarmLimit = ScuData.A;
                     }
+                    catch (Exception er)
+                    {
+                        App.Dialogs.Alert("Deserialize datat error- \n" + er.Message);
+                    }
+                    RPM = ScuData.S;
+                    AlarmLimit = ScuData.A;
+                    SN = ScuData.SN;
+                    Warning = ScuData.W;
+                    StatusColor = ChangeStatusColor(RPM, Warning, AlarmLimit);
+                }
 
                
             }
+        }
+        private Color ChangeStatusColor (int? s, int w, int? a) 
+         {
+            if (s > w) return Color.Green;
+            if (a < s && s <= w) return Color.Yellow;
+            if (s <= a) return Color.Red;
+            return Color.Red;
         }
         public override void OnDeactivate()
         {
