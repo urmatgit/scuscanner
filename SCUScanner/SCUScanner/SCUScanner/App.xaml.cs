@@ -22,7 +22,19 @@ namespace SCUScanner
         public static string CurrentLanguage = "EN";
         public static IUserDialogs Dialogs;
         public static IAdapter BleAdapter;
-        
+        public const string DATABASE_NAME = "SCUData.db";
+        public static SCUDataRepository database;
+        public static SCUDataRepository Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new SCUDataRepository(DATABASE_NAME);
+                }
+                return database;
+            }
+        }
 
         public App()
         {
@@ -97,6 +109,7 @@ namespace SCUScanner
                     await CheckLocationPermission();
                
             }
+            await Database.CreateTable();
             // Handle when your app starts
             //if (BleAdapter.Status == AdapterStatus.PoweredOff )
             //{

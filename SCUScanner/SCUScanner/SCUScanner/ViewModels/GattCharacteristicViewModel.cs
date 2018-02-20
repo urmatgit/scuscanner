@@ -26,7 +26,7 @@ namespace SCUScanner.ViewModels
             get => this.valueToWrite;
             set => this.RaiseAndSetIfChanged(ref this.valueToWrite, value);
         }
-        public async  Task SelectedGattCharacteristic(bool? isDisplayUtf8=null)
+        public async  Task<GattCharacteristicViewModel> SelectedGattCharacteristic(bool? isDisplayUtf8=null)
         {
             IsDisplayUtf8 = isDisplayUtf8;
             if (CanRead)
@@ -39,10 +39,10 @@ namespace SCUScanner.ViewModels
 
                 if (IsDisplayUtf8==null)
                     IsDisplayUtf8 = await App.Dialogs.ConfirmAsync("Display Value as UTF8 or HEX?", okText: "UTF8", cancelText: "HEX");
-                if (BleDevice.Features.HasFlag(DeviceFeatures.MtuRequests))
-                {
-                    var actual = await BleDevice.RequestMtu(512);
-                }
+                //if (BleDevice.Features.HasFlag(DeviceFeatures.MtuRequests))
+                //{
+                //    var actual = await BleDevice.RequestMtu(512);
+                //}
                 this.SetReadValue(this, value, IsDisplayUtf8.Value);
 
             }
@@ -65,6 +65,7 @@ namespace SCUScanner.ViewModels
 
 
             }
+            return this;
         }
         public GattCharacteristicViewModel(IGattCharacteristic characteristic,IDevice device)
         {

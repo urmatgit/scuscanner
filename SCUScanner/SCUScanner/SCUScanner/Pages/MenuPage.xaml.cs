@@ -60,11 +60,11 @@ namespace SCUScanner.Pages
                        {
                        
                             new MasterDetailPageMenuItem(typeof(MainTabbedPage)) { Id = 0, IconSource="technology.png", PageCode="MainText",  Title =settings==null?SCUScanner.Resources.AppResource.MainText : settings.Resources["MainText"] },
-                            //new MasterDetailPageMenuItem(typeof(ScanBluetoothPage)) { Id = 0, IconSource="technology.png", PageCode="DataText",  Title =settings==null?SCUScanner.Resources.AppResource.DataText : settings.Resources["DataText"] },
-                            new MasterDetailPageMenuItem(typeof(Settings)) { Id = 1,IconSource="cogwheel.png",PageCode="SettingsText",Title =settings==null?SCUScanner.Resources.AppResource.SettingsText : settings.Resources["SettingsText"]},
-                            new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 1,IconSource="graduation.png", PageCode="HelpText", Title = settings==null?SCUScanner.Resources.AppResource.HelpText : settings.Resources["HelpText"]  },
-                            new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 2,IconSource="settings.png", PageCode="MaintenanceText", Title = settings==null?SCUScanner.Resources.AppResource.MaintenanceText : settings.Resources["MaintenanceText"]  },
-                            new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 3,IconSource="Spares.png", PageCode ="SparesText", Title = settings==null?SCUScanner.Resources.AppResource.SparesText : settings.Resources["SparesText"]  }
+                            new MasterDetailPageMenuItem(typeof(SCUItemsPage)) { Id = 1, IconSource="list.png", PageCode="DataText",  Title =settings==null?SCUScanner.Resources.AppResource.DataText : settings.Resources["DataText"] },
+                            new MasterDetailPageMenuItem(typeof(Settings)) { Id = 2,IconSource="cogwheel.png",PageCode="SettingsText",Title =settings==null?SCUScanner.Resources.AppResource.SettingsText : settings.Resources["SettingsText"]},
+                            new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 3,IconSource="graduation.png", PageCode="HelpText", Title = settings==null?SCUScanner.Resources.AppResource.HelpText : settings.Resources["HelpText"]  },
+                            new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 4,IconSource="settings.png", PageCode="MaintenanceText", Title = settings==null?SCUScanner.Resources.AppResource.MaintenanceText : settings.Resources["MaintenanceText"]  },
+                            new MasterDetailPageMenuItem(typeof(MasterDetailPageDetail)) { Id = 5,IconSource="Spares.png", PageCode ="SparesText", Title = settings==null?SCUScanner.Resources.AppResource.SparesText : settings.Resources["SparesText"]  }
                        });
         }
 

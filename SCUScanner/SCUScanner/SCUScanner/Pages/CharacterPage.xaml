@@ -2,38 +2,74 @@
 <pages:BaseTabPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:SCUScanner.Helpers"
+             
               xmlns:pages="clr-namespace:SCUScanner.Pages"
              x:Class="SCUScanner.Pages.CharacterPage"
                    x:Name="ConnectedDevice">
-    <TabbedPage.ToolbarItems  >
-        <controls:HideableToolbarItem     IsVisible="{Binding IsVisibleLayout}"  Text="{Binding  Resources[SaveText]}" Command="{Binding ScanToggleCommand}" Order="Primary" Priority="1"    />
+    
+    <!--<TabbedPage.ToolbarItems  >
+        <controls:HideableToolbarItem     IsVisible="{Binding IsVisibleLayout}"  Text="{Binding  Resources[SaveText]}" Command="{Binding SaveCommand}" Order="Primary" Priority="1"    />
 
-    </TabbedPage.ToolbarItems>
-    <ContentPage.Content>
-        <Grid>
+    </TabbedPage.ToolbarItems>-->
+    <ContentPage.Content >
+        <Grid Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
-                
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <!--<RowDefinition Height="auto"/>-->
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Grid.Column="0"  Grid.Row="0" Text="{Binding  Resources[StatusText]}"/>
-            <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding  ConnectText}" TextColor="Red"/>
-            <Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0"   Text="{Binding DeviceViewModel.ConnectButtonText}"
-                    Command="{Binding DisconnectCommand}" FontSize="Small"  IsEnabled="{Binding DeviceViewModel.IsConnected}"/>
-            <Label Grid.Column="0" Grid.Row="1" Text="RSSI"/>
-            <Label Text="{Binding Rssi}" Grid.Row="1" Grid.Column="1" TextColor="Red" />
-            <Label Text="{Binding Address, StringFormat='Address: {0}'}" Grid.Row="1" Grid.Column="2" FontAttributes="Italic" />
-            <Entry x:Name="tLocationName" Text="{Binding LocationName}" Placeholder="{Binding Resources[LocationNameText]}" HorizontalOptions="Fill" Grid.Column="0" Grid.ColumnSpan="3"  Grid.Row="2"     />
-            <Editor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="3" HeightRequest="50"  HorizontalOptions="Fill" />
+            <!--<Label Grid.Column="0"  Grid.Row="1" Text="{Binding  Resources[StatusText]}"/>-->
+            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}"/>
+            <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding SN,StringFormat=' SN: {0}'}"/>
+            <StackLayout Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center">
+                <Label    Text="{Binding RPM}" Font="Bold,16" />
+                <Label    Text="Rpm" Font="Bold,16" />
+            </StackLayout>
+            <StackLayout Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Orientation="Vertical">
+                <Label Text="{Binding Resources[StatusText]}"/>
+                <BoxView Color="{Binding StatusColor}"/>
+            </StackLayout>
+            <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Text="{Binding AlarmLimit, StringFormat='(Alarm at {0} rpm)'}" HorizontalOptions="Center"/>
+            
+            <!--HR-->
+            <Label   Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Text="{Binding HRS, StringFormat='{0} Hrs'}" Font="Bold,16" HorizontalOptions="Center"/>
+            <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Text="{Binding AlarmHours, StringFormat='(Alarm at {0} hours)'}" HorizontalOptions="Center"/>
+            
+            <controls:PlaceholderEditor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Text="{Binding Note}" Placeholder="{Binding Resources[NoteText]}"  HeightRequest="80"  HorizontalOptions="Fill"  FontSize="Small"/>
+            <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="6"  x:Name="tLocationName" Text="{Binding LocationName}" Placeholder="{Binding Resources[LocationNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
+            <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="7"  x:Name="tOperatorName" Text="{Binding OperatorName}" Placeholder="{Binding Resources[OperatorNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
 
+            <Button Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="8" VerticalOptions="Start"  Text="{Binding Resources[SaveText]}"
+                    Command="{Binding SaveCommand}" />
+
+            <Button Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="8" VerticalOptions="End"  Text="{Binding Resources[DownloadText]}"
+                    Command="{Binding DownloadCommand}" />
+            <!--<Label  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding DeviceID}" Font="bold"/>-->
+            <!--<Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Text="{Binding  ConnectText}" TextColor="Red"/>-->
+            <!--<Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1"   Text="{Binding DeviceViewModel.ConnectButtonText}"
+                    Command="{Binding DisconnectCommand}" FontSize="Small"  IsEnabled="{Binding DeviceViewModel.IsConnected}"/>-->
+            
+            <!--<Label Text="{Binding Address, StringFormat='Address: {0}'}" Grid.Row="2" Grid.Column="2" FontAttributes="Italic" />-->
+            
+
+            <!--<Label Text="{Binding Value}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5"/>-->
+            
+            
+           
         </Grid>
     </ContentPage.Content>
     

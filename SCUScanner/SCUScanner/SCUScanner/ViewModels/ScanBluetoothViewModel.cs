@@ -120,20 +120,7 @@ namespace SCUScanner.ViewModels
                     if ( device.Status == ConnectionStatus.Disconnected)
                     {
                         Debug.WriteLine("connection");
-                        //Only for LE Simulator
-                        //if (!device.Features.HasFlag(DeviceFeatures.PairingRequests))
-                        //{
-                        //    App.Dialogs.Alert("Pairing is not supported on this platform");
-                        //}
-                        //else 
-                        //if (device.PairingStatus == PairingStatus.Paired)
-                        //{
-                        //    //App.Dialogs.Alert("Device is already paired");
-                        //}
-                        //else
-                        //{
-                        //    await device.PairingRequest();
-                        //}
+                        
 
                         using (var cancelSrc = new CancellationTokenSource())
                         {
@@ -146,7 +133,7 @@ namespace SCUScanner.ViewModels
                                 
                                 var actual = await device.RequestMtu(512); //Read write size (default 20byte)
                               //  App.Dialogs.Alert("MTU Changed to " + actual);
-                                var devPage = new CharacterPage(o) { Title = o.Name };// ConnectedDevicePage(o) { Title = o.Name };
+                                var devPage = new CharacterPage(o) { Title = Resources["ConnectedDeviceCaptionText"] };// ConnectedDevicePage(o) { Title = o.Name };
                                 devPage.Kod = o.Name;
                                 devPage.Tabbed = this.ParentTabbed;
 
@@ -206,6 +193,7 @@ namespace SCUScanner.ViewModels
                             StopScanning.Start();
                         this.scan = App.BleAdapter
                             .Scan()
+//                            .Where(r=>r.AdvertisementData.ServiceUuids!=null && r.AdvertisementData.ServiceUuids?.Length>0) //filter where service >0
                             .Buffer(TimeSpan.FromSeconds(1))
                             .ObserveOn(RxApp.MainThreadScheduler)
                             .Subscribe(results =>
@@ -269,8 +257,8 @@ namespace SCUScanner.ViewModels
                 dev.TrySet(result);
                 
                 
-                
-                this.Devices.Add(dev);
+              //  if (dev.ServiceCount>0)
+                    this.Devices.Add(dev);
             }
          //   UpdateButtonText(dev);
         }

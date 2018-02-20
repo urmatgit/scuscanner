@@ -107,6 +107,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connected Device.
+        /// </summary>
+        internal static string ConnectedDeviceCaptionText {
+            get {
+                return ResourceManager.GetString("ConnectedDeviceCaptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connecting....
         /// </summary>
         internal static string ConnectingText {
@@ -143,6 +152,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Device Settings.
+        /// </summary>
+        internal static string DeviceSettingsCaptionText {
+            get {
+                return ResourceManager.GetString("DeviceSettingsCaptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Devices.
         /// </summary>
         internal static string DevicesText {
@@ -166,6 +184,15 @@ namespace SCUScanner.Resources {
         internal static string DisconnectedStatusText {
             get {
                 return ResourceManager.GetString("DisconnectedStatusText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download Manual.
+        /// </summary>
+        internal static string DownloadText {
+            get {
+                return ResourceManager.GetString("DownloadText", resourceCulture);
             }
         }
         
@@ -206,7 +233,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Main.
+        ///   Looks up a localized string similar to Nearby Devices.
         /// </summary>
         internal static string MainText {
             get {
@@ -224,11 +251,38 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nearby Devices.
+        /// </summary>
+        internal static string NearbyDevicesCaptionText {
+            get {
+                return ResourceManager.GetString("NearbyDevicesCaptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note.
+        /// </summary>
+        internal static string NoteText {
+            get {
+                return ResourceManager.GetString("NoteText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         internal static string OkText {
             get {
                 return ResourceManager.GetString("OkText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operator.
+        /// </summary>
+        internal static string OperatorNameText {
+            get {
+                return ResourceManager.GetString("OperatorNameText", resourceCulture);
             }
         }
         

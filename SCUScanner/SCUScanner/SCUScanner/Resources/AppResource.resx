@@ -197,9 +197,27 @@ Turn On Bluetooth and press </value>
     <value>Location name</value>
   </data>
   <data name="MainText" xml:space="preserve">
-    <value>Main</value>
+    <value>Nearby Devices</value>
   </data>
   <data name="SaveText" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="NoteText" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="ConnectedDeviceCaptionText" xml:space="preserve">
+    <value>Connected Device</value>
+  </data>
+  <data name="DeviceSettingsCaptionText" xml:space="preserve">
+    <value>Device Settings</value>
+  </data>
+  <data name="NearbyDevicesCaptionText" xml:space="preserve">
+    <value>Nearby Devices</value>
+  </data>
+  <data name="OperatorNameText" xml:space="preserve">
+    <value>Operator</value>
+  </data>
+  <data name="DownloadText" xml:space="preserve">
+    <value>Download Manual</value>
   </data>
 </root>

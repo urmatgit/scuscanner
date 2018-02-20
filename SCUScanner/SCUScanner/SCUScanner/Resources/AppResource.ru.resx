@@ -194,9 +194,30 @@
     <value>Местоположения</value>
   </data>
   <data name="MainText" xml:space="preserve">
-    <value>Главный</value>
+    <value>Близлежащие устройства</value>
   </data>
   <data name="SaveText" xml:space="preserve">
     <value>Сохранить</value>
+  </data>
+  <data name="NoteText" xml:space="preserve">
+    <value>Примечание</value>
+  </data>
+  <data name="ConnectedDeviceCaptionText" xml:space="preserve">
+    <value>Подключенное устройство</value>
+  </data>
+  <data name="DeviceSettingsCaptionText" xml:space="preserve">
+    <value>Параметры устройства</value>
+  </data>
+  <data name="NearbyDevicesCaptionText" xml:space="preserve">
+    <value>Близлежащие устройства</value>
+  </data>
+  <data name="OperatorName" xml:space="preserve">
+    <value>Оператор</value>
+  </data>
+  <data name="DownloadText" xml:space="preserve">
+    <value>Скачать руководство</value>
+  </data>
+  <data name="StatusText" xml:space="preserve">
+    <value>Статус</value>
   </data>
 </root>
