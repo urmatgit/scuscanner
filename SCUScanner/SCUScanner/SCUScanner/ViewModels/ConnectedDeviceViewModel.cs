@@ -348,7 +348,7 @@ namespace SCUScanner.ViewModels
                                {
                                    //Task.Run(async () =>
                                    //{
-                                   var result = character.Read() .Subscribe(x =>
+                                   var result = character.Read(). Subscribe(x=>// ReadUntil(Encoding.UTF8.GetBytes("}")).Subscribe(x =>
                                    {
                                        GetValue(x);
                                    });
@@ -414,7 +414,7 @@ namespace SCUScanner.ViewModels
          private void GetValue(CharacteristicGattResult readresult)
         {
             this.LastValue = DateTime.Now;
-           
+             
                 ScuData = null;
             if (!readresult.Success)
                   //App.Dialogs.AlertAsync("ERROR - " + readresult.ErrorMessage);

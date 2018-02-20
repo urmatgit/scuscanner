@@ -49,14 +49,14 @@
             <!--HR-->
             <Label   Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Text="{Binding HRS, StringFormat='{0} Hrs'}" Font="Bold,16" HorizontalOptions="Center"/>
             <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Text="{Binding AlarmHours, StringFormat='(Alarm at {0} hours)'}" HorizontalOptions="Center"/>
-            
+
             <controls:PlaceholderEditor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Text="{Binding Value}" Placeholder="{Binding Resources[NoteText]}"  HeightRequest="80"  HorizontalOptions="Fill"  FontSize="Small"/>
             <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="6"  x:Name="tLocationName" Text="{Binding LocationName}" Placeholder="{Binding Resources[LocationNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
             <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="7"  x:Name="tOperatorName" Text="{Binding OperatorName}" Placeholder="{Binding Resources[OperatorNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
 
             <Button Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="8" VerticalOptions="Start"  Text="{Binding Resources[SaveText]}"
                     Command="{Binding SaveCommand}" />
-            <Label Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="9"  TextColor="Red" Text="{Binding ErrorMsg}" VerticalOptions="Fill" />
+            <Label Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="9"  TextColor="Red" Text="{Binding ErrorMsg}" VerticalOptions="Fill" />
             <Button Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="10" VerticalOptions="End"  Text="{Binding Resources[DownloadText]}"
                     Command="{Binding DownloadCommand}" />
             <!--<Label  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding DeviceID}" Font="bold"/>-->
