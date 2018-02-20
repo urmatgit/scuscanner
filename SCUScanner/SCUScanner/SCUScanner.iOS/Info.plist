@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>SCUScanner</string>
 	<key>CFBundleIdentifier</key>
-	<string>SCUScanner</string>
+	<string>com.chestersw.SCUScanner</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>CFBundleIconFiles</key>
