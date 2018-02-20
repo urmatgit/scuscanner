@@ -274,7 +274,12 @@ namespace SCUScanner.ViewModels
             get => statusColor;
             set => this.RaiseAndSetIfChanged(ref statusColor, value);
         }
-        
+        private string errorMsg;
+        public string ErrorMsg
+        {
+            get => errorMsg;
+            set => this.RaiseAndSetIfChanged(ref errorMsg, value);
+        }
         public override void OnActivate()
         {
             base.OnActivate();
@@ -411,44 +416,45 @@ namespace SCUScanner.ViewModels
             this.LastValue = DateTime.Now;
            
                 ScuData = null;
-                if (!readresult.Success)
-                    this.Value = "ERROR - " + readresult.ErrorMessage;
+            if (!readresult.Success)
+                  //App.Dialogs.AlertAsync("ERROR - " + readresult.ErrorMessage);
+                    this.ErrorMsg = "ERROR - " + readresult.ErrorMessage;
 
                 else if (readresult.Data == null)
-                    this.Value = "EMPTY";
+                    this.ErrorMsg = "EMPTY";
 
                 else
                 {
                     this.Value = Encoding.UTF8.GetString(readresult.Data, 0, readresult.Data.Length);
                     //RPM = null;
                     //AlarmLimit = null;
-                if (!string.IsNullOrEmpty(this.Value))
-                {
-                    try
-                    {
-                        //
-                        string val = this.Value;
-                        if (!string.IsNullOrEmpty(val))
-                        {
-                            val = val
-                                .Replace("\"ID\":", "\"ID\":\"")
-                                .Replace(",\"SN\":", "\",\"SN\":\"")
-                                .Replace(",\"C\":", "\",\"C\":");
-                            ScuData = JsonConvert.DeserializeObject<SCUSendData>(val);
-                        }
+                //if (!string.IsNullOrEmpty(this.Value))
+                //{
+                //    try
+                //    {
+                //        //
+                //        string val = this.Value;
+                //        if (!string.IsNullOrEmpty(val))
+                //        {
+                //            val = val
+                //                .Replace("\"ID\":", "\"ID\":\"")
+                //                .Replace(",\"SN\":", "\",\"SN\":\"")
+                //                .Replace(",\"C\":", "\",\"C\":");
+                //            ScuData = JsonConvert.DeserializeObject<SCUSendData>(val);
+                //        }
 
-                    }
-                    catch (Exception er)
-                    {
-                        App.Dialogs.Alert("Deserialize datat error- \n" + er.Message);
-                    }
-                    RPM = ScuData.S;
-                    AlarmLimit = ScuData.A;
-                    SN = ScuData.SN;
-                    Warning = ScuData.W;
-                    StatusColor = ChangeStatusColor(RPM, Warning, AlarmLimit);
+                //    }
+                //    catch (Exception er)
+                //    {
+                //        App.Dialogs.Alert("Deserialize datat error- \n" + er.Message);
+                //    }
+                //    RPM = ScuData.S;
+                //    AlarmLimit = ScuData.A;
+                //    SN = ScuData.SN;
+                //    Warning = ScuData.W;
+                //    StatusColor = ChangeStatusColor(RPM, Warning, AlarmLimit);
                   
-                }
+                //}
 
                
             }
