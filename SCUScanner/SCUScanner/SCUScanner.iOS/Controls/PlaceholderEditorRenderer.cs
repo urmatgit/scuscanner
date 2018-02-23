@@ -36,7 +36,7 @@ namespace SCUScanner.iOS.Controls
                 Text = element.Placeholder,
                 TextColor = element.PlaceholderColor.ToUIColor(),
                 BackgroundColor = UIColor.Clear,
-                Font = UIFont.FromName(element.FontFamily, (nfloat)element.FontSize)
+                Font = UIFont.SystemFontOfSize((nfloat)element.FontSize)
             };
             _placeholderLabel.SizeToFit();
 

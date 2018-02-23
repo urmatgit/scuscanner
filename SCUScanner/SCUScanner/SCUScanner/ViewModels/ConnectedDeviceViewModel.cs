@@ -223,11 +223,11 @@ namespace SCUScanner.ViewModels
             get => note;
             set => this.RaiseAndSetIfChanged(ref note, value);
         }
-        private int warning;
+        private int? warning;
         /// <summary>
         /// W – Warning (уровень предупреждения) 
         /// </summary>
-        public int Warning
+        public int? Warning
         {
             get => warning;
             set => this.RaiseAndSetIfChanged(ref warning, value);
@@ -274,7 +274,12 @@ namespace SCUScanner.ViewModels
             get => statusColor;
             set => this.RaiseAndSetIfChanged(ref statusColor, value);
         }
-        
+        private string sourceText;
+        public string SourceText
+        {
+            get => sourceText;
+            set => this.RaiseAndSetIfChanged(ref sourceText, value);
+        }
         public override void OnActivate()
         {
             base.OnActivate();
@@ -420,6 +425,7 @@ namespace SCUScanner.ViewModels
                 else
                 {
                     this.Value = Encoding.UTF8.GetString(readresult.Data, 0, readresult.Data.Length);
+                this.SourceText += this.Value;
                     //RPM = null;
                     //AlarmLimit = null;
                 if (!string.IsNullOrEmpty(this.Value))
@@ -442,10 +448,10 @@ namespace SCUScanner.ViewModels
                     {
                         App.Dialogs.Alert("Deserialize datat error- \n" + er.Message);
                     }
-                    RPM = ScuData.S;
-                    AlarmLimit = ScuData.A;
-                    SN = ScuData.SN;
-                    Warning = ScuData.W;
+                    RPM = ScuData?.S;
+                    AlarmLimit = ScuData?.A;
+                    SN = ScuData?.SN;
+                    Warning = ScuData?.W;
                     StatusColor = ChangeStatusColor(RPM, Warning, AlarmLimit);
                   
                 }
@@ -453,7 +459,7 @@ namespace SCUScanner.ViewModels
                
             }
         }
-        private Color ChangeStatusColor (int? s, int w, int? a) 
+        private Color ChangeStatusColor (int? s, int? w, int? a) 
          {
             if (s > w) return Color.Green;
             if (a < s && s <= w) return Color.Yellow;

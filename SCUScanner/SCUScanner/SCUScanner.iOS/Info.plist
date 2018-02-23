@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>SCUScanner</string>
 	<key>CFBundleIdentifier</key>
-	<string>SCUScanner</string>
+	<string>home.TestKey</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>CFBundleIconFiles</key>
@@ -50,14 +50,12 @@
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>SCUScanner</string>
-  <!--for connecting to devices (client)-->
-  <key>UIBackgroundModes</key>
-  <array>
-    <string>bluetooth-central</string>
-    <string>bluetooth-peripheral</string>
-  </array>
-  <key>NSBluetoothPeripheralUsageDescription</key>
-  <string>SCUScanner BLE connector</string>
- 
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>bluetooth-central</string>
+		<string>bluetooth-peripheral</string>
+	</array>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>SCUScanner BLE connector</string>
 </dict>
 </plist>

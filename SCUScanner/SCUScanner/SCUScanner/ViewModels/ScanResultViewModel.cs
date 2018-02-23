@@ -32,6 +32,9 @@ namespace SCUScanner.ViewModels
         {
             get
             {
+                if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS)
+                    return Device?.ToString();
+                else
                 return Device?.NativeDevice.ToString();
             }
         }
