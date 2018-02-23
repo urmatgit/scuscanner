@@ -96,6 +96,7 @@
     <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\ExtendedTabbedPageRenderer.cs" />
     <Compile Include="Controls\PlaceholderEditorRenderer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />

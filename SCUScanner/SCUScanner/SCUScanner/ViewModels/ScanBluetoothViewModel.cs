@@ -135,6 +135,7 @@ namespace SCUScanner.ViewModels
                               //  App.Dialogs.Alert("MTU Changed to " + actual);
                                 var devPage = new CharacterPage(o) { Title = Resources["ConnectedDeviceCaptionText"] };// ConnectedDevicePage(o) { Title = o.Name };
                                 devPage.Kod = o.Name;
+                                
                                 devPage.Tabbed = this.ParentTabbed;
 
                                 {
@@ -155,7 +156,7 @@ namespace SCUScanner.ViewModels
                     {
                         device.CancelConnection();
                         o.IsConnected = false;
-                        var devicePage = parentTabbed.Children.FirstOrDefault(p => p.Title == o.Name);
+                        var devicePage = parentTabbed.Children.FirstOrDefault(p => (p as BaseTabPage)?.Kod == o.Name);
                         if (devicePage != null)
                         {
                             parentTabbed.CurrentPage = parentTabbed.Children[0];

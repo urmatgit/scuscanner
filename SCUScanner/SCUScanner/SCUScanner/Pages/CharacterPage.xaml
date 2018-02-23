@@ -56,7 +56,10 @@
 
             <Button Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="8" VerticalOptions="Start"  Text="{Binding Resources[SaveText]}"
                     Command="{Binding SaveCommand}" />
-            <Label Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="9" Text="{Binding SourceText}" VerticalOptions="FillAndExpand"/>
+            <ScrollView Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="9" VerticalOptions="FillAndExpand" >
+                <Label  Text="{Binding SourceText}" VerticalOptions="FillAndExpand"/>
+            </ScrollView>
+            
             <Button Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="10" VerticalOptions="End"  Text="{Binding Resources[DownloadText]}"
                     Command="{Binding DownloadCommand}" />
             <!--<Label  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding DeviceID}" Font="bold"/>-->

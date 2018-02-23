@@ -428,7 +428,7 @@ namespace SCUScanner.ViewModels
                 this.SourceText += this.Value;
                     //RPM = null;
                     //AlarmLimit = null;
-                if (!string.IsNullOrEmpty(this.Value))
+                if (!string.IsNullOrEmpty(this.Value) && this.Value.StartsWith("{") && this.Value.EndsWith("}"))
                 {
                     try
                     {
