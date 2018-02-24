@@ -19,9 +19,10 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <AndroidKeyStore>false</AndroidKeyStore>
-    <AndroidSigningKeyStore>C:\Users\Urmat\AppData\Local\Xamarin\Mono for Android\Keystore\Home\Home.keystore</AndroidSigningKeyStore>
-    <AndroidSigningStorePass>urmat82</AndroidSigningStorePass>
-    <AndroidSigningKeyAlias>Home</AndroidSigningKeyAlias>
+    <AndroidSigningKeyStore>C:\soft\Android\scuscanner\SCUScanner\scanner_keystore.keystore</AndroidSigningKeyStore>
+    <AndroidSigningStorePass>Crfyth2018</AndroidSigningStorePass>
+    <AndroidSigningKeyAlias>scanner_keystore</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>Crfyth2018</AndroidSigningKeyPass>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
