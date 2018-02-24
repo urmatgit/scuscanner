@@ -55,7 +55,7 @@
                                         <!--<Button  Grid.Row="2"  Grid.Column="1"  Text="{Binding BindingContext.Resources[ConnectButtonText],Source={x:Reference Name=BleDevices}}"  Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=BleDevices}  }" CommandParameter="{Binding}"  />-->
                                         <Button  Grid.Row="2" Grid.RowSpan="2"  Grid.Column="2" Grid.ColumnSpan="2" IsEnabled="{Binding IsConnectable}"  Text="{Binding ConnectButtonText}"  
                                                  Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=BleDevices}}" 
-                                                 CommandParameter="{Binding}"  BackgroundColor="LightGray"    TextColor="White" />
+                                                 CommandParameter="{Binding}"  BackgroundColor="Green"    TextColor="White" />
                                         <!--<Label Text="{Binding IsConnectable, StringFormat='Connectable: {0}'}" Grid.Row="3" Grid.Column="0" />-->
                                         
                                         

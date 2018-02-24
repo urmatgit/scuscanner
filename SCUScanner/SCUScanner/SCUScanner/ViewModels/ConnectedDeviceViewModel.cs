@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using SCUScanner.Models;
 using Newtonsoft.Json;
+using Plugin.Share;
+using Plugin.Share.Abstractions;
 
 namespace SCUScanner.ViewModels
 {
@@ -24,7 +26,7 @@ namespace SCUScanner.ViewModels
         public ScanResultViewModel DeviceViewModel {get;set;}
         SCUSendData ScuData { get; set; }
         System.Timers.Timer TimerAlarm;
-        object forLock;
+        
         //    public ObservableCollection<Group<GattCharacteristicViewModel>> GattCharacteristics { get; } = new ObservableCollection<Group<GattCharacteristicViewModel>>();
         //public ObservableCollection<GattDescriptorViewModel> GattDescriptors { get; } = new ObservableCollection<GattDescriptorViewModel>();
         public TabbedPage ParentTabbed { get; set; }
@@ -33,6 +35,7 @@ namespace SCUScanner.ViewModels
         public ICommand DisconnectCommand { get; }
         public ICommand SelectCharacteristic { get; }
         public ICommand SaveCommand { get; }
+        public ICommand ValueShareCommand { get; }
         public ConnectedDeviceViewModel(ScanResultViewModel selectedDevice)
         {
             HRS = 250;
@@ -102,7 +105,21 @@ namespace SCUScanner.ViewModels
 
 
               });
+            ValueShareCommand = ReactiveCommand.CreateFromTask(async () =>
+             {
 
+                 if (!CrossShare.IsSupported)
+                     return;
+
+                 
+                     await  CrossShare.Current.Share(new ShareMessage
+                         {
+                             Title = "Reception text",
+                             Text = SourceText
+
+                         });
+                 
+             });
             this.WhenAnyValue(vm => vm.StatusColor).Subscribe(c =>
             {
                 if (c == Color.Red || c == Color.Yellow)
@@ -283,7 +300,7 @@ namespace SCUScanner.ViewModels
         public override void OnActivate()
         {
             base.OnActivate();
-            var count = cleanup.Count;
+            this.cleanup.Clear();
             this.cleanup.Add(this.device
                .WhenStatusChanged()
                .ObserveOn(RxApp.MainThreadScheduler)
@@ -331,6 +348,7 @@ namespace SCUScanner.ViewModels
                .Subscribe(service =>
                {
                    if (string.IsNullOrEmpty(service.Uuid.ToString())) return; 
+                   
                    ///TODO filter 
                  //  var group = new Group<GattCharacteristicViewModel>(service.Uuid.ToString());
                    service
@@ -343,18 +361,19 @@ namespace SCUScanner.ViewModels
                            
                            Device.BeginInvokeOnMainThread(() =>
                            {
+                               
 
-                               if (character.CanRead())
-                               {
-                                   //Task.Run(async () =>
-                                   //{
-                                   var result = character.Read() .Subscribe(x =>
-                                   {
-                                       GetValue(x);
-                                   });
-                                   //});
+                               //if (character.CanRead())
+                               //{
+                               //    //Task.Run(async () =>
+                               //    //{
+                               //    var result = character.Read() .Subscribe(x =>
+                               //    {
+                               //        GetValue(x);
+                               //    });
+                               //    //});
 
-                               }
+                               //}
                                if (character.CanNotify())
                                {
                                    
