@@ -249,11 +249,11 @@ namespace SCUScanner.ViewModels
             get => warning;
             set => this.RaiseAndSetIfChanged(ref warning, value);
         }
-        private int? rpm;
+        private int rpm;
         /// <summary>
         /// S-Speed текущая скорость вращения мотора, 
         /// </summary>
-        public int? RPM 
+        public int RPM 
         {
             get => rpm;
             set => this.RaiseAndSetIfChanged(ref rpm, value);
@@ -467,7 +467,7 @@ namespace SCUScanner.ViewModels
                     {
                         App.Dialogs.Alert("Deserialize datat error- \n" + er.Message);
                     }
-                    RPM = ScuData?.S;
+                    RPM = ScuData?.S ?? 0;
                     AlarmLimit = ScuData?.A;
                     SN = ScuData?.SN;
                     Warning = ScuData?.W;
@@ -478,7 +478,7 @@ namespace SCUScanner.ViewModels
                
             }
         }
-        private Color ChangeStatusColor (int? s, int? w, int? a) 
+        private Color ChangeStatusColor (int s, int? w, int? a) 
          {
             if (s > w) return Color.Green;
             if (a < s && s <= w) return Color.Yellow;
