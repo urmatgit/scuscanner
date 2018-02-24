@@ -49,11 +49,28 @@ namespace SCUScanner.ViewModels
             StopScanning.Interval = 1000 * ScanningDuration;
             StopScanning.Elapsed += StopScanning_Elapsed;
             Devices=new ObservableCollection<ScanResultViewModel>();
-            
+            this.WhenAnyValue(vm => vm.IsVisibleLayout).ToProperty(this, x => x.IsVisibleBlueToothTornOff);
+            this.WhenAnyValue(vm => vm.IsVisibleLayout).Subscribe(s =>
+            {
+                if (s)
+                    ResourcesEx = Resources;
+                else
+                    ResourcesEx = null;
+            });
+            this.WhenAnyValue(vm => vm.Resources).Subscribe(val =>
+            {
+
+                ScanTextChange(App.BleAdapter.IsScanning);
+
+            });
+            this.WhenAnyValue(vm => vm.IsScanning).Subscribe(val =>
+            {
+                ScanTextChange(val);
+            });
             if (App.BleAdapter.Status == AdapterStatus.Unsupported || App.BleAdapter.Status==AdapterStatus.Unknown)
             {
                 IsVisibleLayout = false;
-                return;
+              // return;
             }
            
 
@@ -70,24 +87,7 @@ namespace SCUScanner.ViewModels
 
                     }
                 });
-            this.WhenAnyValue(vm => vm.IsVisibleLayout).ToProperty(this, x => x.IsVisibleBlueToothTornOff);
-            this.WhenAnyValue(vm => vm.IsVisibleLayout).Subscribe(s =>
-            {
-                if (s)
-                    ResourcesEx = Resources;
-                else
-                    ResourcesEx = null;
-            });
-            this.WhenAnyValue(vm => vm.Resources).Subscribe(val =>
-            {
-                
-                    ScanTextChange(App.BleAdapter.IsScanning);
-                
-            });
-            this.WhenAnyValue(vm => vm.IsScanning).Subscribe(val =>
-            {
-                ScanTextChange(val);
-            });
+          
             App.BleAdapter.WhenStatusChanged()
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(st =>
@@ -135,6 +135,7 @@ namespace SCUScanner.ViewModels
                               //  App.Dialogs.Alert("MTU Changed to " + actual);
                                 var devPage = new CharacterPage(o) { Title = Resources["ConnectedDeviceCaptionText"] };// ConnectedDevicePage(o) { Title = o.Name };
                                 devPage.Kod = o.Name;
+                                
                                 devPage.Tabbed = this.ParentTabbed;
 
                                 {
@@ -155,7 +156,7 @@ namespace SCUScanner.ViewModels
                     {
                         device.CancelConnection();
                         o.IsConnected = false;
-                        var devicePage = parentTabbed.Children.FirstOrDefault(p => p.Title == o.Name);
+                        var devicePage = parentTabbed.Children.FirstOrDefault(p => (p as BaseTabPage)?.Kod == o.Name);
                         if (devicePage != null)
                         {
                             parentTabbed.CurrentPage = parentTabbed.Children[0];
