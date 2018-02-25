@@ -137,7 +137,7 @@ namespace SCUScanner.ViewModels
                                 devPage.Kod = o.Name;
                                 
                                 devPage.Tabbed = this.ParentTabbed;
-                                var devSettingPage = new DeviceSettingPage();
+                                var devSettingPage = new DeviceSettingPage() { Title = Resources["DeviceSettingsCaptionText"] };
                                 devSettingPage.Kod = $"{o.Name}_setting";
                                 devSettingPage.Tabbed = this.ParentTabbed;
                                 {

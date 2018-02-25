@@ -37,7 +37,7 @@
             <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}"/>
             <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding SN,StringFormat=' SN: {0}'}"/>
             <StackLayout Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center">
-                <gauge:SfDigitalGauge x:Name="digital" Value="{Binding RPM}" BackgroundColor="White" WidthRequest="100" CharacterStrokeColor="Red"
+                <gauge:SfDigitalGauge x:Name="digital" Value="{Binding RPM}" BackgroundColor="White" WidthRequest="120" CharacterStrokeColor="Red"
                                         CharacterType="EightCrossEightDotMatrix"   VerticalOptions="End"
                                       />
                 <!--<Label    Text="{Binding RPM}" Font="Bold,16" />-->
@@ -52,7 +52,7 @@
             
             <!--HR-->
             <StackLayout Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Orientation="Horizontal" HorizontalOptions="Center">
-                <gauge:SfDigitalGauge x:Name="digitalHRS" Value="{Binding HRS}" BackgroundColor="White" WidthRequest="100" CharacterStrokeColor="Red"
+                <gauge:SfDigitalGauge x:Name="digitalHRS" Value="{Binding HRS}" BackgroundColor="White" WidthRequest="120" CharacterStrokeColor="Red"
                                         CharacterType="EightCrossEightDotMatrix"   
                                       />
 
