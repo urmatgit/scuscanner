@@ -137,9 +137,7 @@ namespace SCUScanner.ViewModels
                                 devPage.Kod = o.Name;
                                 
                                 devPage.Tabbed = this.ParentTabbed;
-                                var devSettingPage = new DeviceSettingPage();
-                                devSettingPage.Kod = $"{o.Name}_setting";
-                                devSettingPage.Tabbed = this.ParentTabbed;
+
                                 {
                                     var ListOfRemovePages = new List<BaseTabPage>();
                                     foreach (BaseTabPage bPage in parentTabbed.Children)
@@ -149,7 +147,6 @@ namespace SCUScanner.ViewModels
                                         ListOfRemovePages.ForEach(x => parentTabbed.Children.Remove(x));
                                 }
                                 parentTabbed.Children.Add(devPage);
-                                parentTabbed.Children.Add(devSettingPage);
                                 parentTabbed.CurrentPage = devPage;
 
                             }
