@@ -131,13 +131,17 @@ namespace SCUScanner.ViewModels
                                     new GattConnectionConfig() { AutoConnect = false }
                                     ).ToTask(cancelSrc.Token);
                                 
-                             //  var actual = await device.RequestMtu(512); //Read write size (default 20byte)
-                              //  App.Dialogs.Alert("MTU Changed to " + actual);
-                                var devPage = new CharacterPage(o) { Title = Resources["ConnectedDeviceCaptionText"] };// ConnectedDevicePage(o) { Title = o.Name };
+                               var actual = await device.RequestMtu(512); //Read write size (default 20byte)
+                                                                          //  App.Dialogs.Alert("MTU Changed to " + actual);
+                                var title = Resources["ConnectedDeviceCaptionText"];
+                             
+                                var devPage = new CharacterPage(o) { Title = title };// ConnectedDevicePage(o) { Title = o.Name };
+
                                 devPage.Kod = o.Name;
-                                
                                 devPage.Tabbed = this.ParentTabbed;
-                                var devSettingPage = new DeviceSettingPage() { Title = Resources["DeviceSettingsCaptionText"] };
+                                title = Resources["DeviceSettingsCaptionText"];
+                               
+                                var devSettingPage = new DeviceSettingPage() { Title = title };
                                 devSettingPage.Kod = $"{o.Name}_setting";
                                 devSettingPage.Tabbed = this.ParentTabbed;
                                 {
