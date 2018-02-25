@@ -48,12 +48,13 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer: urmat2g@gmail.com (A2PW44G33F)</CodesignKey>
+    <CodesignKey>iPhone Distribution: Maxim Osipenko (GSHESUSNEG)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <BuildIpa>true</BuildIpa>
     <IpaMetadata>Info.plist</IpaMetadata>
-    <CodesignProvision>iOS Team Provisioning Profile: home.TestKey</CodesignProvision>
+    <CodesignProvision>Max1_Distribution</CodesignProvision>
+    <IpaIncludeArtwork>false</IpaIncludeArtwork>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -76,9 +77,10 @@
     <ConsolePause>False</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
     <BuildIpa>True</BuildIpa>
-    <CodesignProvision>iOS Team Provisioning Profile: home.TestKey</CodesignProvision>
-    <CodesignKey>iPhone Developer: urmat2g@gmail.com (A2PW44G33F)</CodesignKey>
+    <CodesignProvision>Max1_Distribution</CodesignProvision>
+    <CodesignKey>iPhone Distribution: Maxim Osipenko (GSHESUSNEG)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <IpaMetadata>Info.plist</IpaMetadata>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
     <DebugType>none</DebugType>
@@ -107,6 +109,8 @@
       <SubType>Designer</SubType>
     </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <ITunesArtwork Include="iTunesArtwork" />
+    <ITunesArtwork Include="iTunesArtwork%402x" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
