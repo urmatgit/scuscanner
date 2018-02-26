@@ -48,12 +48,12 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Distribution: Maxim Osipenko (GSHESUSNEG)</CodesignKey>
+    <CodesignKey>iPhone Developer: urmat2g@gmail.com (A2PW44G33F)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <BuildIpa>true</BuildIpa>
     <IpaMetadata>Info.plist</IpaMetadata>
-    <CodesignProvision>Max1_Distribution</CodesignProvision>
+    <CodesignProvision>iOS Team Provisioning Profile: home.TestKey</CodesignProvision>
     <IpaIncludeArtwork>false</IpaIncludeArtwork>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
@@ -144,7 +144,7 @@
       <Version>2.6.0</Version>
     </PackageReference>
     <PackageReference Include="Plugin.BluetoothLE">
-      <Version>6.0.0-beta3</Version>
+      <Version>6.0.0-beta2</Version>
     </PackageReference>
     <PackageReference Include="Plugin.Permissions">
       <Version>2.2.1</Version>

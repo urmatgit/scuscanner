@@ -26,29 +26,29 @@ namespace SCUScanner.ViewModels
         const int ScanningDuration = 30; //sec
         IDisposable scan;
         IDisposable connect;
-       
+
         System.Timers.Timer StopScanning = new System.Timers.Timer();
 
         TabbedPage parentTabbed;
         public TabbedPage ParentTabbed
         {
-            get=> parentTabbed;
-            set => parentTabbed=value;
+            get => parentTabbed;
+            set => parentTabbed = value;
         }
         public ObservableCollection<ScanResultViewModel> Devices { get; }
 
 
         public ICommand ScanToggleCommand { get; }
         public ICommand SelectDeviceCommand { get; }
-        public ICommand  ConnectCommand { get;  }
-     
-        public ScanBluetoothViewModel(TabbedPage page):base()
+        public ICommand ConnectCommand { get; }
+
+        public ScanBluetoothViewModel(TabbedPage page) : base()
         {
-            
+
             parentTabbed = page;
             StopScanning.Interval = 1000 * ScanningDuration;
             StopScanning.Elapsed += StopScanning_Elapsed;
-            Devices=new ObservableCollection<ScanResultViewModel>();
+            Devices = new ObservableCollection<ScanResultViewModel>();
             this.WhenAnyValue(vm => vm.IsVisibleLayout).ToProperty(this, x => x.IsVisibleBlueToothTornOff);
             this.WhenAnyValue(vm => vm.IsVisibleLayout).Subscribe(s =>
             {
@@ -67,14 +67,14 @@ namespace SCUScanner.ViewModels
             {
                 ScanTextChange(val);
             });
-            if (App.BleAdapter.Status == AdapterStatus.Unsupported || App.BleAdapter.Status==AdapterStatus.Unknown)
+            if (App.BleAdapter.Status == AdapterStatus.Unsupported || App.BleAdapter.Status == AdapterStatus.Unknown)
             {
                 IsVisibleLayout = false;
-              // return;
+                // return;
             }
-           
 
-            IsVisibleLayout =  App.BleAdapter.Status != AdapterStatus.PoweredOn;
+
+            IsVisibleLayout = App.BleAdapter.Status != AdapterStatus.PoweredOn;
             this.connect = App.BleAdapter
                 .WhenDeviceStatusChanged()
                 .ObserveOn(RxApp.MainThreadScheduler)
@@ -87,7 +87,7 @@ namespace SCUScanner.ViewModels
 
                     }
                 });
-          
+
             App.BleAdapter.WhenStatusChanged()
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(st =>
@@ -95,8 +95,8 @@ namespace SCUScanner.ViewModels
                 CheckStatus(st);
 
             });
-            
-            
+
+
             App.BleAdapter.WhenScanningStatusChanged()
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(on =>
@@ -106,80 +106,70 @@ namespace SCUScanner.ViewModels
                 });
             this.SelectDeviceCommand = ReactiveCommand.Create<ScanResultViewModel>(x =>
             {
-                StopScan();
+                StopScanBle();
                 App.Dialogs.Alert($"Selected {x.Name}");
                 //services.VmManager.Push<DeviceViewModel>(x.Device);
             });
-            this.ConnectCommand = ReactiveCommand.CreateFromTask<ScanResultViewModel> (async  (o) =>
-            {
-                StopScan();
-                IDevice device = o.Device;
-                try
-                {
+            this.ConnectCommand = ReactiveCommand.CreateFromTask<ScanResultViewModel>(async (o) =>
+           {
+               StopScanBle();
+               IDevice device = o.Device;
+               try
+               {
                     // don't cleanup connection - force user to d/c
-                    if ( device.Status == ConnectionStatus.Disconnected)
-                    {
-                        Debug.WriteLine("connection");
-                        
+                    if (device.Status == ConnectionStatus.Disconnected)
+                   {
+                       Debug.WriteLine("connection");
 
-                        using (var cancelSrc = new CancellationTokenSource())
-                        {
-                            using (App.Dialogs.Loading(Resources["ConnectingText"], cancelSrc.Cancel,Resources["CancelText"]))
-                            {
 
-                                await device.Connect(
-                                    new GattConnectionConfig() { AutoConnect = false }
-                                    ).ToTask(cancelSrc.Token);
-                                
+                       using (var cancelSrc = new CancellationTokenSource())
+                       {
+                           using (App.Dialogs.Loading(Resources["ConnectingText"], cancelSrc.Cancel, Resources["CancelText"]))
+                           {
+
+                               await device.Connect(
+                                   new GattConnectionConfig() { AutoConnect = false }
+                                   ).ToTask(cancelSrc.Token);
+
                                var actual = await device.RequestMtu(512); //Read write size (default 20byte)
                                                                           //  App.Dialogs.Alert("MTU Changed to " + actual);
                                 var title = Resources["ConnectedDeviceCaptionText"];
-                             
-                                var devPage = new CharacterPage(o) { Title = title };// ConnectedDevicePage(o) { Title = o.Name };
+
+                               var devPage = new CharacterPage(o) { Title = title };// ConnectedDevicePage(o) { Title = o.Name };
 
                                 devPage.Kod = o.Name;
-                                devPage.Tabbed = this.ParentTabbed;
-                                title = Resources["DeviceSettingsCaptionText"];
-                               
-                                var devSettingPage = new DeviceSettingPage() { Title = title };
-                                devSettingPage.Kod = $"{o.Name}_setting";
-                                devSettingPage.Tabbed = this.ParentTabbed;
-                                {
-                                    var ListOfRemovePages = new List<BaseTabPage>();
-                                    foreach (BaseTabPage bPage in parentTabbed.Children)
-                                        if (bPage.Kod != SCUScanner.Helpers.GlobalConstants.MAIN_TAB_PAGE)
-                                            ListOfRemovePages.Add(bPage);
-                                    if (ListOfRemovePages.Count > 0)
-                                        ListOfRemovePages.ForEach(x => parentTabbed.Children.Remove(x));
-                                }
-                                parentTabbed.Children.Add(devPage);
-                                parentTabbed.Children.Add(devSettingPage);
-                                parentTabbed.CurrentPage = devPage;
+                               devPage.Tabbed = this.ParentTabbed;
+                               title = Resources["DeviceSettingsCaptionText"];
 
-                            }
-                        }
-                    }
-                    else
-                    {
-                        device.CancelConnection();
-                        o.IsConnected = false;
-                        var devicePage = parentTabbed.Children.FirstOrDefault(p => (p as BaseTabPage)?.Kod == o.Name);
-                        if (devicePage != null)
-                        {
-                            parentTabbed.CurrentPage = parentTabbed.Children[0];
-                            parentTabbed.Children.Remove(devicePage);
-                            
-                        }
-                    }
-                //   UpdateButtonText(o);
+                               var devSettingPage = new DeviceSettingPage() { Title = title };
+                               devSettingPage.Kod = $"{o.Name}_setting";
+                               devSettingPage.Tabbed = this.ParentTabbed;
+                               {
+                                   CleanTabPages();
+                               }
+                               parentTabbed.Children.Add(devPage);
+                               parentTabbed.Children.Add(devSettingPage);
+                               parentTabbed.CurrentPage = devPage;
+
+                           }
+                       }
+                   }
+                   else
+                   {
+                       device.CancelConnection();
+                       o.IsConnected = false;
+                       parentTabbed.CurrentPage = CleanTabPages();
+
+                   }
+                    //   UpdateButtonText(o);
                 }
-                catch (Exception ex)
-                {
-                    App.Dialogs.Alert(ex.ToString());
-                }
-            });
-            
-            this.ScanToggleCommand = ReactiveCommand.Create(
+               catch (Exception ex)
+               {
+                   App.Dialogs.Alert(ex.ToString());
+               }
+           });
+
+            this.ScanToggleCommand = ReactiveCommand.Create( 
                 () =>
                 {
                     if (!isVisibleLayout)
@@ -188,27 +178,28 @@ namespace SCUScanner.ViewModels
                     }
                     if (this.IsScanning)
                     {
-                        StopScan();
+                        StopScanBle();
                     }
                     else
                     {
 
-                        this.Devices.Clear();
-                        this.IsScanning = true ;
+                        //this.Devices.Clear();
+                        this.IsScanning = true;
 
                         //this.ScanText = Resources["ScanText"];
                         if (Models.Settings.Current.ManualScan)
                             StopScanning.Start();
-                        this.scan = App.BleAdapter
-                            .Scan()
-//                            .Where(r=>r.AdvertisementData.ServiceUuids!=null && r.AdvertisementData.ServiceUuids?.Length>0) //filter where service >0
-                            .Buffer(TimeSpan.FromSeconds(1))
-                            .ObserveOn(RxApp.MainThreadScheduler)
-                            .Subscribe(results =>
-                            {
-                                foreach (var result in results)
-                                    this.OnScanResult(result);
-                            });
+                        if (!App.BleAdapter.IsScanning)
+                            this.scan =  App.BleAdapter
+                                .Scan()
+                                //                            .Where(r=>r.AdvertisementData.ServiceUuids!=null && r.AdvertisementData.ServiceUuids?.Length>0) //filter where service >0
+                                .Buffer(TimeSpan.FromSeconds(1))
+                                .ObserveOn(RxApp.MainThreadScheduler)
+                                .Subscribe(results =>
+                                {
+                                    foreach (var result in results)
+                                        this.OnScanResult(result);
+                                });
                         Debug.WriteLine("End scanning");
                     }
                 }
@@ -223,18 +214,38 @@ namespace SCUScanner.ViewModels
 
 
         }
- 
+        private BaseTabPage CleanTabPages()
+        {
+            var ListOfRemovePages = new List<BaseTabPage>();
+            BaseTabPage result = null;
+            foreach (BaseTabPage bPage in parentTabbed.Children)
+                if (bPage.Kod != SCUScanner.Helpers.GlobalConstants.MAIN_TAB_PAGE)
+                    ListOfRemovePages.Add(bPage);
+                else
+                    result = bPage;
+            if (ListOfRemovePages.Count > 0)
+                ListOfRemovePages.ForEach(x => parentTabbed.Children.Remove(x));
+            return result;
+        }
         private void StopScanning_Elapsed(object sender, ElapsedEventArgs e)
         {
-            StopScan();
+            StopScanBle();
         }
 
-        private void StopScan()
+        private void StopScanBle()
         {
+            
+                
             StopScanning.Stop();
             this.scan?.Dispose();
             this.IsScanning = false;
 
+        }
+        public override void OnDeactivate()
+        {
+            StopScanning.Stop();
+            if (this.IsScanning)
+                StopScanBle();
         }
         public override void OnActivate()
         {
@@ -244,7 +255,7 @@ namespace SCUScanner.ViewModels
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(x =>
                 {
-                   CheckStatus(x);
+                    CheckStatus(x);
                 });
 
         }
@@ -263,12 +274,12 @@ namespace SCUScanner.ViewModels
             {
                 dev = new ScanResultViewModel();
                 dev.TrySet(result);
-                
-                
-              //  if (dev.ServiceCount>0)
-                    this.Devices.Add(dev);
+
+
+                //  if (dev.ServiceCount>0)
+                this.Devices.Add(dev);
             }
-         //   UpdateButtonText(dev);
+            //   UpdateButtonText(dev);
         }
         public void ScanTextChange(bool scaning)
         {
@@ -277,7 +288,7 @@ namespace SCUScanner.ViewModels
             else
                 ScanText = Resources["ScanText"];
         }
-        
+
         bool scanning;
         public bool IsScanning
         {
@@ -286,7 +297,7 @@ namespace SCUScanner.ViewModels
         }
         private bool CheckStatus(AdapterStatus status)
         {
-            
+
             if (status == AdapterStatus.PoweredOn)
             {
                 IsVisibleLayout = true;
@@ -298,11 +309,11 @@ namespace SCUScanner.ViewModels
                 IsVisibleLayout = false;
                 ScanText = "";
                 if (IsScanning)
-                    StopScan();
+                    StopScanBle();
             }
             return isVisibleLayout;
         }
-       
+
         string scantext;
         public string ScanText
         {
@@ -311,41 +322,42 @@ namespace SCUScanner.ViewModels
         }
         public string BlueToothTornOffText
         {
-            get { return $"{Resources["BlueToothTornOffText"]} {Resources["ScanText"]}" ; }
+            get { return $"{Resources["BlueToothTornOffText"]} {Resources["ScanText"]}"; }
         }
         /// <summary>
         /// Layout show when Bluetooth disabled
         /// </summary>
         public bool IsVisibleBlueToothTornOff
         {
-            get {
+            get
+            {
                 return !isVisibleLayout;
             }
         }
-        
+
         /// <summary>
         /// Layout for scanning 
         /// </summary>
-        private bool isVisibleLayout=false;
+        private bool isVisibleLayout = false;
         public bool IsVisibleLayout
         {
-            get  =>  isVisibleLayout; 
-            set 
+            get => isVisibleLayout;
+            set
             {
                 this.RaiseAndSetIfChanged(ref this.isVisibleLayout, value);
-                
-            
+
+
             }
         }
         LocalizedResources resourcesex;
-        public  LocalizedResources ResourcesEx
+        public LocalizedResources ResourcesEx
         {
             get
             {
-            
+
                 return resourcesex;
             }
-             set
+            set
             {
                 //if (!isVisible)
                 //    resourcesex = null;

@@ -43,11 +43,15 @@ namespace SCUScanner.Pages
             if (item == null)
                 return;
             selectedPage = item;
-            CurrentPage = (Page)Activator.CreateInstance(item.TargetType);
-            CurrentPage.Title = item.Title;
-            
-            Detail = new NavigationPage(CurrentPage);
-            
+            var navigation = ((Application.Current.MainPage as Xamarin.Forms.MasterDetailPage)?.Detail as Xamarin.Forms.NavigationPage);
+            var CurrentDetailPage=navigation?.CurrentPage ;
+            if (CurrentDetailPage == null || CurrentDetailPage.GetType().Name!=item.TargetType.Name)
+            {
+                CurrentPage = (Page)Activator.CreateInstance(item.TargetType);
+                CurrentPage.Title = item.Title;
+
+                Detail = new NavigationPage(CurrentPage);
+            }            
             IsPresented = false;
 
             MasterPage.ListView.SelectedItem = null;
