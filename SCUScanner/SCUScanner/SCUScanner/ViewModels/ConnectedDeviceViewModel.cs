@@ -436,23 +436,30 @@ namespace SCUScanner.ViewModels
            
                 ScuData = null;
                 if (!readresult.Success)
-                    this.Value = "ERROR - " + readresult.ErrorMessage;
+                    this.SourceText = "ERROR - " + readresult.ErrorMessage;
 
                 else if (readresult.Data == null)
-                    this.Value = "EMPTY";
+                    this.SourceText = "EMPTY";
 
                 else
                 {
                     this.Value = Encoding.UTF8.GetString(readresult.Data, 0, readresult.Data.Length);
-                this.SourceText += this.Value;
-                    //RPM = null;
-                    //AlarmLimit = null;
-                if (!string.IsNullOrEmpty(this.Value) && this.Value.StartsWith("{") && this.Value.EndsWith("}"))
+
+                if (Value.StartsWith("{"))
+                {
+                    this.SourceText = this.Value;
+                   
+                }
+                else
+                    this.SourceText += this.Value;
+                //RPM = null;
+                //AlarmLimit = null;
+                if (!string.IsNullOrEmpty(this.SourceText) && this.SourceText.StartsWith("{") && this.SourceText.EndsWith("}"))
                 {
                     try
                     {
                         //
-                        string val = this.Value;
+                        string val = this.SourceText;
                         if (!string.IsNullOrEmpty(val))
                         {
                             val = val
