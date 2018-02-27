@@ -61,7 +61,7 @@
             <!--<Label   Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Text="{Binding HRS, StringFormat='{0} Hrs'}" Font="Bold,16" HorizontalOptions="Center"/>-->
             <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" Text="{Binding AlarmHours, StringFormat='(Alarm at {0} hours)'}" HorizontalOptions="Center"/>
             
-            <controls:PlaceholderEditor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Text="{Binding Note}" Placeholder="{Binding Resources[NoteText]}"  HeightRequest="80"  HorizontalOptions="Fill"  FontSize="Small"/>
+            <controls:PlaceholderEditor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Text="{Binding Note}" Placeholder="{Binding Resources[NoteText]}"  HeightRequest="30"  HorizontalOptions="Fill"  FontSize="Small"/>
             <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="6"  x:Name="tLocationName" Text="{Binding LocationName}" Placeholder="{Binding Resources[LocationNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
             <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="7"  x:Name="tOperatorName" Text="{Binding OperatorName}" Placeholder="{Binding Resources[OperatorNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
 

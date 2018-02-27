@@ -460,21 +460,20 @@ namespace SCUScanner.ViewModels
                     {
                         //
                         string val = this.SourceText;
-                        if (!string.IsNullOrEmpty(val))
-                        {
+                        
                             val = val
                                 .Replace("\"ID\":", "\"ID\":\"")
                                 .Replace(",\"SN\":", "\",\"SN\":\"")
                                 .Replace(",\"C\":", "\",\"C\":")
                                 .Replace("%", "pc");
-                            App.Dialogs.Alert("Deserialize data- \n" + val);
+                            
                             ScuData = JsonConvert.DeserializeObject<SCUSendData>(val);
-                        }
+                        
 
                     }
                     catch (Exception er)
                     {
-                        App.Dialogs.Alert("Deserialize datat error- \n" + er.Message);
+                        App.Dialogs.Alert("Deserialize data error- \n" + er.Message);
                     }
                     RPM = ScuData?.S ?? 0;
                     AlarmLimit = ScuData?.A;
