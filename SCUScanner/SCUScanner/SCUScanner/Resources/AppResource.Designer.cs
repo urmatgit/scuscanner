@@ -61,6 +61,24 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alarm hours.
+        /// </summary>
+        internal static string AlarmHoursText {
+            get {
+                return ResourceManager.GetString("AlarmHoursText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alarm level %.
+        /// </summary>
+        internal static string AlarmLevelText {
+            get {
+                return ResourceManager.GetString("AlarmLevelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bluetooth is not enabled, enable Bluetooth?.
         /// </summary>
         internal static string AskBluetoothSetText {
@@ -85,6 +103,15 @@ namespace SCUScanner.Resources {
         internal static string BluetoothUnsupportText {
             get {
                 return ResourceManager.GetString("BluetoothUnsupportText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Broadcast identity.
+        /// </summary>
+        internal static string BroadcastIdentityText {
+            get {
+                return ResourceManager.GetString("BroadcastIdentityText", resourceCulture);
             }
         }
         
@@ -139,6 +166,15 @@ namespace SCUScanner.Resources {
         internal static string ContinuousScanText {
             get {
                 return ResourceManager.GetString("ContinuousScanText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cut off %.
+        /// </summary>
+        internal static string CutOffText {
+            get {
+                return ResourceManager.GetString("CutOffText", resourceCulture);
             }
         }
         
@@ -314,6 +350,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send.
+        /// </summary>
+        internal static string SendButtonText {
+            get {
+                return ResourceManager.GetString("SendButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to On the Android device select &quot;Settings&quot; &gt; &quot;Communication&quot; &gt; Bluetooth and make sure Bluetooth switch is in position &quot;On&quot;..
         /// </summary>
         internal static string SetHintBluetoothAndroidText {
@@ -328,6 +373,25 @@ namespace SCUScanner.Resources {
         internal static string SetHintBluetoothIOSText {
             get {
                 return ResourceManager.GetString("SetHintBluetoothIOSText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set serial number note this text
+        ///box only visible on factory version.
+        /// </summary>
+        internal static string SetSerialNumberInfoText {
+            get {
+                return ResourceManager.GetString("SetSerialNumberInfoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set serial number.
+        /// </summary>
+        internal static string SetSerialNumberText {
+            get {
+                return ResourceManager.GetString("SetSerialNumberText", resourceCulture);
             }
         }
         

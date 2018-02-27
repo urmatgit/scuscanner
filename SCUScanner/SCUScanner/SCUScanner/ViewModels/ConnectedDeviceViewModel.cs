@@ -467,7 +467,7 @@ namespace SCUScanner.ViewModels
                                 .Replace(",\"C\":", "\",\"C\":")
                                 .Replace("%", "pc");
                         
-                        ScuData = JsonConvert.DeserializeObject<SCUSendData>(val,new JsonSerializerSettings();
+                        ScuData = JsonConvert.DeserializeObject<SCUSendData>(val);
                         
 
                     }

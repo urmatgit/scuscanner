@@ -220,4 +220,26 @@
   <data name="StatusText" xml:space="preserve">
     <value>Статус</value>
   </data>
+  <data name="AlarmHoursText" xml:space="preserve">
+    <value>Часы будильника</value>
+  </data>
+  <data name="AlarmLevelText" xml:space="preserve">
+    <value>Уровень тревоги %</value>
+  </data>
+  <data name="BroadcastIdentityText" xml:space="preserve">
+    <value>Номер передачика</value>
+  </data>
+  <data name="CutOffText" xml:space="preserve">
+    <value>Отрезать %</value>
+  </data>
+  <data name="SendButtonText" xml:space="preserve">
+    <value>Отправить</value>
+  </data>
+  <data name="SetSerialNumberInfoText" xml:space="preserve">
+    <value>Set serial number note this text
+box only visible on factory version</value>
+  </data>
+  <data name="SetSerialNumberText" xml:space="preserve">
+    <value>Установить серийный номер</value>
+  </data>
 </root>

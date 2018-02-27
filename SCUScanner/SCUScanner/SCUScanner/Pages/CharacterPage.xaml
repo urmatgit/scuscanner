@@ -38,7 +38,7 @@
             <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding SN,StringFormat=' SN: {0}'}"/>
             <StackLayout Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center">
                 <gauge:SfDigitalGauge x:Name="digital" Value="{Binding RPM}" BackgroundColor="White" WidthRequest="120" CharacterStrokeColor="Red"
-                                        CharacterType="EightCrossEightDotMatrix"   VerticalOptions="End"
+                                        CharacterType="EightCrossEightDotMatrix"   
                                       />
                 <!--<Label    Text="{Binding RPM}" Font="Bold,16" />-->
                 <Label    Text="Rpm" Font="Bold,16" VerticalTextAlignment="Center" />

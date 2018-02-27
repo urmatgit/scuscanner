@@ -220,4 +220,26 @@ Turn On Bluetooth and press </value>
   <data name="DownloadText" xml:space="preserve">
     <value>Download Manual</value>
   </data>
+  <data name="AlarmHoursText" xml:space="preserve">
+    <value>Alarm hours</value>
+  </data>
+  <data name="AlarmLevelText" xml:space="preserve">
+    <value>Alarm level %</value>
+  </data>
+  <data name="BroadcastIdentityText" xml:space="preserve">
+    <value>Broadcast identity</value>
+  </data>
+  <data name="CutOffText" xml:space="preserve">
+    <value>Cut off %</value>
+  </data>
+  <data name="SendButtonText" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="SetSerialNumberInfoText" xml:space="preserve">
+    <value>Set serial number note this text
+box only visible on factory version</value>
+  </data>
+  <data name="SetSerialNumberText" xml:space="preserve">
+    <value>Set serial number</value>
+  </data>
 </root>
