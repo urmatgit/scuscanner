@@ -465,7 +465,8 @@ namespace SCUScanner.ViewModels
                             val = val
                                 .Replace("\"ID\":", "\"ID\":\"")
                                 .Replace(",\"SN\":", "\",\"SN\":\"")
-                                .Replace(",\"C\":", "\",\"C\":");
+                                .Replace(",\"C\":", "\",\"C\":")
+                                .Replace("%", "pc");
                             ScuData = JsonConvert.DeserializeObject<SCUSendData>(val);
                         }
 
