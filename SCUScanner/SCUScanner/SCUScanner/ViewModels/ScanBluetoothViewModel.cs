@@ -176,22 +176,32 @@ namespace SCUScanner.ViewModels
                     {
                         return;
                     }
-                    if (this.IsScanning)
-                    {
-                        StopScanBle();
-                    }
-                    else
-                    {
+                if (this.IsScanning)
+                {
+                    StopScanBle();
+                }
+                else
+                {
 
-                        //this.Devices.Clear();
-                        this.IsScanning = true;
+                    //this.Devices.Clear();
+                    this.IsScanning = true;
 
-                        //this.ScanText = Resources["ScanText"];
-                        if (Models.Settings.Current.ManualScan)
-                            StopScanning.Start();
-                        if (!App.BleAdapter.IsScanning)
-                            this.scan =  App.BleAdapter
-                                .Scan()
+                    //this.ScanText = Resources["ScanText"];
+                    if (Models.Settings.Current.ManualScan)
+                        StopScanning.Start();
+                    if (!App.BleAdapter.IsScanning)
+                        this.scan = App.BleAdapter
+                            .Scan(
+                            //public enum BleScanType
+                            //    {
+                            //        Background = 0,
+                            //        LowPowered = 1,
+                            //        Balanced = 2,
+                            //        LowLatency = 3
+                            //    }
+                                     new ScanConfig() { ScanType=BleScanType.Balanced}
+
+                                    )
                                 //                            .Where(r=>r.AdvertisementData.ServiceUuids!=null && r.AdvertisementData.ServiceUuids?.Length>0) //filter where service >0
                                 .Buffer(TimeSpan.FromSeconds(1))
                                 .ObserveOn(RxApp.MainThreadScheduler)

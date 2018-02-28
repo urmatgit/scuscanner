@@ -269,7 +269,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nearby Devices.
+        ///   Looks up a localized string similar to Main.
         /// </summary>
         internal static string MainText {
             get {
