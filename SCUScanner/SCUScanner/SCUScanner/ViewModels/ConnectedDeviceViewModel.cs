@@ -22,6 +22,7 @@ namespace SCUScanner.ViewModels
     public class ConnectedDeviceViewModel : BaseViewModel
     {
 
+        
         IDisposable watcher;
         public ScanResultViewModel DeviceViewModel {get;set;}
         SCUSendData ScuData { get; set; }
@@ -130,7 +131,8 @@ namespace SCUScanner.ViewModels
                 else
                     TimerAlarm.Stop();
             });
-          //  StatusColor = Color.Green;
+            //  StatusColor = Color.Green;
+            OnActivateOnLoad();
         }
         Color oldColor=Color.White;
         bool TimerChangeColor = false;
@@ -297,9 +299,10 @@ namespace SCUScanner.ViewModels
             get => sourceText;
             set => this.RaiseAndSetIfChanged(ref sourceText, value);
         }
-        public override void OnActivate()
+        public void OnActivateOnLoad()
         {
-            base.OnActivate();
+          //  base.OnActivate();
+          
             this.cleanup.Clear();
             this.cleanup.Add(this.device
                .WhenStatusChanged()
@@ -494,12 +497,19 @@ namespace SCUScanner.ViewModels
             if (s <= a) return Color.Red;
             return Color.Red;
         }
-        public override void OnDeactivate()
+        
+        public void Dispose()
         {
-            base.OnDeactivate();
             foreach (var item in this.cleanup)
                 item.Dispose();
-            
+
         }
+        //public override void OnDeactivate()
+        //{
+        //    base.OnDeactivate();
+        //    foreach (var item in this.cleanup)
+        //        item.Dispose();
+
+        //}
     }
 }

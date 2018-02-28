@@ -29,11 +29,16 @@ namespace SCUScanner.Pages
             (this.BindingContext as IViewModel)?.OnActivate();
         }
 
-
+        
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
             (this.BindingContext as IViewModel)?.OnDeactivate();
+        }
+        public override void Dispose()
+        {
+            connectedDeviceViewModel.Dispose();
+            base.Dispose();
         }
     }
 }

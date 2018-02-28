@@ -224,7 +224,10 @@ namespace SCUScanner.ViewModels
                 else
                     result = bPage;
             if (ListOfRemovePages.Count > 0)
-                ListOfRemovePages.ForEach(x => parentTabbed.Children.Remove(x));
+                ListOfRemovePages.ForEach(x => {
+                    x.Dispose();
+                    parentTabbed.Children.Remove(x);
+                    });
             return result;
         }
         private void StopScanning_Elapsed(object sender, ElapsedEventArgs e)

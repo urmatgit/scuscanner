@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace SCUScanner.Pages
 {
-    public class BaseTabPage:ContentPage
+    public class BaseTabPage:ContentPage,IDisposable
     {
         public static readonly BindableProperty TabbedProperty =
                        BindableProperty.Create("Tabbed", typeof(TabbedPage), typeof(TabbedPage),
@@ -19,5 +19,10 @@ namespace SCUScanner.Pages
             }
         }
         public string Kod { get; set; }
+
+        public  virtual void Dispose()
+        {
+            ;
+        }
     }
 }
