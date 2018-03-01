@@ -35,6 +35,9 @@ namespace SCUScanner.Pages
                     CurrentPage.Title = settings.Resources[selectedPage.PageCode];
                 }
             });
+
+            ListView_ItemSelected(null, new SelectedItemChangedEventArgs(MasterPage.viewModel.MenuItems.FirstOrDefault(m => m.Id == 0)));
+
         }
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

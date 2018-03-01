@@ -20,7 +20,7 @@ namespace SCUScanner.Pages
     public partial class MenuPage : ContentPage
     {
         public ListView ListView;
-        MenuPageViewModel viewModel;
+         public MenuPageViewModel viewModel;
         public MenuPage()
         {
             InitializeComponent();
