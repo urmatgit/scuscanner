@@ -15,6 +15,7 @@ using Xamarin.Forms;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 
+
 namespace SCUScanner
 {
     public partial class App : Application
@@ -35,7 +36,7 @@ namespace SCUScanner
                 return database;
             }
         }
-
+        public static SCUScanner.Pages.MainTabbedPage mainTabbed { get;  set; }
         public App()
         {
             InitializeComponent();

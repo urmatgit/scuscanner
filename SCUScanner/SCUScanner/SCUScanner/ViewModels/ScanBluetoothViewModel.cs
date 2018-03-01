@@ -97,13 +97,13 @@ namespace SCUScanner.ViewModels
             });
 
 
-            App.BleAdapter.WhenScanningStatusChanged()
-                .ObserveOn(RxApp.MainThreadScheduler)
-                .Subscribe(on =>
-                {
-                    this.IsScanning = on;
-                    ScanTextChange(on);
-                });
+            //App.BleAdapter.WhenScanningStatusChanged()
+            //    .ObserveOn(RxApp.MainThreadScheduler)
+            //    .Subscribe(on =>
+            //    {
+            //        this.IsScanning = on;
+            //        ScanTextChange(on);
+            //    });
             this.SelectDeviceCommand = ReactiveCommand.Create<ScanResultViewModel>(x =>
             {
                 StopScanBle();
@@ -112,7 +112,8 @@ namespace SCUScanner.ViewModels
             });
             this.ConnectCommand = ReactiveCommand.CreateFromTask<ScanResultViewModel>(async (o) =>
            {
-               StopScanBle();
+               if (Models.Settings.Current.ManualScan)
+                   StopScanBle();
                IDevice device = o.Device;
                try
                {
@@ -191,17 +192,7 @@ namespace SCUScanner.ViewModels
                         StopScanning.Start();
                     if (!App.BleAdapter.IsScanning)
                         this.scan = App.BleAdapter
-                            .Scan(
-                            //public enum BleScanType
-                            //    {
-                            //        Background = 0,
-                            //        LowPowered = 1,
-                            //        Balanced = 2,
-                            //        LowLatency = 3
-                            //    }
-                                     new ScanConfig() { ScanType=BleScanType.Balanced}
-
-                                    )
+                            .Scan()
                                 //                            .Where(r=>r.AdvertisementData.ServiceUuids!=null && r.AdvertisementData.ServiceUuids?.Length>0) //filter where service >0
                                 .Buffer(TimeSpan.FromSeconds(1))
                                 .ObserveOn(RxApp.MainThreadScheduler)
@@ -219,9 +210,9 @@ namespace SCUScanner.ViewModels
                 //    x => x.Value
                 //)
             );
-            //if (Models.Settings.Current.ScanMode)
-            //    this.ScanToggleCommand.Execute(null);
 
+            if (Models.Settings.Current.ScanMode)
+                this.ScanToggleCommand.Execute(null);
 
         }
         private BaseTabPage CleanTabPages()
@@ -256,9 +247,9 @@ namespace SCUScanner.ViewModels
         }
         public override void OnDeactivate()
         {
-            StopScanning.Stop();
-            if (this.IsScanning)
-                StopScanBle();
+            //StopScanning.Stop();
+            //if (this.IsScanning)
+            //    StopScanBle();
         }
         public override void OnActivate()
         {

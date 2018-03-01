@@ -47,9 +47,23 @@ namespace SCUScanner.Pages
             var CurrentDetailPage=navigation?.CurrentPage ;
             if (CurrentDetailPage == null || CurrentDetailPage.GetType().Name!=item.TargetType.Name)
             {
-                CurrentPage = (Page)Activator.CreateInstance(item.TargetType);
-                CurrentPage.Title = item.Title;
-
+                if (item.TargetType.Name==typeof(MainTabbedPage).Name)
+                    if(App.mainTabbed ==null)
+                    {
+                        CurrentPage = (Page)Activator.CreateInstance(item.TargetType);
+                        CurrentPage.Title = item.Title;
+                        App.mainTabbed = CurrentPage as MainTabbedPage;
+                    }
+                    else
+                    {
+                        CurrentPage = App.mainTabbed;
+                    }
+                else 
+                
+                {
+                    CurrentPage = (Page)Activator.CreateInstance(item.TargetType);
+                    CurrentPage.Title = item.Title;
+                }
                 Detail = new NavigationPage(CurrentPage);
             }            
             IsPresented = false;
