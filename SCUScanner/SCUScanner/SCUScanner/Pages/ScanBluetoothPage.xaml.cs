@@ -29,6 +29,10 @@ namespace SCUScanner.Pages
             
             
         }
+        public void DoAppearing()
+        {
+            OnAppearing();
+        }
         protected override void OnAppearing()
         {
             base.OnAppearing();

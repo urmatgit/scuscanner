@@ -9,6 +9,6 @@
              
     <!--Pages can be added as references or inline-->
     <TabbedPage.Children>
-        <pages:ScanBluetoothPage Title="{Binding Resources[MainText]}" Tabbed="{x:Reference Name=BleMain}"/>
+        <pages:ScanBluetoothPage x:Name="ScanningPage" Title="{Binding Resources[MainText]}" Tabbed="{x:Reference Name=BleMain}"/>
     </TabbedPage.Children>
 </TabbedPage>

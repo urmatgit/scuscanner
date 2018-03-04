@@ -18,5 +18,11 @@ namespace SCUScanner.Pages
             InitializeComponent();
             BindingContext = new BaseViewModel();
         }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            ScanningPage.DoAppearing();
+
+        }
     }
 }

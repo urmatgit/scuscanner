@@ -28,7 +28,8 @@ namespace SCUScanner.ViewModels
         IDisposable connect;
 
         System.Timers.Timer StopScanning = new System.Timers.Timer();
-
+        CharacterPage characterPage { get; set; }
+        DeviceSettingPage deviceSettingPage { get; set; }
         TabbedPage parentTabbed;
         public TabbedPage ParentTabbed
         {
@@ -124,21 +125,22 @@ namespace SCUScanner.ViewModels
                                                                           //  App.Dialogs.Alert("MTU Changed to " + actual);
                                 var title = Resources["ConnectedDeviceCaptionText"];
 
-                               var devPage = new CharacterPage(o) { Title = title };// ConnectedDevicePage(o) { Title = o.Name };
-
-                                devPage.Kod = o.Name;
-                               devPage.Tabbed = this.ParentTabbed;
+                               characterPage = new CharacterPage(o) { Title = title };// ConnectedDevicePage(o) { Title = o.Name };
+                               
+                               characterPage.Kod = o.Name;
+                               characterPage.Tabbed = this.ParentTabbed;
                                title = Resources["DeviceSettingsCaptionText"];
 
-                               var devSettingPage = new DeviceSettingPage() { Title = title };
-                               devSettingPage.Kod = $"{o.Name}_setting";
-                               devSettingPage.Tabbed = this.ParentTabbed;
+                               deviceSettingPage = new DeviceSettingPage() { Title = title };
+                               
+                               deviceSettingPage.Kod = $"{o.Name}_setting";
+                               deviceSettingPage.Tabbed = this.ParentTabbed;
                                {
                                    CleanTabPages();
                                }
-                               parentTabbed.Children.Add(devPage);
-                               parentTabbed.Children.Add(devSettingPage);
-                               parentTabbed.CurrentPage = devPage;
+                               parentTabbed.Children.Add(characterPage);
+                               parentTabbed.Children.Add(deviceSettingPage);
+                               parentTabbed.CurrentPage = characterPage;
 
                            }
                        }
@@ -239,18 +241,22 @@ namespace SCUScanner.ViewModels
             //if (this.IsScanning)
             //    StopScanBle();
         }
-        //public override void OnActivate()
-        //{
-        //    base.OnActivate();
-        //    App.BleAdapter
-        //        .WhenStatusChanged()
-        //        .ObserveOn(RxApp.MainThreadScheduler)
-        //        .Subscribe(x =>
-        //        {
-        //            CheckStatus(x);
-        //        });
+        public override void OnActivate()
+        {
+            base.OnActivate();
+            if (characterPage!=null)
+                characterPage.Title = Resources["ConnectedDeviceCaptionText"];
+            if (deviceSettingPage!=null)
+                deviceSettingPage.Title= Resources["DeviceSettingsCaptionText"];
+            //App.BleAdapter
+            //    .WhenStatusChanged()
+            //    .ObserveOn(RxApp.MainThreadScheduler)
+            //    .Subscribe(x =>
+            //    {
+            //        CheckStatus(x);
+            //    });
 
-        //}
+        }
         //void UpdateButtonText(ScanResultViewModel dev)
         //{
         //    dev.ConnectButtonText = dev.IsConnected ? Resources["DisConnectButtonText"] : Resources["ConnectButtonText"];
