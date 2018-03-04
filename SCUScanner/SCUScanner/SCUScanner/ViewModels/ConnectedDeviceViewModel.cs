@@ -24,6 +24,7 @@ namespace SCUScanner.ViewModels
 
         
         IDisposable watcher;
+        IGattCharacteristic gattCharacteristic;
         public ScanResultViewModel DeviceViewModel {get;set;}
         SCUSendData ScuData { get; set; }
         System.Timers.Timer TimerAlarm;
@@ -379,8 +380,8 @@ namespace SCUScanner.ViewModels
                                //}
                                if (character.CanNotify())
                                {
-                                   
-                                   
+
+                                   gattCharacteristic = character;
                                    this.watcher = character
                                     .RegisterAndNotify()
                                     .Subscribe(x =>
@@ -389,38 +390,12 @@ namespace SCUScanner.ViewModels
                                         });
                                }
 
-                               //var vm = new GattCharacteristicViewModel(character,device);
-
-                               //if (vm.CanRead || vm.CanNotify)
-                               //{
-                               //    Task.Run( async () =>
-                               //    {
-                               //        await vm.SelectedGattCharacteristic(true);
-                               //    });
-                               //}
-                               //MDLCharacteristicViewModel = vm;
-                             //  group.Add(vm);
-                               ////if (group.Count == 1)
-                               //var gr = this.GattCharacteristics.FirstOrDefault(g => g.Name == group.Name);
-                               //if (gr == null)
-                               //    this.GattCharacteristics.Add(group);
-                               //else
-                               //    this.GattCharacteristics[this.GattCharacteristics.IndexOf(gr)] = group;
+                             
 
 
                            });
 
-                           //if (group.Count == 1 && this.GattCharacteristics.FirstOrDefault(g=>g.Name== group.Name)==null)
-                           //    this.GattCharacteristics.Add(group);
-
-                           //character
-                           //    .WhenDescriptorDiscovered()
-                           //    .Subscribe(desc => Device.BeginInvokeOnMainThread(() =>
-                           //    {
-                           //        this.GattCharacteristics.add
-                           //        var dvm = new GattDescriptorViewModel(this.Dialogs, desc);
-                           //        this.GattDescriptors.Add(dvm);
-                           //    }));
+                          
                        });
                })
                );
@@ -500,6 +475,12 @@ namespace SCUScanner.ViewModels
         
         public void Dispose()
         {
+            if (gattCharacteristic != null)
+            {
+                gattCharacteristic.DisableNotifications();
+                gattCharacteristic = null;
+            }
+            this.device = null;
             foreach (var item in this.cleanup)
                 item.Dispose();
 

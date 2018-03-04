@@ -9,6 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Views\**" />
+    <EmbeddedResource Remove="Pages\Views\**" />
+    <None Remove="Pages\Views\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\DevicesPage.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Pages\DevicesPage.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
     <PackageReference Include="Plugin.BluetoothLE" Version="6.0.0-beta2" />

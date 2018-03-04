@@ -39,7 +39,7 @@ namespace SCUScanner.ViewModels
 
 
         public ICommand ScanToggleCommand { get; }
-        public ICommand SelectDeviceCommand { get; }
+       
         public ICommand ConnectCommand { get; }
 
         public ScanBluetoothViewModel(TabbedPage page) : base()
@@ -97,19 +97,7 @@ namespace SCUScanner.ViewModels
             });
 
 
-            //App.BleAdapter.WhenScanningStatusChanged()
-            //    .ObserveOn(RxApp.MainThreadScheduler)
-            //    .Subscribe(on =>
-            //    {
-            //        this.IsScanning = on;
-            //        ScanTextChange(on);
-            //    });
-            this.SelectDeviceCommand = ReactiveCommand.Create<ScanResultViewModel>(x =>
-            {
-                StopScanBle();
-                App.Dialogs.Alert($"Selected {x.Name}");
-                //services.VmManager.Push<DeviceViewModel>(x.Device);
-            });
+            
             this.ConnectCommand = ReactiveCommand.CreateFromTask<ScanResultViewModel>(async (o) =>
            {
                if (Models.Settings.Current.ManualScan)
@@ -251,18 +239,18 @@ namespace SCUScanner.ViewModels
             //if (this.IsScanning)
             //    StopScanBle();
         }
-        public override void OnActivate()
-        {
-            base.OnActivate();
-            App.BleAdapter
-                .WhenStatusChanged()
-                .ObserveOn(RxApp.MainThreadScheduler)
-                .Subscribe(x =>
-                {
-                    CheckStatus(x);
-                });
+        //public override void OnActivate()
+        //{
+        //    base.OnActivate();
+        //    App.BleAdapter
+        //        .WhenStatusChanged()
+        //        .ObserveOn(RxApp.MainThreadScheduler)
+        //        .Subscribe(x =>
+        //        {
+        //            CheckStatus(x);
+        //        });
 
-        }
+        //}
         //void UpdateButtonText(ScanResultViewModel dev)
         //{
         //    dev.ConnectButtonText = dev.IsConnected ? Resources["DisConnectButtonText"] : Resources["ConnectButtonText"];
