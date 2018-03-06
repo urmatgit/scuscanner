@@ -38,6 +38,7 @@ namespace SCUScanner.ViewModels
             get => this.busy;
              set => this.RaiseAndSetIfChanged(ref this.busy, value);
         }
+
         protected LocalizedResources resources;
         public virtual LocalizedResources Resources
         {
@@ -46,7 +47,7 @@ namespace SCUScanner.ViewModels
                 return resources;
             }
             private set => this.RaiseAndSetIfChanged(ref this.resources, value);
-            
+
         }
 
         public BaseViewModel()

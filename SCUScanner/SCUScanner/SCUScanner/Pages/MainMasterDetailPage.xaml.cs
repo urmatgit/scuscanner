@@ -30,7 +30,7 @@ namespace SCUScanner.Pages
                 var arg = agr;
                 if (arg is CultureChangedMessage)
                 {
-                    BindingContext = null;
+                //    BindingContext = null;
                     SCUScanner.Models.Settings settings = sender as SCUScanner.Models.Settings;
                     CurrentPage.Title = settings.Resources[selectedPage.PageCode];
                 }

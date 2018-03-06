@@ -58,7 +58,7 @@ namespace SCUScanner.ViewModels
                 else
                     ResourcesEx = null;
             });
-            this.WhenAnyValue(vm => vm.Resources).Subscribe(val =>
+            this.WhenAnyValue(vm => vm.Settings.Resources).Subscribe(val =>
             {
 
                 ScanTextChange(App.BleAdapter.IsScanning);
@@ -285,6 +285,13 @@ namespace SCUScanner.ViewModels
                 ScanText = Resources["StopScanText"];
             else
                 ScanText = Resources["ScanText"];
+            if (Devices.Count() > 0)
+            {
+                foreach(var dev in Devices)
+                {
+                    dev.UpdateButtonText();
+                }
+            }
         }
 
         bool scanning;

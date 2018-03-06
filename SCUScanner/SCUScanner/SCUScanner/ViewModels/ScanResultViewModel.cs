@@ -16,11 +16,14 @@ namespace SCUScanner.ViewModels
             this.WhenAnyValue( x =>x.IsConnected).Subscribe(c=>
             {
                 
-             ConnectButtonText=c? Resources["DisConnectButtonText"] : Resources["ConnectButtonText"];
+             ConnectButtonText=c? Settings.Resources["DisConnectButtonText"] : Settings.Resources["ConnectButtonText"];
                 
             });
         }
-
+        public void UpdateButtonText()
+        {
+            ConnectButtonText = IsConnected ? Settings.Resources["DisConnectButtonText"] : Settings.Resources["ConnectButtonText"];
+        }
         string connectButtonText;
         public string ConnectButtonText
         {

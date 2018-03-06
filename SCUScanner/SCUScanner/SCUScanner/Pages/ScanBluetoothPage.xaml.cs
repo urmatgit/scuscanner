@@ -18,16 +18,31 @@ namespace SCUScanner.Pages
 	public partial class ScanBluetoothPage : BaseTabPage
     {
         bool IsBluetoothEnabled = false;
-        
+        ScanBluetoothViewModel scanBluetoothViewModel;
 
-		public ScanBluetoothPage ()
+        public ScanBluetoothPage ()
 		{
 			InitializeComponent ();
             Kod = GlobalConstants.MAIN_TAB_PAGE;   
-            BindingContext = new ScanBluetoothViewModel(Tabbed);
+            BindingContext = scanBluetoothViewModel=new ScanBluetoothViewModel(Tabbed);
             lblHintBluetoothAndroidText.IsVisible = !(lblHintBluetoothIOSText.IsVisible = Device.RuntimePlatform == Device.iOS);
-            
-            
+            MessagingCenter.Subscribe<object, CultureChangedMessage>(this, string.Empty, (sender, agr) =>
+            {
+
+                var arg = agr;
+                if (arg is CultureChangedMessage)
+                {
+                   // BindingContext = null;
+                    SCUScanner.Models.Settings settings = sender as SCUScanner.Models.Settings;
+                    this.Title = settings.Resources["MainText"];
+                    if (App.mainTabbed != null)
+                    {
+                        App.mainTabbed.Title= settings.Resources["MainText"];
+                        scanBluetoothViewModel.ScanTextChange(scanBluetoothViewModel.IsScanning);
+                    }
+                }
+            });
+
         }
         public void DoAppearing()
         {
