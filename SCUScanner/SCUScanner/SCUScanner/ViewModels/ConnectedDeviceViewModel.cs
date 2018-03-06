@@ -390,7 +390,7 @@ namespace SCUScanner.ViewModels
                                         });
                                }
 
-                             
+                               TimerAlarm.Start();
 
 
                            });
@@ -475,6 +475,8 @@ namespace SCUScanner.ViewModels
         
         public void Dispose()
         {
+            TimerAlarm.Stop();
+            TimerAlarm.Dispose();
             if (gattCharacteristic != null)
             {
                 gattCharacteristic.DisableNotifications();

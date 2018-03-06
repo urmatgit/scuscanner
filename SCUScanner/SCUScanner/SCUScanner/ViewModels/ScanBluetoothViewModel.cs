@@ -201,8 +201,8 @@ namespace SCUScanner.ViewModels
                 //)
             );
 
-            if (Models.Settings.Current.ScanMode)
-                this.ScanToggleCommand.Execute(null);
+            //if (Models.Settings.Current.ScanMode)
+            //    this.ScanToggleCommand.Execute(null);
 
         }
         private BaseTabPage CleanTabPages()
