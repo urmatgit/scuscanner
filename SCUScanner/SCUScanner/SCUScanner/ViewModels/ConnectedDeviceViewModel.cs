@@ -16,6 +16,7 @@ using SCUScanner.Models;
 using Newtonsoft.Json;
 using Plugin.Share;
 using Plugin.Share.Abstractions;
+using System.Diagnostics;
 
 namespace SCUScanner.ViewModels
 {
@@ -25,6 +26,7 @@ namespace SCUScanner.ViewModels
         
         IDisposable watcher;
         IGattCharacteristic gattCharacteristic;
+        Color PreviewColor = Color.White;
         public ScanResultViewModel DeviceViewModel {get;set;}
         SCUSendData ScuData { get; set; }
         System.Timers.Timer TimerAlarm;
@@ -143,16 +145,18 @@ namespace SCUScanner.ViewModels
             if (StatusColor==Color.Red || StatusColor == Color.Yellow || StatusColor == Color.White)
             {
                 TimerChangeColor = true;
-                if (StatusColor != Color.White)
+                Color tmpColor = StatusColor;
+                if (tmpColor != Color.White)
                 {
-                    oldColor = StatusColor;
-                    StatusColor = Color.White;
+                    oldColor = tmpColor;
+                    tmpColor = Color.White;
                 }
                 else
                 {
-                    StatusColor = oldColor;
+                    tmpColor = oldColor;
                     oldColor = Color.White;
                 }
+                StatusColor = tmpColor;
                 TimerChangeColor = false;
                 TimerAlarm.Start();
             }
@@ -357,15 +361,17 @@ namespace SCUScanner.ViewModels
                  //  var group = new Group<GattCharacteristicViewModel>(service.Uuid.ToString());
                    service
                        .WhenCharacteristicDiscovered()
-                       .Where(c=> InListCharacters(c.Uuid.ToString()))
+                      // .Where(c=> InListCharacters(c.Uuid.ToString()))
                        .ObserveOn(RxApp.MainThreadScheduler)
                        .Subscribe(character =>
                        {
-                            
-                           
-                           Device.BeginInvokeOnMainThread(() =>
+                           var strUuid = character.Uuid.ToString();
+                           if (InListCharacters(character.Uuid.ToString()))
                            {
-                               
+
+                               Device.BeginInvokeOnMainThread(() =>
+                               {
+
 
                                //if (character.CanRead())
                                //{
@@ -378,23 +384,24 @@ namespace SCUScanner.ViewModels
                                //    //});
 
                                //}
-                               if (character.CanNotify())
-                               {
+                               if (!character.IsNotifying && character.CanNotify())
+                                   {
 
-                                   gattCharacteristic = character;
-                                   this.watcher = character
-                                    .RegisterAndNotify()
-                                    .Subscribe(x =>
-                                        {
-                                            GetValue(x);
-                                        });
-                               }
+                                       gattCharacteristic = character;
+                                       this.watcher = character
+                                        .RegisterAndNotify()
+                                        .Subscribe(x =>
+                                            {
+                                                GetValue(x);
+                                            });
+                                   }
 
-                               TimerAlarm.Start();
+                               // TimerAlarm.Start();
 
 
                            });
 
+                           }
                           
                        });
                })
@@ -430,14 +437,16 @@ namespace SCUScanner.ViewModels
                 }
                 else
                     this.SourceText += this.Value;
+                Debug.Write(this.SourceText);
                 //RPM = null;
                 //AlarmLimit = null;
-                if (!string.IsNullOrEmpty(this.SourceText) && this.SourceText.StartsWith("{") && this.SourceText.EndsWith("}"))
+                string val = this.SourceText.Trim();
+                if (!string.IsNullOrEmpty(val) &&  val.StartsWith("{") && val.EndsWith("}"))
                 {
                     try
                     {
                         //
-                        string val = this.SourceText;
+                        
                         
                             val = val
                                 .Replace("\"ID\":", "\"ID\":\"")
@@ -446,19 +455,26 @@ namespace SCUScanner.ViewModels
                                 .Replace("%", "pc");
                         
                         ScuData = JsonConvert.DeserializeObject<SCUSendData>(val);
-                        
+                        Debug.WriteLine($"\nScuData-{val}");
 
                     }
                     catch (Exception er)
                     {
                         //App.Dialogs.Alert("Deserialize data error- \n" + er.Message);
+                        this.SourceText = "";
                         return;
                     }
                     RPM = ScuData?.S ?? 0;
                     AlarmLimit = ScuData?.A;
                     SN = ScuData?.SN;
                     Warning = ScuData?.W;
-                    StatusColor = ChangeStatusColor(RPM, Warning, AlarmLimit);
+                    
+                   var tmpNewColor= ChangeStatusColor(RPM, Warning, AlarmLimit);
+                    if (PreviewColor != tmpNewColor)
+                    {
+                        StatusColor = tmpNewColor;
+                        PreviewColor = tmpNewColor;
+                    }
                   
                 }
 
