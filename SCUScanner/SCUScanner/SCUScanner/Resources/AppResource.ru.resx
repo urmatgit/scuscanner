@@ -252,7 +252,7 @@ box only visible on factory version</value>
     <value>Дата и время</value>
   </data>
   <data name="HoursElapsedText" xml:space="preserve">
-    <value>Hours Elapsed</value>
+    <value>Часов</value>
   </data>
   <data name="IDText" xml:space="preserve">
     <value>ИД</value>
@@ -271,5 +271,17 @@ box only visible on factory version</value>
   </data>
   <data name="SpeedText" xml:space="preserve">
     <value>Скорость</value>
+  </data>
+  <data name="AllColumnsText" xml:space="preserve">
+    <value>Все поля</value>
+  </data>
+  <data name="ContainsText" xml:space="preserve">
+    <value>Содержить</value>
+  </data>
+  <data name="EqualsText" xml:space="preserve">
+    <value>Равно</value>
+  </data>
+  <data name="NotEqualsText" xml:space="preserve">
+    <value>Не равно</value>
   </data>
 </root>

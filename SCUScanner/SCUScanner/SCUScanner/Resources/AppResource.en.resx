@@ -272,4 +272,16 @@ box only visible on factory version</value>
   <data name="SpeedText" xml:space="preserve">
     <value>Speed</value>
   </data>
+  <data name="AllColumnsText" xml:space="preserve">
+    <value>All Columns</value>
+  </data>
+  <data name="ContainsText" xml:space="preserve">
+    <value>Contains</value>
+  </data>
+  <data name="EqualsText" xml:space="preserve">
+    <value>Equals</value>
+  </data>
+  <data name="NotEqualsText" xml:space="preserve">
+    <value>NotEquals</value>
+  </data>
 </root>

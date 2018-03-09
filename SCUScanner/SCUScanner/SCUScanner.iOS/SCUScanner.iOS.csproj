@@ -206,4 +206,10 @@
   <ItemGroup>
     <BundleResource Include="Resources\share.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Option.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\CloseIcon.png" />
+  </ItemGroup>
 </Project>

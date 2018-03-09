@@ -88,6 +88,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Columns.
+        /// </summary>
+        internal static string AllColumnsText {
+            get {
+                return ResourceManager.GetString("AllColumnsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bluetooth is not enabled, enable Bluetooth?.
         /// </summary>
         internal static string AskBluetoothSetText {
@@ -179,6 +188,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contains.
+        /// </summary>
+        internal static string ContainsText {
+            get {
+                return ResourceManager.GetString("ContainsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continuous scan.
         /// </summary>
         internal static string ContinuousScanText {
@@ -256,6 +274,15 @@ namespace SCUScanner.Resources {
         internal static string DownloadText {
             get {
                 return ResourceManager.GetString("DownloadText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Equals.
+        /// </summary>
+        internal static string EqualsText {
+            get {
+                return ResourceManager.GetString("EqualsText", resourceCulture);
             }
         }
         
@@ -346,6 +373,15 @@ namespace SCUScanner.Resources {
         internal static string NearbyDevicesCaptionText {
             get {
                 return ResourceManager.GetString("NearbyDevicesCaptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NotEquals.
+        /// </summary>
+        internal static string NotEqualsText {
+            get {
+                return ResourceManager.GetString("NotEqualsText", resourceCulture);
             }
         }
         
