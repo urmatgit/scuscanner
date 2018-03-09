@@ -11,7 +11,7 @@ using Xamarin.Forms.Xaml;
 namespace SCUScanner.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SCUItemsPage : ContentPage
+    public partial class SCUItemsPage : BaseTabPage
     {
          
 

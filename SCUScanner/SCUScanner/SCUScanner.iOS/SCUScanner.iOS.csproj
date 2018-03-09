@@ -158,8 +158,11 @@
     <PackageReference Include="sqlite-net-standard">
       <Version>1.5.1</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid">
+      <Version>16.1.0.26</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfGauge">
-      <Version>16.1.0.24</Version>
+      <Version>16.1.0.26</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.2.0.130-beta</Version>

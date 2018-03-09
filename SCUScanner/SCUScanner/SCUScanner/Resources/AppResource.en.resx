@@ -242,4 +242,34 @@ box only visible on factory version</value>
   <data name="SetSerialNumberText" xml:space="preserve">
     <value>Set serial number</value>
   </data>
+  <data name="AlarmSpeedText" xml:space="preserve">
+    <value>Alarm Speed</value>
+  </data>
+  <data name="BroadCastIdText" xml:space="preserve">
+    <value>Broadcast identity</value>
+  </data>
+  <data name="DateWithTimeText" xml:space="preserve">
+    <value>Date/Time</value>
+  </data>
+  <data name="HoursElapsedText" xml:space="preserve">
+    <value>Hours Elapsed</value>
+  </data>
+  <data name="IDText" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="LocationText" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="NotesText" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="OperatorText" xml:space="preserve">
+    <value>Operator</value>
+  </data>
+  <data name="SerialNoText" xml:space="preserve">
+    <value>Serial No</value>
+  </data>
+  <data name="SpeedText" xml:space="preserve">
+    <value>Speed</value>
+  </data>
 </root>

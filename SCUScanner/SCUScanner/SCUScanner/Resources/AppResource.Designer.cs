@@ -79,6 +79,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alarm Speed.
+        /// </summary>
+        internal static string AlarmSpeedText {
+            get {
+                return ResourceManager.GetString("AlarmSpeedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bluetooth is not enabled, enable Bluetooth?.
         /// </summary>
         internal static string AskBluetoothSetText {
@@ -112,6 +121,15 @@ namespace SCUScanner.Resources {
         internal static string BroadcastIdentityText {
             get {
                 return ResourceManager.GetString("BroadcastIdentityText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Broadcast identity.
+        /// </summary>
+        internal static string BroadCastIdText {
+            get {
+                return ResourceManager.GetString("BroadCastIdText", resourceCulture);
             }
         }
         
@@ -188,6 +206,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date/Time.
+        /// </summary>
+        internal static string DateWithTimeText {
+            get {
+                return ResourceManager.GetString("DateWithTimeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Device Settings.
         /// </summary>
         internal static string DeviceSettingsCaptionText {
@@ -242,6 +269,24 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hours Elapsed.
+        /// </summary>
+        internal static string HoursElapsedText {
+            get {
+                return ResourceManager.GetString("HoursElapsedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID.
+        /// </summary>
+        internal static string IDText {
+            get {
+                return ResourceManager.GetString("IDText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To access the hardware identifiers of nearby external devices via Bluetooth and Wi-Fi scans, your app must now have the ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION permissions.
         /// </summary>
         internal static string InfoPermissionLocationText {
@@ -256,6 +301,15 @@ namespace SCUScanner.Resources {
         internal static string LocationNameText {
             get {
                 return ResourceManager.GetString("LocationNameText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        internal static string LocationText {
+            get {
+                return ResourceManager.GetString("LocationText", resourceCulture);
             }
         }
         
@@ -296,6 +350,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notes.
+        /// </summary>
+        internal static string NotesText {
+            get {
+                return ResourceManager.GetString("NotesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Note.
         /// </summary>
         internal static string NoteText {
@@ -319,6 +382,15 @@ namespace SCUScanner.Resources {
         internal static string OperatorNameText {
             get {
                 return ResourceManager.GetString("OperatorNameText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operator.
+        /// </summary>
+        internal static string OperatorText {
+            get {
+                return ResourceManager.GetString("OperatorText", resourceCulture);
             }
         }
         
@@ -355,6 +427,15 @@ namespace SCUScanner.Resources {
         internal static string SendButtonText {
             get {
                 return ResourceManager.GetString("SendButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serial No.
+        /// </summary>
+        internal static string SerialNoText {
+            get {
+                return ResourceManager.GetString("SerialNoText", resourceCulture);
             }
         }
         
@@ -410,6 +491,15 @@ namespace SCUScanner.Resources {
         internal static string SparesText {
             get {
                 return ResourceManager.GetString("SparesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed.
+        /// </summary>
+        internal static string SpeedText {
+            get {
+                return ResourceManager.GetString("SpeedText", resourceCulture);
             }
         }
         

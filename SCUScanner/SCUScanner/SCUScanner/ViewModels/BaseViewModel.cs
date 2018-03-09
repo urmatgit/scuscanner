@@ -27,10 +27,12 @@ namespace SCUScanner.ViewModels
         {
         }
     }
-    public  class BaseViewModel : AbstractViewModel
+    public class BaseViewModel : AbstractViewModel
     {
-        public Settings Settings => Settings.Current;
-
+        public Settings SettingsBase => Settings.Current;
+         
+          
+        
 
         bool busy;
         public bool IsBusy
@@ -39,25 +41,28 @@ namespace SCUScanner.ViewModels
              set => this.RaiseAndSetIfChanged(ref this.busy, value);
         }
 
-        protected LocalizedResources resources;
+        //protected LocalizedResources resources;
         public virtual LocalizedResources Resources
         {
-            get
-            {
-                return resources;
-            }
-            private set => this.RaiseAndSetIfChanged(ref this.resources, value);
-
+            get => SettingsBase.Resources;
+            //private set => this.RaiseAndSetIfChanged(ref resources, value);
         }
 
         public BaseViewModel()
         {
-            
-            Resources = new LocalizedResources(typeof(AppResource), App.CurrentLanguage);//  App.CurrentLanguage);
+
+            //this.WhenAnyValue(vm => vm.SettingsBase.Resources).Subscribe(val =>
+            //{
+            //    Resources = val;
+            //});
+
+            SettingsBase.Resources = new LocalizedResources(typeof(AppResource), App.CurrentLanguage);//  App.CurrentLanguage);
+
         }
         public void SetResourcesLang(string lang)
         {
-            Resources = new LocalizedResources(typeof(AppResource), lang);//  App.CurrentLanguage);
+            SettingsBase.SetResourcesLang(lang);
+            //Settings.Resources = new LocalizedResources(typeof(AppResource), lang);//  App.CurrentLanguage);
         }
 
         

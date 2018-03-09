@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SCUScanner.ViewModels
 {
-    public class SCUDatasViewModel: AbstractViewModel
+    public class SCUDatasViewModel: BaseViewModel
     {
         public ObservableCollection<SCUItem>  SCUItems { get; private set; }
         public SCUDatasViewModel()

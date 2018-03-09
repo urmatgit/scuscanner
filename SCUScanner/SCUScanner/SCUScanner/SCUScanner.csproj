@@ -30,7 +30,8 @@
     <PackageReference Include="Plugin.Share" Version="7.1.1" />
     <PackageReference Include="ReactiveUI" Version="8.0.0-alpha0117" />
     <PackageReference Include="sqlite-net-standard" Version="1.5.1" />
-    <PackageReference Include="Syncfusion.Xamarin.SfGauge" Version="16.1.0.24" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="16.1.0.26" />
+    <PackageReference Include="Syncfusion.Xamarin.SfGauge" Version="16.1.0.26" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.2.0.130-beta" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
   </ItemGroup>

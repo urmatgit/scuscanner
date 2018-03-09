@@ -1,6 +1,7 @@
 ﻿using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using ReactiveUI;
+using SCUScanner.Resources;
 using SCUScanner.Services;
 using SCUScanner.ViewModels;
 using System;
@@ -10,7 +11,7 @@ using Xamarin.Forms;
 
 namespace SCUScanner.Models
 {
-    public  class  Settings : BaseViewModel
+    public  class  Settings : AbstractViewModel
     {
 
         private static ISettings AppSettings =>  CrossSettings.Current;
@@ -73,6 +74,20 @@ namespace SCUScanner.Models
 //                    SetProperty(ref orinal, value);
                 }
             }
+        }
+        private LocalizedResources resources;
+        public  LocalizedResources Resources
+        {
+            get
+            {
+                return resources;
+            }
+             set => this.RaiseAndSetIfChanged(ref this.resources, value);
+
+        }
+        public void SetResourcesLang(string lang)
+        {
+            Resources = new LocalizedResources(typeof(AppResource), lang);//  App.CurrentLanguage);
         }
     }
 }

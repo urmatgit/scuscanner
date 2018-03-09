@@ -1,9 +1,311 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<pages:BaseTabPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             
-             x:Class="SCUScanner.Pages.SCUItemsPage">
-    <ContentPage.Content>
-         
-    </ContentPage.Content>
-</ContentPage>
+              xmlns:sfgrid="clr-namespace:Syncfusion.SfDataGrid.XForms;assembly=Syncfusion.SfDataGrid.XForms"
+              xmlns:local="clr-namespace:SCUScanner.Helpers"
+              xmlns:pages="clr-namespace:SCUScanner.Pages"
+             x:Class="SCUScanner.Pages.SCUItemsPage"
+                    x:Name="ScuItemsPage" >
+    <pages:BaseTabPage.Content>
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <SearchBar x:Name="filterText"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                IsVisible="true"
+                                Placeholder="Search here to filter">
+                <SearchBar.HeightRequest>
+                    <OnPlatform x:TypeArguments="x:Double"
+                                Android="50"
+                                iOS="50">
+                        
+                    </OnPlatform>
+                </SearchBar.HeightRequest>
+            </SearchBar>
+
+            <sfgrid:SfDataGrid x:Name="dataGrid"
+                               Grid.Row="1"
+                               Grid.Column="0"
+                               AutoGenerateColumns="false"
+                               ItemsSource="{Binding SCUItems}"
+                               ColumnSizer="Auto"
+                               GridStyle="{local:DefaultStyle}"
+                               HeaderRowHeight="52"
+                               RowHeight="48"
+                               SelectionMode="Single"
+                               VerticalOverScrollMode="None">
+
+                <sfgrid:SfDataGrid.Columns>
+                    <!--HeaderText="{Binding Resources[IDText]}"-->
+                    <sfgrid:GridTextColumn HeaderFontAttribute="Bold"
+                                        HeaderText="{Binding BindingContext.Resources[IDText],Source={x:Reference Name=ScuItemsPage}}"
+                                           HeaderTextAlignment="Start"
+                                           LineBreakMode="WordWrap"
+                                           MappingName="ID"
+                                           Padding="5,0,5,0"
+                                           TextAlignment="End">
+                        <!--<sfgrid:GridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Label x:Name="OrderID" Text="{Binding BindingContext.Resources[IDText],Source={x:Reference Name=ScuItemsPage}}"   TextColor="Black"  />
+                            </DataTemplate>
+                        </sfgrid:GridTextColumn.HeaderTemplate>-->
+                        <sfgrid:GridTextColumn.HeaderCellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.HeaderCellTextSize>
+
+                        <sfgrid:GridTextColumn.CellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.CellTextSize>
+                    </sfgrid:GridTextColumn>
+
+                    <sfgrid:GridTextColumn HeaderFontAttribute="Bold"
+                                          
+                                            HeaderText="{Binding BindingContext.Resources[SerialNoText],Source={x:Reference Name=ScuItemsPage}}"
+                                           HeaderTextAlignment="Start"
+                                           LineBreakMode="WordWrap"
+                                           MappingName="SerialNo"
+                                           Padding="5, 0, 0, 0"
+                                           TextAlignment="Start">
+                        <sfgrid:GridTextColumn.HeaderCellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.HeaderCellTextSize>
+
+                        <sfgrid:GridTextColumn.CellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.CellTextSize>
+                    </sfgrid:GridTextColumn>
+
+                    <sfgrid:GridTextColumn HeaderFontAttribute="Bold"
+                                          
+                                                     HeaderText="{Binding BindingContext.Resources[BroadCastIdText],Source={x:Reference Name=ScuItemsPage}}"
+                                           HeaderTextAlignment="Start"
+                                           LineBreakMode="WordWrap"
+                                           MappingName="BroadCastId"
+                                           Padding="5,0,5,0"
+                                           TextAlignment="End">
+                        <sfgrid:GridTextColumn.HeaderCellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.HeaderCellTextSize>
+                        <sfgrid:GridTextColumn.MinimumWidth>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <OnPlatform.iOS>
+                                    <OnIdiom x:TypeArguments="x:Double"
+                                             Phone="70"
+                                             Tablet="20" />
+                                </OnPlatform.iOS>
+                            </OnPlatform>
+                        </sfgrid:GridTextColumn.MinimumWidth>
+                        <sfgrid:GridTextColumn.CellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.CellTextSize>
+                    </sfgrid:GridTextColumn>
+
+                    <sfgrid:GridTextColumn HeaderFontAttribute="Bold"
+                                           
+                                                     HeaderText="{Binding BindingContext.Resources[LocationText],Source={x:Reference Name=ScuItemsPage}}"
+                                           HeaderTextAlignment="Start"
+                                           LineBreakMode="WordWrap"
+                                           MappingName="Location"
+                                           Padding="5, 0, 0, 0"
+                                           TextAlignment="Start">
+                        <sfgrid:GridTextColumn.HeaderCellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.HeaderCellTextSize>
+
+                        <sfgrid:GridTextColumn.CellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.CellTextSize>
+                    </sfgrid:GridTextColumn>
+
+                    <sfgrid:GridTextColumn HeaderFontAttribute="Bold"
+                                          
+                                                     HeaderText="{Binding BindingContext.Resources[NotesText],Source={x:Reference Name=ScuItemsPage}}"
+                                           HeaderTextAlignment="Start"
+                                           LineBreakMode="WordWrap"
+                                           MappingName="Notes"
+                                           Padding="5, 0, 0, 0"
+                                           TextAlignment="Start">
+                        <sfgrid:GridTextColumn.HeaderCellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.HeaderCellTextSize>
+
+                        <sfgrid:GridTextColumn.CellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.CellTextSize>
+                    </sfgrid:GridTextColumn>
+                    <sfgrid:GridTextColumn HeaderFontAttribute="Bold"
+                                            
+                                                     HeaderText="{Binding BindingContext.Resources[SpeedText],Source={x:Reference Name=ScuItemsPage}}"
+                                           HeaderTextAlignment="Start"
+                                           LineBreakMode="WordWrap"
+                                           MappingName="Speed"
+                                           Padding="5, 0, 0, 0"
+                                           TextAlignment="Start">
+                        <sfgrid:GridTextColumn.HeaderCellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.HeaderCellTextSize>
+
+                        <sfgrid:GridTextColumn.CellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.CellTextSize>
+                    </sfgrid:GridTextColumn>
+                    <sfgrid:GridTextColumn HeaderFontAttribute="Bold"
+                                          
+                                                     HeaderText="{Binding BindingContext.Resources[OperatorText],Source={x:Reference Name=ScuItemsPage}}"
+                                           HeaderTextAlignment="Start"
+                                           LineBreakMode="WordWrap"
+                                           MappingName="Operator"
+                                           Padding="5, 0, 0, 0"
+                                           TextAlignment="Start">
+                        <sfgrid:GridTextColumn.HeaderCellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.HeaderCellTextSize>
+
+                        <sfgrid:GridTextColumn.CellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.CellTextSize>
+                    </sfgrid:GridTextColumn>
+                    <sfgrid:GridTextColumn HeaderFontAttribute="Bold"
+                                           
+                                                     HeaderText="{Binding BindingContext.Resources[AlarmSpeedText],Source={x:Reference Name=ScuItemsPage}}"
+                                           HeaderTextAlignment="Start"
+                                           LineBreakMode="WordWrap"
+                                           MappingName="AlarmSpeed"
+                                           Padding="5, 0, 0, 0"
+                                           TextAlignment="Start">
+                        <sfgrid:GridTextColumn.HeaderCellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.HeaderCellTextSize>
+
+                        <sfgrid:GridTextColumn.CellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.CellTextSize>
+                    </sfgrid:GridTextColumn>
+                    <sfgrid:GridTextColumn HeaderFontAttribute="Bold"
+                                          
+                                                     HeaderText="{Binding BindingContext.Resources[DateWithTimeText],Source={x:Reference Name=ScuItemsPage}}"
+                                           HeaderTextAlignment="Start"
+                                           LineBreakMode="WordWrap"
+                                           MappingName="DateWithTime"
+                                           Padding="5, 0, 0, 0"
+                                           TextAlignment="Start">
+                        <sfgrid:GridTextColumn.HeaderCellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.HeaderCellTextSize>
+
+                        <sfgrid:GridTextColumn.CellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.CellTextSize>
+                    </sfgrid:GridTextColumn>
+                    <sfgrid:GridTextColumn HeaderFontAttribute="Bold"
+                                            
+                                                     HeaderText="{Binding BindingContext.Resources[HoursElapsedText],Source={x:Reference Name=ScuItemsPage}}"
+                                           HeaderTextAlignment="Start"
+                                           LineBreakMode="WordWrap"
+                                           MappingName="HoursElapsed"
+                                           Padding="5, 0, 0, 0"
+                                           TextAlignment="Start">
+                        <sfgrid:GridTextColumn.HeaderCellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.HeaderCellTextSize>
+
+                        <sfgrid:GridTextColumn.CellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.CellTextSize>
+                    </sfgrid:GridTextColumn>
+                    <sfgrid:GridTextColumn HeaderFontAttribute="Bold"
+                                           
+                                                     HeaderText="{Binding BindingContext.Resources[AlarmHoursText],Source={x:Reference Name=ScuItemsPage}}"
+                                           HeaderTextAlignment="Start"
+                                           LineBreakMode="WordWrap"
+                                           MappingName="AlarmHours"
+                                           Padding="5, 0, 0, 0"
+                                           TextAlignment="Start">
+                        <sfgrid:GridTextColumn.HeaderCellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.HeaderCellTextSize>
+
+                        <sfgrid:GridTextColumn.CellTextSize>
+                            <OnPlatform x:TypeArguments="x:Double"
+                                        Android="14"
+                                        WinPhone="12"
+                                        iOS="12" />
+                        </sfgrid:GridTextColumn.CellTextSize>
+                    </sfgrid:GridTextColumn>
+                </sfgrid:SfDataGrid.Columns>
+
+            </sfgrid:SfDataGrid>
+        </Grid>
+    </pages:BaseTabPage.Content>
+</pages:BaseTabPage>

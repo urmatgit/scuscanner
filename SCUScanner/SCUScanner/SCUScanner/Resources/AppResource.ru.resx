@@ -242,4 +242,34 @@ box only visible on factory version</value>
   <data name="SetSerialNumberText" xml:space="preserve">
     <value>Установить серийный номер</value>
   </data>
+  <data name="AlarmSpeedText" xml:space="preserve">
+    <value>Скорость Сигнала</value>
+  </data>
+  <data name="BroadcastIdText" xml:space="preserve">
+    <value>Передачик</value>
+  </data>
+  <data name="DateWithTimeText" xml:space="preserve">
+    <value>Дата и время</value>
+  </data>
+  <data name="HoursElapsedText" xml:space="preserve">
+    <value>Hours Elapsed</value>
+  </data>
+  <data name="IDText" xml:space="preserve">
+    <value>ИД</value>
+  </data>
+  <data name="LocationText" xml:space="preserve">
+    <value>Расположение</value>
+  </data>
+  <data name="NotesText" xml:space="preserve">
+    <value>Примечания</value>
+  </data>
+  <data name="OperatorText" xml:space="preserve">
+    <value>Оператор</value>
+  </data>
+  <data name="SerialNoText" xml:space="preserve">
+    <value>серийный номер</value>
+  </data>
+  <data name="SpeedText" xml:space="preserve">
+    <value>Скорость</value>
+  </data>
 </root>

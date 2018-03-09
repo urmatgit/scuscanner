@@ -64,6 +64,8 @@ namespace SCUScanner.Droid
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::SCUScanner.Droid.Resource.Styleable.ProgressWheel_ahTextColor;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::SCUScanner.Droid.Resource.Styleable.ProgressWheel_ahTextSize;
 			global::Splat.Resource.String.library_name = global::SCUScanner.Droid.Resource.String.library_name;
+			global::Syncfusion.SfDataGrid.XForms.Droid.Resource.Layout.ScrollViewer = global::SCUScanner.Droid.Resource.Layout.ScrollViewer;
+			global::Syncfusion.SfDataGrid.XForms.Droid.Resource.String.library_name = global::SCUScanner.Droid.Resource.String.library_name;
 			global::Com.Syncfusion.Gauges.Resource.Dimension.pading_bottom = global::SCUScanner.Droid.Resource.Dimension.pading_bottom;
 			global::Com.Syncfusion.Gauges.Resource.Dimension.pading_top = global::SCUScanner.Droid.Resource.Dimension.pading_top;
 			global::Com.Syncfusion.Gauges.Resource.Id.eightsegment = global::SCUScanner.Droid.Resource.Id.eightsegment;
@@ -4070,25 +4072,28 @@ namespace SCUScanner.Droid
 			public const int notification_template_part_time = 2130903106;
 			
 			// aapt resource value: 0x7f030043
-			public const int select_dialog_item_material = 2130903107;
+			public const int ScrollViewer = 2130903107;
 			
 			// aapt resource value: 0x7f030044
-			public const int select_dialog_multichoice_material = 2130903108;
+			public const int select_dialog_item_material = 2130903108;
 			
 			// aapt resource value: 0x7f030045
-			public const int select_dialog_singlechoice_material = 2130903109;
+			public const int select_dialog_multichoice_material = 2130903109;
 			
 			// aapt resource value: 0x7f030046
-			public const int support_simple_spinner_dropdown_item = 2130903110;
+			public const int select_dialog_singlechoice_material = 2130903110;
 			
 			// aapt resource value: 0x7f030047
-			public const int Tabbar = 2130903111;
+			public const int support_simple_spinner_dropdown_item = 2130903111;
 			
 			// aapt resource value: 0x7f030048
-			public const int Toolbar = 2130903112;
+			public const int Tabbar = 2130903112;
 			
 			// aapt resource value: 0x7f030049
-			public const int tooltip = 2130903113;
+			public const int Toolbar = 2130903113;
+			
+			// aapt resource value: 0x7f03004a
+			public const int tooltip = 2130903114;
 			
 			static Layout()
 			{

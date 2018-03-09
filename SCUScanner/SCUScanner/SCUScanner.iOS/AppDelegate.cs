@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using Syncfusion.SfDataGrid.XForms.iOS;
 using Syncfusion.SfGauge.XForms.iOS;
 using UIKit;
 
@@ -25,6 +26,7 @@ namespace SCUScanner.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             new SfDigitalGaugeRenderer();
+            SfDataGridRenderer.Init();
             LoadApplication(new App());
             
             return base.FinishedLaunching(app, options);

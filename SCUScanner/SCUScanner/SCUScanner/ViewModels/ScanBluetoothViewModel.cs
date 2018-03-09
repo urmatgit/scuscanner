@@ -58,7 +58,7 @@ namespace SCUScanner.ViewModels
                 else
                     ResourcesEx = null;
             });
-            this.WhenAnyValue(vm => vm.Settings.Resources).Subscribe(val =>
+            this.WhenAnyValue(vm => vm.SettingsBase.Resources).Subscribe(val =>
             {
 
                 ScanTextChange(App.BleAdapter.IsScanning);

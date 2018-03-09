@@ -84,19 +84,24 @@ namespace SCUScanner.ViewModels
                                             );
             SaveCommand = ReactiveCommand.CreateFromTask(async () =>
               {
-                  return;// пока отключаем
+               //   return;// пока отключаем
                   if (ScuData == null) return;
                   SCUItem scuitem = null;
-                  
-                           scuitem = new SCUItem()
-                          {
-                              ID = ScuData.ID,
-                              MacAddress=Address,
-                              DateWithTime= this.LastValue,
-                              Speed=ScuData.S,
-                              Location=LocationName,
-                              Comment=Note,
-                              Operator=""
+
+                  scuitem = new SCUItem()
+                  {
+                      ID = ScuData.ID,
+                      SerialNo = ScuData.SN,
+
+                      BroadCastId = Address,
+                      DateWithTime = this.LastValue,
+                      Speed = ScuData.S,
+                      HoursElapsed = HRS, //Потом из уст.
+                      AlarmHours = AlarmHours,//Потом из уст.
+                      AlarmSpeed = ScuData.A,
+                              Location =LocationName,
+                              Notes=Note,
+                              Operator=OperatorName
                            };
 
 
@@ -306,8 +311,6 @@ namespace SCUScanner.ViewModels
         }
         public void OnActivateOnLoad()
         {
-          //  base.OnActivate();
-          
             this.cleanup.Clear();
             this.cleanup.Add(this.device
                .WhenStatusChanged()
@@ -371,20 +374,8 @@ namespace SCUScanner.ViewModels
 
                                Device.BeginInvokeOnMainThread(() =>
                                {
-
-
-                               //if (character.CanRead())
-                               //{
-                               //    //Task.Run(async () =>
-                               //    //{
-                               //    var result = character.Read() .Subscribe(x =>
-                               //    {
-                               //        GetValue(x);
-                               //    });
-                               //    //});
-
-                               //}
-                               if (!character.IsNotifying && character.CanNotify())
+                               
+                               if (character.CanNotify() && !character.IsNotifying)
                                    {
 
                                        gattCharacteristic = character;
@@ -395,9 +386,6 @@ namespace SCUScanner.ViewModels
                                                 GetValue(x);
                                             });
                                    }
-
-                               // TimerAlarm.Start();
-
 
                            });
 
@@ -445,9 +433,6 @@ namespace SCUScanner.ViewModels
                 {
                     try
                     {
-                        //
-                        
-                        
                             val = val
                                 .Replace("\"ID\":", "\"ID\":\"")
                                 .Replace(",\"SN\":", "\",\"SN\":\"")
@@ -472,8 +457,16 @@ namespace SCUScanner.ViewModels
                    var tmpNewColor= ChangeStatusColor(RPM, Warning, AlarmLimit);
                     if (PreviewColor != tmpNewColor)
                     {
-                        StatusColor = tmpNewColor;
-                        PreviewColor = tmpNewColor;
+                        try
+                        {
+                            StatusColor = tmpNewColor;
+                            PreviewColor = tmpNewColor;
+                        }
+                        catch (Exception er)
+                        {
+                            Debug.WriteLine($"Status color chage error-{er.Message}");
+                        }
+                        
                     }
                   
                 }
