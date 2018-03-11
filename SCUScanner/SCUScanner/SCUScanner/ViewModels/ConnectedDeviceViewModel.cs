@@ -375,9 +375,9 @@ namespace SCUScanner.ViewModels
                                Device.BeginInvokeOnMainThread(() =>
                                {
                                
-                               if (character.CanNotify() && !character.IsNotifying)
+                               if (character.CanNotify() )
                                    {
-
+                                       //&& !character.IsNotifying
                                        gattCharacteristic = character;
                                        this.watcher = character
                                         .RegisterAndNotify()
