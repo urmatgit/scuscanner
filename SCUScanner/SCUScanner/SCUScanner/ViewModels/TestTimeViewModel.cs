@@ -32,7 +32,7 @@ namespace SCUScanner.ViewModels
             //StopScanning.Start();
             Device.StartTimer(TimeSpan.FromSeconds(2), () =>
             {
-
+                ///teas dfas df
 
                 times.Add(new TimeString() { time = DateTime.Now.ToString() });
 
