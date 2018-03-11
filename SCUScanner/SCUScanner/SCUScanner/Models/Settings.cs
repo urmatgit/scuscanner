@@ -75,6 +75,31 @@ namespace SCUScanner.Models
                 }
             }
         }
+        int _SelectedColumnIndex = -1;
+        public int SelectedColumnIndex
+        {
+            get => AppSettings.GetValueOrDefault(nameof(SelectedColumnIndex),0);
+            set
+            {
+                var original = SelectedColumnIndex;
+                if (AppSettings.AddOrUpdateValue(nameof(SelectedColumnIndex), value))
+                {
+                    this.RaiseAndSetIfChanged(ref _SelectedColumnIndex, value);
+                }
+            }
+        }
+        int _SelectedConditionIndex = -1;
+        public int SelectedConditionIndex
+        {
+            get => AppSettings.GetValueOrDefault(nameof(SelectedConditionIndex),0);
+            set
+            {
+                if (AppSettings.AddOrUpdateValue(nameof(SelectedConditionIndex), value))
+                {
+                    this.RaiseAndSetIfChanged(ref _SelectedConditionIndex, value);
+                }
+            }
+        }
         private LocalizedResources resources;
         public  LocalizedResources Resources
         {

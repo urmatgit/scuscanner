@@ -9,7 +9,7 @@ using System.Text;
 
 namespace SCUScanner.ViewModels
 {
-    public class SCUDatasViewModel: BaseViewModel
+    public class SCUDatasViewModel : BaseViewModel
     {
         internal delegate void FilterChanged();
 
@@ -35,10 +35,17 @@ namespace SCUScanner.ViewModels
                 filtertext = value;
                 OnFilterTextChanged();
                 this.RaiseAndSetIfChanged(ref filtertext, value);
-               
+
             }
 
         }
+        private bool _VisibleOptionList = false;
+        public bool VisibleOptionList
+        {
+            get => _VisibleOptionList;
+            set => this.RaiseAndSetIfChanged(ref _VisibleOptionList, value);
+        }
+   
         private void OnFilterTextChanged()
         {
             if (filtertextchanged != null)
@@ -64,17 +71,17 @@ namespace SCUScanner.ViewModels
                     }
                     else if (SelectedColumn.Equals("All Columns"))
                     {
-                        if (item.ID.ToLower().Contains(FilterText.ToLower()) ||
+                        if (item.ID?.ToLower().Contains(FilterText.ToLower()) ==true ||
                             item.HoursElapsed.ToString().ToLower().Contains(FilterText.ToLower()) ||
                             item.AlarmHours .ToString().ToLower().Contains(FilterText.ToLower()) ||
                             item.AlarmSpeed.ToString().ToLower().Contains(FilterText.ToLower()) ||
                             item.DateWithTime.ToString().ToLower().Contains(FilterText.ToLower()) ||
-                            item.Location.ToString().ToLower().Contains(FilterText.ToLower()) ||
-                            item.Notes.ToString().ToLower().Contains(FilterText.ToLower()) ||
-                            item.Operator.ToString().ToLower().Contains(FilterText.ToLower()) ||
-                            item.SerialNo.ToString().ToLower().Contains(FilterText.ToLower()) ||
+                            item.Location?.ToString().ToLower().Contains(FilterText.ToLower())==true ||
+                            item.Notes?.ToString().ToLower().Contains(FilterText.ToLower())==true ||
+                            item.Operator?.ToString().ToLower().Contains(FilterText.ToLower()) ==true ||
+                            item.SerialNo?.ToString().ToLower().Contains(FilterText.ToLower()) ==true ||
                             item.Speed.ToString().ToLower().Contains(FilterText.ToLower()) ||
-                            item.BroadCastId.ToString().ToLower().Contains(FilterText.ToLower()))
+                            item.BroadCastId?.ToString().ToLower().Contains(FilterText.ToLower())==true)
                             return true;
                         return false;
                     }
@@ -90,7 +97,8 @@ namespace SCUScanner.ViewModels
         private bool MakeStringFilter(SCUItem o, string option, string condition)
         {
             var value = o.GetType().GetProperty(option);
-            var exactValue = value.GetValue(o, null);
+            
+            var exactValue = value?.GetValue(o, null);
             exactValue = exactValue.ToString().ToLower();
             string text = FilterText.ToLower();
             var methods = typeof(string).GetMethods();

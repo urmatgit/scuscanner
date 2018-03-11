@@ -284,4 +284,7 @@ box only visible on factory version</value>
   <data name="NotEqualsText" xml:space="preserve">
     <value>NotEquals</value>
   </data>
+  <data name="FilterText" xml:space="preserve">
+    <value>Search here to filter</value>
+  </data>
 </root>

@@ -23,42 +23,57 @@ namespace SCUScanner.ViewModels
             columnsList = bindable.FindByName<Picker>("ColumnsList");
             filterText = bindable.FindByName<SearchBar>("filterText");
             optionsList.Items.Add(viewModel.Resources["EqualsText"]);//"Equals");
-            optionsList.Items.Add(viewModel.Resources["NotEquals"]);// "NotEquals");
-            optionsList.Items.Add(viewModel.Resources["Contains"]);//"Contains");
+            optionsList.Items.Add(viewModel.Resources["NotEqualsText"]);// "NotEquals");
+            optionsList.Items.Add(viewModel.Resources["ContainsText"]);//"Contains");
+
             columnsList.Items.Add(viewModel.Resources["AllColumnsText"]);//"All Columns");
+            
+            foreach(var col in dataGrid.Columns)
+            {
+                columnsList.Items.Add(col.HeaderText);
+            }
 
-            columnsList.Items.Add("ID");
-            columnsList.Items.Add("SerialNo");
-            columnsList.Items.Add("BroadCastId");
-            columnsList.Items.Add("Location");
-            columnsList.Items.Add("Notes");
-            columnsList.Items.Add("Speed");
-            columnsList.Items.Add("Operator");
-            columnsList.Items.Add("AlarmSpeed");
-            columnsList.Items.Add("DateWithTime");
-            columnsList.Items.Add("HoursElapsed");
-            columnsList.Items.Add("AlarmHours");
+            //columnsList.Items.Add("ID");
+            //columnsList.Items.Add("SerialNo");
+            //columnsList.Items.Add("BroadCastId");
+            //columnsList.Items.Add("Location");
+            //columnsList.Items.Add("Notes");
+            //columnsList.Items.Add("Speed");
+            //columnsList.Items.Add("Operator");
+            //columnsList.Items.Add("AlarmSpeed");
+            //columnsList.Items.Add("DateWithTime");
+            //columnsList.Items.Add("HoursElapsed");
+            //columnsList.Items.Add("AlarmHours");
 
-            columnsList.SelectedIndex = 0;
+            
             viewModel.filtertextchanged = OnFilterChanged;
             filterText.TextChanged += OnFilterTextChanged;
             columnsList.SelectedIndexChanged += OnColumnsSelectionChanged;
             optionsList.SelectedIndexChanged += OnFilterOptionsChanged;
+            
+            optionsList.SelectedIndex = viewModel.SettingsBase.SelectedConditionIndex;
             base.OnAttachedTo(bindable);
+            
         }
         public void OnColumnsSelectionChanged(object sender, EventArgs e)
         {
             Picker newPicker = (Picker)sender;
-            viewModel.SelectedColumn = newPicker.Items[newPicker.SelectedIndex];
-            if (viewModel.SelectedColumn == viewModel.Resources["AllColumnsText"])//"All Columns")
+            var selectedCol= newPicker.Items[newPicker.SelectedIndex];
+            viewModel.SettingsBase.SelectedColumnIndex = newPicker.SelectedIndex;
+            //viewModel.SelectedColumn = newPicker.Items[newPicker.SelectedIndex];
+            if (selectedCol == viewModel.Resources["AllColumnsText"])//"All Columns")
             {
-                viewModel.SelectedCondition = viewModel.Resources["Contains"];// "Contains";
-                optionsList.IsVisible = false;
+                viewModel.SelectedCondition = "Contains";//  viewModel.Resources["ContainsText"];// "Contains";
+                viewModel.VisibleOptionList = false;
+            //    optionsList.IsVisible = false;
+                viewModel.SelectedColumn = "All Columns";
                 this.OnFilterChanged();
             }
             else
             {
-                optionsList.IsVisible = true;
+                viewModel.SelectedColumn = dataGrid.Columns[newPicker.SelectedIndex - 1].MappingName;//  selectedCol;
+                viewModel.VisibleOptionList = true;
+         //     optionsList.IsVisible = true;
                 foreach (var prop in typeof(SCUItem).GetProperties())
                 {
                     if (prop.Name == viewModel.SelectedColumn)
@@ -69,12 +84,14 @@ namespace SCUScanner.ViewModels
                             optionsList.Items.Add(viewModel.Resources["ContainsText"]); //("Contains");
                             optionsList.Items.Add(viewModel.Resources["EqualsText"]); //"Equals");
                             optionsList.Items.Add(viewModel.Resources["NotEqualsText"]); //"NotEquals");
+
                             if (this.viewModel.SelectedCondition == viewModel.Resources["EqualsText"])
                                 optionsList.SelectedIndex = 1;
                             else if (this.viewModel.SelectedCondition == viewModel.Resources["NotEqualsText"])
                                 optionsList.SelectedIndex = 2;
                             else
                                 optionsList.SelectedIndex = 0;
+
                         }
                         else
                         {
@@ -89,6 +106,7 @@ namespace SCUScanner.ViewModels
                     }
                 }
             }
+            
         }
 
         public void OnFilterOptionsChanged(object sender, EventArgs e)
@@ -96,10 +114,18 @@ namespace SCUScanner.ViewModels
             Picker newPicker = (Picker)sender;
             if (newPicker.SelectedIndex >= 0)
             {
-                viewModel.SelectedCondition = newPicker.Items[newPicker.SelectedIndex];
+                var selectedPicker= newPicker.Items[newPicker.SelectedIndex];
+                if (selectedPicker == viewModel.Resources["EqualsText"])
+                    viewModel.SelectedCondition = "Equals";
+                else if (selectedPicker == viewModel.Resources["NotEqualsText"])
+                    viewModel.SelectedCondition = "NotEquals";
+                else
+                    viewModel.SelectedCondition = "Contains";
+                //              viewModel.SelectedCondition = newPicker.Items[newPicker.SelectedIndex];
                 if (filterText.Text != null)
                     this.OnFilterChanged();
             }
+            viewModel.SettingsBase.SelectedConditionIndex = newPicker.SelectedIndex;
         }
 
         public void OnFilterTextChanged(object sender, TextChangedEventArgs e)

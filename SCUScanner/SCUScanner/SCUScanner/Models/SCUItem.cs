@@ -57,6 +57,15 @@ namespace SCUScanner.Models
         /// Alarm Hours
         /// </summary>
         public int AlarmHours { get; set; }
-        
+        public SCUItem()
+        {
+            ID = "";
+            SerialNo = "";
+            BroadCastId = "";
+            Location = "";
+            Notes = "";
+            Operator = "";
+        }
+
     }
 }

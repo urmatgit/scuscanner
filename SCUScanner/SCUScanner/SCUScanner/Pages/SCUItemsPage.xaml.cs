@@ -19,8 +19,18 @@ namespace SCUScanner.Pages
         public SCUItemsPage()
         {
             InitializeComponent();
-           //BindingContext = new SCUDatasViewModel();
-           
+            //BindingContext = new SCUDatasViewModel();
+            FillOptionList();
+        }
+        private void FillOptionList()
+        {
+            foreach (var col in dataGrid.Columns)
+            {
+                ColumnsList.Items.Add(col.HeaderText);
+            }
+            SCUDatasViewModel viewModel = this.BindingContext as SCUDatasViewModel;
+            if (viewModel!=null)
+            ColumnsList.SelectedIndex =  viewModel.SettingsBase.SelectedColumnIndex;// 0;
         }
         protected override void OnSizeAllocated(double width, double height)
         {

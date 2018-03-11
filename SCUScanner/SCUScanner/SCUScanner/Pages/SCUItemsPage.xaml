@@ -6,6 +6,7 @@
              xmlns:localVM="clr-namespace:SCUScanner.ViewModels"
               xmlns:pages="clr-namespace:SCUScanner.Pages"
              x:Class="SCUScanner.Pages.SCUItemsPage"
+               
                     x:Name="ScuItemsPage" >
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="optionButton" Order="Primary" Priority="1" Icon="Option.png" Clicked="OptionClick">
@@ -15,24 +16,27 @@
     <ContentPage.Behaviors>
         <localVM:FilteringBehaviors/>
     </ContentPage.Behaviors>
-    <ContentPage.Content>
+    <ContentPage.Content >
+        
         <AbsoluteLayout x:Name="absoluteLayout" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
-                        AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-            <Grid RowSpacing="0" x:Name="contentGrid" VerticalOptions="FillAndExpand" >
+                        AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" >
+            <Grid x:Name="contentGrid" RowSpacing="0" ColumnSpacing="0" Margin="0" Padding="3,0,3,0" AbsoluteLayout.LayoutFlags="All"
+                  AbsoluteLayout.LayoutBounds="0,0,1,1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <Grid.ColumnDefinitions>
+                <!--<Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>-->
 
                 <SearchBar x:Name="filterText"
                                 Grid.Row="0"
-                                Grid.Column="0"
+                                
+                                HorizontalOptions="FillAndExpand"
                                 IsVisible="true"
-                                Placeholder="Search here to filter">
+                                Placeholder="{Binding Resources[FilterText]}">
                     <SearchBar.HeightRequest>
                         <OnPlatform x:TypeArguments="x:Double"
                                 Android="50"
@@ -44,7 +48,8 @@
 
                 <sfgrid:SfDataGrid x:Name="dataGrid"
                                Grid.Row="1"
-                               Grid.Column="0"
+                               
+                               HorizontalOptions="FillAndExpand"    
                                AutoGenerateColumns="false"
                                ItemsSource="{Binding SCUItems}"
                                ColumnSizer="Auto"
@@ -488,7 +493,7 @@
                              Grid.Row="1"
                              Grid.Column="1"
                              HorizontalOptions="Start"
-                             IsVisible="False"
+                             IsVisible="{Binding VisibleOptionList}}"
                              WidthRequest="200">
                                 </Picker>
                             </Grid>
@@ -497,6 +502,7 @@
                 </Grid>
 
             </ContentView>
+        
         </AbsoluteLayout>
     </ContentPage.Content>
 

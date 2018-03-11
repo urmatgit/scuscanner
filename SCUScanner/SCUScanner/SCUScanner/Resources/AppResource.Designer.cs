@@ -287,6 +287,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search here to filter.
+        /// </summary>
+        internal static string FilterText {
+            get {
+                return ResourceManager.GetString("FilterText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Help.
         /// </summary>
         internal static string HelpText {
