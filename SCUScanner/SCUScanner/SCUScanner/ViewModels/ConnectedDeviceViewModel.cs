@@ -23,14 +23,14 @@ namespace SCUScanner.ViewModels
     public class ConnectedDeviceViewModel : BaseViewModel
     {
 
-        
+
         IDisposable watcher;
         IGattCharacteristic gattCharacteristic;
         Color PreviewColor = Color.White;
-        public ScanResultViewModel DeviceViewModel {get;set;}
+        public ScanResultViewModel DeviceViewModel { get; set; }
         SCUSendData ScuData { get; set; }
         System.Timers.Timer TimerAlarm;
-        
+
         //    public ObservableCollection<Group<GattCharacteristicViewModel>> GattCharacteristics { get; } = new ObservableCollection<Group<GattCharacteristicViewModel>>();
         //public ObservableCollection<GattDescriptorViewModel> GattDescriptors { get; } = new ObservableCollection<GattDescriptorViewModel>();
         public TabbedPage ParentTabbed { get; set; }
@@ -79,12 +79,12 @@ namespace SCUScanner.ViewModels
                        App.Dialogs.Alert(ex.ToString());
                    }
                });
-            this.SelectCharacteristic = ReactiveCommand.CreateFromTask <GattCharacteristicViewModel>(async x =>
-                                             await x.SelectedGattCharacteristic()
+            this.SelectCharacteristic = ReactiveCommand.CreateFromTask<GattCharacteristicViewModel>(async x =>
+                                            await x.SelectedGattCharacteristic()
                                             );
             SaveCommand = ReactiveCommand.CreateFromTask(async () =>
               {
-               //   return;// пока отключаем
+                  //   return;// пока отключаем
                   if (ScuData == null) return;
                   SCUItem scuitem = null;
 
@@ -99,10 +99,10 @@ namespace SCUScanner.ViewModels
                       HoursElapsed = HRS, //Потом из уст.
                       AlarmHours = AlarmHours,//Потом из уст.
                       AlarmSpeed = ScuData.A,
-                              Location =LocationName,
-                              Notes=Note,
-                              Operator=OperatorName
-                           };
+                      Location = LocationName,
+                      Notes = Note,
+                      Operator = OperatorName
+                  };
 
 
 
@@ -110,7 +110,7 @@ namespace SCUScanner.ViewModels
                   {
                       var id = await App.Database.SaveItemAsync(scuitem);
                   }
-                      
+
 
 
               });
@@ -120,14 +120,14 @@ namespace SCUScanner.ViewModels
                  if (!CrossShare.IsSupported)
                      return;
 
-                 
-                     await  CrossShare.Current.Share(new ShareMessage
-                         {
-                             Title = "Reception text",
-                             Text = SourceText
 
-                         });
-                 
+                 await CrossShare.Current.Share(new ShareMessage
+                 {
+                     Title = "Reception text",
+                     Text = SourceText
+
+                 });
+
              });
             this.WhenAnyValue(vm => vm.StatusColor).Subscribe(c =>
             {
@@ -142,12 +142,12 @@ namespace SCUScanner.ViewModels
             //  StatusColor = Color.Green;
             OnActivateOnLoad();
         }
-        Color oldColor=Color.White;
+        Color oldColor = Color.White;
         bool TimerChangeColor = false;
         private void TimerAlarm_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             TimerAlarm.Stop();
-            if (StatusColor==Color.Red || StatusColor == Color.Yellow || StatusColor == Color.White)
+            if (StatusColor == Color.Red || StatusColor == Color.Yellow || StatusColor == Color.White)
             {
                 TimerChangeColor = true;
                 Color tmpColor = StatusColor;
@@ -165,9 +165,9 @@ namespace SCUScanner.ViewModels
                 TimerChangeColor = false;
                 TimerAlarm.Start();
             }
-              
 
-            
+
+
         }
 
         string value;
@@ -265,7 +265,7 @@ namespace SCUScanner.ViewModels
         /// <summary>
         /// S-Speed текущая скорость вращения мотора, 
         /// </summary>
-        public int RPM 
+        public int RPM
         {
             get => rpm;
             set => this.RaiseAndSetIfChanged(ref rpm, value);
@@ -330,9 +330,9 @@ namespace SCUScanner.ViewModels
 
                        case ConnectionStatus.Disconnected:
                            this.ConnectText = Resources["DisconnectStatusText"];
-                           
-                         //  this.GattCharacteristics.Clear();
-                        //   this.GattDescriptors.Clear();
+
+                           //  this.GattCharacteristics.Clear();
+                           //   this.GattDescriptors.Clear();
                            this.Rssi = 0;
                            break;
 
@@ -355,16 +355,16 @@ namespace SCUScanner.ViewModels
             );
             this.cleanup.Add(this.device
                .WhenServiceDiscovered()
-               .Where(c=>c.Uuid.ToString()==GlobalConstants.UUID_MLDP_PRIVATE_SERVICE || c.Uuid.ToString()==GlobalConstants.UUID_TANSPARENT_PRIVATE_SERVICE)
+               .Where(c => c.Uuid.ToString() == GlobalConstants.UUID_MLDP_PRIVATE_SERVICE || c.Uuid.ToString() == GlobalConstants.UUID_TANSPARENT_PRIVATE_SERVICE)
                .Subscribe(service =>
                {
-                   if (string.IsNullOrEmpty(service.Uuid.ToString())) return; 
-                   
+                   if (string.IsNullOrEmpty(service.Uuid.ToString())) return;
+
                    ///TODO filter 
-                 //  var group = new Group<GattCharacteristicViewModel>(service.Uuid.ToString());
+                   //  var group = new Group<GattCharacteristicViewModel>(service.Uuid.ToString());
                    service
                        .WhenCharacteristicDiscovered()
-                      // .Where(c=> InListCharacters(c.Uuid.ToString()))
+                       // .Where(c=> InListCharacters(c.Uuid.ToString()))
                        .ObserveOn(RxApp.MainThreadScheduler)
                        .Subscribe(character =>
                        {
@@ -374,8 +374,8 @@ namespace SCUScanner.ViewModels
 
                                Device.BeginInvokeOnMainThread(() =>
                                {
-                               
-                               if (character.CanNotify() )
+
+                                   if (character.CanNotify() && this.watcher == null)
                                    {
                                        //&& !character.IsNotifying
                                        gattCharacteristic = character;
@@ -387,58 +387,61 @@ namespace SCUScanner.ViewModels
                                             });
                                    }
 
-                           });
+                               });
 
                            }
-                          
+
                        });
                })
                );
         }
         private bool InListCharacters(string uuid)
         {
-            
+
             if (uuid.Equals(GlobalConstants.UUID_MLDP_DATA_PRIVATE_CHAR) || uuid.Equals(GlobalConstants.UUID_TRANSPARENT_RX_PRIVATE_CHAR) || uuid.Equals(GlobalConstants.UUID_TRANSPARENT_TX_PRIVATE_CHAR))
                 return true;
             return false;
-                
+
         }
-         private void GetValue(CharacteristicGattResult readresult)
+        private bool IsStartedJson = false;
+        private void GetValue(CharacteristicGattResult readresult)
         {
             this.LastValue = DateTime.Now;
-           
-                ScuData = null;
-                if (!readresult.Success)
-                    this.SourceText = "ERROR - " + readresult.ErrorMessage;
 
-                else if (readresult.Data == null)
-                    this.SourceText = "EMPTY";
+            ScuData = null;
+            if (!readresult.Success)
+                this.SourceText = "ERROR - " + readresult.ErrorMessage;
 
-                else
-                {
-                    this.Value = Encoding.UTF8.GetString(readresult.Data, 0, readresult.Data.Length);
+            else if (readresult.Data == null)
+                this.SourceText = "EMPTY";
+
+            else
+            {
+                this.Value = Encoding.UTF8.GetString(readresult.Data, 0, readresult.Data.Length);
 
                 if (Value.StartsWith("{"))
                 {
                     this.SourceText = this.Value;
-                   
+                    IsStartedJson = true;
                 }
-                else
+                else if (IsStartedJson)
+                {
                     this.SourceText += this.Value;
+                }
                 Debug.Write(this.SourceText);
                 //RPM = null;
                 //AlarmLimit = null;
                 string val = this.SourceText.Trim();
-                if (!string.IsNullOrEmpty(val) &&  val.StartsWith("{") && val.EndsWith("}"))
+                if (IsStartedJson && val.EndsWith("}"))
                 {
                     try
                     {
-                            val = val
-                                .Replace("\"ID\":", "\"ID\":\"")
-                                .Replace(",\"SN\":", "\",\"SN\":\"")
-                                .Replace(",\"C\":", "\",\"C\":")
-                                .Replace("%", "pc");
-                        
+                        val = val
+                            .Replace("\"ID\":", "\"ID\":\"")
+                            .Replace(",\"SN\":", "\",\"SN\":\"")
+                            .Replace(",\"C\":", "\",\"C\":")
+                            .Replace("%", "pc");
+
                         ScuData = JsonConvert.DeserializeObject<SCUSendData>(val);
                         Debug.WriteLine($"\nScuData-{val}");
 
@@ -446,42 +449,51 @@ namespace SCUScanner.ViewModels
                     catch (Exception er)
                     {
                         //App.Dialogs.Alert("Deserialize data error- \n" + er.Message);
-                        this.SourceText = "";
-                        return;
+
+
+                        ScuData = null;
                     }
-                    RPM = ScuData?.S ?? 0;
-                    AlarmLimit = ScuData?.A;
-                    SN = ScuData?.SN;
-                    Warning = ScuData?.W;
-                    
-                   var tmpNewColor= ChangeStatusColor(RPM, Warning, AlarmLimit);
-                    if (PreviewColor != tmpNewColor)
+                    finally
                     {
-                        try
-                        {
-                            StatusColor = tmpNewColor;
-                            PreviewColor = tmpNewColor;
-                        }
-                        catch (Exception er)
-                        {
-                            Debug.WriteLine($"Status color chage error-{er.Message}");
-                        }
-                        
+                        this.SourceText = "";
+                        IsStartedJson = false;
                     }
-                  
+                    if (ScuData != null)
+                    {
+                        RPM = ScuData.S;
+                        AlarmLimit = ScuData.A;
+                        SN = ScuData.SN;
+                        Warning = ScuData.W;
+
+                        var tmpNewColor = ChangeStatusColor(RPM, Warning, AlarmLimit);
+                        if (PreviewColor != tmpNewColor)
+                        {
+                            try
+                            {
+                                StatusColor = tmpNewColor;
+                                PreviewColor = tmpNewColor;
+                            }
+                            catch (Exception er)
+                            {
+                                Debug.WriteLine($"Status color chage error-{er.Message}");
+                            }
+
+                        }
+                    }
+
                 }
 
-               
+
             }
         }
-        private Color ChangeStatusColor (int s, int? w, int? a) 
-         {
+        private Color ChangeStatusColor(int s, int? w, int? a)
+        {
             if (s > w) return Color.Green;
             if (a < s && s <= w) return Color.Yellow;
             if (s <= a) return Color.Red;
             return Color.Red;
         }
-        
+
         public void Dispose()
         {
             TimerAlarm.Stop();
@@ -494,7 +506,7 @@ namespace SCUScanner.ViewModels
             this.device = null;
             foreach (var item in this.cleanup)
                 item.Dispose();
-
+            this.watcher = null;
         }
         //public override void OnDeactivate()
         //{

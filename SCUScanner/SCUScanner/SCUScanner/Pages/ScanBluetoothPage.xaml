@@ -30,15 +30,15 @@
                                 <ViewCell.View  >
                                     <Grid Margin="5">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="20" />
+                                            <RowDefinition Height="20" />
+                                            <RowDefinition Height="20" />
+                                            <RowDefinition Height="20" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto" />
                                             <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="auto" />
                                         </Grid.ColumnDefinitions>
 
                                         <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" FontAttributes="Bold" FontSize="15" />
@@ -46,14 +46,15 @@
                                         <Label Text="{Binding Address}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" />
                                         
                                         
-                                        <Label Text="{Binding LocalName, StringFormat='Local Name: {0}'}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+                                        <Label Text="Binding LocalName sdfsdf" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+                                        <!--<Label Text="{Binding LocalName, StringFormat='Local Name: {0}'}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>-->
                                         <!--<Label Text="{Binding Uuid, StringFormat='UUID: {0}'}" Grid.Row="1" Grid.ColumnSpan="2" FontAttributes="Italic" />-->
                                         <Label Text="{Binding ServiceCount, StringFormat='{0} Services'}" Grid.Row="3" Grid.Column="0" />
                                         <!--<Label Text="Device Connected" IsVisible="{Binding IsConnected}" BackgroundColor="Yellow" TextColor="Black"  HorizontalTextAlignment="Center"
                                                Grid.Column="0" Grid.Row="2" />-->
                                         
                                         <!--<Button  Grid.Row="2"  Grid.Column="1"  Text="{Binding BindingContext.Resources[ConnectButtonText],Source={x:Reference Name=BleDevices}}"  Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=BleDevices}  }" CommandParameter="{Binding}"  />-->
-                                        <Button  Grid.Row="2" Grid.RowSpan="2"  Grid.Column="2" Grid.ColumnSpan="2" IsEnabled="{Binding IsConnectable}"  Text="{Binding ConnectButtonText}"  
+                                        <Button  Grid.Row="2" Grid.RowSpan="2"    Grid.Column="2" Grid.ColumnSpan="2" IsEnabled="{Binding IsConnectable}"  Text="{Binding ConnectButtonText}"  
                                                  Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=BleDevices}}" 
                                                  CommandParameter="{Binding}"  BackgroundColor="Green"    TextColor="White" />
                                         <!--<Label Text="{Binding IsConnectable, StringFormat='Connectable: {0}'}" Grid.Row="3" Grid.Column="0" />-->
