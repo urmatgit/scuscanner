@@ -164,6 +164,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfGauge">
       <Version>16.1.0.26</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfTabView">
+      <Version>16.1.0.26</Version>
+    </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.2.0.130-beta</Version>
     </PackageReference>
