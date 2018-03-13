@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using Plugin.Share;
 using Plugin.Share.Abstractions;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace SCUScanner.ViewModels
 {
@@ -375,8 +376,9 @@ namespace SCUScanner.ViewModels
                                Device.BeginInvokeOnMainThread(() =>
                                {
 
-                                   if (character.CanNotify() && this.watcher == null)
+                                   if (character.CanNotify() )
                                    {
+                                       
                                        //&& !character.IsNotifying
                                        gattCharacteristic = character;
                                        this.watcher = character
@@ -404,6 +406,7 @@ namespace SCUScanner.ViewModels
 
         }
         private bool IsStartedJson = false;
+        private string StrJson = "";
         private void GetValue(CharacteristicGattResult readresult)
         {
             this.LastValue = DateTime.Now;
@@ -423,39 +426,45 @@ namespace SCUScanner.ViewModels
                 {
                     this.SourceText = this.Value;
                     IsStartedJson = true;
+                    StrJson = this.Value;
                 }
                 else if (IsStartedJson)
                 {
                     this.SourceText += this.Value;
+                    StrJson += this.Value;
                 }
+                else
+                    StrJson = "";
                 Debug.Write(this.SourceText);
                 //RPM = null;
                 //AlarmLimit = null;
-                string val = this.SourceText.Trim();
-                if (IsStartedJson && val.EndsWith("}"))
+                StrJson =  StrJson.Trim();
+                if (IsStartedJson && StrJson.EndsWith("}"))
                 {
                     try
                     {
-                        val = val
-                            .Replace("\"ID\":", "\"ID\":\"")
-                            .Replace(",\"SN\":", "\",\"SN\":\"")
-                            .Replace(",\"C\":", "\",\"C\":")
-                            .Replace("%", "pc");
+                        StrJson = Regex.Replace(StrJson, "\"ID\":(\\w+)", "\"ID\":\"$1\"");
+                        StrJson = Regex.Replace(StrJson, "\"SN\":(\\w+)", "\"SN\":\"$1\"").Replace("%", "pc");
+                        //StrJson = StrJson
+                        //    .Replace("\"ID\":", "\"ID\":\"")
+                        //    .Replace(",\"SN\":", "\",\"SN\":\"")
+                        //    .Replace(",\"C\":", "\",\"C\":")
+                        //    .Replace("%", "pc");
 
-                        ScuData = JsonConvert.DeserializeObject<SCUSendData>(val);
-                        Debug.WriteLine($"\nScuData-{val}");
+                        ScuData = JsonConvert.DeserializeObject<SCUSendData>(StrJson);
+                        Debug.WriteLine($"\nScuData-{StrJson}");
 
                     }
                     catch (Exception er)
                     {
                         //App.Dialogs.Alert("Deserialize data error- \n" + er.Message);
-
+                        
 
                         ScuData = null;
                     }
                     finally
                     {
-                        this.SourceText = "";
+                        StrJson = "";
                         IsStartedJson = false;
                     }
                     if (ScuData != null)
