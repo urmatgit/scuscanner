@@ -443,8 +443,8 @@ namespace SCUScanner.ViewModels
                 {
                     try
                     {
-                        StrJson = Regex.Replace(StrJson, "\"ID\":(\\w+)", "\"ID\":\"$1\"");
-                        StrJson = Regex.Replace(StrJson, "\"SN\":(\\w+)", "\"SN\":\"$1\"").Replace("%", "pc");
+                        StrJson = Regex.Replace(StrJson, "\"ID\":(.[^,]+)", "\"ID\":\"$1\"");
+                        StrJson = Regex.Replace(StrJson, "\"SN\":(.[^,]+)", "\"SN\":\"$1\"").Replace("%", "pc");
                         //StrJson = StrJson
                         //    .Replace("\"ID\":", "\"ID\":\"")
                         //    .Replace(",\"SN\":", "\",\"SN\":\"")

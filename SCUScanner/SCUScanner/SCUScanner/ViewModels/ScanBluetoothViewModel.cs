@@ -174,7 +174,7 @@ namespace SCUScanner.ViewModels
                 else
                 {
 
-                    //this.Devices.Clear();
+                    this.Devices.Clear();
                     this.IsScanning = true;
 
                     //this.ScanText = Resources["ScanText"];
