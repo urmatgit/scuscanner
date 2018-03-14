@@ -41,20 +41,20 @@ namespace SCUScanner.ViewModels
              set => this.RaiseAndSetIfChanged(ref this.busy, value);
         }
 
-        //protected LocalizedResources resources;
+        private  LocalizedResources resources;
         public virtual LocalizedResources Resources
         {
-            get => SettingsBase.Resources;
-            //private set => this.RaiseAndSetIfChanged(ref resources, value);
+            get => resources;
+           private set => this.RaiseAndSetIfChanged(ref resources, value);
         }
 
         public BaseViewModel()
         {
 
-            //this.WhenAnyValue(vm => vm.SettingsBase.Resources).Subscribe(val =>
-            //{
-            //    Resources = val;
-            //});
+            this.WhenAnyValue(vm => vm.SettingsBase.Resources).Subscribe(val =>
+            {
+                Resources = val;
+            });
 
             SettingsBase.Resources = new LocalizedResources(typeof(AppResource), App.CurrentLanguage);//  App.CurrentLanguage);
 
