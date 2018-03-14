@@ -379,15 +379,36 @@ namespace SCUScanner.ViewModels
                                    if (character.CanNotify() )
                                    {
                                        
-                                       //&& !character.IsNotifying
-                                       gattCharacteristic = character;
-                                       this.watcher = character
-                                        .RegisterAndNotify()
-                                        .Subscribe(x =>
-                                            {
-                                                GetValue(x);
-                                            });
+                                       //if (this.watcher == null)
+                                       //{
+                                          if (this.watcher!=null)
+                                       {
+                                           this.watcher.Dispose();
+                                           this.watcher = null;
+                                       }
+                                       character.EnableNotifications().Subscribe();
+                                           this.watcher = character.WhenNotificationReceived().Subscribe(
+                                               x=> GetValue(x)
+                                               );
+                                           //&& !character.IsNotifying
+                                           //gattCharacteristic = character;
+                                           //this.watcher = character
+
+                                           // .RegisterAndNotify()
+                                           // .Subscribe(x =>
+                                           //     {
+                                           //         GetValue(x);
+                                           //     });
+                                       //}
+                                       //else
+                                       //{
+                                       //    this.watcher.Dispose();
+                                       //    this.watcher = null;
+                                       //}
                                    }
+
+
+                          
 
                                });
 
@@ -443,8 +464,8 @@ namespace SCUScanner.ViewModels
                 {
                     try
                     {
-                        StrJson = Regex.Replace(StrJson, "\"ID\":(\\w+)", "\"ID\":\"$1\"");
-                        StrJson = Regex.Replace(StrJson, "\"SN\":(\\w+)", "\"SN\":\"$1\"").Replace("%", "pc");
+                        StrJson = Regex.Replace(StrJson, "\"ID\":(.[^,]+)", "\"ID\":\"$1\"");
+                        StrJson = Regex.Replace(StrJson, "\"SN\":(.[^,]+)", "\"SN\":\"$1\"").Replace("%", "pc");
                         //StrJson = StrJson
                         //    .Replace("\"ID\":", "\"ID\":\"")
                         //    .Replace(",\"SN\":", "\",\"SN\":\"")
