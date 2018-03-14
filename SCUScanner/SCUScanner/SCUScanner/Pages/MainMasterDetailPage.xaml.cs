@@ -32,7 +32,7 @@ namespace SCUScanner.Pages
                 {
                 //    BindingContext = null;
                     SCUScanner.Models.Settings settings = sender as SCUScanner.Models.Settings;
-                    CurrentPage.Title = settings.Resources[selectedPage.PageCode];
+                    CurrentPage.Title = settings.Resources["MainText"];
                 }
             });
 
@@ -47,30 +47,35 @@ namespace SCUScanner.Pages
                 return;
             selectedPage = item;
             var navigation = ((Application.Current.MainPage as Xamarin.Forms.MasterDetailPage)?.Detail as Xamarin.Forms.NavigationPage);
-            var CurrentDetailPage=navigation?.CurrentPage ;
-            if (CurrentDetailPage == null || CurrentDetailPage.GetType().Name!=item.TargetType.Name)
+            var CurrentDetailPage = navigation?.CurrentPage;
+            if (CurrentDetailPage == null || CurrentDetailPage.GetType().Name != item.TargetType.Name)
             {
-                if (item.TargetType.Name==typeof(MainTabbedPage).Name)
-                    if(App.mainTabbed ==null)
+                if (item.TargetType.Name == typeof(DevicesPage).Name)
+                {
+                    DevicesPage devicesPage = null;
+
+                    if (App.mainTabbed == null)
                     {
-                        CurrentPage = (Page)Activator.CreateInstance(item.TargetType);
-                        CurrentPage.Title = item.Title;
-                        App.mainTabbed = CurrentPage as MainTabbedPage;
+                        devicesPage = (DevicesPage)Activator.CreateInstance(item.TargetType);
+                        devicesPage.Title = item.Title;
+                        App.mainTabbed = devicesPage;
                     }
-                    else
-                    {
-                        CurrentPage = App.mainTabbed;
-                    }
-                else 
-                
+                    devicesPage = App.mainTabbed;
+                    Detail = new NavigationPage(devicesPage);
+                    CurrentPage = devicesPage;
+                }
+
+                else
+
                 {
                     CurrentPage = (Page)Activator.CreateInstance(item.TargetType);
                     CurrentPage.Title = item.Title;
+                    Detail = new NavigationPage(CurrentPage);
                 }
-                Detail = new NavigationPage(CurrentPage);
-            }            
-            IsPresented = false;
 
+            }
+            IsPresented = false;
+            CurrentPage.IsVisible = true;
             MasterPage.ListView.SelectedItem = null;
         }
     }

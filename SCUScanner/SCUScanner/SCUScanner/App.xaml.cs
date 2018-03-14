@@ -36,7 +36,7 @@ namespace SCUScanner
                 return database;
             }
         }
-        public static SCUScanner.Pages.MainTabbedPage mainTabbed { get;  set; }
+        public static Pages.DevicesPage mainTabbed { get;  set; }
         public App()
         {
             InitializeComponent();

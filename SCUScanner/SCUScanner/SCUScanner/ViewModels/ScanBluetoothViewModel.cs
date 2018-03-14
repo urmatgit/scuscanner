@@ -43,7 +43,7 @@ namespace SCUScanner.ViewModels
        
         public ICommand ConnectCommand { get; }
 
-        public ScanBluetoothViewModel(TabbedPage page) : base()
+        public ScanBluetoothViewModel(TabbedPage page=null) : base()
         {
 
             parentTabbed = page;

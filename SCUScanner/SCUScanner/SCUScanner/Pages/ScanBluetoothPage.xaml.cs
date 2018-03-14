@@ -25,23 +25,23 @@ namespace SCUScanner.Pages
 			InitializeComponent ();
             Kod = GlobalConstants.MAIN_TAB_PAGE;   
             BindingContext = scanBluetoothViewModel=new ScanBluetoothViewModel(Tabbed);
-            lblHintBluetoothAndroidText.IsVisible = !(lblHintBluetoothIOSText.IsVisible = Device.RuntimePlatform == Device.iOS);
             MessagingCenter.Subscribe<object, CultureChangedMessage>(this, string.Empty, (sender, agr) =>
             {
 
                 var arg = agr;
                 if (arg is CultureChangedMessage)
                 {
-                   // BindingContext = null;
+                    // BindingContext = null;
                     SCUScanner.Models.Settings settings = sender as SCUScanner.Models.Settings;
                     this.Title = settings.Resources["MainText"];
                     if (App.mainTabbed != null)
                     {
-                        App.mainTabbed.Title= settings.Resources["MainText"];
+                        App.mainTabbed.Title = settings.Resources["MainText"];
                         scanBluetoothViewModel.ScanTextChange(scanBluetoothViewModel.IsScanning);
                     }
                 }
             });
+
 
         }
         public void DoAppearing()

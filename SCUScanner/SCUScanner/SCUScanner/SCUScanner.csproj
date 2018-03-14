@@ -9,17 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\Views\**" />
-    <EmbeddedResource Remove="Pages\Views\**" />
-    <None Remove="Pages\Views\**" />
+    <Compile Remove="Pages\Views\BluetoothEnableInfoView.xaml.cs" />
+    <Compile Remove="Pages\Views\DevicesListView.xaml.cs" />
+    <Compile Remove="Pages\Views\DevicesListViewCell.xaml.cs" />
+    <Compile Remove="Pages\Views\TestListView.xaml.cs" />
+    <Compile Remove="ViewModels\TestTimeViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\DevicesPage.xaml.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Remove="Pages\DevicesPage.xaml" />
+    <EmbeddedResource Remove="Pages\Views\BluetoothEnableInfoView.xaml" />
+    <EmbeddedResource Remove="Pages\Views\DevicesListView.xaml" />
+    <EmbeddedResource Remove="Pages\Views\DevicesListViewCell.xaml" />
+    <EmbeddedResource Remove="Pages\Views\TestListView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +36,12 @@
     <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="16.1.0.26" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.2.0.130-beta" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="Pages\Views\ScanBleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>
@@ -71,6 +78,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\SettingsLanguagePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\Views\ScanBleDevicesView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\AppResource.en.resx">
