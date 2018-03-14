@@ -174,8 +174,8 @@ namespace SCUScanner.ViewModels
                 else
                 {
 
-                    //this.Devices.Clear();
-                    this.IsScanning = true;
+                        this.Devices.Clear();
+                        this.IsScanning = true;
 
                     //this.ScanText = Resources["ScanText"];
                     if (Models.Settings.Current.ManualScan)
