@@ -379,15 +379,36 @@ namespace SCUScanner.ViewModels
                                    if (character.CanNotify() )
                                    {
                                        
-                                       //&& !character.IsNotifying
-                                       gattCharacteristic = character;
-                                       this.watcher = character
-                                        .RegisterAndNotify()
-                                        .Subscribe(x =>
-                                            {
-                                                GetValue(x);
-                                            });
+                                       //if (this.watcher == null)
+                                       //{
+                                          if (this.watcher!=null)
+                                       {
+                                           this.watcher.Dispose();
+                                           this.watcher = null;
+                                       }
+                                       character.EnableNotifications().Subscribe();
+                                           this.watcher = character.WhenNotificationReceived().Subscribe(
+                                               x=> GetValue(x)
+                                               );
+                                           //&& !character.IsNotifying
+                                           //gattCharacteristic = character;
+                                           //this.watcher = character
+
+                                           // .RegisterAndNotify()
+                                           // .Subscribe(x =>
+                                           //     {
+                                           //         GetValue(x);
+                                           //     });
+                                       //}
+                                       //else
+                                       //{
+                                       //    this.watcher.Dispose();
+                                       //    this.watcher = null;
+                                       //}
                                    }
+
+
+                          
 
                                });
 
