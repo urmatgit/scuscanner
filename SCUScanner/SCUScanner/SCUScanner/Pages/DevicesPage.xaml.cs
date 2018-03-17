@@ -24,16 +24,21 @@ namespace SCUScanner.Pages
         public DevicesPage ()
 		{
 			InitializeComponent ();
-            sfTabView = new SfTabView();
+            var content = this.Content as SfTabView;
+            sfTabView = content ??  new SfTabView();
             sfTabView.VerticalOptions = LayoutOptions.FillAndExpand;
             InfoView = new BluetoothSettingInfoView();
             BindingContext = devicesViewModel= new DevicesViewModel();
             this.WhenAnyValue(vm => vm.devicesViewModel.IsVisibleLayout).Subscribe(val =>
             {
-                if (val)
-                     this.Content = sfTabView;
+                var content1 = this.Content as SfTabView;
+                if (val) {
+                    if (content1 == null)
+                        this.Content = sfTabView;
+                }
                 else
                     this.Content = InfoView;
+                //this.Content = InfoView;
             });
             
 
@@ -68,7 +73,9 @@ namespace SCUScanner.Pages
         //protected override void OnSizeAllocated(double width, double height)
         //{
         //    if (devicesViewModel.IsVisibleLayout)
-        //        sfTabView.HeightRequest = height;
+        //    {
+        //        sfTabView.HeightRequest = height- sfTabView.TabHeight;
+        //    }
         //    base.OnSizeAllocated(width, height);
         //}
     }

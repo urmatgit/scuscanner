@@ -4,15 +4,18 @@
                 xmlns:controls="clr-namespace:SCUScanner.Helpers"
              xmlns:local="clr-namespace:SCUScanner.ViewModels"
              
-             x:Class="SCUScanner.Pages.Views.ScanBluetoothView1" BackgroundColor="Blue"
+             x:Class="SCUScanner.Pages.Views.ScanBluetoothView1" 
              x:Name="BleDevices"
              >
     
     <ContentView.Content>
         <StackLayout     VerticalOptions="FillAndExpand">
-            <Button HorizontalOptions="EndAndExpand" Text="{Binding ScanText}" Command="{Binding ScanToggleCommand}">
-
+            <StackLayout Orientation="Horizontal">
+                <ActivityIndicator IsRunning="{Binding IsScanning}"  HorizontalOptions="StartAndExpand"/>
+                <Button HorizontalOptions="EndAndExpand" Text="{Binding ScanText}" Command="{Binding ScanToggleCommand}">
+            
             </Button>
+            </StackLayout>
             <controls:ListViewEx ItemsSource="{Binding Devices}"  HasUnevenRows = "true"   x:Name="DeviceList">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -62,8 +65,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </controls:ListViewEx>
-            <ActivityIndicator IsRunning="{Binding IsScanning}" />
-            <Label Text="footer"/>
+            
         </StackLayout>
     </ContentView.Content>
 </ContentView>

@@ -12,9 +12,9 @@
 
     </ContentPage.ToolbarItems>-->
     <ContentPage.Content>
-        <StackLayout x:Name="lContent">
-            <Label></Label>
-        </StackLayout>
+        <tabView:SfTabView VerticalOptions="FillAndExpand">
+            
+        </tabView:SfTabView>
         
         <!--<AbsoluteLayout x:Name="absoluteLayout" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
                         AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" >
