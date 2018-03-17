@@ -9,18 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\Views\BluetoothEnableInfoView.xaml.cs" />
-    <Compile Remove="Pages\Views\DevicesListView.xaml.cs" />
-    <Compile Remove="Pages\Views\DevicesListViewCell.xaml.cs" />
-    <Compile Remove="Pages\Views\TestListView.xaml.cs" />
+    <Compile Remove="Pages\MainTabbedPage.xaml.cs" />
+    <Compile Remove="Pages\ScanBluetoothPage.xaml.cs" />
+    <Compile Remove="Pages\Views\ScanBluetoothView.xaml.cs" />
     <Compile Remove="ViewModels\TestTimeViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Remove="Pages\Views\BluetoothEnableInfoView.xaml" />
-    <EmbeddedResource Remove="Pages\Views\DevicesListView.xaml" />
-    <EmbeddedResource Remove="Pages\Views\DevicesListViewCell.xaml" />
-    <EmbeddedResource Remove="Pages\Views\TestListView.xaml" />
+    <EmbeddedResource Remove="Pages\MainTabbedPage.xaml" />
+    <EmbeddedResource Remove="Pages\ScanBluetoothPage.xaml" />
+    <EmbeddedResource Remove="Pages\Views\ScanBluetoothView.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,9 +49,6 @@
     <Compile Update="Pages\CharacterPage.xaml.cs">
       <DependentUpon>CharacterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Pages\MainTabbedPage.xaml.cs">
-      <DependentUpon>MainTabbedPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Resources\AppResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -68,19 +63,19 @@
     <EmbeddedResource Update="Pages\DeviceSettingPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\MainTabbedPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Pages\ScanBluetoothPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Pages\SCUItemsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\SettingsLanguagePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Pages\Views\BluetoothSettingInfoView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Pages\Views\ScanBleDevicesView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\Views\ScanBluetoothView1.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\AppResource.en.resx">

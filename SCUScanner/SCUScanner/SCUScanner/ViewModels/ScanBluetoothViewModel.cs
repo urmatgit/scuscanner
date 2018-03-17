@@ -30,12 +30,8 @@ namespace SCUScanner.ViewModels
         System.Timers.Timer StopScanning = new System.Timers.Timer();
         CharacterPage characterPage { get; set; }
         DeviceSettingPage deviceSettingPage { get; set; }
-        TabbedPage parentTabbed;
-        public TabbedPage ParentTabbed
-        {
-            get => parentTabbed;
-            set => parentTabbed = value;
-        }
+        
+        
         public ObservableCollection<ScanResultViewModel> Devices { get; }
 
 
@@ -43,10 +39,10 @@ namespace SCUScanner.ViewModels
        
         public ICommand ConnectCommand { get; }
 
-        public ScanBluetoothViewModel(TabbedPage page=null) : base()
+        public ScanBluetoothViewModel( ) : base()
         {
 
-            parentTabbed = page;
+            
             StopScanning.Interval = 1000 * ScanningDuration;
             StopScanning.Elapsed += StopScanning_Elapsed;
             Devices = new ObservableCollection<ScanResultViewModel>();
@@ -123,24 +119,24 @@ namespace SCUScanner.ViewModels
 
                               // var actual = await device.RequestMtu(512); //Read write size (default 20byte)
                                                                           //  App.Dialogs.Alert("MTU Changed to " + actual);
-                                var title = Resources["ConnectedDeviceCaptionText"];
+                               // var title = Resources["ConnectedDeviceCaptionText"];
 
-                               characterPage = new CharacterPage(o) { Title = title };// ConnectedDevicePage(o) { Title = o.Name };
+                               //characterPage = new CharacterPage(o) { Title = title };// ConnectedDevicePage(o) { Title = o.Name };
                                
-                               characterPage.Kod = o.Name;
-                               characterPage.Tabbed = this.ParentTabbed;
-                               title = Resources["DeviceSettingsCaptionText"];
+                               //characterPage.Kod = o.Name;
+                               //characterPage.Tabbed = this.ParentTabbed;
+                               //title = Resources["DeviceSettingsCaptionText"];
 
-                               deviceSettingPage = new DeviceSettingPage() { Title = title };
+                               //deviceSettingPage = new DeviceSettingPage() { Title = title };
                                
-                               deviceSettingPage.Kod = $"{o.Name}_setting";
-                               deviceSettingPage.Tabbed = this.ParentTabbed;
-                               {
-                                   CleanTabPages();
-                               }
-                               parentTabbed.Children.Add(characterPage);
-                               parentTabbed.Children.Add(deviceSettingPage);
-                               parentTabbed.CurrentPage = characterPage;
+                               //deviceSettingPage.Kod = $"{o.Name}_setting";
+                               //deviceSettingPage.Tabbed = this.ParentTabbed;
+                               //{
+                               //    CleanTabPages();
+                               //}
+                               //parentTabbed.Children.Add(characterPage);
+                               //parentTabbed.Children.Add(deviceSettingPage);
+                               //parentTabbed.CurrentPage = characterPage;
 
                            }
                        }
@@ -149,7 +145,7 @@ namespace SCUScanner.ViewModels
                    {
                        device.CancelConnection();
                        o.IsConnected = false;
-                       parentTabbed.CurrentPage = CleanTabPages();
+                       //parentTabbed.CurrentPage = CleanTabPages();
 
                    }
                     //   UpdateButtonText(o);
@@ -194,33 +190,28 @@ namespace SCUScanner.ViewModels
                         Debug.WriteLine("End scanning");
                     }
                 }
-                //,
-                //this.WhenAny(
-                //    x => x.IsSupported,
-                //    x => x.Value
-                //)
+                
             );
 
-            //if (Models.Settings.Current.ScanMode)
-            //    this.ScanToggleCommand.Execute(null);
+            
 
         }
-        private BaseTabPage CleanTabPages()
-        {
-            var ListOfRemovePages = new List<BaseTabPage>();
-            BaseTabPage result = null;
-            foreach (BaseTabPage bPage in parentTabbed.Children)
-                if (bPage.Kod != SCUScanner.Helpers.GlobalConstants.MAIN_TAB_PAGE)
-                    ListOfRemovePages.Add(bPage);
-                else
-                    result = bPage;
-            if (ListOfRemovePages.Count > 0)
-                ListOfRemovePages.ForEach(x => {
-                    x.Dispose();
-                    parentTabbed.Children.Remove(x);
-                    });
-            return result;
-        }
+        //private BaseTabPage CleanTabPages()
+        //{
+        //    var ListOfRemovePages = new List<BaseTabPage>();
+        //    BaseTabPage result = null;
+        //    foreach (BaseTabPage bPage in parentTabbed.Children)
+        //        if (bPage.Kod != SCUScanner.Helpers.GlobalConstants.MAIN_TAB_PAGE)
+        //            ListOfRemovePages.Add(bPage);
+        //        else
+        //            result = bPage;
+        //    if (ListOfRemovePages.Count > 0)
+        //        ListOfRemovePages.ForEach(x => {
+        //            x.Dispose();
+        //            parentTabbed.Children.Remove(x);
+        //            });
+        //    return result;
+        //}
         private void StopScanning_Elapsed(object sender, ElapsedEventArgs e)
         {
             StopScanBle();
