@@ -10,9 +10,9 @@
     
     <ContentView.Content>
         <StackLayout     VerticalOptions="FillAndExpand">
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" Padding="0,0,5,0">
                 <ActivityIndicator IsRunning="{Binding IsScanning}"  HorizontalOptions="StartAndExpand"/>
-                <Button HorizontalOptions="EndAndExpand" Text="{Binding ScanText}" Command="{Binding ScanToggleCommand}">
+                <Button HorizontalOptions="EndAndExpand" Text="{Binding ScanText}" Command="{Binding ScanToggleCommand}"  BackgroundColor="Green"    TextColor="White" HeightRequest="18">
             
             </Button>
             </StackLayout>

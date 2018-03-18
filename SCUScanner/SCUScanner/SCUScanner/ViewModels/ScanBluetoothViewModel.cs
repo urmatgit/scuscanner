@@ -117,26 +117,7 @@ namespace SCUScanner.ViewModels
                                    new GattConnectionConfig() { AutoConnect = false }
                                    ).ToTask(cancelSrc.Token);
                                App.mainTabbed.CreateCharacterTabView(o);
-                              // var actual = await device.RequestMtu(512); //Read write size (default 20byte)
-                                                                          //  App.Dialogs.Alert("MTU Changed to " + actual);
-                               // var title = Resources["ConnectedDeviceCaptionText"];
-
-                               //characterPage = new CharacterPage(o) { Title = title };// ConnectedDevicePage(o) { Title = o.Name };
-                               
-                               //characterPage.Kod = o.Name;
-                               //characterPage.Tabbed = this.ParentTabbed;
-                               //title = Resources["DeviceSettingsCaptionText"];
-
-                               //deviceSettingPage = new DeviceSettingPage() { Title = title };
-                               
-                               //deviceSettingPage.Kod = $"{o.Name}_setting";
-                               //deviceSettingPage.Tabbed = this.ParentTabbed;
-                               //{
-                               //    CleanTabPages();
-                               //}
-                               //parentTabbed.Children.Add(characterPage);
-                               //parentTabbed.Children.Add(deviceSettingPage);
-                               //parentTabbed.CurrentPage = characterPage;
+                              
 
                            }
                        }
@@ -145,7 +126,7 @@ namespace SCUScanner.ViewModels
                    {
                        device.CancelConnection();
                        o.IsConnected = false;
-                       //parentTabbed.CurrentPage = CleanTabPages();
+                       
                        App.mainTabbed.RemoveCharacterTabView();
 
                    }
@@ -197,22 +178,7 @@ namespace SCUScanner.ViewModels
             
 
         }
-        //private BaseTabPage CleanTabPages()
-        //{
-        //    var ListOfRemovePages = new List<BaseTabPage>();
-        //    BaseTabPage result = null;
-        //    foreach (BaseTabPage bPage in parentTabbed.Children)
-        //        if (bPage.Kod != SCUScanner.Helpers.GlobalConstants.MAIN_TAB_PAGE)
-        //            ListOfRemovePages.Add(bPage);
-        //        else
-        //            result = bPage;
-        //    if (ListOfRemovePages.Count > 0)
-        //        ListOfRemovePages.ForEach(x => {
-        //            x.Dispose();
-        //            parentTabbed.Children.Remove(x);
-        //            });
-        //    return result;
-        //}
+        
         private void StopScanning_Elapsed(object sender, ElapsedEventArgs e)
         {
             StopScanBle();

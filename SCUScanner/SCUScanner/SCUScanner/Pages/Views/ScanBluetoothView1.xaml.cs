@@ -14,11 +14,11 @@ namespace SCUScanner.Pages.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ScanBluetoothView1 : ContentView
 	{
-        ScanBluetoothViewModel scanBluetoothViewModel;
+       public ScanBluetoothViewModel ScanViewModel { get; set; }
         public ScanBluetoothView1 ()
 		{
 			InitializeComponent ();
-              BindingContext = scanBluetoothViewModel = new ScanBluetoothViewModel();
+              BindingContext = ScanViewModel = new ScanBluetoothViewModel();
             //scanBluetoothViewModel = this.BindingContext as ScanBluetoothViewModel;
             MessagingCenter.Subscribe<object, CultureChangedMessage>(this, string.Empty, (sender, agr) =>
             {
@@ -32,7 +32,7 @@ namespace SCUScanner.Pages.Views
                     if (App.mainTabbed != null)
                     {
                         App.mainTabbed.Title = settings.Resources["MainText"];
-                        scanBluetoothViewModel.ScanTextChange(scanBluetoothViewModel.IsScanning);
+                        ScanViewModel.ScanTextChange(ScanViewModel.IsScanning);
                     }
                 }
             });
