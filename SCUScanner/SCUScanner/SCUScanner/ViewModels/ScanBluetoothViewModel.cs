@@ -116,7 +116,7 @@ namespace SCUScanner.ViewModels
                                await device.Connect(
                                    new GattConnectionConfig() { AutoConnect = false }
                                    ).ToTask(cancelSrc.Token);
-
+                               App.mainTabbed.CreateCharacterTabView(o);
                               // var actual = await device.RequestMtu(512); //Read write size (default 20byte)
                                                                           //  App.Dialogs.Alert("MTU Changed to " + actual);
                                // var title = Resources["ConnectedDeviceCaptionText"];
@@ -146,6 +146,7 @@ namespace SCUScanner.ViewModels
                        device.CancelConnection();
                        o.IsConnected = false;
                        //parentTabbed.CurrentPage = CleanTabPages();
+                       App.mainTabbed.RemoveCharacterTabView();
 
                    }
                     //   UpdateButtonText(o);

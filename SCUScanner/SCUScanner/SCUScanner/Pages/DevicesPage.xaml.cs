@@ -9,6 +9,7 @@ using ReactiveUI;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using SCUScanner.Pages.Views;
+using SCUScanner.Helpers;
 
 namespace SCUScanner.Pages
 {
@@ -17,9 +18,12 @@ namespace SCUScanner.Pages
 	{
         TabItemCollection tabItems = new TabItemCollection();
         DevicesViewModel devicesViewModel;
-        SfTabView sfTabView;
-        SfTabItem NearbyDevicesTabItem;
-        SfTabItem ConnectedDeviceTabItem;
+        public  SfTabView sfTabView
+        {
+            get;set;
+        }
+        SfTabItemEx NearbyDevicesTabItem;
+        SfTabItemEx ConnectedDeviceTabItem;
         BluetoothSettingInfoView InfoView;
         
        // ListView listView;
@@ -43,28 +47,50 @@ namespace SCUScanner.Pages
                 else
                     this.Content = InfoView;
             });
-            this.WhenAnyValue(vm => vm.devicesViewModel.Resources).Subscribe(val =>
-            {
-                NearbyDevicesTabItem.Title= val["NearbyDevicesCaptionText"];
-            });
+          
 
 
             NearbyDevicesTabItem = CreateTabItem("NearbyDevicesCaptionText", new ScanBluetoothView1());
             tabItems.Add(NearbyDevicesTabItem);
-
-            ConnectedDeviceTabItem = CreateTabItem("ConnectedDeviceCaptionText",new CharacteristicView());
-            tabItems.Add(ConnectedDeviceTabItem);
+            this.WhenAnyValue(vm => vm.devicesViewModel.Resources).Subscribe(val =>
+            {
+                var newtitle = val["NearbyDevicesCaptionText"];
+                if (NearbyDevicesTabItem.Caption != newtitle)
+                NearbyDevicesTabItem.Caption = newtitle;
+                if (ConnectedDeviceTabItem != null)
+                {
+                    newtitle = val["ConnectedDeviceCaptionText"];
+                    if (ConnectedDeviceTabItem.Caption != newtitle)
+                    ConnectedDeviceTabItem.Caption = newtitle;
+                }
+            });
+            //ConnectedDeviceTabItem = CreateTabItem("ConnectedDeviceCaptionText",new CharacteristicView());
+            //tabItems.Add(ConnectedDeviceTabItem);
 
             sfTabView.Items = tabItems;
              
 
 
         }
-       
-        protected SfTabItem CreateTabItem(string captionCode,View content)
+        public  void CreateCharacterTabView(ScanResultViewModel scanResultViewModel)
         {
-             var TabItem = new SfTabItem();
-            TabItem.Title = devicesViewModel.Resources[captionCode];
+            
+            ConnectedDeviceTabItem = CreateTabItem("ConnectedDeviceCaptionText",new CharacteristicView(scanResultViewModel));
+
+            tabItems.Add(ConnectedDeviceTabItem);
+            sfTabView.SelectedIndex = tabItems.Count-1;
+        }
+        public void RemoveCharacterTabView()
+        {
+            if (ConnectedDeviceTabItem !=null && tabItems.Contains(ConnectedDeviceTabItem))
+                tabItems.Remove(ConnectedDeviceTabItem);
+            sfTabView.SelectedIndex = 0;
+        }
+        protected SfTabItemEx CreateTabItem(string captionCode,View content)
+        {
+             var TabItem = new SfTabItemEx();
+            TabItem.Caption = devicesViewModel.Resources[captionCode];
+            
             TabItem.Content = content;// new ScanBluetoothView1();
             return TabItem;
         }
@@ -76,7 +102,7 @@ namespace SCUScanner.Pages
             if (!tabItems.Contains(NearbyDevicesTabItem))
                 tabItems.Add(NearbyDevicesTabItem);
 
-            if (!tabItems.Contains(ConnectedDeviceTabItem))
+            if (!tabItems.Contains(ConnectedDeviceTabItem) && ConnectedDeviceTabItem!=null)
                 tabItems.Add(ConnectedDeviceTabItem);
             //    tabView.SelectedIndex = 0;
 

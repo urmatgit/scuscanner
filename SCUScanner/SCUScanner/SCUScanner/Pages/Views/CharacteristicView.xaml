@@ -11,7 +11,7 @@
         <controls:HideableToolbarItem     IsVisible="{Binding IsVisibleLayout}"  Text="{Binding  Resources[SaveText]}" Command="{Binding SaveCommand}" Order="Primary" Priority="1"    />
 
     </TabbedPage.ToolbarItems>-->
-    <ContentPage.Content >
+    <ContentView.Content >
         <Grid Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
@@ -87,6 +87,6 @@
             
            
         </Grid>
-    </ContentPage.Content>
+    </ContentView.Content>
     
 </ContentView>
