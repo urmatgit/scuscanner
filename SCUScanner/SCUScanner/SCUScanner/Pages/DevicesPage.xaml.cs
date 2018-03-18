@@ -18,15 +18,19 @@ namespace SCUScanner.Pages
         TabItemCollection tabItems = new TabItemCollection();
         DevicesViewModel devicesViewModel;
         SfTabView sfTabView;
+        SfTabItem NearbyDevicesTabItem;
+        SfTabItem ConnectedDeviceTabItem;
         BluetoothSettingInfoView InfoView;
-        SfTabItem ScanBluetoothItem = new SfTabItem();
+        
        // ListView listView;
         public DevicesPage ()
 		{
 			InitializeComponent ();
             var content = this.Content as SfTabView;
+
             sfTabView = content ??  new SfTabView();
             sfTabView.VerticalOptions = LayoutOptions.FillAndExpand;
+
             InfoView = new BluetoothSettingInfoView();
             BindingContext = devicesViewModel= new DevicesViewModel();
             this.WhenAnyValue(vm => vm.devicesViewModel.IsVisibleLayout).Subscribe(val =>
@@ -38,35 +42,42 @@ namespace SCUScanner.Pages
                 }
                 else
                     this.Content = InfoView;
-                //this.Content = InfoView;
             });
-            
+            this.WhenAnyValue(vm => vm.devicesViewModel.Resources).Subscribe(val =>
+            {
+                NearbyDevicesTabItem.Title= val["NearbyDevicesCaptionText"];
+            });
 
-            ScanBluetoothItem = CreateScanBluetoothItem();
 
-            tabItems.Add(ScanBluetoothItem);
+            NearbyDevicesTabItem = CreateTabItem("NearbyDevicesCaptionText", new ScanBluetoothView1());
+            tabItems.Add(NearbyDevicesTabItem);
+
+            ConnectedDeviceTabItem = CreateTabItem("ConnectedDeviceCaptionText",new CharacteristicView());
+            tabItems.Add(ConnectedDeviceTabItem);
 
             sfTabView.Items = tabItems;
              
 
 
         }
-
-        protected SfTabItem CreateScanBluetoothItem()
+       
+        protected SfTabItem CreateTabItem(string captionCode,View content)
         {
-            SfTabItem sfTabItem = new SfTabItem();
-            sfTabItem.Title = devicesViewModel.Resources["MainText"];
-            sfTabItem.Content = new ScanBluetoothView1();
-            return sfTabItem;
+             var TabItem = new SfTabItem();
+            TabItem.Title = devicesViewModel.Resources[captionCode];
+            TabItem.Content = content;// new ScanBluetoothView1();
+            return TabItem;
         }
-
+        
         protected override void OnAppearing()
         {
 
             base.OnAppearing();
-            if (!tabItems.Contains(ScanBluetoothItem))
-                tabItems.Add(ScanBluetoothItem);
-          
+            if (!tabItems.Contains(NearbyDevicesTabItem))
+                tabItems.Add(NearbyDevicesTabItem);
+
+            if (!tabItems.Contains(ConnectedDeviceTabItem))
+                tabItems.Add(ConnectedDeviceTabItem);
             //    tabView.SelectedIndex = 0;
 
         }
