@@ -52,6 +52,9 @@
     <Compile Update="Pages\Views\CharacteristicView.xaml.cs">
       <DependentUpon>CharacteristicView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Pages\Views\DeviceSettingView.xaml.cs">
+      <DependentUpon>DeviceSettingView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Resources\AppResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:pages="clr-namespace:SCUScanner.Pages"
+             x:Class="SCUScanner.Pages.DeviceSettingView">
+    <ContentView.Content >
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Entry Grid.Column="0" Grid.Row="0" Placeholder="{Binding Resources[BroadcastIdentityText]}" Text="{Binding BroadcastIdentity}"/>
+            <Entry Grid.Column="0" Grid.Row="1" Placeholder="{Binding Resources[AlarmLevelText]}" Text="{Binding AlarmLevel}"/>
+            <Entry Grid.Column="0" Grid.Row="2" Placeholder="{Binding Resources[CutOffText]}" Text="{Binding CutOff}"/>
+            <Entry Grid.Column="0" Grid.Row="3" Placeholder="{Binding Resources[AlarmHoursText]}" Text="{Binding AlarmHours}"/>
+            <Entry Grid.Column="0" Grid.Row="4" Placeholder="{Binding Resources[SetSerialNumberText]}" Text="{Binding SetSerialNumber}"/>
+            <Label Grid.Column="0" Grid.Row="5" Text="{Binding Resources[SetSerialNumberInfoText]}"  />
+            <Button Grid.Column="0"  Grid.Row="6"   Text="{Binding Resources[SendButtonText]}"  
+                    Command="{Binding SendCommand}"  BackgroundColor="Green"    TextColor="White"/>
+        </Grid>
+        
+    </ContentView.Content>
+</ContentView>

@@ -11,12 +11,12 @@ using Xamarin.Forms.Xaml;
 namespace SCUScanner.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class DeviceSettingPage : BaseTabPage
+	public partial class DeviceSettingView : ContentView
     {
-		public DeviceSettingPage ()
+		public DeviceSettingView(ScanResultViewModel scanResultViewModel)
 		{
 			InitializeComponent ();
-            BindingContext = new DeviceSettingViewModel(null);
+            BindingContext = new DeviceSettingViewModel(scanResultViewModel);
 
         }
 	}

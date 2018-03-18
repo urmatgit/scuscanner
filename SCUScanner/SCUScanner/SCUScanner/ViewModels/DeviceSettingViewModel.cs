@@ -9,7 +9,7 @@ namespace SCUScanner.ViewModels
     public class DeviceSettingViewModel: BaseViewModel
     {
         public ICommand SendCommand { get; }
-        public DeviceSettingViewModel()
+        public DeviceSettingViewModel(ScanResultViewModel scanResultViewModel)
         {
 
         }

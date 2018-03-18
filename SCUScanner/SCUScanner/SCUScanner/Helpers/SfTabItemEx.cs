@@ -9,8 +9,11 @@ namespace SCUScanner.Helpers
     public class SfTabItemEx: SfTabItem
     {
         public Label lblTitle { get; set; }
-        public SfTabItemEx()
+        public int Index { get; set; }
+        private SfTabView TabView;
+        public SfTabItemEx(SfTabView tabView)
         {
+            TabView = tabView;
             lblTitle = new Label();
             lblTitle.FontAttributes = FontAttributes.Bold;
             //lblTitle.FontSize = 20;
@@ -26,7 +29,7 @@ namespace SCUScanner.Helpers
 
         private void OnLabelClicked()
         {
-            
+            TabView.SelectedIndex = Index;
         }
 
         

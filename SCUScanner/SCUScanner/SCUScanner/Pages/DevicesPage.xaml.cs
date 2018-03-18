@@ -24,6 +24,7 @@ namespace SCUScanner.Pages
         }
         SfTabItemEx NearbyDevicesTabItem;
         SfTabItemEx ConnectedDeviceTabItem;
+        SfTabItemEx ConnectedDeviceSettingTabItem;
         BluetoothSettingInfoView InfoView;
         
        // ListView listView;
@@ -52,6 +53,7 @@ namespace SCUScanner.Pages
 
             NearbyDevicesTabItem = CreateTabItem("NearbyDevicesCaptionText", new ScanBluetoothView1());
             tabItems.Add(NearbyDevicesTabItem);
+            NearbyDevicesTabItem.Index = tabItems.Count - 1;
             this.WhenAnyValue(vm => vm.devicesViewModel.Resources).Subscribe(val =>
             {
                 var newtitle = val["NearbyDevicesCaptionText"];
@@ -63,6 +65,12 @@ namespace SCUScanner.Pages
                     if (ConnectedDeviceTabItem.Caption != newtitle)
                     ConnectedDeviceTabItem.Caption = newtitle;
                 }
+                if (ConnectedDeviceSettingTabItem != null)
+                {
+                    newtitle = val["DeviceSettingsCaptionText"];
+                    if (ConnectedDeviceSettingTabItem.Caption != newtitle)
+                        ConnectedDeviceSettingTabItem.Caption = newtitle;
+                }
             });
             //ConnectedDeviceTabItem = CreateTabItem("ConnectedDeviceCaptionText",new CharacteristicView());
             //tabItems.Add(ConnectedDeviceTabItem);
@@ -72,23 +80,41 @@ namespace SCUScanner.Pages
 
 
         }
+        public void CreateDeviceSettingTabView(ScanResultViewModel scanResultViewModel)
+        {
+
+            ConnectedDeviceSettingTabItem = CreateTabItem("DeviceSettingsCaptionText", new DeviceSettingView(scanResultViewModel));
+
+            tabItems.Add(ConnectedDeviceSettingTabItem);
+            ConnectedDeviceSettingTabItem.Index = tabItems.Count - 1;
+           // sfTabView.SelectedIndex = ConnectedDeviceSettingTabItem.Index;
+        }
         public  void CreateCharacterTabView(ScanResultViewModel scanResultViewModel)
         {
             
             ConnectedDeviceTabItem = CreateTabItem("ConnectedDeviceCaptionText",new CharacteristicView(scanResultViewModel));
 
             tabItems.Add(ConnectedDeviceTabItem);
-            sfTabView.SelectedIndex = tabItems.Count-1;
+            ConnectedDeviceTabItem.Index = tabItems.Count - 1;
+            sfTabView.SelectedIndex = ConnectedDeviceTabItem.Index;
+            CreateDeviceSettingTabView(scanResultViewModel);
+        }
+        public void RemoveDeviceSettingTabView()
+        {
+            if (ConnectedDeviceSettingTabItem != null && tabItems.Contains(ConnectedDeviceSettingTabItem))
+                tabItems.Remove(ConnectedDeviceSettingTabItem);
+            //sfTabView.SelectedIndex = 0;
         }
         public void RemoveCharacterTabView()
         {
             if (ConnectedDeviceTabItem !=null && tabItems.Contains(ConnectedDeviceTabItem))
                 tabItems.Remove(ConnectedDeviceTabItem);
             sfTabView.SelectedIndex = 0;
+            RemoveDeviceSettingTabView();
         }
         protected SfTabItemEx CreateTabItem(string captionCode,View content)
         {
-             var TabItem = new SfTabItemEx();
+             var TabItem = new SfTabItemEx(sfTabView);
             TabItem.Caption = devicesViewModel.Resources[captionCode];
             
             TabItem.Content = content;// new ScanBluetoothView1();
@@ -104,6 +130,8 @@ namespace SCUScanner.Pages
 
             if (!tabItems.Contains(ConnectedDeviceTabItem) && ConnectedDeviceTabItem!=null)
                 tabItems.Add(ConnectedDeviceTabItem);
+            if (!tabItems.Contains(ConnectedDeviceSettingTabItem) && ConnectedDeviceSettingTabItem != null) 
+                tabItems.Add(ConnectedDeviceSettingTabItem);
             //    tabView.SelectedIndex = 0;
 
         }
