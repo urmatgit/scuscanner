@@ -1,4 +1,5 @@
-﻿using SCUScanner.Services;
+﻿using ReactiveUI;
+using SCUScanner.Services;
 using SCUScanner.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,13 @@ namespace SCUScanner.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CharacteristicView : ContentView
     {
-        ConnectedDeviceViewModel connectedDeviceViewModel;
+       public ConnectedDeviceViewModel ConnectedViewModel { get; set; }
         public CharacteristicView(ScanResultViewModel viewModel)
 		{
-			InitializeComponent ();
-            BindingContext = connectedDeviceViewModel=new ConnectedDeviceViewModel(viewModel);
+            ConnectedViewModel = new ConnectedDeviceViewModel(viewModel);
+            InitializeComponent ();
+            
+            BindingContext = this;
 
         }
         //protected override void OnAppearing()

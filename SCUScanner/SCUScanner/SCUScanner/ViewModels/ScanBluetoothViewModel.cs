@@ -28,8 +28,8 @@ namespace SCUScanner.ViewModels
         IDisposable connect;
 
         System.Timers.Timer StopScanning = new System.Timers.Timer();
-        CharacterPage characterPage { get; set; }
-        DeviceSettingPage deviceSettingPage { get; set; }
+        //CharacterPage characterPage { get; set; }
+        //DeviceSettingPage deviceSettingPage { get; set; }
         
         
         public ObservableCollection<ScanResultViewModel> Devices { get; }
@@ -202,10 +202,10 @@ namespace SCUScanner.ViewModels
         public override void OnActivate()
         {
             base.OnActivate();
-            if (characterPage!=null)
-                characterPage.Title = Resources["ConnectedDeviceCaptionText"];
-            if (deviceSettingPage!=null)
-                deviceSettingPage.Title= Resources["DeviceSettingsCaptionText"];
+            //if (characterPage!=null)
+            //    characterPage.Title = Resources["ConnectedDeviceCaptionText"];
+            //if (deviceSettingPage!=null)
+            //    deviceSettingPage.Title= Resources["DeviceSettingsCaptionText"];
             //App.BleAdapter
             //    .WhenStatusChanged()
             //    .ObserveOn(RxApp.MainThreadScheduler)
@@ -277,6 +277,7 @@ namespace SCUScanner.ViewModels
             return isVisibleLayout;
         }
 
+      
         string scantext;
         public string ScanText
         {

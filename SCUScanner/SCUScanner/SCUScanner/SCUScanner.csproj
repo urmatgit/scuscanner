@@ -9,6 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\CharacterPage.xaml.cs" />
+    <Compile Remove="Pages\ConnectedDevicePage.xaml.cs" />
+    <Compile Remove="Pages\DeviceSettingPage.xaml.cs" />
     <Compile Remove="Pages\MainTabbedPage.xaml.cs" />
     <Compile Remove="Pages\ScanBluetoothPage.xaml.cs" />
     <Compile Remove="Pages\Views\ScanBluetoothView.xaml.cs" />
@@ -16,6 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="Pages\CharacterPage.xaml" />
+    <EmbeddedResource Remove="Pages\ConnectedDevicePage.xaml" />
+    <EmbeddedResource Remove="Pages\DeviceSettingPage.xaml" />
     <EmbeddedResource Remove="Pages\MainTabbedPage.xaml" />
     <EmbeddedResource Remove="Pages\ScanBluetoothPage.xaml" />
     <EmbeddedResource Remove="Pages\Views\ScanBluetoothView.xaml" />
@@ -46,9 +52,6 @@
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="App.xaml.cs">
       <DependentUpon>*.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Pages\CharacterPage.xaml.cs">
-      <DependentUpon>CharacterPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Pages\Views\CharacteristicView.xaml.cs">
       <DependentUpon>CharacteristicView.xaml</DependentUpon>
     </Compile>
@@ -63,12 +66,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Pages\ConnectedDevicePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Pages\DeviceSettingPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Pages\SCUItemsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

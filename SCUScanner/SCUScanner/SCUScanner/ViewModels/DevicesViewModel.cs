@@ -56,6 +56,12 @@ namespace SCUScanner.ViewModels
               });
 
         }
+        string scantext1 = "TestScanDev";
+        public string ScanText1
+        {
+            get => scantext1;
+            set => this.RaiseAndSetIfChanged(ref this.scantext1, value);
+        }
 
     }
 }

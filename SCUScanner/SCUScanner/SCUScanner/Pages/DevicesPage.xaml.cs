@@ -33,7 +33,8 @@ namespace SCUScanner.Pages
 			InitializeComponent ();
             var content = this.Content as SfTabView;
 
-            sfTabView = content ??  new SfTabView();
+            sfTabView = content ??  new SfTabView() {VisibleHeaderCount=3 };
+
             sfTabView.VerticalOptions = LayoutOptions.FillAndExpand;
 
             InfoView = new BluetoothSettingInfoView();

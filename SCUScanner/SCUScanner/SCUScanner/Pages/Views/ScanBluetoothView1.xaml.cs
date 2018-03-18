@@ -17,9 +17,10 @@ namespace SCUScanner.Pages.Views
        public ScanBluetoothViewModel ScanViewModel { get; set; }
         public ScanBluetoothView1 ()
 		{
-			InitializeComponent ();
-              BindingContext = ScanViewModel = new ScanBluetoothViewModel();
-            //scanBluetoothViewModel = this.BindingContext as ScanBluetoothViewModel;
+            ScanViewModel = new ScanBluetoothViewModel();
+            InitializeComponent ();
+            BindingContext = this;
+                //scanBluetoothViewModel = this.BindingContext as ScanBluetoothViewModel;
             MessagingCenter.Subscribe<object, CultureChangedMessage>(this, string.Empty, (sender, agr) =>
             {
 

@@ -211,7 +211,7 @@
   <data name="NearbyDevicesCaptionText" xml:space="preserve">
     <value>Близлежащие устройства</value>
   </data>
-  <data name="OperatorName" xml:space="preserve">
+  <data name="OperatorNameText" xml:space="preserve">
     <value>Оператор</value>
   </data>
   <data name="DownloadText" xml:space="preserve">

@@ -12,11 +12,12 @@
         <StackLayout     VerticalOptions="FillAndExpand">
             <StackLayout Orientation="Horizontal" Padding="0,0,5,0">
                 <ActivityIndicator IsRunning="{Binding IsScanning}"  HorizontalOptions="StartAndExpand"/>
-                <Button HorizontalOptions="EndAndExpand" Text="{Binding ScanText}" Command="{Binding ScanToggleCommand}"  BackgroundColor="Green"    TextColor="White" HeightRequest="18">
+                <!--Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=BleDevices}}"-->
+                <Button HorizontalOptions="EndAndExpand" Text="{Binding ScanViewModel.ScanText,Source={x:Reference Name=BleDevices}}" Command="{Binding ScanViewModel.ScanToggleCommand,Source={x:Reference Name=BleDevices}}"  BackgroundColor="Green"    TextColor="White" HeightRequest="18">
             
             </Button>
             </StackLayout>
-            <controls:ListViewEx ItemsSource="{Binding Devices}"  HasUnevenRows = "true"   x:Name="DeviceList">
+            <controls:ListViewEx ItemsSource="{Binding ScanViewModel.Devices,Source={x:Reference Name=BleDevices}}"  HasUnevenRows = "true"   x:Name="DeviceList">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -48,7 +49,7 @@
 
                                     <!--<Button  Grid.Row="2"  Grid.Column="1"  Text="{Binding BindingContext.Resources[ConnectButtonText],Source={x:Reference Name=BleDevices}}"  Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=BleDevices}  }" CommandParameter="{Binding}"  />-->
                                     <Button  Grid.Row="2" Grid.RowSpan="2"    Grid.Column="2" Grid.ColumnSpan="2" IsEnabled="{Binding IsConnectable}"  Text="{Binding ConnectButtonText}"  
-                                                 Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=BleDevices}}" 
+                                                 Command="{Binding ScanViewModel.ConnectCommand,Source={x:Reference Name=BleDevices}}" 
                                                  CommandParameter="{Binding}"  BackgroundColor="Green"    TextColor="White" />
                                     <!--<Label Text="{Binding IsConnectable, StringFormat='Connectable: {0}'}" Grid.Row="3" Grid.Column="0" />-->
 

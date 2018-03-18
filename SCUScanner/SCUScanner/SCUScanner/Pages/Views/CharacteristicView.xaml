@@ -8,7 +8,7 @@
                    x:Name="ConnectedDevice">
     
     <!--<TabbedPage.ToolbarItems  >
-        <controls:HideableToolbarItem     IsVisible="{Binding IsVisibleLayout}"  Text="{Binding  Resources[SaveText]}" Command="{Binding SaveCommand}" Order="Primary" Priority="1"    />
+        <controls:HideableToolbarItem     IsVisible="{Binding ConnectedDevice.IsVisibleLayout}"  Text="{Binding ConnectedDevice. Resources[SaveText]}" Command="{Binding ConnectedDevice.SaveCommand}" Order="Primary" Priority="1"    />
 
     </TabbedPage.ToolbarItems>-->
     <ContentView.Content >
@@ -33,56 +33,47 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <!--<Label Grid.Column="0"  Grid.Row="1" Text="{Binding  Resources[StatusText]}"/>-->
-            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}"/>
-            <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding SN,StringFormat=' SN: {0}'}"/>
+            <!--<Label Grid.Column="0"  Grid.Row="1" Text="{Binding ConnectedViewModel. Resources[StatusText]}"/>-->
+            <Label Grid.Row="0" Grid.Column="0" Text="{Binding ConnectedViewModel.Name,Source={x:Reference Name=ConnectedDevice}}"/>
+            <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding ConnectedViewModel.SN,StringFormat=' SN: {0}',Source={x:Reference Name=ConnectedDevice}}"/>
             <StackLayout Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center">
-                <gauge:SfDigitalGauge x:Name="digital" Value="{Binding RPM}" BackgroundColor="White" WidthRequest="120" CharacterStrokeColor="Red"
+                <gauge:SfDigitalGauge x:Name="digital" Value="{Binding ConnectedViewModel.RPM,Source={x:Reference Name=ConnectedDevice}}" BackgroundColor="White" WidthRequest="120" CharacterStrokeColor="Red"
                                         CharacterType="EightCrossEightDotMatrix"   
                                       />
-                <!--<Label    Text="{Binding RPM}" Font="Bold,16" />-->
+                <!--<Label    Text="{Binding ConnectedViewModel.RPM}" Font="Bold,16" />-->
                 <Label    Text="Rpm" Font="Bold,16" VerticalTextAlignment="Center" />
             </StackLayout>
             <StackLayout Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Orientation="Vertical">
-                
-                <Label Text="{Binding Resources[StatusText]}"/>
-                <BoxView Color="{Binding StatusColor}" HeightRequest="20"/>
+
+                <Label Text="{Binding ConnectedViewModel.Resources[StatusText],Source={x:Reference Name=ConnectedDevice}}"/>
+                <BoxView Color="{Binding ConnectedViewModel.StatusColor,Source={x:Reference Name=ConnectedDevice}}" HeightRequest="20"/>
             </StackLayout>
-            <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Text="{Binding AlarmLimit, StringFormat='(Alarm at {0} rpm)'}" HorizontalOptions="Center"/>
+            <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Text="{Binding ConnectedViewModel.AlarmLimit, StringFormat='(Alarm at {0} rpm)',Source={x:Reference Name=ConnectedDevice}}" HorizontalOptions="Center"/>
             
             <!--HR-->
             <StackLayout Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Orientation="Horizontal" HorizontalOptions="Center">
-                <gauge:SfDigitalGauge x:Name="digitalHRS" Value="{Binding HRS}" BackgroundColor="White" WidthRequest="120" CharacterStrokeColor="Red"
+                <gauge:SfDigitalGauge x:Name="digitalHRS" Value="{Binding ConnectedViewModel.HRS,Source={x:Reference Name=ConnectedDevice}}" BackgroundColor="White" WidthRequest="120" CharacterStrokeColor="Red"
                                         CharacterType="EightCrossEightDotMatrix"   
                                       />
 
                 <Label    Text="Hrs" Font="Bold,16" VerticalTextAlignment="Center" />
             </StackLayout>
-            <!--<Label   Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Text="{Binding HRS, StringFormat='{0} Hrs'}" Font="Bold,16" HorizontalOptions="Center"/>-->
-            <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" Text="{Binding AlarmHours, StringFormat='(Alarm at {0} hours)'}" HorizontalOptions="Center"/>
-            
-            <controls:PlaceholderEditor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Text="{Binding Note}" Placeholder="{Binding Resources[NoteText]}"  HeightRequest="60"  HorizontalOptions="Fill"  FontSize="Small"/>
-            <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="6"  x:Name="tLocationName" Text="{Binding LocationName}" Placeholder="{Binding Resources[LocationNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
-            <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="7"  x:Name="tOperatorName" Text="{Binding OperatorName}" Placeholder="{Binding Resources[OperatorNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
+            <!--<Label   Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Text="{Binding ConnectedViewModel.HRS, StringFormat='{0} Hrs'}" Font="Bold,16" HorizontalOptions="Center"/>-->
+            <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" Text="{Binding ConnectedViewModel.AlarmHours, StringFormat='(Alarm at {0} hours)',Source={x:Reference Name=ConnectedDevice}}" HorizontalOptions="Center"/>
 
-            <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="8" VerticalOptions="Start"  Text="{Binding Resources[SaveText]}"
-                    Command="{Binding SaveCommand}"  BackgroundColor="Green"    TextColor="White"/>
-            <Button Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" Image="share.png" Command="{Binding ValueShareCommand}"   BackgroundColor="Green"    TextColor="White"/>
+            <controls:PlaceholderEditor x:Name="plNote" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Text="{Binding ConnectedViewModel.Note,Source={x:Reference Name=ConnectedDevice}}" Placeholder="{Binding ConnectedViewModel.Resources[NoteText],Mode=OneWay,Source={x:Reference Name=ConnectedDevice}}"  HeightRequest="60"  HorizontalOptions="Fill"  FontSize="Small"/>
+            <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="6"  x:Name="tLocationName" Text="{Binding ConnectedViewModel.LocationName,Source={x:Reference Name=ConnectedDevice}}" Placeholder="{Binding ConnectedViewModel.Resources[LocationNameText],Source={x:Reference Name=ConnectedDevice}}" HorizontalOptions="Fill" FontSize="Small"/>
+            <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="7"  x:Name="tOperatorName" Text="{Binding ConnectedViewModel.OperatorName,Source={x:Reference Name=ConnectedDevice}}" Placeholder="{Binding ConnectedViewModel.Resources[OperatorNameText],Source={x:Reference Name=ConnectedDevice}}" HorizontalOptions="Fill" FontSize="Small"/>
+
+            <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="8" VerticalOptions="Start"  Text="{Binding ConnectedViewModel.Resources[SaveText],Source={x:Reference Name=ConnectedDevice}}"
+                    Command="{Binding ConnectedViewModel.SaveCommand,Source={x:Reference Name=ConnectedDevice}}"  BackgroundColor="Green"    TextColor="White"/>
+            <Button Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" Image="share.png" Command="{Binding ConnectedViewModel.ValueShareCommand,Source={x:Reference Name=ConnectedDevice}}"   BackgroundColor="Green"    TextColor="White"/>
             <ScrollView Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="9" VerticalOptions="FillAndExpand" >
-                <Label  Text="{Binding SourceText}" VerticalOptions="FillAndExpand"/>
+                <Label  Text="{Binding ConnectedViewModel.SourceText,Source={x:Reference Name=ConnectedDevice}}" VerticalOptions="FillAndExpand"/>
             </ScrollView>
-            
-            <Button Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="10" VerticalOptions="End"  Text="{Binding Resources[DownloadText]}"
-                    Command="{Binding DownloadCommand}"  BackgroundColor="Green"    TextColor="White"/>
-            <!--<Label  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding DeviceID}" Font="bold"/>-->
-            <!--<Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Text="{Binding  ConnectText}" TextColor="Red"/>-->
-            <!--<Button Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="1"   Text="{Binding DeviceViewModel.ConnectButtonText}"
-                    Command="{Binding DisconnectCommand}" FontSize="Small"  IsEnabled="{Binding DeviceViewModel.IsConnected}"/>-->
-            
-            <!--<Label Text="{Binding Address, StringFormat='Address: {0}'}" Grid.Row="2" Grid.Column="2" FontAttributes="Italic" />-->
-            
 
-            <!--<Label Text="{Binding Value}" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5"/>-->
+            <Button Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="10" VerticalOptions="End"  Text="{Binding ConnectedViewModel.Resources[DownloadText],Source={x:Reference Name=ConnectedDevice}}"
+                    Command="{Binding ConnectedViewModel.DownloadCommand,Source={x:Reference Name=ConnectedDevice}}"  BackgroundColor="Green"    TextColor="White"/>
             
             
            

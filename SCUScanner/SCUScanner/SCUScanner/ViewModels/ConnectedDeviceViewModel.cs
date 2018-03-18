@@ -140,6 +140,11 @@ namespace SCUScanner.ViewModels
                 else
                     TimerAlarm.Stop();
             });
+            //this.WhenAnyValue(vm => vm.Resources).Subscribe(r =>
+            //{
+            //    NotePlaceHolder = r["NoteText"];
+                
+            //});
             //  StatusColor = Color.Green;
             OnActivateOnLoad();
         }
@@ -170,7 +175,12 @@ namespace SCUScanner.ViewModels
 
 
         }
-
+        string noteplaseholder;
+        public string NotePlaceHolder
+        {
+            get => noteplaseholder;
+            set => this.RaiseAndSetIfChanged(ref noteplaseholder, value);
+        }
         string value;
         public string Value
         {
