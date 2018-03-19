@@ -5,14 +5,17 @@
               xmlns:pages="clr-namespace:SCUScanner.Pages"
              xmlns:views="clr-namespace:SCUScanner.Pages.Views"
               xmlns:controls="clr-namespace:SCUScanner.Helpers"
-             
+             BackgroundColor="LightBlue"
              x:Class="SCUScanner.Pages.DevicesPage">
     <!--<ContentPage.ToolbarItems  >
         <controls:HideableToolbarItem     IsVisible="True"  Text="ScanText" Command="{Binding ScanToggleCommand}" Order="Primary" Priority="1"    />
 
     </ContentPage.ToolbarItems>-->
     <ContentPage.Content>
-        <tabView:SfTabView VerticalOptions="FillAndExpand">
+        <tabView:SfTabView VerticalOptions="FillAndExpand" VisibleHeaderCount="3"  >
+            <tabView:SfTabView.SelectionIndicatorSettings>
+                <tabView:SelectionIndicatorSettings Position="Fill" Color="White"/>
+            </tabView:SfTabView.SelectionIndicatorSettings>
             
         </tabView:SfTabView>
         

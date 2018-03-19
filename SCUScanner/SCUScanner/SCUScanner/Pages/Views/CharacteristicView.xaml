@@ -5,6 +5,7 @@
              xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
               xmlns:pages="clr-namespace:SCUScanner.Pages"
              x:Class="SCUScanner.Pages.CharacteristicView"
+             BackgroundColor="White"
                    x:Name="ConnectedDevice">
     
     <!--<TabbedPage.ToolbarItems  >

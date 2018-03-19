@@ -2,7 +2,9 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:pages="clr-namespace:SCUScanner.Pages"
-             x:Class="SCUScanner.Pages.DeviceSettingView">
+             x:Class="SCUScanner.Pages.DeviceSettingView"
+             BackgroundColor="White"
+             >
     <ContentView.Content >
         <Grid Margin="10">
             <Grid.ColumnDefinitions>

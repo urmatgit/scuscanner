@@ -6,14 +6,15 @@
              
              x:Class="SCUScanner.Pages.Views.ScanBluetoothView1" 
              x:Name="BleDevices"
+             BackgroundColor="White"
              >
     
     <ContentView.Content>
         <StackLayout     VerticalOptions="FillAndExpand">
-            <StackLayout Orientation="Horizontal" Padding="0,0,5,0">
-                <ActivityIndicator IsRunning="{Binding IsScanning}"  HorizontalOptions="StartAndExpand"/>
+            <StackLayout Orientation="Horizontal" Padding="5,0,5,0" HeightRequest="30">
+                <ActivityIndicator IsRunning="{Binding ScanViewModel.IsScanning,Source={x:Reference Name=BleDevices}}"  HorizontalOptions="StartAndExpand"/>
                 <!--Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=BleDevices}}"-->
-                <Button HorizontalOptions="EndAndExpand" Text="{Binding ScanViewModel.ScanText,Source={x:Reference Name=BleDevices}}" Command="{Binding ScanViewModel.ScanToggleCommand,Source={x:Reference Name=BleDevices}}"  BackgroundColor="Green"    TextColor="White" HeightRequest="18">
+                <Button  HorizontalOptions="EndAndExpand" Text="{Binding ScanViewModel.ScanText,Source={x:Reference Name=BleDevices}}" Command="{Binding ScanViewModel.ScanToggleCommand,Source={x:Reference Name=BleDevices}}"  BackgroundColor="Green"    TextColor="White"  WidthRequest="120">
             
             </Button>
             </StackLayout>
