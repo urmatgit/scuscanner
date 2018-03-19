@@ -26,12 +26,12 @@
                 <RowDefinition Height="32"/>
                 <RowDefinition Height="auto"/>
                 <!--<RowDefinition Height="auto"/>-->
+                <RowDefinition Height="80"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <!--<Label Grid.Column="0"  Grid.Row="1" Text="{Binding ConnectedViewModel. Resources[StatusText]}"/>-->
             <Label Grid.Row="0" Grid.Column="0" Text="{Binding ConnectedViewModel.Name,Source={x:Reference Name=ConnectedDevice}}"/>
@@ -60,19 +60,22 @@
             </StackLayout>
             <!--<Label   Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Text="{Binding ConnectedViewModel.HRS, StringFormat='{0} Hrs'}" Font="Bold,16" HorizontalOptions="Center"/>-->
             <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" Text="{Binding ConnectedViewModel.AlarmHours, StringFormat='(Alarm at {0} hours)',Source={x:Reference Name=ConnectedDevice}}" HorizontalOptions="Center"/>
-
-            <controls:PlaceholderEditor x:Name="plNote" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Text="{Binding ConnectedViewModel.Note,Source={x:Reference Name=ConnectedDevice}}" Placeholder="{Binding ConnectedViewModel.Resources[NoteText],Mode=OneWay,Source={x:Reference Name=ConnectedDevice}}"  HeightRequest="60"  HorizontalOptions="Fill"  FontSize="Small"/>
+            <StackLayout Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Orientation="Vertical"  >
+                <Label Text="{Binding ConnectedViewModel.Resources[NoteText], Source={x:Reference Name=ConnectedDevice}}" FontSize="Small"/>
+                <Editor Text="{Binding ConnectedViewModel.Note,Source={x:Reference Name=ConnectedDevice}}"   HorizontalOptions="Fill" VerticalOptions="FillAndExpand"  FontSize="Small"/>
+            </StackLayout >
+            <!--<controls:PlaceholderEditor x:Name="plNote" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Text="{Binding ConnectedViewModel.Note,Source={x:Reference Name=ConnectedDevice}}" Placeholder="{Binding ConnectedViewModel.Resources[NoteText], Source={x:Reference Name=ConnectedDevice}}"  HeightRequest="60"  HorizontalOptions="Fill"  FontSize="Small"/>-->
             <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="6"  x:Name="tLocationName" Text="{Binding ConnectedViewModel.LocationName,Source={x:Reference Name=ConnectedDevice}}" Placeholder="{Binding ConnectedViewModel.Resources[LocationNameText],Source={x:Reference Name=ConnectedDevice}}" HorizontalOptions="Fill" FontSize="Small"/>
             <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="7"  x:Name="tOperatorName" Text="{Binding ConnectedViewModel.OperatorName,Source={x:Reference Name=ConnectedDevice}}" Placeholder="{Binding ConnectedViewModel.Resources[OperatorNameText],Source={x:Reference Name=ConnectedDevice}}" HorizontalOptions="Fill" FontSize="Small"/>
 
             <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="8" VerticalOptions="Start"  Text="{Binding ConnectedViewModel.Resources[SaveText],Source={x:Reference Name=ConnectedDevice}}"
                     Command="{Binding ConnectedViewModel.SaveCommand,Source={x:Reference Name=ConnectedDevice}}"  BackgroundColor="Green"    TextColor="White"/>
             <Button Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" Image="share.png" Command="{Binding ConnectedViewModel.ValueShareCommand,Source={x:Reference Name=ConnectedDevice}}"   BackgroundColor="Green"    TextColor="White"/>
-            <ScrollView Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="9" VerticalOptions="FillAndExpand" >
+            <ScrollView Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="9" VerticalOptions="FillAndExpand"  HeightRequest="40">
                 <Label  Text="{Binding ConnectedViewModel.SourceText,Source={x:Reference Name=ConnectedDevice}}" VerticalOptions="FillAndExpand"/>
             </ScrollView>
 
-            <Button Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="10" VerticalOptions="End"  Text="{Binding ConnectedViewModel.Resources[DownloadText],Source={x:Reference Name=ConnectedDevice}}"
+            <Button Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="10"   Text="{Binding ConnectedViewModel.Resources[DownloadText],Source={x:Reference Name=ConnectedDevice}}"
                     Command="{Binding ConnectedViewModel.DownloadCommand,Source={x:Reference Name=ConnectedDevice}}"  BackgroundColor="Green"    TextColor="White"/>
             
             

@@ -33,7 +33,7 @@ namespace SCUScanner.Pages
 			InitializeComponent ();
             var content = this.Content as SfTabView;
 
-            sfTabView = content ??  new SfTabView() {VisibleHeaderCount=3 };
+            sfTabView = content ??  new SfTabView() {VisibleHeaderCount=3,EnableSwiping=true };
 
             sfTabView.VerticalOptions = LayoutOptions.FillAndExpand;
 
@@ -95,9 +95,11 @@ namespace SCUScanner.Pages
             
             ConnectedDeviceTabItem = CreateTabItem("ConnectedDeviceCaptionText",new CharacteristicView(scanResultViewModel));
 
-            tabItems.Add(ConnectedDeviceTabItem);
+            sfTabView.Items.Add(ConnectedDeviceTabItem);
             ConnectedDeviceTabItem.Index = tabItems.Count - 1;
-            sfTabView.SelectedIndex = ConnectedDeviceTabItem.Index;
+           // sfTabView.SelectedIndex =  ConnectedDeviceTabItem.Index;
+            
+            
             CreateDeviceSettingTabView(scanResultViewModel);
         }
         public void RemoveDeviceSettingTabView()
@@ -133,7 +135,7 @@ namespace SCUScanner.Pages
                 tabItems.Add(ConnectedDeviceTabItem);
             if (!tabItems.Contains(ConnectedDeviceSettingTabItem) && ConnectedDeviceSettingTabItem != null) 
                 tabItems.Add(ConnectedDeviceSettingTabItem);
-            //    tabView.SelectedIndex = 0;
+            sfTabView.SelectedIndex = 0;
 
         }
         //protected override void OnSizeAllocated(double width, double height)

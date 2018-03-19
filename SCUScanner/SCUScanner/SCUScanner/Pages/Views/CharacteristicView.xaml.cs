@@ -25,6 +25,7 @@ namespace SCUScanner.Pages
             BindingContext = this;
 
         }
+        
         //protected override void OnAppearing()
         //{
         //    connectedDeviceViewModel.ParentTabbed = this.Tabbed;
