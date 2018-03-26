@@ -287,4 +287,10 @@ box only visible on factory version</value>
   <data name="FilterText" xml:space="preserve">
     <value>Текст для фильтра</value>
   </data>
+  <data name="EnterSerialNumberText" xml:space="preserve">
+    <value>Ввод серийного номера</value>
+  </data>
+  <data name="ListOfManualsText" xml:space="preserve">
+    <value>Список руководств</value>
+  </data>
 </root>

@@ -278,6 +278,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter serial number.
+        /// </summary>
+        internal static string EnterSerialNumberText {
+            get {
+                return ResourceManager.GetString("EnterSerialNumberText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Equals.
         /// </summary>
         internal static string EqualsText {
@@ -328,6 +337,15 @@ namespace SCUScanner.Resources {
         internal static string InfoPermissionLocationText {
             get {
                 return ResourceManager.GetString("InfoPermissionLocationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of manuals.
+        /// </summary>
+        internal static string ListOfManualsText {
+            get {
+                return ResourceManager.GetString("ListOfManualsText", resourceCulture);
             }
         }
         

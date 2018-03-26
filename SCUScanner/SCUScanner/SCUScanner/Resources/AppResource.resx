@@ -287,4 +287,10 @@ box only visible on factory version</value>
   <data name="FilterText" xml:space="preserve">
     <value>Search here to filter</value>
   </data>
+  <data name="EnterSerialNumberText" xml:space="preserve">
+    <value>Enter serial number</value>
+  </data>
+  <data name="ListOfManualsText" xml:space="preserve">
+    <value>List of manuals</value>
+  </data>
 </root>

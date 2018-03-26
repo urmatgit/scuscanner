@@ -15,6 +15,7 @@ namespace SCUScanner.Pages
     {
         public MainTabbedPage ()
         {
+
             InitializeComponent();
             BindingContext = new BaseViewModel();
         }
