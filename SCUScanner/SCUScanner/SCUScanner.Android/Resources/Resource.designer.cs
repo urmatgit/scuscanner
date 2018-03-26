@@ -64,19 +64,6 @@ namespace SCUScanner.Droid
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextColor = global::SCUScanner.Droid.Resource.Styleable.ProgressWheel_ahTextColor;
 			global::AndroidHUD.Resource.Styleable.ProgressWheel_ahTextSize = global::SCUScanner.Droid.Resource.Styleable.ProgressWheel_ahTextSize;
 			global::Splat.Resource.String.library_name = global::SCUScanner.Droid.Resource.String.library_name;
-			global::Syncfusion.SfDataGrid.XForms.Droid.Resource.Layout.ScrollViewer = global::SCUScanner.Droid.Resource.Layout.ScrollViewer;
-			global::Syncfusion.SfDataGrid.XForms.Droid.Resource.String.library_name = global::SCUScanner.Droid.Resource.String.library_name;
-			global::Com.Syncfusion.Gauges.Resource.Dimension.pading_bottom = global::SCUScanner.Droid.Resource.Dimension.pading_bottom;
-			global::Com.Syncfusion.Gauges.Resource.Dimension.pading_top = global::SCUScanner.Droid.Resource.Dimension.pading_top;
-			global::Com.Syncfusion.Gauges.Resource.Id.eightsegment = global::SCUScanner.Droid.Resource.Id.eightsegment;
-			global::Com.Syncfusion.Gauges.Resource.Id.fourteensegment = global::SCUScanner.Droid.Resource.Id.fourteensegment;
-			global::Com.Syncfusion.Gauges.Resource.Id.rootLayout = global::SCUScanner.Droid.Resource.Id.rootLayout;
-			global::Com.Syncfusion.Gauges.Resource.Id.sevensegment = global::SCUScanner.Droid.Resource.Id.sevensegment;
-			global::Com.Syncfusion.Gauges.Resource.Id.sixteensegment = global::SCUScanner.Droid.Resource.Id.sixteensegment;
-			global::Com.Syncfusion.Gauges.Resource.Layout.circulargauge_layout = global::SCUScanner.Droid.Resource.Layout.circulargauge_layout;
-			global::Com.Syncfusion.Gauges.Resource.Layout.digitalgauge_layout = global::SCUScanner.Droid.Resource.Layout.digitalgauge_layout;
-			global::Com.Syncfusion.Gauges.Resource.String.ApplicationName = global::SCUScanner.Droid.Resource.String.ApplicationName;
-			global::Com.Syncfusion.Gauges.Resource.String.Hello = global::SCUScanner.Droid.Resource.String.Hello;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::SCUScanner.Droid.Resource.Attribute.actionBarSize;
 		}
 		

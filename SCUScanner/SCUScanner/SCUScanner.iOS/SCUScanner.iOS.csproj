@@ -48,12 +48,12 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer: urmat2g@gmail.com (A2PW44G33F)</CodesignKey>
+    <CodesignKey>iPhone Developer: Maxim Osipenko (GR7TQVH329)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <BuildIpa>true</BuildIpa>
     <IpaMetadata>Info.plist</IpaMetadata>
-    <CodesignProvision>iOS Team Provisioning Profile: home.TestKey</CodesignProvision>
+    <CodesignProvision>First-i5s</CodesignProvision>
     <IpaIncludeArtwork>false</IpaIncludeArtwork>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
@@ -77,7 +77,7 @@
     <ConsolePause>False</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
     <BuildIpa>True</BuildIpa>
-    <CodesignProvision>Max1_Distribution</CodesignProvision>
+    <CodesignProvision>New_4devices</CodesignProvision>
     <CodesignKey>iPhone Distribution: Maxim Osipenko (GSHESUSNEG)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <IpaMetadata>Info.plist</IpaMetadata>
