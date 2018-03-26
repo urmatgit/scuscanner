@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SCUScanner.Pages.MaintenancePage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Maintenance page!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Padding="5">
+            <Entry x:Name="eSerialNumber" Placeholder="{Binding Resources[EnterSerialNumberText]}" Text="{Binding SerialNumber}"></Entry>
+            <Button x:Name="bScanQR" Text="{Binding Resources[ScanQRCode]}" Command="{Binding ScanQRCommand}"
+                    BackgroundColor="Green" TextColor="White"></Button>
+            <Button x:Name="bDownloadManual" Text="{Binding Resources[DownloadText]}" Command="{Binding DownloadManualCommand}"
+                    VerticalOptions="EndAndExpand" BackgroundColor="Green" TextColor="White"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

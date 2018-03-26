@@ -293,4 +293,7 @@ box only visible on factory version</value>
   <data name="ListOfManualsText" xml:space="preserve">
     <value>Список руководств</value>
   </data>
+  <data name="ScanQRCode" xml:space="preserve">
+    <value>Сканировать QR код </value>
+  </data>
 </root>
