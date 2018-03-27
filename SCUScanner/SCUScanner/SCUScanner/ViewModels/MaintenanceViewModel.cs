@@ -29,5 +29,9 @@ namespace SCUScanner.ViewModels
             SerialNumber = App.mainTabbed?.CurrentConnectDeviceSN;
         }
             
+        private void DownLoadManual()
+        {
+
+        }
     }
 }

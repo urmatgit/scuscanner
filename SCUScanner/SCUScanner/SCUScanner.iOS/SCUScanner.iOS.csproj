@@ -48,12 +48,12 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer: Maxim Osipenko (GR7TQVH329)</CodesignKey>
+    <CodesignKey>iPhone Developer: urmat2g@gmail.com (A2PW44G33F)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <BuildIpa>true</BuildIpa>
     <IpaMetadata>Info.plist</IpaMetadata>
-    <CodesignProvision>First-i5s</CodesignProvision>
+    <CodesignProvision>iOS Team Provisioning Profile: home.TestKey</CodesignProvision>
     <IpaIncludeArtwork>false</IpaIncludeArtwork>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
@@ -165,13 +165,13 @@
     <PackageReference Include="Syncfusion.Xamarin.SfGauge">
       <Version>16.1.0.26</Version>
     </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.SfTabView">
-      <Version>16.1.0.26</Version>
-    </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.2.0.130-beta</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms">
+      <Version>2.3.2</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
