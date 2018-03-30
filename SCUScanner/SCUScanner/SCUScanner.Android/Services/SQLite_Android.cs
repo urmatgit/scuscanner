@@ -25,5 +25,14 @@ namespace SCUScanner.Droid.Services
             var path = Path.Combine(documentsPath, sqliteFilename);
             return path;
         }
+
+        public string GetWorkDir()
+        {
+            var workdir= System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            workdir = Path.Combine(workdir, "manuals");
+            if (!Directory.Exists(workdir))
+                Directory.CreateDirectory(workdir);
+            return workdir;
+        }
     }
 }

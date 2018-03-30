@@ -22,5 +22,17 @@ namespace SCUScanner.iOS.Services
 
             return path;
         }
+
+        public string GetWorkDir()
+        {
+            var workdir = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            workdir = Path.Combine(workdir, "manuals");
+            if (!Directory.Exists(workdir))
+                Directory.CreateDirectory(workdir);
+            return workdir;
+             
+        }
+
+        
     }
 }

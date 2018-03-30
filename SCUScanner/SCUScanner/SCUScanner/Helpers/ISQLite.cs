@@ -7,5 +7,6 @@ namespace SCUScanner.Helpers
     public interface ISQLite
     {
         string GetDatabasePath(string filename);
+        string GetWorkDir();
     }
 }
