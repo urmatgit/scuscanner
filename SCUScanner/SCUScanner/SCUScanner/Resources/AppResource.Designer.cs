@@ -413,6 +413,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Internet access or connection error. Open local copy of manual.
+        /// </summary>
+        internal static string NoInternetConOrErrorText {
+            get {
+                return ResourceManager.GetString("NoInternetConOrErrorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to NotEquals.
         /// </summary>
         internal static string NotEqualsText {

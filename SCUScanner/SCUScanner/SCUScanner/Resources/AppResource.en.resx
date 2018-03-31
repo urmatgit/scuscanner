@@ -299,4 +299,7 @@ box only visible on factory version</value>
   <data name="ManualNotFoundText" xml:space="preserve">
     <value>Manual not found</value>
   </data>
+  <data name="NoInternetConOrErrorText" xml:space="preserve">
+    <value>No Internet access or connection error. Open local copy of manual</value>
+  </data>
 </root>

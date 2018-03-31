@@ -37,6 +37,9 @@ namespace SCUScanner.ViewModels
              });
             DownloadManualCommand = ReactiveCommand.CreateFromTask(async () =>
              {
+                 if (Path.GetExtension(SerialNumber) != "pdf")
+                     SerialNumber += ".pdf";
+                 string filename = Path.Combine(WorkDir, serialnumber);
                  FtpClient client = new FtpClient(FtpHost);
                  try
                  {
@@ -47,11 +50,10 @@ namespace SCUScanner.ViewModels
                      await client.ConnectAsync();
                      if (client.IsConnected)
                      {
-                         if (Path.GetExtension(SerialNumber) != "pdf")
-                             SerialNumber += ".pdf";
+                         
 
                          {
-                             string filename = Path.Combine(WorkDir, serialnumber);
+                             
                              if (client.FileExists($"/manuals/{SerialNumber}"))
                              {
                                  //if (File.Exists(filename))
@@ -74,11 +76,11 @@ namespace SCUScanner.ViewModels
                                      await App.Dialogs.AlertAsync(ex.ToString());
 
                                  }
-                                     if (dowloaded || File.Exists(filename))
-                                     {
-                                         WebViewPageCS webViewPageCS = new WebViewPageCS(filename);
-                                         await Navigation.PushAsync(webViewPageCS);
-                                     }
+                                     //if (dowloaded || File.Exists(filename))
+                                     //{
+                                     //    WebViewPageCS webViewPageCS = new WebViewPageCS(filename);
+                                     //    await Navigation.PushAsync(webViewPageCS);
+                                     //}
                                  
                              }
                              else
@@ -93,16 +95,22 @@ namespace SCUScanner.ViewModels
                      }
                      else
                      {
-                         await App.Dialogs.AlertAsync("failed to connect to FTP server");
+                         await App.Dialogs.AlertAsync(Resources["NoInternetConOrErrorText"]);
                      }
                  }
                  catch (Exception ex)
                  {
-                     await App.Dialogs.AlertAsync(ex.ToString());
+                     await App.Dialogs.AlertAsync(Resources["NoInternetConOrErrorText"]);
+
                  }
                  finally
                  {
-                     await client.DisconnectAsync();
+                     await client?.DisconnectAsync();
+                     if ( File.Exists(filename))
+                     {
+                         WebViewPageCS webViewPageCS = new WebViewPageCS(filename);
+                         await Navigation.PushAsync(webViewPageCS);
+                     }
                  }
                  SerialNumber = App.mainTabbed?.CurrentConnectDeviceSN;
              });

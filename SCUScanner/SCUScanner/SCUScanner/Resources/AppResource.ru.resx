@@ -299,4 +299,7 @@ box only visible on factory version</value>
   <data name="ManualNotFoundText" xml:space="preserve">
     <value>Руководство не найдено</value>
   </data>
+  <data name="NoInternetConOrErrorText" xml:space="preserve">
+    <value>Нет доступа в Интернет или ошибка подключения. Открываю локальную копию руководства</value>
+  </data>
 </root>
