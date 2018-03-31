@@ -1,6 +1,7 @@
 ﻿using FluentFTP;
 using ReactiveUI;
 using SCUScanner.Helpers;
+using SCUScanner.Pages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,7 @@ namespace SCUScanner.ViewModels
 {
     public class MaintenanceViewModel:BaseViewModel
     {
+        private INavigation Navigation;
         private const string FtpHost = "ftp://ftp.chester.ru";
         public ICommand ScanQRCommand { get; }
         public ICommand DownloadManualCommand { get; }
@@ -24,8 +26,9 @@ namespace SCUScanner.ViewModels
             get => serialnumber;
             set=> this.RaiseAndSetIfChanged(ref this.serialnumber, value);
         }
-        public MaintenanceViewModel()
+        public MaintenanceViewModel(INavigation navigation)
         {
+            Navigation = navigation;
             WorkDir = DependencyService.Get<ISQLite>().GetWorkDir();
             ScanQRCommand = ReactiveCommand.CreateFromTask(async () =>
              {
@@ -44,9 +47,14 @@ namespace SCUScanner.ViewModels
                  {
                      using (App.Dialogs.Loading("Downloading manual", cancelSrc.Cancel, Resources["CancelText"]))
                      {
-                         if (client.DownloadFile(Path.Combine(WorkDir, serialnumber), $"/manuals/{SerialNumber}", true))
+                         string filename = Path.Combine(WorkDir, serialnumber);
+                         if (client.DownloadFile(filename, $"/manuals/{SerialNumber}", true))
                          {
-
+                             if (File.Exists(filename))
+                             {
+                                 WebViewPageCS webViewPageCS = new WebViewPageCS(filename);
+                                 await Navigation.PushAsync(webViewPageCS);
+                             }
                          }
                      }
 

@@ -19,7 +19,7 @@ namespace SCUScanner.Pages
         public MaintenancePage ()
 		{
 			InitializeComponent ();
-            BindingContext = maintenanceViewModel = new MaintenanceViewModel();
+            BindingContext = maintenanceViewModel = new MaintenanceViewModel(Navigation);
             bScanQR.Clicked += BScanQR_Clicked;
 
         }
