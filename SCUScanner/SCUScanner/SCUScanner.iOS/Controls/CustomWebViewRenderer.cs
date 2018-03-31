@@ -31,7 +31,7 @@ namespace SCUScanner.iOS.Controls
             {
                 var customWebView = Element as CustomWebView;
                 //string fileName = Path.Combine(NSBundle.MainBundle.BundlePath, string.Format("Content/{0}", WebUtility.UrlEncode(customWebView.Uri)));
-                string fileName = WebUtility.UrlEncode(customWebView.Uri);// Path.Combine(NSBundle.MainBundle.BundlePath, string.Format("Content/{0}", WebUtility.UrlEncode(customWebView.Uri)));
+                string fileName = customWebView.Uri;// Path.Combine(NSBundle.MainBundle.BundlePath, string.Format("Content/{0}", WebUtility.UrlEncode(customWebView.Uri)));
                 Control.LoadRequest(new NSUrlRequest(new NSUrl(fileName, false)));
                 Control.ScalesPageToFit = true;
             }

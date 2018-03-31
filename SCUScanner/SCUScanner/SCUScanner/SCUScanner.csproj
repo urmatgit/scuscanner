@@ -73,6 +73,9 @@
     <EmbeddedResource Update="Pages\SettingsLanguagePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Pages\TestListViewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\AppResource.en.resx">
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>

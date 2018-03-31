@@ -70,6 +70,7 @@ namespace SCUScanner.Pages
                         if (action== settings.Resources["ListOfManualsText"])
                         {
                             type = typeof(ListOfManualPage);
+                            //type = typeof(TestListViewPage);
                         }
                     }
 

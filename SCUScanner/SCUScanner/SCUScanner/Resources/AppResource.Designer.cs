@@ -386,6 +386,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manual not found.
+        /// </summary>
+        internal static string ManualNotFoundText {
+            get {
+                return ResourceManager.GetString("ManualNotFoundText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manual scan.
         /// </summary>
         internal static string ManualScanText {

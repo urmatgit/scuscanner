@@ -296,4 +296,7 @@ box only visible on factory version</value>
   <data name="ScanQRCode" xml:space="preserve">
     <value>Scan the units QR code</value>
   </data>
+  <data name="ManualNotFoundText" xml:space="preserve">
+    <value>Manual not found</value>
+  </data>
 </root>

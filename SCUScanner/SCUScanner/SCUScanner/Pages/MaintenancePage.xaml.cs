@@ -34,7 +34,7 @@ namespace SCUScanner.Pages
                 {
                     Navigation.PopAsync();
                     maintenanceViewModel.SerialNumber = result.Text;
-                     DisplayAlert("Scanned Barcode", result.Text, "OK");
+                   //  DisplayAlert("Scanned Barcode", result.Text, "OK");
                 });
             };
             await Navigation.PushAsync(scanPage);
