@@ -67,7 +67,9 @@ namespace SCUScanner.ViewModels
                                      {
                                          using (App.Dialogs.Loading(Resources["DownloadText"], cancelSrc.Cancel, Resources["CancelText"]))
                                          {
-                                             dowloaded = await client.DownloadFileAsync(filename, $"/manuals/{SerialNumber}", true);
+                                             string tmpFileName = filename + DateTime.Now.Second.ToString();
+                                             dowloaded = await client.DownloadFileAsync(tmpFileName, $"/manuals/{SerialNumber}", true);
+                                             File.Copy(tmpFileName, filename,true);
 
                                          }
                                      }

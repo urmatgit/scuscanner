@@ -23,7 +23,7 @@
 	<key>MinimumOSVersion</key>
 	<string>9.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>SCUScanner</string>
+	<string>Centriclean</string>
 	<key>CFBundleIdentifier</key>
 	<string>home.TestKey</string>
 	<key>CFBundleVersion</key>
@@ -57,7 +57,7 @@
 	</array>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>SCUScanner BLE connector</string>
-  <key>NSCameraUsageDescription</key>
-  <string>Can we use your camera</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Can we use your camera</string>
 </dict>
 </plist>
