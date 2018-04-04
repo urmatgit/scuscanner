@@ -140,6 +140,9 @@ namespace SCUScanner.ViewModels
                 else
                     TimerAlarm.Stop();
             });
+            this.WhenAnyValue(vm => vm.SN).Subscribe(s => {
+                App.mainTabbed.CurrentConnectDeviceSN = s;
+                });
             //  StatusColor = Color.Green;
             OnActivateOnLoad();
         }
@@ -493,6 +496,7 @@ namespace SCUScanner.ViewModels
                         RPM = ScuData.S;
                         AlarmLimit = ScuData.A;
                         SN = ScuData.SN;
+
                         Warning = ScuData.W;
 
                         var tmpNewColor = ChangeStatusColor(RPM, Warning, AlarmLimit);
@@ -538,12 +542,14 @@ namespace SCUScanner.ViewModels
                 item.Dispose();
             this.watcher = null;
         }
-        //public override void OnDeactivate()
-        //{
-        //    base.OnDeactivate();
-        //    foreach (var item in this.cleanup)
-        //        item.Dispose();
+        public override void OnDeactivate()
+        {
+            
+            base.OnDeactivate();
+            
+            //foreach (var item in this.cleanup)
+            //    item.Dispose();
 
-        //}
+        }
     }
 }

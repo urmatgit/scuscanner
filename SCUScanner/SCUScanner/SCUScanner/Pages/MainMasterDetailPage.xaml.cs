@@ -16,6 +16,7 @@ namespace SCUScanner.Pages
     {
         MasterDetailPageMenuItem selectedPage = null;
         Page CurrentPage = null;
+        SCUScanner.Models.Settings settings= SCUScanner.Models.Settings.Current;
         public MainMasterDetailPage()
         {
             InitializeComponent();
@@ -31,7 +32,7 @@ namespace SCUScanner.Pages
                 if (arg is CultureChangedMessage)
                 {
                 //    BindingContext = null;
-                    SCUScanner.Models.Settings settings = sender as SCUScanner.Models.Settings;
+                      settings = sender as SCUScanner.Models.Settings;
                     CurrentPage.Title = settings.Resources[selectedPage.PageCode];
                 }
             });
@@ -40,7 +41,7 @@ namespace SCUScanner.Pages
 
         }
 
-        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var item = e.SelectedItem as MasterDetailPageMenuItem;
             if (item == null)
@@ -48,7 +49,7 @@ namespace SCUScanner.Pages
             selectedPage = item;
             var navigation = ((Application.Current.MainPage as Xamarin.Forms.MasterDetailPage)?.Detail as Xamarin.Forms.NavigationPage);
             var CurrentDetailPage=navigation?.CurrentPage ;
-            if (CurrentDetailPage == null || CurrentDetailPage.GetType().Name!=item.TargetType.Name)
+            if (CurrentDetailPage == null || CurrentDetailPage.GetType().Name!=item.TargetType.Name || CurrentDetailPage.GetType().Name==typeof(MaintenancePage).Name)
             {
                 if (item.TargetType.Name==typeof(MainTabbedPage).Name)
                     if(App.mainTabbed ==null)
@@ -61,10 +62,20 @@ namespace SCUScanner.Pages
                     {
                         CurrentPage = App.mainTabbed;
                     }
-                else 
-                
-                {
-                    CurrentPage = (Page)Activator.CreateInstance(item.TargetType);
+                else {
+                    var type = item.TargetType;
+                    if (item.TargetType.Name == typeof(MaintenancePage).Name)
+                    {
+                        var action=await DisplayActionSheet("", "", "", settings.Resources["EnterSerialNumberText"], settings.Resources["ListOfManualsText"]);
+                        if (action== settings.Resources["ListOfManualsText"])
+                        {
+                            type = typeof(ListOfManualPage);
+                            //type = typeof(TestListViewPage);
+                        }
+                    }
+
+
+                    CurrentPage = (Page)Activator.CreateInstance(type);
                     CurrentPage.Title = item.Title;
                 }
                 Detail = new NavigationPage(CurrentPage);

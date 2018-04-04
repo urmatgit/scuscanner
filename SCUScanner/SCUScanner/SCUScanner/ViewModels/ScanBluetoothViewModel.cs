@@ -85,7 +85,7 @@ namespace SCUScanner.ViewModels
                     if (vm != null)
                     {
                         vm.IsConnected = x.Status == ConnectionStatus.Connected;
-
+                        if (!vm.IsConnected) App.mainTabbed.CurrentConnectDeviceSN = "";
                     }
                 });
 
@@ -147,8 +147,10 @@ namespace SCUScanner.ViewModels
                    }
                    else
                    {
+
                        device.CancelConnection();
                        o.IsConnected = false;
+                       App.mainTabbed.CurrentConnectDeviceSN = "";
                        parentTabbed.CurrentPage = CleanTabPages();
 
                    }

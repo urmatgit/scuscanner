@@ -287,4 +287,19 @@ box only visible on factory version</value>
   <data name="FilterText" xml:space="preserve">
     <value>Search here to filter</value>
   </data>
+  <data name="EnterSerialNumberText" xml:space="preserve">
+    <value>Enter serial number</value>
+  </data>
+  <data name="ListOfManualsText" xml:space="preserve">
+    <value>List of manuals</value>
+  </data>
+  <data name="ScanQRCode" xml:space="preserve">
+    <value>Scan the units QR code</value>
+  </data>
+  <data name="ManualNotFoundText" xml:space="preserve">
+    <value>Manual not found</value>
+  </data>
+  <data name="NoInternetConOrErrorText" xml:space="preserve">
+    <value>No Internet access or connection error. Open local copy of manual</value>
+  </data>
 </root>

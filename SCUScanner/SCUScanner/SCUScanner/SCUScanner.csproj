@@ -9,21 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\Views\**" />
-    <EmbeddedResource Remove="Pages\Views\**" />
-    <None Remove="Pages\Views\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Compile Remove="Pages\ConnectedDevicePage.xaml.cs" />
     <Compile Remove="Pages\DevicesPage.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="Pages\ConnectedDevicePage.xaml" />
     <EmbeddedResource Remove="Pages\DevicesPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.0.1" />
+    <PackageReference Include="FluentFTP" Version="19.1.3" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
     <PackageReference Include="Plugin.BluetoothLE" Version="6.0.0-beta2" />
     <PackageReference Include="Plugin.Permissions" Version="2.2.1" />
@@ -32,9 +29,9 @@
     <PackageReference Include="sqlite-net-standard" Version="1.5.1" />
     <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="16.1.0.26" />
     <PackageReference Include="Syncfusion.Xamarin.SfGauge" Version="16.1.0.26" />
-    <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="16.1.0.26" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.2.0.130-beta" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.3.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,13 +52,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Pages\ConnectedDevicePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Pages\DeviceSettingPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Pages\ListOfManualPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Pages\MainTabbedPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\MaintenancePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\ScanBluetoothPage.xaml">
@@ -71,6 +71,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\SettingsLanguagePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\TestListViewPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\AppResource.en.resx">

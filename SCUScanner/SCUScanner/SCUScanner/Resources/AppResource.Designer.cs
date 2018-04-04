@@ -278,6 +278,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter serial number.
+        /// </summary>
+        internal static string EnterSerialNumberText {
+            get {
+                return ResourceManager.GetString("EnterSerialNumberText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Equals.
         /// </summary>
         internal static string EqualsText {
@@ -332,6 +341,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List of manuals.
+        /// </summary>
+        internal static string ListOfManualsText {
+            get {
+                return ResourceManager.GetString("ListOfManualsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Location name.
         /// </summary>
         internal static string LocationNameText {
@@ -368,6 +386,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manual not found.
+        /// </summary>
+        internal static string ManualNotFoundText {
+            get {
+                return ResourceManager.GetString("ManualNotFoundText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manual scan.
         /// </summary>
         internal static string ManualScanText {
@@ -382,6 +409,15 @@ namespace SCUScanner.Resources {
         internal static string NearbyDevicesCaptionText {
             get {
                 return ResourceManager.GetString("NearbyDevicesCaptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Internet access or connection error. Open local copy of manual.
+        /// </summary>
+        internal static string NoInternetConOrErrorText {
+            get {
+                return ResourceManager.GetString("NoInternetConOrErrorText", resourceCulture);
             }
         }
         
@@ -445,6 +481,15 @@ namespace SCUScanner.Resources {
         internal static string SaveText {
             get {
                 return ResourceManager.GetString("SaveText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan the units QR code.
+        /// </summary>
+        internal static string ScanQRCode {
+            get {
+                return ResourceManager.GetString("ScanQRCode", resourceCulture);
             }
         }
         

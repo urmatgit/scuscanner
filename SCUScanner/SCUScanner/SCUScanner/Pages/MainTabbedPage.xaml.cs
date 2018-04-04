@@ -13,8 +13,11 @@ namespace SCUScanner.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainTabbedPage : TabbedPage
     {
+
+        public string CurrentConnectDeviceSN { get; set; }
         public MainTabbedPage ()
         {
+
             InitializeComponent();
             BindingContext = new BaseViewModel();
         }
