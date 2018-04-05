@@ -70,7 +70,13 @@ namespace SCUScanner.ViewModels
                                              string tmpFileName = filename + DateTime.Now.Second.ToString();
                                              dowloaded = await client.DownloadFileAsync(tmpFileName, $"/manuals/{SerialNumber}", true);
                                              File.Copy(tmpFileName, filename,true);
+                                             try
+                                             {
+                                                 File.Delete(tmpFileName);
+                                             }catch(Exception er)
+                                             {
 
+                                             }
                                          }
                                      }
                                  }catch(Exception ex)
