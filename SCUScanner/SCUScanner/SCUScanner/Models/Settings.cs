@@ -56,6 +56,19 @@ namespace SCUScanner.Models
             }
 
         }
+        string operatorname;
+        public string OperatorName
+        {
+            get => AppSettings.GetValueOrDefault(nameof(OperatorName), "");
+            set
+            {
+                var original = OperatorName;
+                if (AppSettings.AddOrUpdateValue(nameof(OperatorName),value))
+                {
+                    this.RaiseAndSetIfChanged(ref this.operatorname, value);
+                }
+            }
+        }
         string selectedlang;
         public  string SelectedLang
         {

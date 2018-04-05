@@ -50,6 +50,7 @@ namespace SCUScanner.ViewModels
             TimerAlarm.Elapsed += TimerAlarm_Elapsed;
             device = selectedDevice.Device;
             Name = device?.Name;
+            OperatorName = SettingsBase.OperatorName;
             DeviceViewModel = selectedDevice;
             IsVisibleLayout = true;
             this.DisconnectCommand = ReactiveCommand.Create(() =>
@@ -544,7 +545,7 @@ namespace SCUScanner.ViewModels
         }
         public override void OnDeactivate()
         {
-            
+            SettingsBase.OperatorName=OperatorName;
             base.OnDeactivate();
             
             //foreach (var item in this.cleanup)
