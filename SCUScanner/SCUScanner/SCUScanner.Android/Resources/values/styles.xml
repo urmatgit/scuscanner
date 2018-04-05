@@ -5,12 +5,12 @@
     <item name="android:windowBackground">@drawable/splash</item>
     <item name="android:windowNoTitle">true</item>
     <item name="android:windowFullscreen">true</item>
-    <item name="colorPrimary">#000000</item>
+    <item name="colorPrimary">#211e1e</item>
     <!-- colorPrimaryDark is used for the status bar -->
-    <item name="colorPrimaryDark">#000000</item>
+    <item name="colorPrimaryDark">#211e1e</item>
     <!-- colorAccent is used as the default value for colorControlActivated
          which is used to tint widgets -->
-    <item name="colorAccent">#000000</item>
+    <item name="colorAccent">#211e1e</item>
     <!-- Disable activity slide-in animation -->
     <item name="android:windowAnimationStyle">@null</item>
   </style>
