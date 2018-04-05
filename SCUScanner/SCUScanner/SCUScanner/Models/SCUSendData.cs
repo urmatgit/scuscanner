@@ -12,6 +12,10 @@ namespace SCUScanner.Models
         public string SN { get; set; }
         public int C { get; set; }
         public int S { get; set; }
+        /// <summary>
+        /// – это количество часов оставшихся до того момента как устройство подаст сигнал тревоги по причине выработки часов. 
+        /// </summary>
+        public int H { get; set; }
         public int Apc { get; set; }
         public int A { get; set; }
         public int W { get; set; }
