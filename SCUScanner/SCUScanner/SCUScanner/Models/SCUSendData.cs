@@ -19,5 +19,10 @@ namespace SCUScanner.Models
         public int CO { get; set; }
         //public int HR { get; set; }
         //public int EL { get; set; }
+
+        /// <summary>
+        /// номер версии устройства(прошивки?)
+        /// </summary>
+        public string V { get; set; }
     }
 }
