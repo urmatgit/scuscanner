@@ -28,6 +28,11 @@ namespace SCUScanner.Services
             return await database.Table<SCUItem>().ToListAsync();
 
         }
+        public async Task<List<DevicesItem>> GetDevicesItem()
+        {
+            
+            return await database.QueryAsync<DevicesItem>("Select id, UnitName, SerialNo from SCUItem group by UnitName", "");
+        }
         public async Task<SCUItem> GetItemAsync(int id)
         {
             return await database.GetAsync<SCUItem>(id);
@@ -38,10 +43,10 @@ namespace SCUScanner.Services
         }
         public async Task<int> SaveItemAsync(SCUItem item)
         {
-            if (item._Id != 0)
+            if (item.Id != 0)
             {
                 await database.UpdateAsync(item);
-                return item._Id;
+                return item.Id;
             }
             else
             {

@@ -11,11 +11,15 @@
   <ItemGroup>
     <Compile Remove="Pages\ConnectedDevicePage.xaml.cs" />
     <Compile Remove="Pages\DevicesPage.xaml.cs" />
+    <Compile Remove="Pages\TestListViewPage.xaml.cs" />
+    <Compile Remove="ViewModels\DevicesViewModel.cs" />
+    <Compile Remove="ViewModels\TestTimeViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Remove="Pages\ConnectedDevicePage.xaml" />
     <EmbeddedResource Remove="Pages\DevicesPage.xaml" />
+    <EmbeddedResource Remove="Pages\TestListViewPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,6 +56,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Pages\DataDevicesListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Pages\DeviceSettingPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -71,9 +78,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\SettingsLanguagePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Pages\TestListViewPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\AppResource.en.resx">

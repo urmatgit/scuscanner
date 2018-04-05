@@ -92,7 +92,7 @@ namespace SCUScanner.ViewModels
 
                   scuitem = new SCUItem()
                   {
-                      ID = ScuData.ID,
+                      UnitName = ScuData.ID,
                       SerialNo = ScuData.SN,
 
                       BroadCastId = Address,
