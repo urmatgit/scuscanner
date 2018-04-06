@@ -254,8 +254,8 @@ box only visible on factory version</value>
   <data name="HoursElapsedText" xml:space="preserve">
     <value>Hours Elapsed</value>
   </data>
-  <data name="IDText" xml:space="preserve">
-    <value>ID</value>
+  <data name="UnitNameText" xml:space="preserve">
+    <value>Unit Name</value>
   </data>
   <data name="LocationText" xml:space="preserve">
     <value>Location</value>

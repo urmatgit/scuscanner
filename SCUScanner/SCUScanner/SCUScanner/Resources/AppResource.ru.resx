@@ -254,8 +254,8 @@ box only visible on factory version</value>
   <data name="HoursElapsedText" xml:space="preserve">
     <value>Часов</value>
   </data>
-  <data name="IDText" xml:space="preserve">
-    <value>ИД</value>
+  <data name="UnitNameText" xml:space="preserve">
+    <value>Название устройство</value>
   </data>
   <data name="LocationText" xml:space="preserve">
     <value>Расположение</value>

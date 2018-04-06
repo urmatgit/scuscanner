@@ -31,11 +31,15 @@ namespace SCUScanner.Services
         public async Task<List<DevicesItem>> GetDevicesItem()
         {
             
-            return await database.QueryAsync<DevicesItem>("Select id, UnitName, SerialNo from SCUItem group by UnitName", "");
+            return await database.QueryAsync<DevicesItem>("Select id, UnitName, SerialNo from SCUItem group by UnitName,SerialNo order by UnitName", "");
         }
         public async Task<SCUItem> GetItemAsync(int id)
         {
             return await database.GetAsync<SCUItem>(id);
+        }
+        public async Task<List<SCUItem>> GetItemAsync(string unitname)
+        {
+            return await database.Table<SCUItem>().Where(s => s.UnitName.Trim() == unitname).ToListAsync();
         }
         public async Task<int> DeleteItemAsync(SCUItem item)
         {

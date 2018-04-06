@@ -62,7 +62,7 @@
                     <sfgrid:SfDataGrid.Columns>
                         <!--HeaderText="{Binding Resources[IDText]}"-->
                         <sfgrid:GridTextColumn HeaderFontAttribute="Bold"
-                                        HeaderText="{Binding BindingContext.Resources[IDText],Source={x:Reference Name=ScuItemsPage}}"
+                                        HeaderText="{Binding BindingContext.Resources[UnitNameText],Source={x:Reference Name=ScuItemsPage}}"
                                            HeaderTextAlignment="Start"
                                            LineBreakMode="WordWrap"
                                            MappingName="UnitName"

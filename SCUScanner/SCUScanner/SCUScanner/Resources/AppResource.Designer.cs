@@ -323,15 +323,6 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ID.
-        /// </summary>
-        internal static string IDText {
-            get {
-                return ResourceManager.GetString("IDText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to To access the hardware identifiers of nearby external devices via Bluetooth and Wi-Fi scans, your app must now have the ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION permissions.
         /// </summary>
         internal static string InfoPermissionLocationText {
@@ -608,6 +599,15 @@ namespace SCUScanner.Resources {
         internal static string StopScanText {
             get {
                 return ResourceManager.GetString("StopScanText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit Name.
+        /// </summary>
+        internal static string UnitNameText {
+            get {
+                return ResourceManager.GetString("UnitNameText", resourceCulture);
             }
         }
     }
