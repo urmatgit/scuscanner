@@ -66,6 +66,7 @@ namespace SCUScanner.Models
             Notes = "";
             Operator = "";
         }
-
+        [Ignore]
+        public bool IsDelete { get; set; }
     }
 }

@@ -1,24 +1,29 @@
 ﻿using ReactiveUI;
 using SCUScanner.Models;
+using SCUScanner.Pages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SCUScanner.ViewModels
 {
 
     public class DataDivicesListViewModel : BaseViewModel
     {
+        INavigation Navigation;
         public ICommand SelectCommand { get; }
         public ObservableCollection<DevicesItem> DevicesItems { get; private set; }
-        public DataDivicesListViewModel()
+        public DataDivicesListViewModel(INavigation navigation)
         {
+            Navigation = navigation;
             DevicesItems = new ObservableCollection<DevicesItem>();
             SelectCommand = ReactiveCommand.CreateFromTask<DevicesItem> (async (x) =>
             {
-                await App.Dialogs.AlertAsync($"Selected click - {x.UnitName}" );
+                //await App.Dialogs.AlertAsync($"Selected click - {x.UnitName}" );
+                await Navigation.PushAsync(new SCUItemsListPage(x.UnitName));
             });
         }
         public override void OnActivate()
@@ -32,6 +37,7 @@ namespace SCUScanner.ViewModels
             var list = await App.Database.GetDevicesItem();
             try
             {
+                DevicesItems.Clear();
                 list.ForEach(l => DevicesItems.Add(l));
                 //SCUItems.  = new ObservableCollection<SCUItem>(list);
             }

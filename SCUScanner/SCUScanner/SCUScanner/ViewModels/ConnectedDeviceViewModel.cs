@@ -296,6 +296,7 @@ namespace SCUScanner.ViewModels
             get => hrs;
             set => this.RaiseAndSetIfChanged(ref hrs, value);
         }
+
         private int alarmHours;
         public int AlarmHours
         {
@@ -497,7 +498,7 @@ namespace SCUScanner.ViewModels
                         RPM = ScuData.S;
                         AlarmLimit = ScuData.A;
                         SN = ScuData.SN;
-
+                        HRS = ScuData.H;
                         Warning = ScuData.W;
 
                         var tmpNewColor = ChangeStatusColor(RPM, Warning, AlarmLimit);

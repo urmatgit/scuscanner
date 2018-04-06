@@ -18,7 +18,7 @@ namespace SCUScanner.Pages
         public DataDevicesListPage()
         {
             InitializeComponent();
-            BindingContext= dataDivicesListViewModel = new DataDivicesListViewModel();
+            BindingContext= dataDivicesListViewModel = new DataDivicesListViewModel(Navigation);
             
         }
         protected override void OnAppearing()

@@ -43,12 +43,12 @@ namespace SCUScanner.Services
         }
         public  async  Task<int> GetItemAsyncCount(string unitname)
         {
-            return await database.ExecuteScalarAsync<int>("select count(*) from SCUItem where UnitName='?'",unitname);
+            return await database.ExecuteScalarAsync<int>($"select count(*) from SCUItem where UnitName like  '{unitname}'");
         }
         public async Task<List<SCUItem>> GetItemAsync(string unitname,int start=0,int rowcount=5)
         {
             
-            return await database.QueryAsync<SCUItem>($"Select * from SCUItem where UnitName='?' order by id DESC limit {start},{rowcount} ", unitname);
+            return await database.QueryAsync<SCUItem>($"Select * from SCUItem where UnitName like '{unitname}' order by id DESC limit {start},{rowcount}");
         }
         public async Task<int> DeleteItemAsync(SCUItem item)
         {

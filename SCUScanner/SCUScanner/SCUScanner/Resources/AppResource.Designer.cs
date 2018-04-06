@@ -88,6 +88,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alarm at.
+        /// </summary>
+        internal static string AlarmText {
+            get {
+                return ResourceManager.GetString("AlarmText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Columns.
         /// </summary>
         internal static string AllColumnsText {
@@ -233,6 +242,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string DeleteText {
+            get {
+                return ResourceManager.GetString("DeleteText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Device Settings.
         /// </summary>
         internal static string DeviceSettingsCaptionText {
@@ -319,6 +337,15 @@ namespace SCUScanner.Resources {
         internal static string HoursElapsedText {
             get {
                 return ResourceManager.GetString("HoursElapsedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hours Run.
+        /// </summary>
+        internal static string HoursRunText {
+            get {
+                return ResourceManager.GetString("HoursRunText", resourceCulture);
             }
         }
         
@@ -463,6 +490,15 @@ namespace SCUScanner.Resources {
         internal static string OperatorText {
             get {
                 return ResourceManager.GetString("OperatorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RMP.
+        /// </summary>
+        internal static string RMPText {
+            get {
+                return ResourceManager.GetString("RMPText", resourceCulture);
             }
         }
         
