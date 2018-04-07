@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:SCUScanner.Helpers"
              x:Class="SCUScanner.Pages.DataDevicesListPage">
-    <controls:ListViewEx x:Name="MyListView"
+    <controls:sfListViewEx x:Name="MyListView"
             ItemsSource="{Binding DevicesItems}"
              ItemClickCommand="{Binding SelectCommand}"
-           HasUnevenRows = "true"
+            ItemSize="80"
           >
             
     <!--Built in Cells-->
@@ -17,19 +17,19 @@
     </controls:ListViewEx.ItemTemplate>-->
     
     <!--Custom View Cells-->
-    
-    <ListView.ItemTemplate>
+
+        <controls:sfListViewEx.ItemTemplate>
       <DataTemplate>
         <ViewCell>
-          <StackLayout Margin="20,5,5,5" Padding="5">
+          <StackLayout Margin="20,5,5,5" Padding="5"  >
             <Label Text="{Binding UnitName}"  FontSize="Large" FontAttributes="Bold"
-                   Style="{DynamicResource ListItemTextStyle}" />
+                    />
             <Label Text="{Binding SerialNo}" FontSize="Small"
-                   Style="{DynamicResource ListItemDetailTextStyle}"/>
+                   />
           </StackLayout>
         </ViewCell>
       </DataTemplate>
-    </ListView.ItemTemplate>
+    </controls:sfListViewEx.ItemTemplate>
     
-  </controls:ListViewEx>
+  </controls:sfListViewEx>
 </ContentPage>

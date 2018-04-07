@@ -11,6 +11,11 @@
             <helper:InverseBoolConverter x:Key="inverseBoolConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
+    <ContentPage.ToolbarItems  >
+        <ToolbarItem     Icon="share.png"  Command="{Binding ShareCommand}" Order="Primary" Priority="1"    />
+        <ToolbarItem     Icon="delete.png"  Command="{Binding DeleteCommand}" Order="Primary" Priority="1"    />
+    </ContentPage.ToolbarItems>
+    
     <ContentPage.Content>
       
             
@@ -54,7 +59,7 @@
                                             </Grid.ColumnDefinitions>
                                             <Label Grid.Column="0" Grid.Row="0" Text="{Binding BindingContext.Resources[UnitNameText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
                                             <Label Grid.Column="1" Grid.Row="0" Text="{Binding UnitName}"/>
-                                            <Label Grid.Column="2"  Grid.Row="0"  Text="{Binding BindingContext.Resources[DeleteText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold" HorizontalTextAlignment="End" VerticalOptions="CenterAndExpand"/>
+                                <Label Grid.Column="2"  Grid.Row="0"  Text="{Binding BindingContext.Resources[SelectText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold" HorizontalTextAlignment="End" VerticalOptions="CenterAndExpand"/>
                                             <Switch   Grid.Column="3" Grid.Row="0" IsToggled="{Binding IsDelete}"/>
                                         </Grid>
                                     </StackLayout>

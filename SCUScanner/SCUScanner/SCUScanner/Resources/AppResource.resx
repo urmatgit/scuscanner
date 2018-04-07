@@ -314,4 +314,7 @@ box only visible on factory version</value>
   <data name="RMPText" xml:space="preserve">
     <value>RMP</value>
   </data>
+  <data name="SelectText" xml:space="preserve">
+    <value>Select</value>
+  </data>
 </root>

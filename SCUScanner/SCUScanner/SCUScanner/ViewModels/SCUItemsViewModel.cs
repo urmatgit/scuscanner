@@ -9,6 +9,8 @@ using ReactiveUI;
 using System.Threading.Tasks;
 using System.Reactive.Linq;
 using Xamarin.Forms;
+using Plugin.Share;
+using Plugin.Share.Abstractions;
 
 namespace SCUScanner.ViewModels
 {
@@ -17,6 +19,7 @@ namespace SCUScanner.ViewModels
         private const int MaxPageItem = 5;
         private string UnitName { get; set; }
         public ICommand LoadMoreCommand { get; }
+        public ICommand ShareCommand { get; }
         public ObservableCollection<SCUItem> SCUItems { get; set; }
         private int ItemCounts { get; set; }
 
@@ -32,7 +35,21 @@ namespace SCUScanner.ViewModels
             SCUItems = new ObservableCollection<SCUItem>();
             
             LoadMoreCommand = new Command<object>(GetNextItems, CanLoadMoreItems);
-            
+            ShareCommand = ReactiveCommand.CreateFromTask(async () =>
+            {
+
+                if (!CrossShare.IsSupported)
+                    return;
+
+
+                await CrossShare.Current.Share(new ShareMessage
+                {
+                    Title = "Reception text",
+                    Text = ""
+
+                });
+
+            });
 
             GetFisrtPage();
         //    CanLoadMoreItems = this.WhenAnyValue(vm => LoadedItemCount > ItemCounts);
@@ -68,7 +85,7 @@ namespace SCUScanner.ViewModels
            
             if (IsBusy || LoadedItemCount > ItemCounts) return;
             IsBusy = true;
-            await Task.Delay(2500);
+            await Task.Delay(1000);
             try
             {
                 var items = await App.Database.GetItemAsync(UnitName, LoadedItemCount, MaxPageItem);
