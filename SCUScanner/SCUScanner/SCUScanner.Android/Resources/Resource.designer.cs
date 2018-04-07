@@ -77,10 +77,6 @@ namespace SCUScanner.Droid
 			global::Com.Syncfusion.Gauges.Resource.Layout.digitalgauge_layout = global::SCUScanner.Droid.Resource.Layout.digitalgauge_layout;
 			global::Com.Syncfusion.Gauges.Resource.String.ApplicationName = global::SCUScanner.Droid.Resource.String.ApplicationName;
 			global::Com.Syncfusion.Gauges.Resource.String.Hello = global::SCUScanner.Droid.Resource.String.Hello;
-			global::Syncfusion.SfPullToRefresh.XForms.Android.Resource.Drawable.shadow_effect = global::SCUScanner.Droid.Resource.Drawable.shadow_effect;
-			global::Syncfusion.SfPullToRefresh.XForms.Android.Resource.Id.ShadowEffectShape = global::SCUScanner.Droid.Resource.Id.ShadowEffectShape;
-			global::Syncfusion.SfPullToRefresh.XForms.Android.Resource.String.ApplicationName = global::SCUScanner.Droid.Resource.String.ApplicationName;
-			global::Syncfusion.SfPullToRefresh.XForms.Android.Resource.String.Hello = global::SCUScanner.Droid.Resource.String.Hello;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::SCUScanner.Droid.Resource.Attribute.actionBarSize;
 			global::ZXing.Net.Mobile.Forms.Android.Resource.Layout.zxingscanneractivitylayout = global::SCUScanner.Droid.Resource.Layout.zxingscanneractivitylayout;
 			global::ZXing.Net.Mobile.Forms.Android.Resource.Layout.zxingscannerfragmentlayout = global::SCUScanner.Droid.Resource.Layout.zxingscannerfragmentlayout;
@@ -2442,26 +2438,26 @@ namespace SCUScanner.Droid
 			// aapt resource value: 0x7f020053
 			public const int avd_hide_password = 2130837587;
 			
+			// aapt resource value: 0x7f020141
+			public const int avd_hide_password_1 = 2130837825;
+			
 			// aapt resource value: 0x7f020142
-			public const int avd_hide_password_1 = 2130837826;
+			public const int avd_hide_password_2 = 2130837826;
 			
 			// aapt resource value: 0x7f020143
-			public const int avd_hide_password_2 = 2130837827;
-			
-			// aapt resource value: 0x7f020144
-			public const int avd_hide_password_3 = 2130837828;
+			public const int avd_hide_password_3 = 2130837827;
 			
 			// aapt resource value: 0x7f020054
 			public const int avd_show_password = 2130837588;
 			
+			// aapt resource value: 0x7f020144
+			public const int avd_show_password_1 = 2130837828;
+			
 			// aapt resource value: 0x7f020145
-			public const int avd_show_password_1 = 2130837829;
+			public const int avd_show_password_2 = 2130837829;
 			
 			// aapt resource value: 0x7f020146
-			public const int avd_show_password_2 = 2130837830;
-			
-			// aapt resource value: 0x7f020147
-			public const int avd_show_password_3 = 2130837831;
+			public const int avd_show_password_3 = 2130837830;
 			
 			// aapt resource value: 0x7f020055
 			public const int bluetooth = 2130837589;
@@ -3129,11 +3125,11 @@ namespace SCUScanner.Droid
 			// aapt resource value: 0x7f020132
 			public const int notification_icon_background = 2130837810;
 			
-			// aapt resource value: 0x7f020140
-			public const int notification_template_icon_bg = 2130837824;
+			// aapt resource value: 0x7f02013f
+			public const int notification_template_icon_bg = 2130837823;
 			
-			// aapt resource value: 0x7f020141
-			public const int notification_template_icon_low_bg = 2130837825;
+			// aapt resource value: 0x7f020140
+			public const int notification_template_icon_low_bg = 2130837824;
 			
 			// aapt resource value: 0x7f020133
 			public const int notification_tile_bg = 2130837811;
@@ -3154,25 +3150,22 @@ namespace SCUScanner.Droid
 			public const int settings = 2130837816;
 			
 			// aapt resource value: 0x7f020139
-			public const int shadow_effect = 2130837817;
+			public const int share = 2130837817;
 			
 			// aapt resource value: 0x7f02013a
-			public const int share = 2130837818;
+			public const int Spares = 2130837818;
 			
 			// aapt resource value: 0x7f02013b
-			public const int Spares = 2130837819;
+			public const int splash = 2130837819;
 			
 			// aapt resource value: 0x7f02013c
-			public const int splash = 2130837820;
+			public const int technology = 2130837820;
 			
 			// aapt resource value: 0x7f02013d
-			public const int technology = 2130837821;
+			public const int tooltip_frame_dark = 2130837821;
 			
 			// aapt resource value: 0x7f02013e
-			public const int tooltip_frame_dark = 2130837822;
-			
-			// aapt resource value: 0x7f02013f
-			public const int tooltip_frame_light = 2130837823;
+			public const int tooltip_frame_light = 2130837822;
 			
 			static Drawable()
 			{
@@ -3204,9 +3197,6 @@ namespace SCUScanner.Droid
 			
 			// aapt resource value: 0x7f090036
 			public const int SYM = 2131296310;
-			
-			// aapt resource value: 0x7f0900d4
-			public const int ShadowEffectShape = 2131296468;
 			
 			// aapt resource value: 0x7f0900be
 			public const int action0 = 2131296446;

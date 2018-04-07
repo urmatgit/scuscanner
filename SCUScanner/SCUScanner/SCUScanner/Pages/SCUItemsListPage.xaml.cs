@@ -15,23 +15,23 @@ namespace SCUScanner.Pages
         public SCUItemsListPage(string unitName)
         {
             InitializeComponent();
-            pullToRefresh.Refreshing += PullToRefresh_Refreshing;
+            
             
             BindingContext = viewModel = new SCUItemsViewModel(unitName);
         }
 
-        private async void PullToRefresh_Refreshing(object sender, EventArgs e)
-        {
-            pullToRefresh.IsRefreshing = true;
-            await Task.Delay(1000);
-            try
-            {
-                await viewModel.GetNextItems();
-            }
-            finally
-            {
-                pullToRefresh.IsRefreshing = false;
-            }
-        }
+        //private async void PullToRefresh_Refreshing(object sender, EventArgs e)
+        //{
+        //    pullToRefresh.IsRefreshing = true;
+        //    await Task.Delay(1000);
+        //    try
+        //    {
+        //        await viewModel.GetNextItems();
+        //    }
+        //    finally
+        //    {
+        //        pullToRefresh.IsRefreshing = false;
+        //    }
+        //}
     }
 }

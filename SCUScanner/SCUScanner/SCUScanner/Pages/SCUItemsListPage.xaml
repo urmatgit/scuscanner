@@ -2,46 +2,41 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SCUScanner.Pages.SCUItemsListPage"
-             
+              xmlns:helper="clr-namespace:Syncfusion.ListView.XForms.Helpers;assembly=Syncfusion.SfListView.XForms"
              xmlns:pulltoRefresh="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms"
              xmlns:syncfusion="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              x:Name="SCUItemsList">
-
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helper:InverseBoolConverter x:Key="inverseBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid RowSpacing="0" ColumnSpacing="0" Padding="0" Margin="0">
+      
             
-            <pulltoRefresh:SfPullToRefresh x:Name="pullToRefresh"
-                                           ProgressBackgroundColor="#0065FF"
-                                           RefreshContentHeight="50"
-                                           PullingThreshold="100"
-                                           
-                                           RefreshContentWidth="50"
-                                           TransitionMode="Push"
-                                           IsRefreshing="False">
-                <pulltoRefresh:SfPullToRefresh.ProgressStrokeWidth>
-                    <OnPlatform x:TypeArguments="x:Double">
-                        <OnPlatform.Android>6</OnPlatform.Android>
-                        <OnPlatform.iOS>2</OnPlatform.iOS>
-                    </OnPlatform>
-                </pulltoRefresh:SfPullToRefresh.ProgressStrokeWidth>
-                <pulltoRefresh:SfPullToRefresh.PullableContent>
-                    <syncfusion:SfListView x:Name="listView" ItemSize="120" 
+          
+          
+                    <syncfusion:SfListView x:Name="listView" ItemSize="181" 
                                            ItemsSource="{Binding SCUItems}"
-                                           AllowSwiping="True"
-                                   AutoFitMode="Height" SelectionMode="None">
+                                           LoadMoreOption="Auto"
+                                           LoadMoreCommand="{Binding LoadMoreCommand}"
+                                           SelectionMode="None" 
+                                             IsBusy="{Binding IsBusy}"
+                                          
+                                   >
                                                     
                         <syncfusion:SfListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid RowSpacing="0" ColumnSpacing="0" Margin="10"  >
+                    <Grid RowSpacing="0" ColumnSpacing="0" Margin="10"   >
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="20" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="20" />
                                         <RowDefinition Height="1" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
@@ -125,11 +120,20 @@
                                 </Grid>
                             </DataTemplate>
                         </syncfusion:SfListView.ItemTemplate>
-                    </syncfusion:SfListView>
-                </pulltoRefresh:SfPullToRefresh.PullableContent>
-            </pulltoRefresh:SfPullToRefresh>
+                <syncfusion:SfListView.LoadMoreTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Label Text="Load More Items" TextColor="Black" BackgroundColor="AliceBlue"
+                           HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                           IsVisible="{Binding IsBusy, Converter={StaticResource inverseBoolConverter}}" />
+                            <syncfusion:LoadMoreIndicator Color="Red" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" VerticalOptions="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </syncfusion:SfListView.LoadMoreTemplate>
+            </syncfusion:SfListView>
+            
 
            
-        </Grid>
+      
     </ContentPage.Content>
 </ContentPage>
