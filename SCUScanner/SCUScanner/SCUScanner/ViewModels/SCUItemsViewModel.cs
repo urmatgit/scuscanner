@@ -51,7 +51,8 @@ namespace SCUScanner.ViewModels
                 ItemCounts = await App.Database.GetItemAsyncCount(UnitName.Trim());
 
                 var items = await App.Database.GetItemAsync(UnitName, 0, MaxPageItem);
-                items.ForEach(l => SCUItems.Add(l));
+                foreach(var item in  items.OrderByDescending(i=>i.DateWithTime))
+                    SCUItems.Add(item);
                 LoadedItemCount = MaxPageItem;
             }catch(Exception er)
             {
@@ -71,7 +72,8 @@ namespace SCUScanner.ViewModels
             try
             {
                 var items = await App.Database.GetItemAsync(UnitName, LoadedItemCount, MaxPageItem);
-                items.ForEach(l => SCUItems.Add(l));
+                foreach(var item in items.OrderByDescending(i=>i.DateWithTime))
+                    SCUItems.Add(item);
                 LoadedItemCount += MaxPageItem;
             }
             finally
