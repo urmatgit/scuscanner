@@ -69,6 +69,19 @@ namespace SCUScanner.Models
                 }
             }
         }
+        string devicefilter;
+        public string DeviceFilter
+        {
+            get => AppSettings.GetValueOrDefault(nameof(DeviceFilter), "");
+            set
+            {
+                var original = DeviceFilter;
+                if (AppSettings.AddOrUpdateValue(nameof(DeviceFilter), value))
+                {
+                    this.RaiseAndSetIfChanged(ref this.devicefilter, value);
+                }
+            }
+        }
         string selectedlang;
         public  string SelectedLang
         {

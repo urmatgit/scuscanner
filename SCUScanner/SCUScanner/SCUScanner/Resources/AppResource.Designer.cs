@@ -251,6 +251,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deleting....
+        /// </summary>
+        internal static string DeletingText {
+            get {
+                return ResourceManager.GetString("DeletingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Device Settings.
         /// </summary>
         internal static string DeviceSettingsCaptionText {

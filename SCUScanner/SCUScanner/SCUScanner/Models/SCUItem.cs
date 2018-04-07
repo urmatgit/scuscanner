@@ -1,11 +1,12 @@
-﻿using SQLite;
+﻿using ReactiveUI;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SCUScanner.Models
 {
-    public class SCUItem
+    public class SCUItem: ReactiveObject
     {
         [PrimaryKey, AutoIncrement, Column("id")]
         public int Id { get; set; }
@@ -66,7 +67,13 @@ namespace SCUScanner.Models
             Notes = "";
             Operator = "";
         }
+        private bool isSelected;
         [Ignore]
-        public bool IsDelete { get; set; }
+
+        public bool IsSelected
+        {
+            get => isSelected;
+            set=> this.RaiseAndSetIfChanged(ref this.isSelected, value);
+        }
     }
 }

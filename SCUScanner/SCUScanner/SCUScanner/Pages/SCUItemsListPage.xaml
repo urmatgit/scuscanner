@@ -6,11 +6,11 @@
              xmlns:pulltoRefresh="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms"
              xmlns:syncfusion="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              x:Name="SCUItemsList">
-    <ContentPage.Resources>
+    <!--<ContentPage.Resources>
         <ResourceDictionary>
             <helper:InverseBoolConverter x:Key="inverseBoolConverter"/>
         </ResourceDictionary>
-    </ContentPage.Resources>
+    </ContentPage.Resources>-->
     <ContentPage.ToolbarItems  >
         <ToolbarItem     Icon="share.png"  Command="{Binding ShareCommand}" Order="Primary" Priority="1"    />
         <ToolbarItem     Icon="delete.png"  Command="{Binding DeleteCommand}" Order="Primary" Priority="1"    />
@@ -60,7 +60,7 @@
                                             <Label Grid.Column="0" Grid.Row="0" Text="{Binding BindingContext.Resources[UnitNameText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
                                             <Label Grid.Column="1" Grid.Row="0" Text="{Binding UnitName}"/>
                                 <Label Grid.Column="2"  Grid.Row="0"  Text="{Binding BindingContext.Resources[SelectText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold" HorizontalTextAlignment="End" VerticalOptions="CenterAndExpand"/>
-                                            <Switch   Grid.Column="3" Grid.Row="0" IsToggled="{Binding IsDelete}"/>
+                                <Switch   Grid.Column="3" Grid.Row="0" IsToggled="{Binding IsSelected}"/>
                                         </Grid>
                                     </StackLayout>
                                     <Label Grid.Column="0" Grid.Row="1" Text="{Binding BindingContext.Resources[SerialNoText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
@@ -128,9 +128,9 @@
                 <syncfusion:SfListView.LoadMoreTemplate>
                     <DataTemplate>
                         <Grid>
-                            <Label Text="Load More Items" TextColor="Black" BackgroundColor="AliceBlue"
+                            <!--<Label Text="Load More Items" TextColor="Black" BackgroundColor="AliceBlue"
                            HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
-                           IsVisible="{Binding IsBusy, Converter={StaticResource inverseBoolConverter}}" />
+                           IsVisible="{Binding IsBusy, Converter={StaticResource inverseBoolConverter}}" />-->
                             <syncfusion:LoadMoreIndicator Color="Red" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" VerticalOptions="Center"/>
                         </Grid>
                     </DataTemplate>

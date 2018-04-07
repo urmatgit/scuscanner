@@ -314,6 +314,9 @@ box only visible on factory version</value>
   <data name="HoursRunText" xml:space="preserve">
     <value>Hours Run</value>
   </data>
+  <data name="DeletingText" xml:space="preserve">
+    <value>Deleting...</value>
+  </data>
   <data name="SelectText" xml:space="preserve">
     <value>Select</value>
   </data>

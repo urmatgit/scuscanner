@@ -11,6 +11,7 @@ using System.Reactive.Linq;
 using Xamarin.Forms;
 using Plugin.Share;
 using Plugin.Share.Abstractions;
+using System.Threading;
 
 namespace SCUScanner.ViewModels
 {
@@ -20,6 +21,7 @@ namespace SCUScanner.ViewModels
         private string UnitName { get; set; }
         public ICommand LoadMoreCommand { get; }
         public ICommand ShareCommand { get; }
+        public ICommand DeleteCommand { get;  }
         public ObservableCollection<SCUItem> SCUItems { get; set; }
         private int ItemCounts { get; set; }
 
@@ -50,8 +52,38 @@ namespace SCUScanner.ViewModels
                 });
 
             });
+            DeleteCommand= ReactiveCommand.CreateFromTask(async () =>
+            {
 
-            GetFisrtPage();
+                var selecteItems = SCUItems.Where(s => s.IsSelected);
+                StringBuilder stringBuilder = new StringBuilder();
+                try
+                {
+                    using (var cancelSrc = new CancellationTokenSource())
+                    {
+                        using (App.Dialogs.Loading(Resources["DeletingText"], cancelSrc.Cancel, Resources["CancelText"]))
+                        {
+                            foreach (var str in selecteItems)
+                            {
+                                
+                                await App.Database.DeleteItemAsync(str);
+
+                            }
+                            //stringBuilder.AppendLine(str.UnitName);
+                        }
+                    }
+                }
+                finally
+                {
+
+                    await GetFisrtPage();
+                }
+                //await App.Dialogs.AlertAsync(stringBuilder.ToString());
+
+
+
+            });
+            Task.Run(()=>  GetFisrtPage());
         //    CanLoadMoreItems = this.WhenAnyValue(vm => LoadedItemCount > ItemCounts);
         }
         private bool CanLoadMoreItems(object obj)
@@ -60,13 +92,13 @@ namespace SCUScanner.ViewModels
             
             return true;
         }
-        private async void GetFisrtPage()
+        private async    Task GetFisrtPage()
         {
             try
             {
                 IsBusy = true;
                 ItemCounts = await App.Database.GetItemAsyncCount(UnitName.Trim());
-
+                SCUItems.Clear();
                 var items = await App.Database.GetItemAsync(UnitName, 0, MaxPageItem);
                 foreach(var item in  items.OrderByDescending(i=>i.DateWithTime))
                     SCUItems.Add(item);
