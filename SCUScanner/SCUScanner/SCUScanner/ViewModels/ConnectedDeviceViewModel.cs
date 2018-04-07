@@ -43,7 +43,7 @@ namespace SCUScanner.ViewModels
         public ICommand ValueShareCommand { get; }
         public ConnectedDeviceViewModel(ScanResultViewModel selectedDevice)
         {
-            HRS = 250;
+           // HRS = 250;
             AlarmHours = 700;
             TimerAlarm = new System.Timers.Timer();
             TimerAlarm.Interval = 500;

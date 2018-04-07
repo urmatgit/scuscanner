@@ -42,12 +42,42 @@ namespace SCUScanner.ViewModels
 
                 if (!CrossShare.IsSupported)
                     return;
+                var selecteItems = SCUItems.Where(s => s.IsSelected);
+                StringBuilder stringBuilder = new StringBuilder();
+                int CaptionLenth = 25;
+                foreach (var str in selecteItems)
+                {
 
+                    string line = Resources["UnitNameText"];
+                    stringBuilder.AppendLine($"{line.PadRight(CaptionLenth, ' ')}: {str.UnitName}");
+
+                    line = Resources["SerialNoText"];
+                    stringBuilder.AppendLine($"{line.PadRight(CaptionLenth, ' ')}: {str.SerialNo}");
+
+                    line = Resources["RMPText"];
+                    stringBuilder.AppendLine($"{line.PadRight(CaptionLenth, ' ')}: {str.Speed} {Resources["AlarmText"]} {str.AlarmSpeed}");
+
+                    line = Resources["HoursRunText"];
+                    stringBuilder.AppendLine($"{line.PadRight(CaptionLenth, ' ')}: {str.HoursElapsed} {Resources["AlarmText"]} {str.AlarmHours}");
+
+                    line = Resources["LocationNameText"];
+                    stringBuilder.AppendLine($"{line.PadRight(CaptionLenth, ' ')}: {str.Location}");
+
+                    line = Resources["OperatorText"];
+                    stringBuilder.AppendLine($"{line.PadRight(CaptionLenth, ' ')}: {str.Operator}");
+
+                    line = Resources["NotesText"];
+                    stringBuilder.AppendLine($"{line.PadRight(CaptionLenth, ' ')}: {str.Notes}");
+
+                    line = Resources["DateWithTimeText"];
+                    stringBuilder.AppendLine($"{line.PadRight(CaptionLenth, ' ')}: {str.DateWithTime}");
+                    stringBuilder.AppendLine($"{"".PadRight(CaptionLenth*2, '-')}");
+                }
 
                 await CrossShare.Current.Share(new ShareMessage
                 {
                     Title = "Reception text",
-                    Text = ""
+                    Text = stringBuilder.ToString()
 
                 });
 
