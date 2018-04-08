@@ -22,7 +22,7 @@ namespace SCUScanner.ViewModels
         public ICommand LoadMoreCommand { get; }
         public ICommand ShareCommand { get; }
         public ICommand DeleteCommand { get;  }
-        public ObservableCollection<SCUItem> SCUItems { get; set; }
+        public  ObservableCollection<SCUItem> SCUItems { get; private set; }
         private int ItemCounts { get; set; }
 
 
@@ -96,7 +96,7 @@ namespace SCUScanner.ViewModels
                             foreach (var str in selecteItems)
                             {
                                 
-                                await App.Database.DeleteItemAsync(str);
+                                await App.Database.DeleteItemAsync(str.Id);
 
                             }
                             //stringBuilder.AppendLine(str.UnitName);
@@ -113,8 +113,15 @@ namespace SCUScanner.ViewModels
 
 
             });
-            Task.Run(()=>  GetFisrtPage());
-        //    CanLoadMoreItems = this.WhenAnyValue(vm => LoadedItemCount > ItemCounts);
+          
+                   //    CanLoadMoreItems = this.WhenAnyValue(vm => LoadedItemCount > ItemCounts);
+        }
+        public override async void OnActivate()
+        {
+            base.OnActivate();
+            
+                await GetFisrtPage();
+            
         }
         private bool CanLoadMoreItems(object obj)
         {
@@ -122,20 +129,39 @@ namespace SCUScanner.ViewModels
             
             return true;
         }
+        private async Task AddElementAsync(SCUItem item)
+        {
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                await Task.Run(() => SCUItems.Add(item));
+            });
+        }
+        private void ClearItems()
+        {
+            while (this.SCUItems.Any())
+            {
+                this.SCUItems.RemoveAt(0);
+            }
+        }
         private async    Task GetFisrtPage()
         {
             try
             {
                 IsBusy = true;
                 ItemCounts = await App.Database.GetItemAsyncCount(UnitName.Trim());
-                SCUItems.Clear();
-                var items = await App.Database.GetItemAsync(UnitName, 0, MaxPageItem);
-                foreach(var item in  items.OrderByDescending(i=>i.DateWithTime))
-                    SCUItems.Add(item);
+                ClearItems();
+                 var items = await App.Database.GetItemAsync(UnitName, 0, MaxPageItem);
+                foreach (var item in items.OrderByDescending(i => i.DateWithTime))
+                {
+                    //await AddElementAsync(item);// 
+                     SCUItems.Add(item);
+                }
                 LoadedItemCount = MaxPageItem;
             }catch(Exception er)
             {
-                await App.Dialogs.AlertAsync(er.Message);
+                string errmsg = er.Message+"\n"+er.InnerException?.Message;
+                 
+                await App.Dialogs.AlertAsync(errmsg);
             }
             finally
             {

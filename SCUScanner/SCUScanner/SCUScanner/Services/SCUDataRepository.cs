@@ -54,6 +54,10 @@ namespace SCUScanner.Services
         {
             return await database.DeleteAsync(item);
         }
+        public async Task<int> DeleteItemAsync(int id)
+        {
+            return await database.ExecuteScalarAsync<int>("delete from SCUItem where id=?", id);
+        }
         public async Task<int> SaveItemAsync(SCUItem item)
         {
             if (item.Id != 0)

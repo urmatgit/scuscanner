@@ -21,9 +21,17 @@ namespace SCUScanner.ViewModels
             Navigation = navigation;
             DevicesItems = new ObservableCollection<DevicesItem>();
             SelectCommand = ReactiveCommand.CreateFromTask<DevicesItem> (async (x) =>
+          //  SelectCommand=ReactiveCommand.Create<DevicesItem>((x)=>
             {
+                //Device.BeginInvokeOnMainThread(async () =>
+                {
+                    //await Navigation.PopAsync();
+                   
+                       await  Navigation.PushAsync(new SCUItemsListPage(x.UnitName));
+                   
+                }//);
                 //await App.Dialogs.AlertAsync($"Selected click - {x.UnitName}" );
-                await Navigation.PushAsync(new SCUItemsListPage(x.UnitName));
+                
             });
         }
         public override void OnActivate()
