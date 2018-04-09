@@ -11,11 +11,15 @@
   <ItemGroup>
     <Compile Remove="Pages\ConnectedDevicePage.xaml.cs" />
     <Compile Remove="Pages\DevicesPage.xaml.cs" />
+    <Compile Remove="Pages\TestListViewPage.xaml.cs" />
+    <Compile Remove="ViewModels\DevicesViewModel.cs" />
+    <Compile Remove="ViewModels\TestTimeViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Remove="Pages\ConnectedDevicePage.xaml" />
     <EmbeddedResource Remove="Pages\DevicesPage.xaml" />
+    <EmbeddedResource Remove="Pages\TestListViewPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,8 +31,9 @@
     <PackageReference Include="Plugin.Share" Version="7.1.1" />
     <PackageReference Include="ReactiveUI" Version="8.0.0-alpha0117" />
     <PackageReference Include="sqlite-net-standard" Version="1.5.1" />
-    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="16.1.0.26" />
-    <PackageReference Include="Syncfusion.Xamarin.SfGauge" Version="16.1.0.26" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="16.1.0.32" />
+    <PackageReference Include="Syncfusion.Xamarin.SfGauge" Version="16.1.0.32" />
+    <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="16.1.0.32" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.2.0.130-beta" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.3.2" />
@@ -52,6 +57,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Pages\DataDevicesListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Pages\DeviceSettingPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -71,9 +79,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\SettingsLanguagePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Pages\TestListViewPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\AppResource.en.resx">

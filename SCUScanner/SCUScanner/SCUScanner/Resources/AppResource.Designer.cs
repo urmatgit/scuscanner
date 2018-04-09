@@ -88,6 +88,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alarm at.
+        /// </summary>
+        internal static string AlarmText {
+            get {
+                return ResourceManager.GetString("AlarmText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Columns.
         /// </summary>
         internal static string AllColumnsText {
@@ -233,6 +242,24 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        internal static string DeleteText {
+            get {
+                return ResourceManager.GetString("DeleteText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleting....
+        /// </summary>
+        internal static string DeletingText {
+            get {
+                return ResourceManager.GetString("DeletingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Device Settings.
         /// </summary>
         internal static string DeviceSettingsCaptionText {
@@ -323,11 +350,11 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ID.
+        ///   Looks up a localized string similar to Hours Run.
         /// </summary>
-        internal static string IDText {
+        internal static string HoursRunText {
             get {
-                return ResourceManager.GetString("IDText", resourceCulture);
+                return ResourceManager.GetString("HoursRunText", resourceCulture);
             }
         }
         
@@ -476,6 +503,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RMP.
+        /// </summary>
+        internal static string RMPText {
+            get {
+                return ResourceManager.GetString("RMPText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         internal static string SaveText {
@@ -508,6 +544,15 @@ namespace SCUScanner.Resources {
         internal static string SelectedLanguageCodeText {
             get {
                 return ResourceManager.GetString("SelectedLanguageCodeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        internal static string SelectText {
+            get {
+                return ResourceManager.GetString("SelectText", resourceCulture);
             }
         }
         
@@ -608,6 +653,15 @@ namespace SCUScanner.Resources {
         internal static string StopScanText {
             get {
                 return ResourceManager.GetString("StopScanText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit Name.
+        /// </summary>
+        internal static string UnitNameText {
+            get {
+                return ResourceManager.GetString("UnitNameText", resourceCulture);
             }
         }
     }

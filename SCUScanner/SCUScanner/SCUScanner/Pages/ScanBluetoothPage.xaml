@@ -46,7 +46,7 @@
                                         <Label Text="{Binding Address}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" />
                                         
                                         
-                                        <Label Text="Binding LocalName sdfsdf" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+                                        <Label Text="Binding LocalName" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
                                         <!--<Label Text="{Binding LocalName, StringFormat='Local Name: {0}'}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>-->
                                         <!--<Label Text="{Binding Uuid, StringFormat='UUID: {0}'}" Grid.Row="1" Grid.ColumnSpan="2" FontAttributes="Italic" />-->
                                         <Label Text="{Binding ServiceCount, StringFormat='{0} Services'}" Grid.Row="3" Grid.Column="0" />

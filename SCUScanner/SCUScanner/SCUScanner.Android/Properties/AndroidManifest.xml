@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="7" android:versionName="7.0" package="SCUScanner.SCUScanner" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="7" android:versionName="7.0" package="Centriclean.Centriclean" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="23" android:targetSdkVersion="26" />
-	<application android:label="SCUScanner.Android"></application>
+	<application android:label="Centriclean"></application>
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 	<!--this is necessary for Android v6+ to get the device name and address-->

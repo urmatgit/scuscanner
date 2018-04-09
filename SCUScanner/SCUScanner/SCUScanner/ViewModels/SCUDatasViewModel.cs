@@ -71,7 +71,7 @@ namespace SCUScanner.ViewModels
                     }
                     else if (SelectedColumn.Equals("All Columns"))
                     {
-                        if (item.ID?.ToLower().Contains(FilterText.ToLower()) ==true ||
+                        if (item.UnitName?.ToLower().Contains(FilterText.ToLower()) ==true ||
                             item.HoursElapsed.ToString().ToLower().Contains(FilterText.ToLower()) ||
                             item.AlarmHours .ToString().ToLower().Contains(FilterText.ToLower()) ||
                             item.AlarmSpeed.ToString().ToLower().Contains(FilterText.ToLower()) ||

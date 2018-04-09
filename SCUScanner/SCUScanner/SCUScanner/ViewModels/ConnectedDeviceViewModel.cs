@@ -43,13 +43,14 @@ namespace SCUScanner.ViewModels
         public ICommand ValueShareCommand { get; }
         public ConnectedDeviceViewModel(ScanResultViewModel selectedDevice)
         {
-            HRS = 250;
+           // HRS = 250;
             AlarmHours = 700;
             TimerAlarm = new System.Timers.Timer();
             TimerAlarm.Interval = 500;
             TimerAlarm.Elapsed += TimerAlarm_Elapsed;
             device = selectedDevice.Device;
             Name = device?.Name;
+            OperatorName = SettingsBase.OperatorName;
             DeviceViewModel = selectedDevice;
             IsVisibleLayout = true;
             this.DisconnectCommand = ReactiveCommand.Create(() =>
@@ -91,7 +92,7 @@ namespace SCUScanner.ViewModels
 
                   scuitem = new SCUItem()
                   {
-                      ID = ScuData.ID,
+                      UnitName = ScuData.ID,
                       SerialNo = ScuData.SN,
 
                       BroadCastId = Address,
@@ -295,6 +296,7 @@ namespace SCUScanner.ViewModels
             get => hrs;
             set => this.RaiseAndSetIfChanged(ref hrs, value);
         }
+
         private int alarmHours;
         public int AlarmHours
         {
@@ -496,7 +498,7 @@ namespace SCUScanner.ViewModels
                         RPM = ScuData.S;
                         AlarmLimit = ScuData.A;
                         SN = ScuData.SN;
-
+                        HRS = ScuData.H;
                         Warning = ScuData.W;
 
                         var tmpNewColor = ChangeStatusColor(RPM, Warning, AlarmLimit);
@@ -544,7 +546,7 @@ namespace SCUScanner.ViewModels
         }
         public override void OnDeactivate()
         {
-            
+            SettingsBase.OperatorName=OperatorName;
             base.OnDeactivate();
             
             //foreach (var item in this.cleanup)

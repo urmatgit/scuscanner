@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SCUScanner.Pages.MenuPage"
              Icon="hamburger.png"
-             Title="Master">
+             Title="Master" >
   <StackLayout>
         
         <ListView x:Name="MenuItemsListView"
@@ -13,7 +13,7 @@
                   SeparatorColor="Black"
                   >
       <ListView.Header>
-        <Grid BackgroundColor="#03A9F4">
+        <Grid BackgroundColor="#211e1e" >
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
@@ -28,7 +28,7 @@
           <Label
               Grid.Column="1"
               Grid.Row="1"
-              Text="SCUScanner"
+              Text="Centriclean" TextColor="White"
               Style="{DynamicResource SubtitleStyle}"/>
         </Grid>
       </ListView.Header>

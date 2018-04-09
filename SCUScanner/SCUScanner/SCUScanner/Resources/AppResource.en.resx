@@ -254,8 +254,8 @@ box only visible on factory version</value>
   <data name="HoursElapsedText" xml:space="preserve">
     <value>Hours Elapsed</value>
   </data>
-  <data name="IDText" xml:space="preserve">
-    <value>ID</value>
+  <data name="UnitNameText" xml:space="preserve">
+    <value>Unit Name</value>
   </data>
   <data name="LocationText" xml:space="preserve">
     <value>Location</value>
@@ -301,5 +301,23 @@ box only visible on factory version</value>
   </data>
   <data name="NoInternetConOrErrorText" xml:space="preserve">
     <value>No Internet access or connection error. Open local copy of manual</value>
+  </data>
+  <data name="RMPText" xml:space="preserve">
+    <value>RMP</value>
+  </data>
+  <data name="AlarmText" xml:space="preserve">
+    <value>Alarm at</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="HoursRunText" xml:space="preserve">
+    <value>Hours Run</value>
+  </data>
+  <data name="DeletingText" xml:space="preserve">
+    <value>Deleting...</value>
+  </data>
+  <data name="SelectText" xml:space="preserve">
+    <value>Select</value>
   </data>
 </root>

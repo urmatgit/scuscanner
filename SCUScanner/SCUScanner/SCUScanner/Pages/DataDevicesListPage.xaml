@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:SCUScanner.Helpers"
+             x:Class="SCUScanner.Pages.DataDevicesListPage">
+    <StackLayout>
+        <SearchBar x:Name="filterText"
+                                Grid.Row="0"
+                                
+                                HorizontalOptions="FillAndExpand"
+                                IsVisible="true"
+                                Placeholder="{Binding Resources[FilterText]}">
+            <SearchBar.HeightRequest>
+                <OnPlatform x:TypeArguments="x:Double"
+                                Android="50"
+                                iOS="50">
+
+                </OnPlatform>
+            </SearchBar.HeightRequest>
+        </SearchBar>
+
+
+    <controls:sfListViewEx x:Name="DataDevicesListView"
+            ItemsSource="{Binding DevicesItems}"
+             ItemClickCommand="{Binding SelectCommand}"
+            ItemSize="80"
+          >
+            
+    <!--Built in Cells-->
+        <!--<controls:ListViewEx.ItemTemplate>
+        <DataTemplate>
+            <TextCell Text="{Binding .}" />
+        </DataTemplate>
+    </controls:ListViewEx.ItemTemplate>-->
+    
+    <!--Custom View Cells-->
+
+        <controls:sfListViewEx.ItemTemplate>
+      <DataTemplate>
+        <ViewCell>
+          <StackLayout Margin="20,5,5,5" Padding="5"  >
+            <Label Text="{Binding UnitName}"  FontSize="Large" FontAttributes="Bold"
+                    />
+            <Label Text="{Binding SerialNo}" FontSize="Small"
+                   />
+          </StackLayout>
+        </ViewCell>
+      </DataTemplate>
+    </controls:sfListViewEx.ItemTemplate>
+    
+  </controls:sfListViewEx>
+    </StackLayout>
+</ContentPage>

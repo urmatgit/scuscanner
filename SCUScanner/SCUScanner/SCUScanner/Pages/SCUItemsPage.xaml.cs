@@ -19,7 +19,7 @@ namespace SCUScanner.Pages
         public SCUItemsPage()
         {
             InitializeComponent();
-            //BindingContext = new SCUDatasViewModel();
+            BindingContext = new SCUDatasViewModel();
             FillOptionList();
         }
         private void FillOptionList()

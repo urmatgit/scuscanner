@@ -254,8 +254,8 @@ box only visible on factory version</value>
   <data name="HoursElapsedText" xml:space="preserve">
     <value>Часов</value>
   </data>
-  <data name="IDText" xml:space="preserve">
-    <value>ИД</value>
+  <data name="UnitNameText" xml:space="preserve">
+    <value>Название устройство</value>
   </data>
   <data name="LocationText" xml:space="preserve">
     <value>Расположение</value>
@@ -301,5 +301,23 @@ box only visible on factory version</value>
   </data>
   <data name="NoInternetConOrErrorText" xml:space="preserve">
     <value>Нет доступа в Интернет или ошибка подключения. Открываю локальную копию руководства</value>
+  </data>
+  <data name="RMPText" xml:space="preserve">
+    <value>RMP</value>
+  </data>
+  <data name="AlarmText" xml:space="preserve">
+    <value>Alarm at</value>
+  </data>
+  <data name="DeleteText" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="HoursRunText" xml:space="preserve">
+    <value>Hours Run</value>
+  </data>
+  <data name="SelectText" xml:space="preserve">
+    <value>Выбрать</value>
+  </data>
+  <data name="DeletingText" xml:space="preserve">
+    <value>Удаление...</value>
   </data>
 </root>

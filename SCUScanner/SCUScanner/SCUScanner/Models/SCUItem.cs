@@ -1,19 +1,20 @@
-﻿using SQLite;
+﻿using ReactiveUI;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SCUScanner.Models
 {
-    public class SCUItem
+    public class SCUItem: ReactiveObject
     {
-        [PrimaryKey, AutoIncrement, Column("_id")]
-        public int _Id { get; set; }
+        [PrimaryKey, AutoIncrement, Column("id")]
+        public int Id { get; set; }
         /// <summary>
         /// String eg. SCU310 (max of 6 characters)
         /// </summary>
         [MaxLength(6)]
-        public string ID { get; set; }
+        public string UnitName { get; set; }
         /// <summary>
         /// Text 21 bytes wide
         /// </summary>
@@ -59,13 +60,20 @@ namespace SCUScanner.Models
         public int AlarmHours { get; set; }
         public SCUItem()
         {
-            ID = "";
+            UnitName = "";
             SerialNo = "";
             BroadCastId = "";
             Location = "";
             Notes = "";
             Operator = "";
         }
+        private bool isSelected;
+        [Ignore]
 
+        public bool IsSelected
+        {
+            get => isSelected;
+            set=> this.RaiseAndSetIfChanged(ref this.isSelected, value);
+        }
     }
 }

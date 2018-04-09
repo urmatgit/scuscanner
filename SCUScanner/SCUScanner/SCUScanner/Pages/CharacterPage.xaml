@@ -24,7 +24,7 @@
                 <RowDefinition Height="32"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="32"/>
-                <RowDefinition Height="auto"/>
+                <!--<RowDefinition Height="auto"/>-->
                 <!--<RowDefinition Height="auto"/>-->
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -41,7 +41,7 @@
                                         CharacterType="EightCrossEightDotMatrix"   
                                       />
                 <!--<Label    Text="{Binding RPM}" Font="Bold,16" />-->
-                <Label    Text="Rpm" Font="Bold,16" VerticalTextAlignment="Center" />
+                <Label    Text="Rpm" Font="Bold,20" VerticalTextAlignment="Center" />
             </StackLayout>
             <StackLayout Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Orientation="Vertical">
                 
@@ -52,27 +52,28 @@
             
             <!--HR-->
             <StackLayout Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Orientation="Horizontal" HorizontalOptions="Center">
+                <Label    Text="Alarms in: " Font="Bold,20" VerticalTextAlignment="Center" />
                 <gauge:SfDigitalGauge x:Name="digitalHRS" Value="{Binding HRS}" BackgroundColor="White" WidthRequest="120" CharacterStrokeColor="Red"
                                         CharacterType="EightCrossEightDotMatrix"   
                                       />
 
-                <Label    Text="Hrs" Font="Bold,16" VerticalTextAlignment="Center" />
+                <Label    Text="Hrs" Font="Bold,20" VerticalTextAlignment="Center" />
             </StackLayout>
             <!--<Label   Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Text="{Binding HRS, StringFormat='{0} Hrs'}" Font="Bold,16" HorizontalOptions="Center"/>-->
-            <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" Text="{Binding AlarmHours, StringFormat='(Alarm at {0} hours)'}" HorizontalOptions="Center"/>
+            <!--<Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" Text="{Binding AlarmHours, StringFormat='(Alarm at {0} hours)'}" HorizontalOptions="Center"/>-->
             
-            <controls:PlaceholderEditor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="5" Text="{Binding Note}" Placeholder="{Binding Resources[NoteText]}"  HeightRequest="60"  HorizontalOptions="Fill"  FontSize="Small"/>
-            <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="6"  x:Name="tLocationName" Text="{Binding LocationName}" Placeholder="{Binding Resources[LocationNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
-            <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="7"  x:Name="tOperatorName" Text="{Binding OperatorName}" Placeholder="{Binding Resources[OperatorNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
+            <controls:PlaceholderEditor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" Text="{Binding Note}" Placeholder="{Binding Resources[NoteText]}"  HeightRequest="60"  HorizontalOptions="Fill"  FontSize="Small"/>
+            <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="5"  x:Name="tLocationName" Text="{Binding LocationName}" Placeholder="{Binding Resources[LocationNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
+            <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="6"  x:Name="tOperatorName" Text="{Binding OperatorName}" Placeholder="{Binding Resources[OperatorNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
 
-            <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="8" VerticalOptions="Start"  Text="{Binding Resources[SaveText]}"
+            <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" VerticalOptions="Start"  Text="{Binding Resources[SaveText]}"
                     Command="{Binding SaveCommand}"  BackgroundColor="Green"    TextColor="White"/>
-            <Button Grid.Column="2" Grid.Row="8" Grid.ColumnSpan="2" Image="share.png" Command="{Binding ValueShareCommand}"   BackgroundColor="Green"    TextColor="White"/>
-            <ScrollView Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="9" VerticalOptions="FillAndExpand" >
+            <Button Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2" Image="share.png" Command="{Binding ValueShareCommand}"   BackgroundColor="Green"    TextColor="White"/>
+            <ScrollView Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="8" VerticalOptions="FillAndExpand" >
                 <Label  Text="{Binding SourceText}" VerticalOptions="FillAndExpand"/>
             </ScrollView>
             
-            <Button Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="10" VerticalOptions="End"  Text="{Binding Resources[DownloadText]}"
+            <Button Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="9" VerticalOptions="End"  Text="{Binding Resources[DownloadText]}"
                     Command="{Binding DownloadCommand}"  BackgroundColor="Green"    TextColor="White"/>
             <!--<Label  Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding DeviceID}" Font="bold"/>-->
             <!--<Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Text="{Binding  ConnectText}" TextColor="Red"/>-->

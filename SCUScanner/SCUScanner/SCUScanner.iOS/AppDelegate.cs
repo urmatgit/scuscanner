@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using Syncfusion.ListView.XForms.iOS;
 using Syncfusion.SfDataGrid.XForms.iOS;
 using Syncfusion.SfGauge.XForms.iOS;
 
@@ -28,7 +29,7 @@ namespace SCUScanner.iOS
             global::Xamarin.Forms.Forms.Init();
             new SfDigitalGaugeRenderer();
             SfDataGridRenderer.Init();
-            
+            SfListViewRenderer.Init();
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             LoadApplication(new App());
             

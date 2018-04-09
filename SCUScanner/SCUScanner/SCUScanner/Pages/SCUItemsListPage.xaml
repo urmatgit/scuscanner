@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SCUScanner.Pages.SCUItemsListPage"
+              xmlns:helper="clr-namespace:Syncfusion.ListView.XForms.Helpers;assembly=Syncfusion.SfListView.XForms"
+             xmlns:pulltoRefresh="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms"
+             xmlns:syncfusion="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             x:Name="SCUItemsList">
+    <!--<ContentPage.Resources>
+        <ResourceDictionary>
+            <helper:InverseBoolConverter x:Key="inverseBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>-->
+    <ContentPage.ToolbarItems  >
+        <ToolbarItem     Icon="share.png"  Command="{Binding ShareCommand}" Order="Primary" Priority="1"    />
+        <ToolbarItem     Icon="delete.png"  Command="{Binding DeleteCommand}" Order="Primary" Priority="1"    />
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.Content>
+      
+            
+          
+          
+                    <syncfusion:SfListView x:Name="listView" ItemSize="181" 
+                                           ItemsSource="{Binding SCUItems}"
+                                           LoadMoreOption="Auto"
+                                           LoadMoreCommand="{Binding LoadMoreCommand}"
+                                           SelectionMode="None" 
+                                             IsBusy="{Binding IsBusy}"
+                                          
+                                   >
+                                                    
+                        <syncfusion:SfListView.ItemTemplate>
+                            <DataTemplate>
+                    <Grid RowSpacing="0" ColumnSpacing="0" Margin="10"   >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="20" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="20" />
+                                        <RowDefinition Height="1" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="130"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" HorizontalOptions="FillAndExpand"  >
+                                        <Grid HorizontalOptions="FillAndExpand">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" Grid.Row="0" Text="{Binding BindingContext.Resources[UnitNameText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
+                                            <Label Grid.Column="1" Grid.Row="0" Text="{Binding UnitName}"/>
+                                <Label Grid.Column="2"  Grid.Row="0"  Text="{Binding BindingContext.Resources[SelectText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold" HorizontalTextAlignment="End" VerticalOptions="CenterAndExpand"/>
+                                <Switch   Grid.Column="3" Grid.Row="0" IsToggled="{Binding IsSelected}"/>
+                                        </Grid>
+                                    </StackLayout>
+                                    <Label Grid.Column="0" Grid.Row="1" Text="{Binding BindingContext.Resources[SerialNoText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
+                                    <Label Grid.Column="1" Grid.Row="1" Text="{Binding SerialNo}"/>
+                                    <!--<StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" HorizontalOptions="FillAndExpand">
+                                        <Grid HorizontalOptions="FillAndExpand">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" Grid.Row="0" Text="{Binding BindingContext.Resources[SerialNoText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
+                                            <Label Grid.Column="1" Grid.Row="0" Text="{Binding SerialNo}"/>
+                                            <Switch   Grid.Column="2" Grid.Row="0" IsToggled="{Binding IsDelete}"/>
+                                        </Grid>
+                                    </StackLayout>-->
+
+                                    
+  
+                                    <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2"  >
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0"  Grid.Row="0" Text="{Binding BindingContext.Resources[RMPText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
+                                            <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="0" >
+                                                <Label  Text="{Binding Speed}"/>
+                                                <Label  Text="{Binding BindingContext.Resources[AlarmText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
+                                                <Label  Text="{Binding AlarmSpeed}"/>
+                                            </StackLayout>
+                                        </Grid>
+                                    </StackLayout>
+
+                                    <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" >
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0"  Grid.Row="0" Text="{Binding BindingContext.Resources[HoursRunText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
+                                            <StackLayout Orientation="Horizontal" Grid.Column="1" Grid.Row="0" >
+                                                <Label  Text="{Binding HoursElapsed}"/>
+                                                <Label  Text="{Binding BindingContext.Resources[AlarmText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
+                                                <Label  Text="{Binding AlarmHours}"/>
+                                            </StackLayout>
+                                        </Grid>
+                                    </StackLayout>
+                                    <Label Grid.Column="0"  Grid.Row="4"  Text="{Binding BindingContext.Resources[LocationNameText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
+                                    <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Text="{Binding Location}"/>
+
+                                    <Label Grid.Column="0" Grid.Row="5" Text="{Binding BindingContext.Resources[OperatorText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
+                                    <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Text="{Binding Operator}"/>
+
+                                    <Label Grid.Column="0" Grid.Row="6" Text="{Binding BindingContext.Resources[NotesText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
+                                    <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" Text="{Binding Notes}"/>
+
+                                    <Label Grid.Column="0"  Grid.Row="7" Text="{Binding BindingContext.Resources[DateWithTimeText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
+                                    <Label Grid.Column="1"  Grid.ColumnSpan="2" Grid.Row="7"  Text="{Binding DateWithTime}"/>
+                                    
+                                    <BoxView Grid.Column="0"    Grid.ColumnSpan="3" Grid.Row="8" BackgroundColor="Black"/>
+                                </Grid>
+                            </DataTemplate>
+                        </syncfusion:SfListView.ItemTemplate>
+                <syncfusion:SfListView.LoadMoreTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <!--<Label Text="Load More Items" TextColor="Black" BackgroundColor="AliceBlue"
+                           HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                           IsVisible="{Binding IsBusy, Converter={StaticResource inverseBoolConverter}}" />-->
+                            <syncfusion:LoadMoreIndicator Color="Red" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" VerticalOptions="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </syncfusion:SfListView.LoadMoreTemplate>
+            </syncfusion:SfListView>
+            
+
+           
+      
+    </ContentPage.Content>
+</ContentPage>
