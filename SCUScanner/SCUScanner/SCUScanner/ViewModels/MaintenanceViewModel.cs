@@ -26,9 +26,19 @@ namespace SCUScanner.ViewModels
             get => serialnumber;
             set => this.RaiseAndSetIfChanged(ref this.serialnumber, value);
         }
+        private string GetFileNameFromSerialNo(string serial)
+        {
+            string result = "";
+            int index_ = result.LastIndexOf('-');
+            if (index_ == 0)
+                index_ = result.Length;
+            result = result.Substring(0, index_).ToLower() ;
+            result = $"{result}({SettingsBase.SelectedLang.ToLower()}).pdf";
+            return result;
+        }
         public MaintenanceViewModel(INavigation navigation)
         {
-            SerialNumber = "readme";
+            SerialNumber = "";
             Navigation = navigation;
             WorkDir = DependencyService.Get<ISQLite>().GetWorkManualDir();
             ScanQRCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -37,9 +47,11 @@ namespace SCUScanner.ViewModels
              });
             DownloadManualCommand = ReactiveCommand.CreateFromTask(async () =>
              {
-                 if (Path.GetExtension(SerialNumber) != "pdf")
-                     SerialNumber += ".pdf";
-                 string filename = Path.Combine(WorkDir, serialnumber);
+                 //if (Path.GetExtension(SerialNumber) != "pdf")
+                 //    SerialNumber += ".pdf";
+                 string filename = GetFileNameFromSerialNo(SerialNumber);
+                 
+                  filename = Path.Combine(WorkDir, serialnumber);
                  FtpClient client = new FtpClient(FtpHost);
                  try
                  {
