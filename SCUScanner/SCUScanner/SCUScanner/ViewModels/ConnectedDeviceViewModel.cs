@@ -470,6 +470,7 @@ namespace SCUScanner.ViewModels
                     try
                     {
                         StrJson = Regex.Replace(StrJson, "\"ID\":(.[^,]+)", "\"ID\":\"$1\"");
+                        StrJson = Regex.Replace(StrJson, "\"S:(.[^,]+)", "\"S\":$1");
                         StrJson = Regex.Replace(StrJson, "\"SN\":(.[^,]+)", "\"SN\":\"$1\"").Replace("%", "pc");
                         //StrJson = StrJson
                         //    .Replace("\"ID\":", "\"ID\":\"")
