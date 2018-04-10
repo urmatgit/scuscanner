@@ -13,10 +13,10 @@ namespace SCUScanner.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class DeviceSettingPage : BaseTabPage
     {
-		public DeviceSettingPage ()
+		public DeviceSettingPage (ScanResultViewModel selectedDevice)
 		{
 			InitializeComponent ();
-            BindingContext = new DeviceSettingViewModel();
+            BindingContext = new DeviceSettingViewModel(selectedDevice);
 
         }
 	}

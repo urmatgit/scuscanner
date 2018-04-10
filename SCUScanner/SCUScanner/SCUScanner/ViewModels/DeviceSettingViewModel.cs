@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using Plugin.BluetoothLE;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,11 +10,16 @@ namespace SCUScanner.ViewModels
     public class DeviceSettingViewModel: BaseViewModel
     {
         public ICommand SendCommand { get; }
-        public DeviceSettingViewModel()
+        IDevice device;
+        public DeviceSettingViewModel(ScanResultViewModel selectedDevice)
         {
+            device = selectedDevice.Device;
 
-        }
-
+            SendCommand = ReactiveCommand.CreateFromTask(async () =>
+             {
+                 
+             });
+            }
         private string broadcastIdentity;
         public string BroadcastIdentity
         {
