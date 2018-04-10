@@ -102,7 +102,8 @@ namespace SCUScanner.ViewModels
                                  }
                              }
                          }
-                         await App.Dialogs.AlertAsync(stringBuilder.ToString());
+                         if (stringBuilder.Length>0)
+                            await App.Dialogs.AlertAsync(stringBuilder.ToString());
                      }
                  }
              });
@@ -114,7 +115,7 @@ namespace SCUScanner.ViewModels
                 byte[] bytes = Encoding.UTF8.GetBytes(str);
 
                 result = await App.mainTabbed.SelectedCharacteristic.Write(bytes)
-                                  .Timeout(TimeSpan.FromSeconds(5))
+                                  .Timeout(TimeSpan.FromSeconds(10))
                                   .ToTask();
 
            

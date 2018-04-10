@@ -437,7 +437,8 @@ namespace SCUScanner.ViewModels
         private void GetValue(CharacteristicGattResult readresult)
         {
             this.LastValue = DateTime.Now;
-
+            if (App.mainTabbed.SelectedCharacteristic == null)
+                App.mainTabbed.SelectedCharacteristic = readresult.Characteristic;
             ScuData = null;
             if (!readresult.Success)
                 this.SourceText = "ERROR - " + readresult.ErrorMessage;
