@@ -27,32 +27,50 @@ namespace SCUScanner.ViewModels
                          StringBuilder stringBuilder = new StringBuilder();
                          using (App.Dialogs.Loading(Resources["SendingValueText"]))
                          {
+                             CharacteristicGattResult res = null;
+                             string strResult = "";
+
                              System.Diagnostics.Debug.WriteLine("Start sending value");
-                            var res=  await WriteToDevice($"!{BroadcastIdentity}");
-                             var strResult = res.Success ? "OK" : res.ErrorMessage;
-                             strResult = $"{Resources["BroadcastIdentityText"]}- {strResult}";
-                             stringBuilder.AppendLine(strResult);
-                             System.Diagnostics.Debug.WriteLine(strResult);
-                             res = await WriteToDevice($"^{AlarmLevel}");
-                             strResult = res.Success ? "OK" : res.ErrorMessage;
-                             strResult = $"{Resources["AlarmLevelText"]}- {strResult}";
-                             stringBuilder.AppendLine(strResult);
-                             System.Diagnostics.Debug.WriteLine(strResult);
-                             res =await WriteToDevice($"@{CutOff}");
-                             strResult = res.Success ? "OK" : res.ErrorMessage;
-                             strResult = $"{Resources["CutOffText"]}- {strResult}";
-                             stringBuilder.AppendLine(strResult);
-                             System.Diagnostics.Debug.WriteLine(strResult);
-                             res =await WriteToDevice($"~{AlarmHours}");
-                             strResult = res.Success ? "OK" : res.ErrorMessage;
-                             strResult = $"{Resources["AlarmHoursText"]}- {strResult}";
-                             stringBuilder.AppendLine(strResult);
-                             System.Diagnostics.Debug.WriteLine(strResult);
-                             res =await WriteToDevice($"${SetSerialNumber}");
-                             strResult = res.Success ? "OK" : res.ErrorMessage;
-                             strResult = $"{Resources["SetSerialNumberText"]}- {strResult}";
-                             stringBuilder.AppendLine(strResult);
-                             System.Diagnostics.Debug.WriteLine(strResult);
+                             if (!string.IsNullOrEmpty(BroadcastIdentity)){
+                                 res = await WriteToDevice($"!{BroadcastIdentity}");
+                                 strResult = res.Success ? "OK" : res.ErrorMessage;
+                                     strResult = $"{Resources["BroadcastIdentityText"]}- {strResult}";
+                                     stringBuilder.AppendLine(strResult);
+                                     System.Diagnostics.Debug.WriteLine(strResult);
+                              
+                             }
+                             if (AlarmLevel!=null)
+                             {
+                                 res = await WriteToDevice($"^{AlarmLevel}");
+                                 strResult = res.Success ? "OK" : res.ErrorMessage;
+                                 strResult = $"{Resources["AlarmLevelText"]}- {strResult}";
+                                 stringBuilder.AppendLine(strResult);
+                                 System.Diagnostics.Debug.WriteLine(strResult);
+                             }
+                             if (CutOff != null)
+                             {
+                                 res = await WriteToDevice($"@{CutOff}");
+                                 strResult = res.Success ? "OK" : res.ErrorMessage;
+                                 strResult = $"{Resources["CutOffText"]}- {strResult}";
+                                 stringBuilder.AppendLine(strResult);
+                                 System.Diagnostics.Debug.WriteLine(strResult);
+                             }
+                             if (AlarmHours != null)
+                             {
+                                 res = await WriteToDevice($"~{AlarmHours}");
+                                 strResult = res.Success ? "OK" : res.ErrorMessage;
+                                 strResult = $"{Resources["AlarmHoursText"]}- {strResult}";
+                                 stringBuilder.AppendLine(strResult);
+                                 System.Diagnostics.Debug.WriteLine(strResult);
+                             }
+                             if (!string.IsNullOrEmpty(SetSerialNumber))
+                             {
+                                 res = await WriteToDevice($"${SetSerialNumber}");
+                                 strResult = res.Success ? "OK" : res.ErrorMessage;
+                                 strResult = $"{Resources["SetSerialNumberText"]}- {strResult}";
+                                 stringBuilder.AppendLine(strResult);
+                                 System.Diagnostics.Debug.WriteLine(strResult);
+                             }
                          }
                          await App.Dialogs.AlertAsync(stringBuilder.ToString());
                      }
@@ -62,14 +80,14 @@ namespace SCUScanner.ViewModels
         private async Task<CharacteristicGattResult> WriteToDevice(string str)
         {
             CharacteristicGattResult result = null;
-            if (!string.IsNullOrEmpty(str)) {
+            
                 byte[] bytes = Encoding.UTF8.GetBytes(str);
 
                   result =  await App.mainTabbed.SelectedCharacteristic.Write(bytes)
                                     .Timeout(TimeSpan.FromSeconds(5))
                                     .ToTask();
                 
-            }
+            
             return result;
         }
         private string broadcastIdentity;
