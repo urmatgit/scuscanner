@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <pages:BaseTabPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:localBeh="clr-namespace:SCUScanner.Helpers.Behaviors" 
+                   
               xmlns:pages="clr-namespace:SCUScanner.Pages"
              x:Class="SCUScanner.Pages.DeviceSettingPage">
     <ContentPage.Content >
@@ -10,20 +12,54 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="16"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="16"/> 
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="16"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="16"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="16"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Entry Grid.Column="0" Grid.Row="0" Placeholder="{Binding Resources[BroadcastIdentityText]}" Text="{Binding BroadcastIdentity}"/>
-            <Entry Grid.Column="0" Grid.Row="1" Placeholder="{Binding Resources[AlarmLevelText]}" Text="{Binding AlarmLevel}"/>
-            <Entry Grid.Column="0" Grid.Row="2" Placeholder="{Binding Resources[CutOffText]}" Text="{Binding CutOff}"/>
-            <Entry Grid.Column="0" Grid.Row="3" Placeholder="{Binding Resources[AlarmHoursText]}" Text="{Binding AlarmHours}"/>
-            <Entry Grid.Column="0" Grid.Row="4" Placeholder="{Binding Resources[SetSerialNumberText]}" Text="{Binding SetSerialNumber}"/>
-            <Label Grid.Column="0" Grid.Row="5" Text="{Binding Resources[SetSerialNumberInfoText]}"  />
-            <Button Grid.Column="0"  Grid.Row="6"   Text="{Binding Resources[SendButtonText]}"  
+            <Entry Grid.Column="0" Grid.Row="0" Placeholder="{Binding Resources[BroadcastIdentityText]}" Text="{Binding BroadcastIdentity}">
+                <Entry.Behaviors>
+                    <localBeh:MaxLengthValidatorBehavior  ErrorLabel="BroadcastErrorMessage" MaxLength="6"/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Grid.Column="0" Grid.Row="1" x:Name="BroadcastErrorMessage" TextColor="Red" FontAttributes="Italic" FontSize="Small"/>
+            <Entry Grid.Column="0" Grid.Row="2" Placeholder="{Binding Resources[AlarmLevelText]}" Text="{Binding AlarmLevel}" Keyboard="Numeric">
+                <Entry.Behaviors>
+                    <localBeh:BetweenValueValidatorBehavior ErrorLabel="AlarmLevelErrorMessage" MinValue="24"  MaxValue="36"/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Grid.Column="0" Grid.Row="3" x:Name="AlarmLevelErrorMessage" TextColor="Red" FontAttributes="Italic" FontSize="Small"/>
+
+            <Entry Grid.Column="0" Grid.Row="4" Placeholder="{Binding Resources[CutOffText]}" Text="{Binding CutOff}" Keyboard="Numeric">
+                <Entry.Behaviors>
+                    <localBeh:BetweenValueValidatorBehavior ErrorLabel="CutOffErrorMessage" MinValue="36"  MaxValue="64"/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Grid.Column="0" Grid.Row="5" x:Name="CutOffErrorMessage" TextColor="Red" FontAttributes="Italic" FontSize="Small"/>
+
+            <Entry Grid.Column="0" Grid.Row="6" Placeholder="{Binding Resources[AlarmHoursText]}" Text="{Binding AlarmHours}" Keyboard="Numeric">
+                <Entry.Behaviors>
+                    <localBeh:BetweenValueValidatorBehavior ErrorLabel="AlarmHoursErrorMessage" MinValue="0"  MaxValue="9999"/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Grid.Column="0" Grid.Row="7" x:Name="AlarmHoursErrorMessage" TextColor="Red" FontAttributes="Italic" FontSize="Small"/>
+
+            <Entry Grid.Column="0" Grid.Row="8" Placeholder="{Binding Resources[SetSerialNumberText]}" Text="{Binding SetSerialNumber}">
+                <Entry.Behaviors>
+                    <localBeh:MaxLengthValidatorBehavior  ErrorLabel="SerialNumberErrorMessage"  MaxLength="21"/>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Grid.Column="0" Grid.Row="9" x:Name="SerialNumberErrorMessage" TextColor="Red" FontAttributes="Italic" FontSize="Small"/>
+            
+            <Label Grid.Column="0" Grid.Row="10" Text="{Binding Resources[SetSerialNumberInfoText]}"  />
+            <Button Grid.Column="0"  Grid.Row="11"   Text="{Binding Resources[SendButtonText]}"  
                     Command="{Binding SendCommand}"  BackgroundColor="Green"    TextColor="White"/>
         </Grid>
         

@@ -323,4 +323,10 @@ box only visible on factory version</value>
   <data name="SendingValueText" xml:space="preserve">
     <value>Sending value...</value>
   </data>
+  <data name="RangeWillBeValueText" xml:space="preserve">
+    <value>The range will be between {0} and {1}</value>
+  </data>
+  <data name="LengthMustBeText" xml:space="preserve">
+    <value>length must be {0} characters</value>
+  </data>
 </root>

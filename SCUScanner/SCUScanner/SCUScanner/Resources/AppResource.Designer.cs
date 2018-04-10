@@ -368,6 +368,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to length must be {0} characters.
+        /// </summary>
+        internal static string LengthMustBeText {
+            get {
+                return ResourceManager.GetString("LengthMustBeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List of manuals.
         /// </summary>
         internal static string ListOfManualsText {
@@ -499,6 +508,15 @@ namespace SCUScanner.Resources {
         internal static string OperatorText {
             get {
                 return ResourceManager.GetString("OperatorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The range will be between {0} and {1}.
+        /// </summary>
+        internal static string RangeWillBeValueText {
+            get {
+                return ResourceManager.GetString("RangeWillBeValueText", resourceCulture);
             }
         }
         
