@@ -56,7 +56,7 @@
     <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
-    <EnableProguard>false</EnableProguard>
+    <EnableProguard>true</EnableProguard>
     <AndroidSupportedAbis />
   </PropertyGroup>
   <ItemGroup>
