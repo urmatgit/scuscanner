@@ -320,4 +320,7 @@ box only visible on factory version</value>
   <data name="DeletingText" xml:space="preserve">
     <value>Удаление...</value>
   </data>
+  <data name="SendingValueText" xml:space="preserve">
+    <value>Отправка значений...</value>
+  </data>
 </root>

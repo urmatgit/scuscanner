@@ -185,7 +185,7 @@ namespace SCUScanner.ViewModels
                     if (!App.BleAdapter.IsScanning)
                         this.scan = App.BleAdapter
                             .Scan()
-                                //                            .Where(r=>r.AdvertisementData.ServiceUuids!=null && r.AdvertisementData.ServiceUuids?.Length>0) //filter where service >0
+                                //.Where(r=>r.AdvertisementData.ServiceUuids!=null && r.AdvertisementData.ServiceUuids?.Length>0) //filter where service >0
                                 .Buffer(TimeSpan.FromSeconds(1))
                                 .ObserveOn(RxApp.MainThreadScheduler)
                                 .Subscribe(results =>

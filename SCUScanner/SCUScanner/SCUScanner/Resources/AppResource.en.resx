@@ -320,4 +320,7 @@ box only visible on factory version</value>
   <data name="SelectText" xml:space="preserve">
     <value>Select</value>
   </data>
+  <data name="SendingValueText" xml:space="preserve">
+    <value>Sending value...</value>
+  </data>
 </root>

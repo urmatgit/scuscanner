@@ -566,6 +566,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sending value....
+        /// </summary>
+        internal static string SendingValueText {
+            get {
+                return ResourceManager.GetString("SendingValueText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Serial No.
         /// </summary>
         internal static string SerialNoText {

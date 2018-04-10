@@ -377,7 +377,7 @@ namespace SCUScanner.ViewModels
                            var strUuid = character.Uuid.ToString();
                            if (InListCharacters(character.Uuid.ToString()))
                            {
-
+                               App.mainTabbed.SelectedCharacteristic = character;
                                Device.BeginInvokeOnMainThread(() =>
                                {
 
@@ -390,6 +390,7 @@ namespace SCUScanner.ViewModels
                                        {
                                            this.watcher.Dispose();
                                            this.watcher = null;
+                                           App.mainTabbed.SelectedCharacteristic = null;
                                        }
                                        character.EnableNotifications().Subscribe();
                                            this.watcher = character.WhenNotificationReceived().Subscribe(
@@ -544,6 +545,7 @@ namespace SCUScanner.ViewModels
             foreach (var item in this.cleanup)
                 item.Dispose();
             this.watcher = null;
+            App.mainTabbed.SelectedCharacteristic = null;
         }
         public override void OnDeactivate()
         {

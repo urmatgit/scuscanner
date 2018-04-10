@@ -1,4 +1,5 @@
-﻿using SCUScanner.ViewModels;
+﻿using Plugin.BluetoothLE;
+using SCUScanner.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace SCUScanner.Pages
     {
 
         public string CurrentConnectDeviceSN { get; set; }
+        public IGattCharacteristic SelectedCharacteristic { get; set; }
         public MainTabbedPage ()
         {
 
