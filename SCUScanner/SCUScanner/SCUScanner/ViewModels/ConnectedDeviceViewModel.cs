@@ -377,7 +377,7 @@ namespace SCUScanner.ViewModels
                            var strUuid = character.Uuid.ToString();
                            if (InListCharacters(character.Uuid.ToString()))
                            {
-
+                               App.mainTabbed.SelectedCharacteristic = character;
                                Device.BeginInvokeOnMainThread(() =>
                                {
 
@@ -390,6 +390,7 @@ namespace SCUScanner.ViewModels
                                        {
                                            this.watcher.Dispose();
                                            this.watcher = null;
+                                           App.mainTabbed.SelectedCharacteristic = null;
                                        }
                                        character.EnableNotifications().Subscribe();
                                            this.watcher = character.WhenNotificationReceived().Subscribe(
@@ -436,7 +437,8 @@ namespace SCUScanner.ViewModels
         private void GetValue(CharacteristicGattResult readresult)
         {
             this.LastValue = DateTime.Now;
-
+            if (App.mainTabbed.SelectedCharacteristic == null)
+                App.mainTabbed.SelectedCharacteristic = readresult.Characteristic;
             ScuData = null;
             if (!readresult.Success)
                 this.SourceText = "ERROR - " + readresult.ErrorMessage;
@@ -470,6 +472,7 @@ namespace SCUScanner.ViewModels
                     try
                     {
                         StrJson = Regex.Replace(StrJson, "\"ID\":(.[^,]+)", "\"ID\":\"$1\"");
+                        StrJson = Regex.Replace(StrJson, "\"S:(.[^,]+)", "\"S\":$1");
                         StrJson = Regex.Replace(StrJson, "\"SN\":(.[^,]+)", "\"SN\":\"$1\"").Replace("%", "pc");
                         //StrJson = StrJson
                         //    .Replace("\"ID\":", "\"ID\":\"")
@@ -543,6 +546,7 @@ namespace SCUScanner.ViewModels
             foreach (var item in this.cleanup)
                 item.Dispose();
             this.watcher = null;
+            App.mainTabbed.SelectedCharacteristic = null;
         }
         public override void OnDeactivate()
         {

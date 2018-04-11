@@ -131,7 +131,7 @@ namespace SCUScanner.ViewModels
                                characterPage.Tabbed = this.ParentTabbed;
                                title = Resources["DeviceSettingsCaptionText"];
 
-                               deviceSettingPage = new DeviceSettingPage() { Title = title };
+                               deviceSettingPage = new DeviceSettingPage(o) { Title = title };
                                
                                deviceSettingPage.Kod = $"{o.Name}_setting";
                                deviceSettingPage.Tabbed = this.ParentTabbed;
@@ -185,7 +185,7 @@ namespace SCUScanner.ViewModels
                     if (!App.BleAdapter.IsScanning)
                         this.scan = App.BleAdapter
                             .Scan()
-                                //                            .Where(r=>r.AdvertisementData.ServiceUuids!=null && r.AdvertisementData.ServiceUuids?.Length>0) //filter where service >0
+                                //.Where(r=>r.AdvertisementData.ServiceUuids!=null && r.AdvertisementData.ServiceUuids?.Length>0) //filter where service >0
                                 .Buffer(TimeSpan.FromSeconds(1))
                                 .ObserveOn(RxApp.MainThreadScheduler)
                                 .Subscribe(results =>
