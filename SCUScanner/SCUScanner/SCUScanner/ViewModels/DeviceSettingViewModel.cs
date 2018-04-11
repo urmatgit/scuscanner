@@ -2,7 +2,7 @@
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Text;
@@ -38,14 +38,16 @@ namespace SCUScanner.ViewModels
                                      System.Diagnostics.Debug.WriteLine("Start sending value");
                                      if (!string.IsNullOrEmpty(BroadcastIdentity))
                                      {
-                                         res = await WriteToDevice($"!{BroadcastIdentity}", cancelSrc);
-                                         if (res != null)
-                                         {
-                                             strResult = res.Success ? "OK" : res.ErrorMessage;
-                                             strResult = $"{Resources["BroadcastIdentityText"]}- {strResult}";
-                                             stringBuilder.AppendLine(strResult);
-                                             System.Diagnostics.Debug.WriteLine(strResult);
-                                         }
+                                         WriteToDeviceWithoutResponse($"!{BroadcastIdentity}");
+
+                                         //res = await WriteToDevice($"!{BroadcastIdentity}", cancelSrc);
+                                         //if (res != null)
+                                         //{
+                                         //    strResult = res.Success ? "OK" : res.ErrorMessage;
+                                         //    strResult = $"{Resources["BroadcastIdentityText"]}- {strResult}";
+                                         //    stringBuilder.AppendLine(strResult);
+                                         //    System.Diagnostics.Debug.WriteLine(strResult);
+                                         //}
 
                                      }
                                      if (AlarmLevel != null)
@@ -117,12 +119,23 @@ namespace SCUScanner.ViewModels
                 result = await App.mainTabbed.SelectedCharacteristic.Write(bytes)
                                   .Timeout(TimeSpan.FromSeconds(10))
                                   .ToTask();
+                
 
-           
             return result;
         }
+        private void WriteToDeviceWithoutResponse(string str )
+        {
+            
+
+            byte[] bytes = Encoding.UTF8.GetBytes(str);
+
+             App.mainTabbed.SelectedCharacteristic.WriteWithoutResponse(bytes);
+
+        
+        }
+          
         private string broadcastIdentity;
-        [StringLength(6, MinimumLength = 0, ErrorMessage = "This field requires a minimum of 2 characters and a maximum of 10.")]
+       
         public string BroadcastIdentity
         {
             get => broadcastIdentity;
