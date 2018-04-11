@@ -33,6 +33,10 @@ namespace SCUScanner.Pages
         {
             get { return ScanningPage; }
         }
+        public void CloseConnection()
+        {
+            ScanningPage.scanBluetoothViewModel.CleanTabPages();
+        }
         protected override void OnAppearing()
         {
             base.OnAppearing();

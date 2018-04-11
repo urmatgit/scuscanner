@@ -340,7 +340,10 @@ namespace SCUScanner.ViewModels
 
                        case ConnectionStatus.Disconnected:
                            this.ConnectText = Resources["DisconnectStatusText"];
-
+                           using (var dialog = App.Dialogs.Loading(Resources["DisconnectStatusText"]))
+                           {
+                               App.mainTabbed.CloseConnection();
+                           }
                            //  this.GattCharacteristics.Clear();
                            //   this.GattDescriptors.Clear();
                            this.Rssi = 0;
@@ -539,6 +542,8 @@ namespace SCUScanner.ViewModels
 
         public void Dispose()
         {
+            device.CancelConnection();
+            DeviceViewModel.IsConnected = false;
             TimerAlarm.Stop();
             TimerAlarm.Dispose();
             if (gattCharacteristic != null)

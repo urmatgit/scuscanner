@@ -368,7 +368,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to length must be {0} characters.
+        ///   Looks up a localized string similar to length must be up to {0} characters.
         /// </summary>
         internal static string LengthMustBeText {
             get {
