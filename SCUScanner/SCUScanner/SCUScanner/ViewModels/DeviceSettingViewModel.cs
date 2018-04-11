@@ -38,16 +38,17 @@ namespace SCUScanner.ViewModels
                                      System.Diagnostics.Debug.WriteLine("Start sending value");
                                      if (!string.IsNullOrEmpty(BroadcastIdentity))
                                      {
-                                         WriteToDeviceWithoutResponse($"!{BroadcastIdentity}");
+                                         //WriteToDeviceWithoutResponse($"!{BroadcastIdentity}");
 
-                                         //res = await WriteToDevice($"!{BroadcastIdentity}", cancelSrc);
-                                         //if (res != null)
-                                         //{
-                                         //    strResult = res.Success ? "OK" : res.ErrorMessage;
-                                         //    strResult = $"{Resources["BroadcastIdentityText"]}- {strResult}";
-                                         //    stringBuilder.AppendLine(strResult);
-                                         //    System.Diagnostics.Debug.WriteLine(strResult);
-                                         //}
+                                         res = await WriteToDevice($"!{BroadcastIdentity}", cancelSrc);
+                                         if (res != null)
+                                         {
+                                             strResult = res.Success ? "OK" : res.ErrorMessage;
+                                             strResult = $"{Resources["BroadcastIdentityText"]}- {strResult}";
+                                             stringBuilder.AppendLine(strResult);
+                                             System.Diagnostics.Debug.WriteLine(strResult);
+                                         }
+
 
                                      }
                                      if (AlarmLevel != null)

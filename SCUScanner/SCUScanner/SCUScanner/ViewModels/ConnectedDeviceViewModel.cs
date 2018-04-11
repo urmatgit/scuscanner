@@ -41,6 +41,10 @@ namespace SCUScanner.ViewModels
         public ICommand SelectCharacteristic { get; }
         public ICommand SaveCommand { get; }
         public ICommand ValueShareCommand { get; }
+        public void Disconnect()
+        {
+
+        }
         public ConnectedDeviceViewModel(ScanResultViewModel selectedDevice)
         {
            // HRS = 250;
