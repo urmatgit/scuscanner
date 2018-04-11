@@ -29,10 +29,10 @@ namespace SCUScanner.ViewModels
         private string GetFileNameFromSerialNo(string serial)
         {
             string result = "";
-            int index_ = result.LastIndexOf('-');
+            int index_ = serial.LastIndexOf('-');
             if (index_ == 0)
-                index_ = result.Length;
-            result = result.Substring(0, index_).ToLower() ;
+                index_ = serial.Length;
+            result = serial.Substring(0, index_).ToLower() ;
             result = $"{result}({SettingsBase.SelectedLang.ToLower()}).pdf";
             return result;
         }
@@ -51,7 +51,7 @@ namespace SCUScanner.ViewModels
                  //    SerialNumber += ".pdf";
                  string filename = GetFileNameFromSerialNo(SerialNumber);
                  
-                  filename = Path.Combine(WorkDir, serialnumber);
+                 var filenamelocal = Path.Combine(WorkDir, filename);
                  FtpClient client = new FtpClient(FtpHost);
                  try
                  {
@@ -66,7 +66,7 @@ namespace SCUScanner.ViewModels
 
                          {
                              
-                             if (client.FileExists($"/manuals/{SerialNumber}"))
+                             if (client.FileExists($"/manuals/{filename}"))
                              {
                                  //if (File.Exists(filename))
                                  //{
@@ -79,9 +79,9 @@ namespace SCUScanner.ViewModels
                                      {
                                          using (App.Dialogs.Loading(Resources["DownloadText"], cancelSrc.Cancel, Resources["CancelText"]))
                                          {
-                                             string tmpFileName = filename + DateTime.Now.Second.ToString();
-                                             dowloaded = await client.DownloadFileAsync(tmpFileName, $"/manuals/{SerialNumber}", true);
-                                             File.Copy(tmpFileName, filename,true);
+                                             string tmpFileName = filenamelocal + DateTime.Now.Second.ToString();
+                                             dowloaded = await client.DownloadFileAsync(tmpFileName, $"/manuals/{filename}", true);
+                                             File.Copy(tmpFileName, filenamelocal, true);
                                              try
                                              {
                                                  File.Delete(tmpFileName);
@@ -126,9 +126,9 @@ namespace SCUScanner.ViewModels
                  finally
                  {
                      await client?.DisconnectAsync();
-                     if ( File.Exists(filename))
+                     if ( File.Exists(filenamelocal))
                      {
-                         WebViewPageCS webViewPageCS = new WebViewPageCS(filename);
+                         WebViewPageCS webViewPageCS = new WebViewPageCS(filenamelocal);
                          await Navigation.PushAsync(webViewPageCS);
                      }
                  }
