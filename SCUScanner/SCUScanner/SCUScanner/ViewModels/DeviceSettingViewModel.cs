@@ -2,18 +2,20 @@
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SCUScanner.ViewModels
 {
     public class DeviceSettingViewModel: BaseViewModel
     {
+        public TabbedPage ParentTabbed { get; set; }
         public ICommand SendCommand { get; }
         IDevice device;
         public DeviceSettingViewModel(ScanResultViewModel selectedDevice)
@@ -47,11 +49,15 @@ namespace SCUScanner.ViewModels
                                              strResult = $"{Resources["BroadcastIdentityText"]}- {strResult}";
                                              stringBuilder.AppendLine(strResult);
                                              System.Diagnostics.Debug.WriteLine(strResult);
+                                             if (res.Success)
+                                             {
+                                                 Disconnect();
+                                             }
                                          }
 
 
                                      }
-                                     if (AlarmLevel != null)
+                                     if (!string.IsNullOrEmpty(AlarmLevel))
                                      {
                                          res = await WriteToDevice($"^{AlarmLevel}", cancelSrc);
                                          if (res != null)
@@ -62,7 +68,7 @@ namespace SCUScanner.ViewModels
                                              System.Diagnostics.Debug.WriteLine(strResult);
                                          }
                                      }
-                                     if (CutOff != null)
+                                     if (!string.IsNullOrEmpty(CutOff))
                                      {
                                          res = await WriteToDevice($"@{CutOff}", cancelSrc);
                                          if (res != null)
@@ -73,7 +79,7 @@ namespace SCUScanner.ViewModels
                                              System.Diagnostics.Debug.WriteLine(strResult);
                                          }
                                      }
-                                     if (AlarmHours != null)
+                                     if (!string.IsNullOrEmpty(AlarmHours))
                                      {
                                          var strAlarmHours = AlarmHours.ToString();
                                          res = await WriteToDevice($"~{strAlarmHours.PadLeft(4, '0')}", cancelSrc);
@@ -111,6 +117,34 @@ namespace SCUScanner.ViewModels
                  }
              });
             }
+        private void Disconnect()
+        {
+            try
+            {
+                // don't cleanup connection - force user to d/c
+                if (this.device.Status != ConnectionStatus.Disconnected)
+                {
+                    this.device.CancelConnection();
+                    
+                    if (ParentTabbed != null)
+                    {
+                        //var connectedPage=ParentTabbed.Children.GetEnumerator().
+                        var connectedPage = ParentTabbed.Children.FirstOrDefault(p => p.Title == device.Name);
+                        if (connectedPage != null)
+                        {
+                            ParentTabbed.CurrentPage = ParentTabbed.Children[0];
+                            ParentTabbed.Children.Remove(connectedPage);
+                        }
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                App.Dialogs.Alert(ex.ToString());
+            }
+        }
         private async Task<CharacteristicGattResult> WriteToDevice(string str, CancellationTokenSource cancellationTokenSource)
         {
             CharacteristicGattResult result = null;

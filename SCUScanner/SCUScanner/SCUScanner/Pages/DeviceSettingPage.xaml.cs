@@ -13,11 +13,22 @@ namespace SCUScanner.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class DeviceSettingPage : BaseTabPage
     {
-		public DeviceSettingPage (ScanResultViewModel selectedDevice)
+        DeviceSettingViewModel deviceSettingViewModel;
+        public DeviceSettingPage (ScanResultViewModel selectedDevice)
 		{
 			InitializeComponent ();
-            BindingContext = new DeviceSettingViewModel(selectedDevice);
+            BindingContext = deviceSettingViewModel= new DeviceSettingViewModel(selectedDevice);
 
         }
-	}
+        protected override void OnAppearing()
+        {
+            deviceSettingViewModel.ParentTabbed = this.Tabbed;
+            base.OnAppearing();
+        }
+        public override void Dispose()
+        {
+            deviceSettingViewModel = null;
+            base.Dispose();
+        }
+    }
 }
