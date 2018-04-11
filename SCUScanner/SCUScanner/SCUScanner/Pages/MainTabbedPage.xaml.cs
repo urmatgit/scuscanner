@@ -29,6 +29,10 @@ namespace SCUScanner.Pages
             InitializeComponent();
             BindingContext = new BaseViewModel();
         }
+        public ScanBluetoothPage ScanPage
+        {
+            get { return ScanningPage; }
+        }
         protected override void OnAppearing()
         {
             base.OnAppearing();

@@ -18,7 +18,7 @@ namespace SCUScanner.Pages
 	public partial class ScanBluetoothPage : BaseTabPage
     {
         bool IsBluetoothEnabled = false;
-        ScanBluetoothViewModel scanBluetoothViewModel;
+       public  ScanBluetoothViewModel scanBluetoothViewModel;
 
         public ScanBluetoothPage ()
 		{

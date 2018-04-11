@@ -136,31 +136,11 @@ namespace SCUScanner.ViewModels
             }
         private void Disconnect()
         {
-            try
+            if (App.mainTabbed != null)
             {
-                // don't cleanup connection - force user to d/c
-                if (this.device.Status != ConnectionStatus.Disconnected)
-                {
-                    this.device.CancelConnection();
-                    
-                    if (ParentTabbed != null)
-                    {
-                        //var connectedPage=ParentTabbed.Children.GetEnumerator().
-                        var connectedPage = ParentTabbed.Children.FirstOrDefault(p => p.Title == device.Name);
-                        if (connectedPage != null)
-                        {
-                            ParentTabbed.CurrentPage = ParentTabbed.Children[0];
-                            ParentTabbed.Children.Remove(connectedPage);
-                        }
-
-                    }
-                }
-
+                App.mainTabbed.ScanPage?.scanBluetoothViewModel.CleanTabPages();
             }
-            catch (Exception ex)
-            {
-                App.Dialogs.Alert(ex.ToString());
-            }
+        
         }
         private async Task<CharacteristicGattResult> WriteToDevice(string str, CancellationTokenSource cancellationTokenSource)
         {

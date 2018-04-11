@@ -207,7 +207,7 @@ namespace SCUScanner.ViewModels
             //    this.ScanToggleCommand.Execute(null);
 
         }
-        private BaseTabPage CleanTabPages()
+        public BaseTabPage CleanTabPages()
         {
             var ListOfRemovePages = new List<BaseTabPage>();
             BaseTabPage result = null;
