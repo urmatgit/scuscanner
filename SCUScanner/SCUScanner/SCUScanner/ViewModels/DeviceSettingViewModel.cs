@@ -93,13 +93,30 @@ namespace SCUScanner.ViewModels
                                      }
                                      if (!string.IsNullOrEmpty(SetSerialNumber))
                                      {
-                                         res = await WriteToDevice($"${SetSerialNumber}", cancelSrc);
+                                         var serial = SetSerialNumber;
+                                         if (serial.Length < 21)
+                                         {
+                                             serial += ">";
+                                         }
+                                         serial += $"${serial}";
+                                         res = null;
+                                         foreach (char ch in serial)
+                                         {
+                                             res = await WriteToDevice(ch.ToString(), cancelSrc);
+                                             System.Diagnostics.Debug.WriteLine(ch.ToString());
+                                             Thread.Sleep(10);
+                                             
+                                         }
                                          if (res != null)
                                          {
                                              strResult = res.Success ? "OK" : res.ErrorMessage;
                                              strResult = $"{Resources["SetSerialNumberText"]}- {strResult}";
                                              stringBuilder.AppendLine(strResult);
                                              System.Diagnostics.Debug.WriteLine(strResult);
+                                             if (res.Success)
+                                             {
+                                                 Disconnect();
+                                             }
                                          }
                                      }
                                  }
