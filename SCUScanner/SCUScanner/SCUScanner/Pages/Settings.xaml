@@ -20,10 +20,10 @@
                 </Grid.RowDefinitions>
                 <!--Text="{local:Translate ContinuousScanText}}"-->
                 <Label  Grid.Column="0" Grid.Row="0" Text="{Binding Resources[ContinuousScanText]}" VerticalTextAlignment="Center" />
-                <Switch BindingContext="{Binding Settings}" Grid.Column="1" Grid.Row="0" IsToggled="{Binding ScanMode}"/>
+                <Switch BindingContext="{Binding SettingsBase}" Grid.Column="1" Grid.Row="0" IsToggled="{Binding ScanMode}"/>
                 
                 <Label Grid.Column="0" Grid.Row="1" Text="{Binding Resources[ManualScanText]}" VerticalTextAlignment="Center"/>
-                <Switch BindingContext="{Binding Settings}" Grid.Column="1" Grid.Row="1" IsToggled="{Binding ManualScan}"/>
+                <Switch BindingContext="{Binding SettingsBase}" Grid.Column="1" Grid.Row="1" IsToggled="{Binding ManualScan}"/>
 
                 <StackLayout Grid.Column="0" Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2" >
                     <Label  Text="{Binding Resources[SelectedLanguageCodeText]}"  VerticalTextAlignment="Center">
