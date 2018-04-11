@@ -12,12 +12,12 @@ namespace SCUScanner.Pages
     public partial class SCUItemsListPage : ContentPage
     {
         SCUItemsViewModel viewModel;
-        public SCUItemsListPage(string unitName)
+        public SCUItemsListPage(string unitName,string sn)
         {
             InitializeComponent();
             
             
-            BindingContext = viewModel = new SCUItemsViewModel(unitName);
+            BindingContext = viewModel = new SCUItemsViewModel(unitName,sn);
         }
 
         //private async void PullToRefresh_Refreshing(object sender, EventArgs e)

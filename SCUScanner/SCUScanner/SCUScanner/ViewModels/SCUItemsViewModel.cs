@@ -19,6 +19,7 @@ namespace SCUScanner.ViewModels
     {
         private const int MaxPageItem = 5;
         private string UnitName { get; set; }
+        private string SN { get; set; }
         public ICommand LoadMoreCommand { get; }
         public ICommand ShareCommand { get; }
         public ICommand DeleteCommand { get;  }
@@ -30,10 +31,11 @@ namespace SCUScanner.ViewModels
 
         public int LoadedItemCount;
         
-        public SCUItemsViewModel(string unitName)
+        public SCUItemsViewModel(string unitName,string sn)
         {
             IsBusy = false;
             UnitName = unitName;
+            SN = sn;
             SCUItems = new ObservableCollection<SCUItem>();
             
             LoadMoreCommand = new Command<object>(GetNextItems, CanLoadMoreItems);
@@ -148,9 +150,9 @@ namespace SCUScanner.ViewModels
             try
             {
                 IsBusy = true;
-                ItemCounts = await App.Database.GetItemAsyncCount(UnitName.Trim());
+                ItemCounts = await App.Database.GetItemAsyncCount(UnitName.Trim(),SN.Trim());
                 ClearItems();
-                 var items = await App.Database.GetItemAsync(UnitName, 0, MaxPageItem);
+                 var items = await App.Database.GetItemAsync(UnitName.Trim(),SN.Trim(), 0, MaxPageItem);
                 foreach (var item in items.OrderByDescending(i => i.DateWithTime))
                 {
                     //await AddElementAsync(item);// 
@@ -176,7 +178,7 @@ namespace SCUScanner.ViewModels
             await Task.Delay(1000);
             try
             {
-                var items = await App.Database.GetItemAsync(UnitName, LoadedItemCount, MaxPageItem);
+                var items = await App.Database.GetItemAsync(UnitName.Trim(),SN.Trim(), LoadedItemCount, MaxPageItem);
                 foreach(var item in items.OrderByDescending(i=>i.DateWithTime))
                     SCUItems.Add(item);
                 LoadedItemCount += MaxPageItem;

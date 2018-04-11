@@ -27,7 +27,7 @@ namespace SCUScanner.ViewModels
                 {
                     //await Navigation.PopAsync();
                    
-                       await  Navigation.PushAsync(new SCUItemsListPage(x.UnitName));
+                       await  Navigation.PushAsync(new SCUItemsListPage(x.UnitName,x.SerialNo));
                    
                 }//);
                 //await App.Dialogs.AlertAsync($"Selected click - {x.UnitName}" );

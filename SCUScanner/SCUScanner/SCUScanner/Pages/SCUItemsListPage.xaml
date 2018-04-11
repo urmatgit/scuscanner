@@ -63,8 +63,8 @@
                                 <Switch   Grid.Column="3" Grid.Row="0" IsToggled="{Binding IsSelected}"/>
                                         </Grid>
                                     </StackLayout>
-                                    <Label Grid.Column="0" Grid.Row="1" Text="{Binding BindingContext.Resources[SerialNoText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
-                                    <Label Grid.Column="1" Grid.Row="1" Text="{Binding SerialNo}"/>
+                                    <Label Grid.Column="0" Grid.Row="1"  Text="{Binding BindingContext.Resources[SerialNoText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
+                        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding SerialNo}"/>
                                     <!--<StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" HorizontalOptions="FillAndExpand">
                                         <Grid HorizontalOptions="FillAndExpand">
                                             <Grid.ColumnDefinitions>
