@@ -162,7 +162,7 @@ namespace SCUScanner.ViewModels
         {
             if (App.mainTabbed != null)
             {
-                App.mainTabbed.ScanPage?.scanBluetoothViewModel.CleanTabPages(true);
+                App.mainTabbed.CloseConnection();// scanBluetoothViewModel.CleanTabPages(true);
             }
         
         }
