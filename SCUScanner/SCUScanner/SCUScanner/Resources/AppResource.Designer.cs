@@ -691,5 +691,14 @@ namespace SCUScanner.Resources {
                 return ResourceManager.GetString("UnitNameText", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to wait {0} seconds for its internal reboot  and then re-connect .
+        /// </summary>
+        internal static string WaitForChangeIDText {
+            get {
+                return ResourceManager.GetString("WaitForChangeIDText", resourceCulture);
+            }
+        }
     }
 }

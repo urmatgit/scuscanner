@@ -207,9 +207,13 @@ namespace SCUScanner.ViewModels
             //    this.ScanToggleCommand.Execute(null);
 
         }
-        public BaseTabPage CleanTabPages()
+        public BaseTabPage CleanTabPages(bool rescan = false)
         {
-            var ListOfRemovePages = new List<BaseTabPage>();
+            if (rescan)
+            {
+                StopScanBle();
+            }
+                var ListOfRemovePages = new List<BaseTabPage>();
             BaseTabPage result = null;
             foreach (BaseTabPage bPage in parentTabbed.Children)
                 if (bPage.Kod != SCUScanner.Helpers.GlobalConstants.MAIN_TAB_PAGE)
@@ -221,6 +225,10 @@ namespace SCUScanner.ViewModels
                     x.Dispose();
                     parentTabbed.Children.Remove(x);
                     });
+            if (rescan && Models.Settings.Current.ScanMode)
+            {
+                ScanToggleCommand.Execute(null);
+            }
             return result;
         }
         private void StopScanning_Elapsed(object sender, ElapsedEventArgs e)

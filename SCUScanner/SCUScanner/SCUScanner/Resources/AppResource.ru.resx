@@ -329,4 +329,7 @@ box only visible on factory version</value>
   <data name="LengthMustBeText" xml:space="preserve">
     <value>длина должен быть до {0} символов</value>
   </data>
+  <data name="WaitForChangeIDText" xml:space="preserve">
+    <value>подождите {0} секунд для его внутренней перезагрузки, а затем повторно одключиться</value>
+  </data>
 </root>

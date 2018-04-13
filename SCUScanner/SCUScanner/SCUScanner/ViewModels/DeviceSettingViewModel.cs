@@ -29,6 +29,7 @@ namespace SCUScanner.ViewModels
                      if (App.mainTabbed.SelectedCharacteristic.CanWrite())
                      {
                          StringBuilder stringBuilder = new StringBuilder();
+                         bool DoDisconnect = false;
                          using (var cancelSrc = new CancellationTokenSource())
                          {
                              using (var dialog= App.Dialogs.Loading(Resources["SendingValueText"], cancelSrc.Cancel))
@@ -51,7 +52,8 @@ namespace SCUScanner.ViewModels
                                              System.Diagnostics.Debug.WriteLine(strResult);
                                              if (res.Success)
                                              {
-                                                 Disconnect();
+                                                 DoDisconnect = true;
+                                                
                                              }
                                          }
 
@@ -115,7 +117,8 @@ namespace SCUScanner.ViewModels
                                              System.Diagnostics.Debug.WriteLine(strResult);
                                              if (res.Success)
                                              {
-                                                 Disconnect();
+                                                 DoDisconnect = true;
+                                                 //Disconnect();
                                              }
                                          }
                                      }
@@ -123,13 +126,33 @@ namespace SCUScanner.ViewModels
                                  catch (Exception er)
                                  {
                                      dialog.Hide();
+                                     
                                      await App.Dialogs.AlertAsync(er.Message);
 
                                  }
                              }
                          }
+                         if (DoDisconnect)
+                         {
+                            Disconnect();
+                             //After changing the identity the Bluetooth module will broadcast with a different Id and so the connection must be dropped, wait 7 seconds for its internal reboot  and then re - connect
+
+                             int duration = 8;
+                             
+                             using (var dialog = App.Dialogs.Progress(string.Format(Resources["WaitForChangeIDText"], duration)))
+                             {
+                                 int step = 100 / duration;
+                                 while (dialog.PercentComplete < 100)
+                                 {
+                                     await Task.Delay(TimeSpan.FromSeconds(1));
+                                     dialog.PercentComplete += step;
+                                 }
+                             }
+
+                         }
                          if (stringBuilder.Length>0)
                             await App.Dialogs.AlertAsync(stringBuilder.ToString());
+                         
                      }
                  }
              });
@@ -138,7 +161,7 @@ namespace SCUScanner.ViewModels
         {
             if (App.mainTabbed != null)
             {
-                App.mainTabbed.ScanPage?.scanBluetoothViewModel.CleanTabPages();
+                App.mainTabbed.ScanPage?.scanBluetoothViewModel.CleanTabPages(true);
             }
         
         }

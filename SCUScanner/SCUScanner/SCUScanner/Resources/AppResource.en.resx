@@ -329,4 +329,7 @@ box only visible on factory version</value>
   <data name="LengthMustBeText" xml:space="preserve">
     <value>length must be up to {0} characters</value>
   </data>
+  <data name="WaitForChangeIDText" xml:space="preserve">
+    <value>wait {0} seconds for its internal reboot  and then re-connect </value>
+  </data>
 </root>
