@@ -144,6 +144,7 @@ namespace SCUScanner.ViewModels
 
                            }
                        }
+                       App.Dialogs.Toast("Connected");
                    }
                    else
                    {
@@ -152,6 +153,7 @@ namespace SCUScanner.ViewModels
                        o.IsConnected = false;
                        App.mainTabbed.CurrentConnectDeviceSN = "";
                        parentTabbed.CurrentPage = CleanTabPages();
+                       App.Dialogs.Toast("Disconnected");
 
                    }
                     //   UpdateButtonText(o);
@@ -182,17 +184,20 @@ namespace SCUScanner.ViewModels
                     //this.ScanText = Resources["ScanText"];
                     if (Models.Settings.Current.ManualScan)
                         StopScanning.Start();
-                    if (!App.BleAdapter.IsScanning)
-                        this.scan = App.BleAdapter
-                            .Scan()
-                                //.Where(r=>r.AdvertisementData.ServiceUuids!=null && r.AdvertisementData.ServiceUuids?.Length>0) //filter where service >0
-                                .Buffer(TimeSpan.FromSeconds(1))
-                                .ObserveOn(RxApp.MainThreadScheduler)
-                                .Subscribe(results =>
-                                {
-                                    foreach (var result in results)
-                                        this.OnScanResult(result);
-                                });
+                        if (!App.BleAdapter.IsScanning)
+                        {
+                            this.scan = App.BleAdapter
+                                .Scan()
+                                    //.Where(r=>r.AdvertisementData.ServiceUuids!=null && r.AdvertisementData.ServiceUuids?.Length>0) //filter where service >0
+                                    .Buffer(TimeSpan.FromSeconds(1))
+                                    .ObserveOn(RxApp.MainThreadScheduler)
+                                    .Subscribe(results =>
+                                    {
+                                        foreach (var result in results)
+                                            this.OnScanResult(result);
+                                    });
+                            App.Dialogs.Toast("Scanning start");
+                        }
                         Debug.WriteLine("End scanning");
                     }
                 }
@@ -207,12 +212,9 @@ namespace SCUScanner.ViewModels
             //    this.ScanToggleCommand.Execute(null);
 
         }
-        public BaseTabPage CleanTabPages(bool rescan = false)
+        public BaseTabPage CleanTabPages()
         {
-            if (rescan)
-            {
-                StopScanBle();
-            }
+             
                 var ListOfRemovePages = new List<BaseTabPage>();
             BaseTabPage result = null;
             foreach (BaseTabPage bPage in parentTabbed.Children)
@@ -225,10 +227,7 @@ namespace SCUScanner.ViewModels
                     x.Dispose();
                     parentTabbed.Children.Remove(x);
                     });
-            if (rescan && Models.Settings.Current.ScanMode)
-            {
-                ScanToggleCommand.Execute(null);
-            }
+             
             return result;
         }
         private void StopScanning_Elapsed(object sender, ElapsedEventArgs e)
@@ -243,13 +242,13 @@ namespace SCUScanner.ViewModels
             StopScanning.Stop();
             this.scan?.Dispose();
             this.IsScanning = false;
-
+            App.Dialogs.Toast("Scanning stop");
         }
         public override void OnDeactivate()
         {
             //StopScanning.Stop();
-            //if (this.IsScanning)
-            //    StopScanBle();
+            if (this.IsScanning)
+                StopScanBle();
         }
         public override void OnActivate()
         {
@@ -258,6 +257,10 @@ namespace SCUScanner.ViewModels
                 characterPage.Title = Resources["ConnectedDeviceCaptionText"];
             if (deviceSettingPage!=null)
                 deviceSettingPage.Title= Resources["DeviceSettingsCaptionText"];
+            if (!this.IsScanning && Models.Settings.Current.AutoScan)
+            {
+                this.ScanToggleCommand.Execute(null);
+            }
             //App.BleAdapter
             //    .WhenStatusChanged()
             //    .ObserveOn(RxApp.MainThreadScheduler)

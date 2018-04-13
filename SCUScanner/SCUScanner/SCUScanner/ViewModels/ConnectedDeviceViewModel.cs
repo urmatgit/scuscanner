@@ -26,7 +26,7 @@ namespace SCUScanner.ViewModels
 
 
         IDisposable watcher;
-        IGattCharacteristic gattCharacteristic;
+       // IGattCharacteristic gattCharacteristic;
         Color PreviewColor = Color.White;
         public ScanResultViewModel DeviceViewModel { get; set; }
         SCUSendData ScuData { get; set; }
@@ -59,31 +59,11 @@ namespace SCUScanner.ViewModels
             IsVisibleLayout = true;
             this.DisconnectCommand = ReactiveCommand.Create(() =>
                {
-                   try
+                   if (App.mainTabbed != null)
                    {
-                       // don't cleanup connection - force user to d/c
-                       if (this.device.Status != ConnectionStatus.Disconnected)
-                       {
-                           this.device.CancelConnection();
-                           selectedDevice.IsConnected = false;
-                           if (ParentTabbed != null)
-                           {
-                               //var connectedPage=ParentTabbed.Children.GetEnumerator().
-                               var connectedPage = ParentTabbed.Children.FirstOrDefault(p => p.Title == device.Name);
-                               if (connectedPage != null)
-                               {
-                                   ParentTabbed.CurrentPage = ParentTabbed.Children[0];
-                                   ParentTabbed.Children.Remove(connectedPage);
-                               }
-
-                           }
-                       }
-
+                       App.mainTabbed.ScanPage?.scanBluetoothViewModel.CleanTabPages();
                    }
-                   catch (Exception ex)
-                   {
-                       App.Dialogs.Alert(ex.ToString());
-                   }
+       
                });
             this.SelectCharacteristic = ReactiveCommand.CreateFromTask<GattCharacteristicViewModel>(async x =>
                                             await x.SelectedGattCharacteristic()
@@ -148,6 +128,14 @@ namespace SCUScanner.ViewModels
             this.WhenAnyValue(vm => vm.SN).Subscribe(s => {
                 App.mainTabbed.CurrentConnectDeviceSN = s;
                 });
+            this.WhenAnyValue(vm => vm.Name).Subscribe(val =>
+            {
+                try
+                {
+                    DeviceViewModel.Name = val;
+                }
+                catch (Exception er) { }
+            });
             //  StatusColor = Color.Green;
             OnActivateOnLoad();
         }
@@ -385,51 +373,44 @@ namespace SCUScanner.ViewModels
                            if (InListCharacters(character.Uuid.ToString()))
                            {
                                App.mainTabbed.SelectedCharacteristic = character;
-                               Device.BeginInvokeOnMainThread(() =>
-                               {
-
-                                   if (character.CanNotify() )
-                                   {
-                                       
-                                       //if (this.watcher == null)
-                                       //{
-                                          if (this.watcher!=null)
-                                       {
-                                           this.watcher.Dispose();
-                                           this.watcher = null;
-                                           App.mainTabbed.SelectedCharacteristic = null;
-                                       }
-                                       character.EnableNotifications().Subscribe();
-                                           this.watcher = character.WhenNotificationReceived().Subscribe(
-                                               x=> GetValue(x)
-                                               );
-                                           //&& !character.IsNotifying
-                                           //gattCharacteristic = character;
-                                           //this.watcher = character
-
-                                           // .RegisterAndNotify()
-                                           // .Subscribe(x =>
-                                           //     {
-                                           //         GetValue(x);
-                                           //     });
-                                       //}
-                                       //else
-                                       //{
-                                       //    this.watcher.Dispose();
-                                       //    this.watcher = null;
-                                       //}
-                                   }
-
-
-                          
-
-                               });
+                               //gattCharacteristic = character;
+                               NotifyEnable(character);
 
                            }
 
                        });
                })
                );
+        }
+        private async void NotifyDisable(IGattCharacteristic character) {
+            await App.mainTabbed.SelectedCharacteristic?.DisableNotifications();
+        }
+        private void NotifyEnable(IGattCharacteristic character)
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+
+                if (character.CanNotify())
+                {
+
+
+                    if (this.watcher != null)
+                    {
+                        this.watcher.Dispose();
+                        this.watcher = null;
+                        App.mainTabbed.SelectedCharacteristic = null;
+                    }
+                    character.EnableNotifications().Subscribe();
+                    this.watcher = character.WhenNotificationReceived().Subscribe(
+                        x => GetValue(x)
+                        );
+
+                }
+
+
+
+
+            });
         }
         private bool InListCharacters(string uuid)
         {
@@ -542,20 +523,21 @@ namespace SCUScanner.ViewModels
 
         public void Dispose()
         {
+            if (App.mainTabbed.SelectedCharacteristic != null)
+            {
+                App.mainTabbed.SelectedCharacteristic.DisableNotifications();
+                App.mainTabbed.SelectedCharacteristic = null;
+            }
             device.CancelConnection();
             DeviceViewModel.IsConnected = false;
             TimerAlarm.Stop();
             TimerAlarm.Dispose();
-            if (gattCharacteristic != null)
-            {
-                gattCharacteristic.DisableNotifications();
-                gattCharacteristic = null;
-            }
+            
             this.device = null;
             foreach (var item in this.cleanup)
                 item.Dispose();
             this.watcher = null;
-            App.mainTabbed.SelectedCharacteristic = null;
+           // App.mainTabbed.SelectedCharacteristic = null;
         }
         public override void OnDeactivate()
         {

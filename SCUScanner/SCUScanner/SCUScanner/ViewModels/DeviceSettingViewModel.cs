@@ -18,6 +18,7 @@ namespace SCUScanner.ViewModels
         public TabbedPage ParentTabbed { get; set; }
         public ICommand SendCommand { get; }
         IDevice device;
+
         public DeviceSettingViewModel(ScanResultViewModel selectedDevice)
         {
             device = selectedDevice.Device;

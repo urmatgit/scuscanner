@@ -51,7 +51,7 @@ namespace SCUScanner.ViewModels
         public string Name
         {
             get => this.name;
-            private set => this.RaiseAndSetIfChanged(ref this.name, value);
+             set => this.RaiseAndSetIfChanged(ref this.name, value);
         }
 
 

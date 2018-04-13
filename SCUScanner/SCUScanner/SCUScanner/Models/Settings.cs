@@ -20,24 +20,24 @@ namespace SCUScanner.Models
           settings ?? (settings = new Settings());
         public Settings():base()
         {
-            this.WhenAnyValue(vm => vm.ScanMode).Subscribe(val => { ManualScan = !val; });
-            this.WhenAnyValue(vm => vm.ManualScan).Subscribe(val => { ScanMode = !val; });
+            this.WhenAnyValue(vm => vm.AutoScan).Subscribe(val => { ManualScan = !val; });
+            this.WhenAnyValue(vm => vm.ManualScan).Subscribe(val => { AutoScan = !val; });
         }
         /// <summary>
         /// if false =Continuouse, true -manual
         /// </summary>
-        bool scanmode;
-        public  bool ScanMode
+        bool autoscan;
+        public  bool AutoScan
         {
-            get => AppSettings.GetValueOrDefault(nameof(ScanMode), true);
+            get => AppSettings.GetValueOrDefault(nameof(AutoScan), true);
              set
             {
-                var original = ScanMode;
-                if (AppSettings.AddOrUpdateValue(nameof(ScanMode), value))
+                var original = AutoScan;
+                if (AppSettings.AddOrUpdateValue(nameof(AutoScan), value))
                 {
                     //SetProperty(ref original, value);
                     //OnPropertyChanged("ManualScan");
-                    this.RaiseAndSetIfChanged(ref this.scanmode, value);
+                    this.RaiseAndSetIfChanged(ref this.autoscan, value);
                  //   ManualScan = !this.scanmode;
                 }
                 
