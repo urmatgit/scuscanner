@@ -382,7 +382,8 @@ namespace SCUScanner.ViewModels
                })
                );
         }
-        private async void NotifyDisable(IGattCharacteristic character) {
+        private async void NotifyDisable() {
+            
             await App.mainTabbed.SelectedCharacteristic?.DisableNotifications();
         }
         private void NotifyEnable(IGattCharacteristic character)
@@ -539,9 +540,18 @@ namespace SCUScanner.ViewModels
             this.watcher = null;
            // App.mainTabbed.SelectedCharacteristic = null;
         }
+        public override void OnActivate()
+        {
+            base.OnActivate();
+            if (App.mainTabbed.SelectedCharacteristic != null)
+            {
+                NotifyEnable(App.mainTabbed.SelectedCharacteristic);
+            }
+        }
         public override void OnDeactivate()
         {
             SettingsBase.OperatorName=OperatorName;
+            NotifyDisable();
             base.OnDeactivate();
             
             //foreach (var item in this.cleanup)
