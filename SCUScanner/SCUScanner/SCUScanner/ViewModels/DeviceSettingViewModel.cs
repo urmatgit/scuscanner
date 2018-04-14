@@ -18,7 +18,7 @@ namespace SCUScanner.ViewModels
         public TabbedPage ParentTabbed { get; set; }
         public ICommand SendCommand { get; }
         IDevice device;
-
+        bool ReConnectIfOk = true;
         public DeviceSettingViewModel(ScanResultViewModel selectedDevice)
         {
             device = selectedDevice.Device;
@@ -43,7 +43,7 @@ namespace SCUScanner.ViewModels
                                      if (!string.IsNullOrEmpty(BroadcastIdentity))
                                      {
                                          //WriteToDeviceWithoutResponse($"!{BroadcastIdentity}");
-
+                                         ReConnectIfOk = true;
                                          res = await WriteToDevice($"!{BroadcastIdentity}", cancelSrc);
                                          if (res != null)
                                          {
@@ -134,7 +134,7 @@ namespace SCUScanner.ViewModels
                                  catch (Exception er)
                                  {
                                      dialog.Hide();
-                                     
+                                     ReConnectIfOk = false;
                                      await App.Dialogs.AlertAsync(er.Message);
 
                                  }
@@ -160,7 +160,8 @@ namespace SCUScanner.ViewModels
                          }
                          if (stringBuilder.Length>0)
                             await App.Dialogs.AlertAsync(stringBuilder.ToString());
-                         Disconnect();
+                         if (DoDisconnect)
+                            Disconnect();
                      }
                  }
              });
@@ -169,7 +170,7 @@ namespace SCUScanner.ViewModels
         {
             if (App.mainTabbed != null)
             {
-                App.mainTabbed.ScanPage.scanBluetoothViewModel.CleanTabPages(true);
+                App.mainTabbed.ScanPage.scanBluetoothViewModel.CleanTabPages(ReConnectIfOk);
             }
         
         }

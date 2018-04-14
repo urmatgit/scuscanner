@@ -138,6 +138,8 @@ namespace SCUScanner.ViewModels
                                            new GattConnectionConfig() { AutoConnect = false }
                                            ).ToTask(cancelSrc.Token);
                                    }
+                                   else
+                                       throw er;
                                }
                               // var actual = await device.RequestMtu(512); //Read write size (default 20byte)
                                                                           //  App.Dialogs.Alert("MTU Changed to " + actual);
