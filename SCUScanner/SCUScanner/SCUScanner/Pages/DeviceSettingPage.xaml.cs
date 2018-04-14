@@ -23,6 +23,8 @@ namespace SCUScanner.Pages
         protected override void OnAppearing()
         {
             deviceSettingViewModel.ParentTabbed = this.Tabbed;
+            App.mainTabbed.ScanPage?.RunDisappearing();
+            App.mainTabbed.characterPage?.RunDisappearing();
             base.OnAppearing();
         }
         public override void Dispose()

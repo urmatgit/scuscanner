@@ -15,13 +15,14 @@ namespace SCUScanner.ViewModels
         {
             this.WhenAnyValue( x =>x.IsConnected).Subscribe(c=>
             {
-                
+                var devicename = Device?.Name;
              ConnectButtonText=c? SettingsBase.Resources["DisConnectButtonText"] : SettingsBase.Resources["ConnectButtonText"];
                 
             });
         }
         public void UpdateButtonText()
         {
+            var devicename = Device?.Name;
             ConnectButtonText = IsConnected ? SettingsBase.Resources["DisConnectButtonText"] : SettingsBase.Resources["ConnectButtonText"];
         }
         string connectButtonText;

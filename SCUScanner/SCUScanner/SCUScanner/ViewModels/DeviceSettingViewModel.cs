@@ -135,7 +135,7 @@ namespace SCUScanner.ViewModels
                          }
                          if (DoDisconnect)
                          {
-                            Disconnect();
+                            
                              //After changing the identity the Bluetooth module will broadcast with a different Id and so the connection must be dropped, wait 7 seconds for its internal reboot  and then re - connect
 
                              int duration = 8;
@@ -153,7 +153,7 @@ namespace SCUScanner.ViewModels
                          }
                          if (stringBuilder.Length>0)
                             await App.Dialogs.AlertAsync(stringBuilder.ToString());
-                         
+                         Disconnect();
                      }
                  }
              });

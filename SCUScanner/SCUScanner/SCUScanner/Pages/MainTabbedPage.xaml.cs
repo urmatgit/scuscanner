@@ -2,6 +2,7 @@
 using SCUScanner.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,14 @@ namespace SCUScanner.Pages
             InitializeComponent();
             BindingContext = new BaseViewModel();
         }
+        public CharacterPage characterPage
+        {
+            get; set;
+        }
+        public DeviceSettingPage deviceSettingPage
+        {
+            get;set;
+        }
         public ScanBluetoothPage ScanPage
         {
             get { return ScanningPage; }
@@ -42,6 +51,16 @@ namespace SCUScanner.Pages
             base.OnAppearing();
             ScanningPage.DoAppearing();
 
+        }
+        protected override void OnPagesChanged(NotifyCollectionChangedEventArgs e)
+        {
+            
+            base.OnPagesChanged(e);
+        }
+        protected override void OnCurrentPageChanged()
+        {
+            
+            base.OnCurrentPageChanged();
         }
     }
 }

@@ -24,5 +24,9 @@ namespace SCUScanner.Pages
         {
             ;
         }
+        public void RunDisappearing()
+        {
+            this.OnDisappearing();
+        }
     }
 }

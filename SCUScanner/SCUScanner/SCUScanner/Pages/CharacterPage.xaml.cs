@@ -25,7 +25,11 @@ namespace SCUScanner.Pages
         protected override void OnAppearing()
         {
             connectedDeviceViewModel.ParentTabbed = this.Tabbed;
+
             base.OnAppearing();
+            App.mainTabbed.ScanPage?.RunDisappearing();
+            App.mainTabbed.deviceSettingPage?.RunDisappearing();
+
             (this.BindingContext as IViewModel)?.OnActivate();
         }
 

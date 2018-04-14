@@ -14,10 +14,11 @@ using System.Threading.Tasks;
 using System.Threading;
 using SCUScanner.Models;
 using Newtonsoft.Json;
-using Plugin.Share;
-using Plugin.Share.Abstractions;
+
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using Plugin.Share;
+using Plugin.Share.Abstractions;
 
 namespace SCUScanner.ViewModels
 {
@@ -103,6 +104,7 @@ namespace SCUScanner.ViewModels
             ValueShareCommand = ReactiveCommand.CreateFromTask(async () =>
              {
 
+
                  if (!CrossShare.IsSupported)
                      return;
 
@@ -137,7 +139,7 @@ namespace SCUScanner.ViewModels
                 catch (Exception er) { }
             });
             //  StatusColor = Color.Green;
-            OnActivateOnLoad();
+            
         }
         Color oldColor = Color.White;
         bool TimerChangeColor = false;
@@ -166,7 +168,7 @@ namespace SCUScanner.ViewModels
 
 
         }
-
+       
         string value;
         public string Value
         {
@@ -307,6 +309,12 @@ namespace SCUScanner.ViewModels
             get => sourceText;
             set => this.RaiseAndSetIfChanged(ref sourceText, value);
         }
+        private bool isNotifying;
+        public bool IsNotifying
+        {
+            get => isNotifying;
+            set => this.RaiseAndSetIfChanged(ref isNotifying, value);
+        }
         public void OnActivateOnLoad()
         {
             this.cleanup.Clear();
@@ -328,10 +336,13 @@ namespace SCUScanner.ViewModels
 
                        case ConnectionStatus.Disconnected:
                            this.ConnectText = Resources["DisconnectStatusText"];
-                           using (var dialog = App.Dialogs.Loading(Resources["DisconnectStatusText"]))
-                           {
-                               App.mainTabbed.CloseConnection();
-                           }
+                           //device.Connect(
+                           //        new GattConnectionConfig() { AutoConnect = false }
+                           //        );
+                           //using (var dialog = App.Dialogs.Loading(Resources["DisconnectStatusText"]))
+                           //{
+                           //    App.mainTabbed.CloseConnection();
+                           //}
                            //  this.GattCharacteristics.Clear();
                            //   this.GattDescriptors.Clear();
                            this.Rssi = 0;
@@ -372,7 +383,7 @@ namespace SCUScanner.ViewModels
                            var strUuid = character.Uuid.ToString();
                            if (InListCharacters(character.Uuid.ToString()))
                            {
-                               App.mainTabbed.SelectedCharacteristic = character;
+
                                //gattCharacteristic = character;
                                NotifyEnable(character);
 
@@ -383,15 +394,30 @@ namespace SCUScanner.ViewModels
                );
         }
         private async void NotifyDisable() {
-            
-            await App.mainTabbed.SelectedCharacteristic?.DisableNotifications();
+
+            if (App.mainTabbed.SelectedCharacteristic != null && IsNotifying)
+            {
+                //     App.mainTabbed.SelectedCharacteristic.
+                try
+                {
+                    await App.mainTabbed.SelectedCharacteristic?.DisableNotifications();
+                }
+                catch (Exception er)
+                {
+
+                }
+                finally
+                {
+                    IsNotifying = false;
+                }
+            }
         }
         private void NotifyEnable(IGattCharacteristic character)
         {
             Device.BeginInvokeOnMainThread(() =>
             {
 
-                if (character.CanNotify())
+                if (character.CanNotify()  )
                 {
 
 
@@ -401,11 +427,21 @@ namespace SCUScanner.ViewModels
                         this.watcher = null;
                         App.mainTabbed.SelectedCharacteristic = null;
                     }
-                    character.EnableNotifications().Subscribe();
+                    try
+                    {
+                        character.EnableNotifications().Subscribe(n =>
+                        {
+                            var en = n;
+                        });
+                    }catch (Exception er)
+                    {
+                        App.Dialogs.AlertAsync(er.Message);
+                    }
                     this.watcher = character.WhenNotificationReceived().Subscribe(
                         x => GetValue(x)
                         );
-
+                    this.IsNotifying = true;
+                    App.mainTabbed.SelectedCharacteristic = character;
                 }
 
 
@@ -416,7 +452,9 @@ namespace SCUScanner.ViewModels
         private bool InListCharacters(string uuid)
         {
 
-            if (uuid.Equals(GlobalConstants.UUID_MLDP_DATA_PRIVATE_CHAR) || uuid.Equals(GlobalConstants.UUID_TRANSPARENT_RX_PRIVATE_CHAR) || uuid.Equals(GlobalConstants.UUID_TRANSPARENT_TX_PRIVATE_CHAR))
+            //if (uuid.Equals(GlobalConstants.UUID_MLDP_DATA_PRIVATE_CHAR) || uuid.Equals(GlobalConstants.UUID_TRANSPARENT_RX_PRIVATE_CHAR) || uuid.Equals(GlobalConstants.UUID_TRANSPARENT_TX_PRIVATE_CHAR))
+             if(uuid.Equals(GlobalConstants.UUID_MLDP_DATA_PRIVATE_CHAR)) //GlobalConstants.UUID_TRANSPARENT_TX_PRIVATE_CHAR))
+                
                 return true;
             return false;
 
@@ -527,6 +565,7 @@ namespace SCUScanner.ViewModels
             if (App.mainTabbed.SelectedCharacteristic != null)
             {
                 App.mainTabbed.SelectedCharacteristic.DisableNotifications();
+                IsNotifying = false;
                 App.mainTabbed.SelectedCharacteristic = null;
             }
             device.CancelConnection();
@@ -543,7 +582,11 @@ namespace SCUScanner.ViewModels
         public override void OnActivate()
         {
             base.OnActivate();
-            if (App.mainTabbed.SelectedCharacteristic != null)
+            if (this.cleanup.Count == 0)
+            {
+                OnActivateOnLoad();
+            }
+            if (App.mainTabbed.SelectedCharacteristic != null && !IsNotifying)
             {
                 NotifyEnable(App.mainTabbed.SelectedCharacteristic);
             }

@@ -52,12 +52,16 @@ namespace SCUScanner.Pages
         {
             base.OnAppearing();
             (BindingContext as ScanBluetoothViewModel). ParentTabbed = Tabbed;
+            App.mainTabbed.characterPage?.RunDisappearing();
+            App.mainTabbed.deviceSettingPage?.RunDisappearing();
             (this.BindingContext as IViewModel)?.OnActivate();
         }
+         
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
             (this.BindingContext as IViewModel)?.OnDeactivate();
         }
+        
     }
 }

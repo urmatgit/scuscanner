@@ -9,9 +9,10 @@ using ReactiveUI;
 using System.Threading.Tasks;
 using System.Reactive.Linq;
 using Xamarin.Forms;
+
+using System.Threading;
 using Plugin.Share;
 using Plugin.Share.Abstractions;
-using System.Threading;
 
 namespace SCUScanner.ViewModels
 {
@@ -73,7 +74,7 @@ namespace SCUScanner.ViewModels
 
                     line = Resources["DateWithTimeText"];
                     stringBuilder.AppendLine($"{line.PadRight(CaptionLenth, ' ')}: {str.DateWithTime}");
-                    stringBuilder.AppendLine($"{"".PadRight(CaptionLenth*2, '-')}");
+                    stringBuilder.AppendLine($"{"".PadRight(CaptionLenth * 2, '-')}");
                 }
 
                 await CrossShare.Current.Share(new ShareMessage
@@ -84,7 +85,7 @@ namespace SCUScanner.ViewModels
                 });
 
             });
-            DeleteCommand= ReactiveCommand.CreateFromTask(async () =>
+            DeleteCommand = ReactiveCommand.CreateFromTask(async () =>
             {
 
                 var selecteItems = SCUItems.Where(s => s.IsSelected);

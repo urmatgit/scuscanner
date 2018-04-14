@@ -26,11 +26,13 @@ namespace SCUScanner.ViewModels
         const int ScanningDuration = 30; //sec
         IDisposable scan;
         IDisposable connect;
-
+        bool IsClickScan = false;
         System.Timers.Timer StopScanning = new System.Timers.Timer();
         CharacterPage characterPage { get; set; }
         DeviceSettingPage deviceSettingPage { get; set; }
+        private ScanResultViewModel LastConnectedItem { get; set; }
         TabbedPage parentTabbed;
+        
         public TabbedPage ParentTabbed
         {
             get => parentTabbed;
@@ -85,7 +87,11 @@ namespace SCUScanner.ViewModels
                     if (vm != null)
                     {
                         vm.IsConnected = x.Status == ConnectionStatus.Connected;
-                        if (!vm.IsConnected) App.mainTabbed.CurrentConnectDeviceSN = "";
+                        if (!vm.IsConnected)
+                        {
+                            App.mainTabbed.CurrentConnectDeviceSN = "";
+                            LastConnectedItem = null;
+                        }
                     }
                 });
 
@@ -103,6 +109,8 @@ namespace SCUScanner.ViewModels
            {
                if (Models.Settings.Current.ManualScan)
                    StopScanBle();
+
+               LastConnectedItem = o;
                IDevice device = o.Device;
                try
                {
@@ -130,13 +138,13 @@ namespace SCUScanner.ViewModels
                                characterPage.Kod = o.Name;
                                characterPage.Tabbed = this.ParentTabbed;
                                title = Resources["DeviceSettingsCaptionText"];
-
+                               App.mainTabbed.characterPage = characterPage;
                                deviceSettingPage = new DeviceSettingPage(o) { Title = title };
-                               
+                               App.mainTabbed.deviceSettingPage = deviceSettingPage;
                                deviceSettingPage.Kod = $"{o.Name}_setting";
                                deviceSettingPage.Tabbed = this.ParentTabbed;
                                {
-                                   CleanTabPages();
+                                 //  CleanTabPages();
                                }
                                parentTabbed.Children.Add(characterPage);
                                parentTabbed.Children.Add(deviceSettingPage);
@@ -150,6 +158,7 @@ namespace SCUScanner.ViewModels
                    {
 
                        device.CancelConnection();
+                       LastConnectedItem = null;
                        o.IsConnected = false;
                        App.mainTabbed.CurrentConnectDeviceSN = "";
                        parentTabbed.CurrentPage = CleanTabPages();
@@ -171,6 +180,7 @@ namespace SCUScanner.ViewModels
                     {
                         return;
                     }
+                    IsClickScan = true;
                 if (this.IsScanning)
                 {
                     StopScanBle();
@@ -178,7 +188,11 @@ namespace SCUScanner.ViewModels
                 else
                 {
 
-                        this.Devices.Clear();
+                      //  this.Devices.Clear();
+                        while (this.Devices.Any())
+                        {
+                            this.Devices.RemoveAt(0);
+                        }
                         this.IsScanning = true;
 
                     //this.ScanText = Resources["ScanText"];
@@ -227,7 +241,8 @@ namespace SCUScanner.ViewModels
                     x.Dispose();
                     parentTabbed.Children.Remove(x);
                     });
-             
+            App.mainTabbed.characterPage = null;
+            App.mainTabbed.deviceSettingPage = null;
             return result;
         }
         private void StopScanning_Elapsed(object sender, ElapsedEventArgs e)
@@ -257,7 +272,7 @@ namespace SCUScanner.ViewModels
                 characterPage.Title = Resources["ConnectedDeviceCaptionText"];
             if (deviceSettingPage!=null)
                 deviceSettingPage.Title= Resources["DeviceSettingsCaptionText"];
-            if (!this.IsScanning && Models.Settings.Current.AutoScan)
+            if (!this.IsScanning && Models.Settings.Current.AutoScan && IsClickScan)
             {
                 this.ScanToggleCommand.Execute(null);
             }
@@ -284,8 +299,13 @@ namespace SCUScanner.ViewModels
             else
             {
                 dev = new ScanResultViewModel();
+                
+                
                 dev.TrySet(result);
-
+                if (LastConnectedItem != null && dev.Name==LastConnectedItem.Name)
+                {
+                    dev.IsConnected = LastConnectedItem.IsConnected;
+                }
 
                 //  if (dev.ServiceCount>0)
                 this.Devices.Add(dev);
@@ -384,6 +404,8 @@ namespace SCUScanner.ViewModels
                 this.RaiseAndSetIfChanged(ref this.resourcesex, value);
             }
         }
+
+        
     }
 }
 
