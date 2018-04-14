@@ -47,15 +47,17 @@ namespace SCUScanner.ViewModels
                                          res = await WriteToDevice($"!{BroadcastIdentity}", cancelSrc);
                                          if (res != null)
                                          {
-                                             strResult = res.Success ? "OK" : res.ErrorMessage;
-                                             strResult = $"{Resources["BroadcastIdentityText"]}- {strResult}";
-                                             stringBuilder.AppendLine(strResult);
+                                             
+                                                 strResult = res.Success ? "OK" : res.ErrorMessage;
+                                                 strResult = $"{Resources["BroadcastIdentityText"]}- {strResult}";
+                                             
                                              System.Diagnostics.Debug.WriteLine(strResult);
                                              if (res.Success)
                                              {
                                                  DoDisconnect = true;
                                                 
-                                             }
+                                             }else
+                                                 stringBuilder.AppendLine(strResult);
                                          }
 
 
@@ -67,7 +69,9 @@ namespace SCUScanner.ViewModels
                                          {
                                              strResult = res.Success ? "OK" : res.ErrorMessage;
                                              strResult = $"{Resources["AlarmLevelText"]}- {strResult}";
-                                             stringBuilder.AppendLine(strResult);
+                                             if (!res.Success)
+                                                 stringBuilder.AppendLine(strResult);
+
                                              System.Diagnostics.Debug.WriteLine(strResult);
                                          }
                                      }
@@ -76,9 +80,10 @@ namespace SCUScanner.ViewModels
                                          res = await WriteToDevice($"@{CutOff}", cancelSrc);
                                          if (res != null)
                                          {
-                                             strResult = res.Success ? "OK" : res.ErrorMessage;
+                                             strResult = res.Success ? "" : res.ErrorMessage;
                                              strResult = $"{Resources["CutOffText"]}- {strResult}";
-                                             stringBuilder.AppendLine(strResult);
+                                             if (!res.Success)
+                                                 stringBuilder.AppendLine(strResult);
                                              System.Diagnostics.Debug.WriteLine(strResult);
                                          }
                                      }
@@ -88,9 +93,10 @@ namespace SCUScanner.ViewModels
                                          res = await WriteToDevice($"~{strAlarmHours.PadLeft(4, '0')}", cancelSrc);
                                          if (res != null)
                                          {
-                                             strResult = res.Success ? "OK" : res.ErrorMessage;
+                                             strResult = res.Success ? "" : res.ErrorMessage;
                                              strResult = $"{Resources["AlarmHoursText"]}- {strResult}";
-                                             stringBuilder.AppendLine(strResult);
+                                             if (!res.Success)
+                                                 stringBuilder.AppendLine(strResult);
                                              System.Diagnostics.Debug.WriteLine(strResult);
                                          }
                                      }
@@ -112,15 +118,16 @@ namespace SCUScanner.ViewModels
                                          }
                                          if (res != null)
                                          {
-                                             strResult = res.Success ? "OK" : res.ErrorMessage;
+                                             strResult = res.Success ? "" : res.ErrorMessage;
                                              strResult = $"{Resources["SetSerialNumberText"]}- {strResult}";
-                                             stringBuilder.AppendLine(strResult);
+                                             
                                              System.Diagnostics.Debug.WriteLine(strResult);
                                              if (res.Success)
                                              {
                                                  DoDisconnect = true;
                                                  //Disconnect();
-                                             }
+                                             }else
+                                                 stringBuilder.AppendLine(strResult);
                                          }
                                      }
                                  }
@@ -162,7 +169,7 @@ namespace SCUScanner.ViewModels
         {
             if (App.mainTabbed != null)
             {
-                App.mainTabbed.CloseConnection();// scanBluetoothViewModel.CleanTabPages(true);
+                App.mainTabbed.ScanPage.scanBluetoothViewModel.CleanTabPages(true);
             }
         
         }

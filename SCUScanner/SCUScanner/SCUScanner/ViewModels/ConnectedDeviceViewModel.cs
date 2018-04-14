@@ -374,22 +374,36 @@ namespace SCUScanner.ViewModels
 
                    ///TODO filter 
                    //  var group = new Group<GattCharacteristicViewModel>(service.Uuid.ToString());
-                   service
-                       .WhenCharacteristicDiscovered()
-                       // .Where(c=> InListCharacters(c.Uuid.ToString()))
-                       .ObserveOn(RxApp.MainThreadScheduler)
-                       .Subscribe(character =>
-                       {
-                           var strUuid = character.Uuid.ToString();
-                           if (InListCharacters(character.Uuid.ToString()))
+                   try
+                   {
+                       service
+                           .WhenCharacteristicDiscovered()
+                           // .Where(c=> InListCharacters(c.Uuid.ToString()))
+                           .ObserveOn(RxApp.MainThreadScheduler)
+                           .Subscribe(character =>
                            {
+                               var strUuid = character.Uuid.ToString();
+                               if (InListCharacters(character.Uuid.ToString()))
+                               {
 
                                //gattCharacteristic = character;
-                               NotifyEnable(character);
+                               try
+                                   {
+                                       NotifyEnable(character);
+                                   }
+                                   catch (Exception er)
+                                   {
+                                       App.Dialogs.AlertAsync(er.Message);
+                                   }
 
-                           }
+                               }
 
-                       });
+                           });
+                   }catch (Exception er)
+                   {
+                       App.Dialogs.AlertAsync(er.Message);
+
+                   }
                })
                );
         }
@@ -414,6 +428,7 @@ namespace SCUScanner.ViewModels
         }
         private void NotifyEnable(IGattCharacteristic character)
         {
+            
             Device.BeginInvokeOnMainThread(() =>
             {
 
@@ -448,6 +463,7 @@ namespace SCUScanner.ViewModels
 
 
             });
+            
         }
         private bool InListCharacters(string uuid)
         {

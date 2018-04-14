@@ -124,11 +124,21 @@ namespace SCUScanner.ViewModels
                        {
                            using (App.Dialogs.Loading(Resources["ConnectingText"], cancelSrc.Cancel, Resources["CancelText"]))
                            {
-
-                               await device.Connect(
-                                   new GattConnectionConfig() { AutoConnect = false }
-                                   ).ToTask(cancelSrc.Token);
-
+                               try
+                               {
+                                   await device.Connect(
+                                       new GattConnectionConfig() { AutoConnect = false }
+                                       ).ToTask(cancelSrc.Token);
+                               }catch(Exception er) 
+                               {
+                                   if (er.Message.StartsWith("133"))
+                                   {
+                                       Thread.Sleep(3000);
+                                       await device.Connect(
+                                           new GattConnectionConfig() { AutoConnect = false }
+                                           ).ToTask(cancelSrc.Token);
+                                   }
+                               }
                               // var actual = await device.RequestMtu(512); //Read write size (default 20byte)
                                                                           //  App.Dialogs.Alert("MTU Changed to " + actual);
                                 var title = Resources["ConnectedDeviceCaptionText"];
@@ -226,7 +236,7 @@ namespace SCUScanner.ViewModels
             //    this.ScanToggleCommand.Execute(null);
 
         }
-        public BaseTabPage CleanTabPages()
+        public BaseTabPage CleanTabPages(bool restorelastconnect = false)
         {
              
                 var ListOfRemovePages = new List<BaseTabPage>();
@@ -243,6 +253,12 @@ namespace SCUScanner.ViewModels
                     });
             App.mainTabbed.characterPage = null;
             App.mainTabbed.deviceSettingPage = null;
+            if(restorelastconnect && this.LastConnectedItem != null)
+            {
+                this.ConnectCommand.Execute(this.LastConnectedItem);
+
+            }else
+            this.LastConnectedItem = null;
             return result;
         }
         private void StopScanning_Elapsed(object sender, ElapsedEventArgs e)
@@ -304,7 +320,7 @@ namespace SCUScanner.ViewModels
                 dev.TrySet(result);
                 if (LastConnectedItem != null && dev.Name==LastConnectedItem.Name)
                 {
-                    dev.IsConnected = LastConnectedItem.IsConnected;
+                    dev.IsConnected = true;
                 }
 
                 //  if (dev.ServiceCount>0)
