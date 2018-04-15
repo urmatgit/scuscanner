@@ -27,6 +27,7 @@ namespace SCUScanner.ViewModels
         IDisposable scan;
         IDisposable connect;
         bool IsClickScan = false;
+        bool IsBroadcastNameChanged = false;
         System.Timers.Timer StopScanning = new System.Timers.Timer();
         CharacterPage characterPage { get; set; }
         DeviceSettingPage deviceSettingPage { get; set; }
@@ -90,7 +91,8 @@ namespace SCUScanner.ViewModels
                         if (!vm.IsConnected)
                         {
                             App.mainTabbed.CurrentConnectDeviceSN = "";
-                            LastConnectedItem = null;
+                            if(!IsBroadcastNameChanged)
+                                LastConnectedItem = null;
                         }
                     }
                 });
@@ -257,9 +259,11 @@ namespace SCUScanner.ViewModels
             App.mainTabbed.deviceSettingPage = null;
             if(restorelastconnect && this.LastConnectedItem != null)
             {
-                this.ConnectCommand.Execute(this.LastConnectedItem);
+                IsBroadcastNameChanged = true;
+                //this.ConnectCommand.Execute(this.LastConnectedItem);
 
-            }else
+            }
+            else
             this.LastConnectedItem = null;
             return result;
         }
@@ -320,13 +324,24 @@ namespace SCUScanner.ViewModels
                 
                 
                 dev.TrySet(result);
-                if (LastConnectedItem != null && dev.Name==LastConnectedItem.Name)
+                if (LastConnectedItem != null && dev.Name==LastConnectedItem.Name && !IsBroadcastNameChanged)
                 {
                     dev.IsConnected = true;
                 }
 
                 //  if (dev.ServiceCount>0)
                 this.Devices.Add(dev);
+                if (IsBroadcastNameChanged && LastConnectedItem != null)
+                {
+                    try
+                    {
+                        ConnectCommand.Execute(dev);
+                    }
+                    finally
+                    {
+                        IsBroadcastNameChanged = false;
+                    }
+                }
             }
             //   UpdateButtonText(dev);
         }

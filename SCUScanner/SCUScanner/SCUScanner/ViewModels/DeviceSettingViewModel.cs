@@ -124,7 +124,7 @@ namespace SCUScanner.ViewModels
                                              System.Diagnostics.Debug.WriteLine(strResult);
                                              if (res.Success)
                                              {
-                                                 DoDisconnect = true;
+                                                // DoDisconnect = true;
                                                  //Disconnect();
                                              }else
                                                  stringBuilder.AppendLine(strResult);
