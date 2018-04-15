@@ -331,7 +331,7 @@ namespace SCUScanner.ViewModels
 
                 //  if (dev.ServiceCount>0)
                 this.Devices.Add(dev);
-                if (IsBroadcastNameChanged && LastConnectedItem != null)
+                if (IsBroadcastNameChanged && LastConnectedItem != null && LastConnectedItem.Device==dev.Device)
                 {
                     try
                     {
