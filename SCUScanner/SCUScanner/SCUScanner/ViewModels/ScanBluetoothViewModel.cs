@@ -131,6 +131,7 @@ namespace SCUScanner.ViewModels
                                    await device.Connect(
                                        new GattConnectionConfig() { AutoConnect = false }
                                        ).ToTask(cancelSrc.Token);
+                                   Thread.Sleep(5000);//
                                }catch(Exception er) 
                                {
                                    if (er.Message.StartsWith("133"))
@@ -331,7 +332,7 @@ namespace SCUScanner.ViewModels
 
                 //  if (dev.ServiceCount>0)
                 this.Devices.Add(dev);
-                if (IsBroadcastNameChanged && LastConnectedItem != null && LastConnectedItem.Device==dev.Device)
+                if (IsBroadcastNameChanged && LastConnectedItem != null && LastConnectedItem.Address==dev.Address)
                 {
                     try
                     {
