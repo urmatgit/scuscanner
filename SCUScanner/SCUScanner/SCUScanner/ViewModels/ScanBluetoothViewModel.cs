@@ -215,6 +215,12 @@ namespace SCUScanner.ViewModels
                         StopScanning.Start();
                         if (!App.BleAdapter.IsScanning)
                         {
+                            var connectedDevices= App.BleAdapter.GetConnectedDevices();
+                            if (connectedDevices.Count() > 0)
+                            {
+                                foreach (var dev in connectedDevices)
+                                    AddConnectedDevice(dev);
+                            }
                             this.scan = App.BleAdapter
                                 .Scan()
                                     //.Where(r=>r.AdvertisementData.ServiceUuids!=null && r.AdvertisementData.ServiceUuids?.Length>0) //filter where service >0
@@ -312,6 +318,40 @@ namespace SCUScanner.ViewModels
         //{
         //    dev.ConnectButtonText = dev.IsConnected ? Resources["DisConnectButtonText"] : Resources["ConnectButtonText"];
         //}
+        void  AddConnectedDevice(IDevice device)
+        {
+            var dev = this.Devices.FirstOrDefault(x => x.Uuid.Equals(device.Uuid));
+            if (dev != null)
+            {
+            
+                dev.TrySet(device);
+            }
+            else
+            {
+                dev = new ScanResultViewModel();
+
+
+                dev.TrySet(device);
+                if (LastConnectedItem != null && dev.Name == LastConnectedItem.Name && !IsBroadcastNameChanged)
+                {
+                    dev.IsConnected = true;
+                }
+
+                //  if (dev.ServiceCount>0)
+                this.Devices.Add(dev);
+                if (IsBroadcastNameChanged && LastConnectedItem != null && LastConnectedItem.Address == dev.Address)
+                {
+                    try
+                    {
+                       ConnectCommand.Execute (dev);
+                    }
+                    finally
+                    {
+                        IsBroadcastNameChanged = false;
+                    }
+                }
+            }
+        }
         void OnScanResult(IScanResult result)
         {
             var dev = this.Devices.FirstOrDefault(x => x.Uuid.Equals(result.Device.Uuid));

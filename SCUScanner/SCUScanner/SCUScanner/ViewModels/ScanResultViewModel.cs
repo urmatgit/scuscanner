@@ -146,13 +146,47 @@ namespace SCUScanner.ViewModels
                     this.Rssi = result.Rssi;
 
                     var ad = result.AdvertisementData;
-                    this.ServiceCount = ad.ServiceUuids?.Length ?? 0;
-                    this.IsConnectable = ad.IsConnectable;
-                    this.LocalName = ad.LocalName;
-                    this.TxPower = ad.TxPower;
-                    this.ManufacturerData = ad.ManufacturerData == null
+                    this.ServiceCount = ad?.ServiceUuids?.Length ?? 0;
+                    this.IsConnectable = ad != null ? ad.IsConnectable : true ;
+                    this.LocalName =ad?.LocalName;
+                    this.TxPower = ad == null ? 0: ad.TxPower;
+                    this.ManufacturerData = ad?.ManufacturerData == null
                         ? null
                         : BitConverter.ToString(ad.ManufacturerData);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+            return response;
+        }
+        public bool TrySet(IDevice result)
+        {
+            var response = false;
+
+            if (this.Uuid == Guid.Empty)
+            {
+                this.Device = Device;
+                this.Uuid = this.Device.Uuid;
+                //this.nameOb = result
+                //    .Device
+                //    .WhenNameUpdated()
+                //    .Subscribe(x => this.Name = x);
+
+                response = true;
+            }
+
+            try
+            {
+                if (this.Uuid == Device.Uuid)
+                {
+                    response = true;
+
+                    this.Name = Device.Name;
+                    this.Rssi = Rssi;
+                    this.IsConnectable = true;
+                    
                 }
             }
             catch (Exception ex)
