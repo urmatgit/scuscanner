@@ -66,8 +66,11 @@
             <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="5"  x:Name="tLocationName" Text="{Binding LocationName}" Placeholder="{Binding Resources[LocationNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
             <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="6"  x:Name="tOperatorName" Text="{Binding OperatorName}" Placeholder="{Binding Resources[OperatorNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
 
-            <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" VerticalOptions="Start"  Text="{Binding Resources[SaveText]}"
+            <Button Grid.Column="0"  Grid.Row="7" VerticalOptions="Start"  Text="{Binding Resources[SaveText]}"
                     Command="{Binding SaveCommand}"  BackgroundColor="Green"    TextColor="White"/>
+            <Button Grid.Column="1"  Grid.Row="7"   Text="{Binding DeviceViewModel.ConnectButtonText}"
+                    Command="{Binding DisconnectCommand}"   IsEnabled="{Binding DeviceViewModel.IsConnected}" BackgroundColor="Green"    TextColor="White"/>
+
             <Button Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2" Image="share.png" Command="{Binding ValueShareCommand}"   BackgroundColor="Green"    TextColor="White"/>
             <ScrollView Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="8" VerticalOptions="FillAndExpand" >
                 <Label  Text="{Binding SourceText}" VerticalOptions="FillAndExpand"/>
