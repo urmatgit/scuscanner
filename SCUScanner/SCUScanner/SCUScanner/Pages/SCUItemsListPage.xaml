@@ -45,11 +45,11 @@
                                         <RowDefinition Height="1" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="130"/>
+                                        <ColumnDefinition Width="150"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" HorizontalOptions="FillAndExpand"  >
+                        <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" HorizontalOptions="FillAndExpand"  BackgroundColor="Blue" >
                                         <Grid HorizontalOptions="FillAndExpand">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="100"/>
