@@ -73,9 +73,9 @@ namespace SCUScanner.ViewModels
               {
                   //   return;// пока отключаем
                   if (ScuData == null) return;
+                  SCUItem scuitem = null;
 
-
-                  SCUItem scuitem = new SCUItem()
+                  scuitem = new SCUItem()
                   {
                       UnitName = ScuData.ID,
                       SerialNo = ScuData.SN,
@@ -96,7 +96,6 @@ namespace SCUScanner.ViewModels
                   using (App.Dialogs.Loading(Resources["SavingText"]))
                   {
                       var id = await App.Database.SaveItemAsync(scuitem);
-                      Debug.WriteLine($"Insert resut={id}: Id={scuitem.Id}");
                   }
 
 
@@ -443,31 +442,31 @@ namespace SCUScanner.ViewModels
                         this.watcher = null;
                         App.mainTabbed.SelectedCharacteristic = null;
                     }
-                    character.RegisterAndNotify().Subscribe(registerResult =>
+                    //character.RegisterAndNotify().Subscribe(registerResult =>
+                    //{
+                    //    GetValue(registerResult);
+                    //});
+                    try
                     {
-                        GetValue(registerResult);
-                    });
-                    //try
-                    //{
-                    //    character.EnableNotifications().Subscribe(n =>
-                    //    {
+                        character.EnableNotifications().Subscribe(n =>
+                        {
                         
-                    //        Debug.WriteLine($"EnableNotifications- {n.ErrorMessage}");
-                            
-                    //        //if (n.Success)
-                    //        //{
-                    //        //    this.watcher= n.Characteristic.WhenNotificationReceived().Subscribe(
-                    //        //        x => GetValue(x)
-                    //        //    );
-                    //        //    this.IsNotifying = true;
-                    //        //    App.mainTabbed.SelectedCharacteristic = character;
-                    //        //}
-                    //    });
-                    //}
-                    //catch (Exception er)
-                    //{
-                    //    App.Dialogs.AlertAsync(er.Message);
-                    //}
+                            Debug.WriteLine($"EnableNotifications- {n.ErrorMessage}");
+
+                            if (n.Success)
+                            {
+                                this.watcher = n.Characteristic.WhenNotificationReceived().Subscribe(
+                                    x => GetValue(x)
+                                );
+                                this.IsNotifying = true;
+                                App.mainTabbed.SelectedCharacteristic = character;
+                            }
+                        });
+                    }
+                    catch (Exception er)
+                    {
+                        App.Dialogs.AlertAsync(er.Message);
+                    }
                     //this.watcher = character.WhenNotificationReceived().Subscribe(
                     //    x => GetValue(x)
                     //    );
@@ -483,8 +482,8 @@ namespace SCUScanner.ViewModels
         private bool InListCharacters(string uuid)
         {
 
-            if (uuid.Equals(GlobalConstants.UUID_MLDP_DATA_PRIVATE_CHAR) || uuid.Equals(GlobalConstants.UUID_TRANSPARENT_RX_PRIVATE_CHAR) || uuid.Equals(GlobalConstants.UUID_TRANSPARENT_TX_PRIVATE_CHAR))
-             //if(uuid.Equals(GlobalConstants.UUID_MLDP_DATA_PRIVATE_CHAR)) //GlobalConstants.UUID_TRANSPARENT_TX_PRIVATE_CHAR))
+            //if (uuid.Equals(GlobalConstants.UUID_MLDP_DATA_PRIVATE_CHAR) || uuid.Equals(GlobalConstants.UUID_TRANSPARENT_RX_PRIVATE_CHAR) || uuid.Equals(GlobalConstants.UUID_TRANSPARENT_TX_PRIVATE_CHAR))
+             if(uuid.Equals(GlobalConstants.UUID_MLDP_DATA_PRIVATE_CHAR)) //GlobalConstants.UUID_TRANSPARENT_TX_PRIVATE_CHAR))
                 
                 return true;
             return false;
