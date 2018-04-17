@@ -128,10 +128,13 @@ namespace SCUScanner.ViewModels
                            {
                                try
                                {
+                                   StopScanBle();
+                                   Debug.WriteLine("Stopped the scan because we're about to connect...");
+                                   Thread.Sleep(1000);
                                    await device.Connect(
                                        new GattConnectionConfig() { AutoConnect = false }
                                        ).ToTask(cancelSrc.Token);
-                                   Thread.Sleep(5000);//
+                                   
                                }catch(Exception er) 
                                {
                                    if (er.Message.StartsWith("133"))
@@ -285,6 +288,7 @@ namespace SCUScanner.ViewModels
                 
             StopScanning.Stop();
             this.scan?.Dispose();
+            this.scan=null;
             this.IsScanning = false;
             App.Dialogs.Toast("Scanning stop");
         }

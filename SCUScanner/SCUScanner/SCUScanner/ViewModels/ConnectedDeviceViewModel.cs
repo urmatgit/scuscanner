@@ -452,24 +452,24 @@ namespace SCUScanner.ViewModels
                         {
                         
                             Debug.WriteLine($"EnableNotifications- {n.ErrorMessage}");
-                            
-                            //if (n.Success)
-                            //{
-                            //    this.watcher= n.Characteristic.WhenNotificationReceived().Subscribe(
-                            //        x => GetValue(x)
-                            //    );
-                            //    this.IsNotifying = true;
-                            //    App.mainTabbed.SelectedCharacteristic = character;
-                            //}
+
+                            if (n.Success)
+                            {
+                                this.watcher = n.Characteristic.WhenNotificationReceived().Subscribe(
+                                    x => GetValue(x)
+                                );
+                                this.IsNotifying = true;
+                                App.mainTabbed.SelectedCharacteristic = character;
+                            }
                         });
                     }
                     catch (Exception er)
                     {
                         App.Dialogs.AlertAsync(er.Message);
                     }
-                    this.watcher = character.WhenNotificationReceived().Subscribe(
-                        x => GetValue(x)
-                        );
+                    //this.watcher = character.WhenNotificationReceived().Subscribe(
+                    //    x => GetValue(x)
+                    //    );
 
                 }
 
