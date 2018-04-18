@@ -49,7 +49,7 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                        <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" HorizontalOptions="FillAndExpand"  BackgroundColor="Blue" >
+                        <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" HorizontalOptions="FillAndExpand"    >
                                         <Grid HorizontalOptions="FillAndExpand">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="100"/>

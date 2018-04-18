@@ -167,7 +167,7 @@ namespace SCUScanner.ViewModels
 
             if (this.Uuid == Guid.Empty)
             {
-                this.Device = Device;
+                this.Device = result;
                 this.Uuid = this.Device.Uuid;
                 //this.nameOb = result
                 //    .Device
@@ -179,12 +179,12 @@ namespace SCUScanner.ViewModels
 
             try
             {
-                if (this.Uuid == Device.Uuid)
+                if (this.Uuid == result.Uuid)
                 {
                     response = true;
 
-                    this.Name = Device.Name;
-                    this.Rssi = Rssi;
+                    this.Name = result.Name;
+                    
                     this.IsConnectable = true;
                     
                 }
