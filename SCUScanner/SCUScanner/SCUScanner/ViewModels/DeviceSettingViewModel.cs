@@ -19,6 +19,10 @@ namespace SCUScanner.ViewModels
         public ICommand SendCommand { get; }
         IDevice device;
         bool ReConnectIfOk = true;
+        private string DataTostring(byte[] data)
+        {
+            return Encoding.UTF8.GetString(data, 0, data.Length);
+        } 
         public DeviceSettingViewModel(ScanResultViewModel selectedDevice)
         {
             device = selectedDevice.Device;
@@ -35,7 +39,7 @@ namespace SCUScanner.ViewModels
                          {
                              using (var dialog= App.Dialogs.Loading(Resources["SendingValueText"], cancelSrc.Cancel))
                              {
-                                 CharacteristicGattResult res = null;
+                                 CharacteristicResult res = null;
                                  string strResult = "";
                                  try
                                  {
@@ -48,16 +52,14 @@ namespace SCUScanner.ViewModels
                                          if (res != null)
                                          {
                                              
-                                                 strResult = res.Success ? "OK" : res.ErrorMessage;
+                                                 strResult =DataTostring(res.Data);
                                                  strResult = $"{Resources["BroadcastIdentityText"]}- {strResult}";
                                              
                                              System.Diagnostics.Debug.WriteLine(strResult);
-                                             if (res.Success)
-                                             {
+                                             
                                                  DoDisconnect = true;
                                                 
-                                             }else
-                                                 stringBuilder.AppendLine(strResult);
+                                             
                                          }
 
 
@@ -67,10 +69,9 @@ namespace SCUScanner.ViewModels
                                          res = await WriteToDevice($"^{AlarmLevel}", cancelSrc);
                                          if (res != null)
                                          {
-                                             strResult = res.Success ? "OK" : res.ErrorMessage;
+                                             strResult = DataTostring(res.Data);
                                              strResult = $"{Resources["AlarmLevelText"]}- {strResult}";
-                                             if (!res.Success)
-                                                 stringBuilder.AppendLine(strResult);
+                                             
 
                                              System.Diagnostics.Debug.WriteLine(strResult);
                                          }
@@ -80,10 +81,9 @@ namespace SCUScanner.ViewModels
                                          res = await WriteToDevice($"@{CutOff}", cancelSrc);
                                          if (res != null)
                                          {
-                                             strResult = res.Success ? "" : res.ErrorMessage;
+                                             strResult = DataTostring(res.Data);
                                              strResult = $"{Resources["CutOffText"]}- {strResult}";
-                                             if (!res.Success)
-                                                 stringBuilder.AppendLine(strResult);
+                                             
                                              System.Diagnostics.Debug.WriteLine(strResult);
                                          }
                                      }
@@ -93,10 +93,9 @@ namespace SCUScanner.ViewModels
                                          res = await WriteToDevice($"~{strAlarmHours.PadLeft(4, '0')}", cancelSrc);
                                          if (res != null)
                                          {
-                                             strResult = res.Success ? "" : res.ErrorMessage;
+                                             strResult = DataTostring(res.Data);
                                              strResult = $"{Resources["AlarmHoursText"]}- {strResult}";
-                                             if (!res.Success)
-                                                 stringBuilder.AppendLine(strResult);
+                                             
                                              System.Diagnostics.Debug.WriteLine(strResult);
                                          }
                                      }
@@ -118,16 +117,11 @@ namespace SCUScanner.ViewModels
                                          }
                                          if (res != null)
                                          {
-                                             strResult = res.Success ? "" : res.ErrorMessage;
+                                             strResult = DataTostring(res.Data);
                                              strResult = $"{Resources["SetSerialNumberText"]}- {strResult}";
                                              
                                              System.Diagnostics.Debug.WriteLine(strResult);
-                                             if (res.Success)
-                                             {
-                                                // DoDisconnect = true;
-                                                 //Disconnect();
-                                             }else
-                                                 stringBuilder.AppendLine(strResult);
+                                             
                                          }
                                      }
                                  }
@@ -174,9 +168,9 @@ namespace SCUScanner.ViewModels
             }
         
         }
-        private async Task<CharacteristicGattResult> WriteToDevice(string str, CancellationTokenSource cancellationTokenSource)
+        private async Task<CharacteristicResult> WriteToDevice(string str, CancellationTokenSource cancellationTokenSource)
         {
-            CharacteristicGattResult result = null;
+            CharacteristicResult result = null;
             
                 byte[] bytes = Encoding.UTF8.GetBytes(str);
 

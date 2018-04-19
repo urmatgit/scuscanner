@@ -151,17 +151,17 @@ namespace SCUScanner.ViewModels
              set => this.RaiseAndSetIfChanged(ref this.lastValue, value);
         }
 
-        void SetReadValue(GattCharacteristicViewModel selectedGatt, CharacteristicGattResult result, bool fromUtf8) => Device.BeginInvokeOnMainThread(() =>
+        void SetReadValue(GattCharacteristicViewModel selectedGatt, CharacteristicResult result, bool fromUtf8) => Device.BeginInvokeOnMainThread(() =>
         {
 
 
             this.LastValue = DateTime.Now;
             selectedGatt.LastValue = DateTime.Now;
             
-            if (!result.Success)
-                this.Value = "ERROR - " + result.ErrorMessage;
+            //if (!result.Success)
+            //    this.Value = "ERROR - " + result.ErrorMessage;
 
-            else if (result.Data == null)
+            if (result.Data == null)
                 this.Value = "EMPTY";
 
             else

@@ -459,33 +459,34 @@ namespace SCUScanner.ViewModels
                         App.mainTabbed.CurrentDeviceInfo.GattCharacteristic= null;
 
                     }
-                    //character.RegisterAndNotify().Subscribe(registerResult =>
+                    this.watcher = character.RegisterAndNotify().Subscribe(registerResult =>
+                    {
+                        GetValue(registerResult);
+                    });
+                    this.IsNotifying = true;
+                    //try
                     //{
-                    //    GetValue(registerResult);
-                    //});
-                    try
-                    {
-                        character.EnableNotifications().Subscribe(n =>
-                        {
-                        
-                            Debug.WriteLine($"EnableNotifications- {n.ErrorMessage}");
+                    //    character.EnableNotifications().Subscribe(n =>
+                    //    {
 
-                            if (n.Success && IsActive)
-                            {
-                                this.watcher = n.Characteristic.WhenNotificationReceived().Subscribe(
-                                    x => GetValue(x)
-                                );
-                                this.IsNotifying = true;
-                                App.mainTabbed.CurrentDeviceInfo.GattCharacteristic = character;
-                                App.mainTabbed.CurrentDeviceInfo.Device = device;
-                                App.Dialogs.Toast("EnableNotifications");
-                            }
-                        });
-                    }
-                    catch (Exception er)
-                    {
-                        App.Dialogs.AlertAsync(er.Message);
-                    }
+                    //        //Debug.WriteLine($"EnableNotifications- {n. ErrorMessage}");
+
+                    //        if (n && IsActive)
+                    //        {
+                    //            this.watcher = character.WhenNotificationReceived().Subscribe(
+                    //                x => GetValue(x)
+                    //            );
+                    //            this.IsNotifying = true;
+                    //            App.mainTabbed.CurrentDeviceInfo.GattCharacteristic = character;
+                    //            App.mainTabbed.CurrentDeviceInfo.Device = device;
+                    //            App.Dialogs.Toast("EnableNotifications");
+                    //        }
+                    //    });
+                    //}
+                    //catch (Exception er)
+                    //{
+                    //    App.Dialogs.AlertAsync(er.Message);
+                    //}
                     //this.watcher = character.WhenNotificationReceived().Subscribe(
                     //    x => GetValue(x)
                     //    );
@@ -510,14 +511,14 @@ namespace SCUScanner.ViewModels
         }
         private bool IsStartedJson = false;
         private string StrJson = "";
-        private void GetValue(CharacteristicGattResult readresult)
+        private void GetValue(CharacteristicResult readresult)
         {
             this.LastValue = DateTime.Now;
             if (App.mainTabbed.CurrentDeviceInfo.GattCharacteristic == null)
                 App.mainTabbed.CurrentDeviceInfo.GattCharacteristic = readresult.Characteristic;
-            ScuData = null;
-            if (!readresult.Success)
-                this.SourceText = "ERROR - " + readresult.ErrorMessage;
+          //  ScuData = null;
+            //if (!readresult.Success)
+            //    this.SourceText = "ERROR - " + readresult.ErrorMessage;
 
             else if (readresult.Data == null)
                 this.SourceText = "EMPTY";
