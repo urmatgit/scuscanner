@@ -1,5 +1,5 @@
 ﻿using Acr.UserDialogs;
-using Plugin.BluetoothLE;
+
 using SCUScanner.Models;
 using SCUScanner.Resources;
 using SCUScanner.Services;
@@ -22,7 +22,7 @@ namespace SCUScanner
     {
         public static string CurrentLanguage = "EN";
         public static IUserDialogs Dialogs;
-        public static IAdapter BleAdapter;
+        //public static IAdapter BleAdapter;
         public const string DATABASE_NAME = "SCUData.db";
         public static SCUDataRepository database;
         public static SCUDataRepository Database
@@ -41,7 +41,7 @@ namespace SCUScanner
         {
             InitializeComponent();
             Dialogs = UserDialogs.Instance;
-            BleAdapter = CrossBleAdapter.Current;
+            //BleAdapter = CrossBleAdapter.Current;
 
             if (Device.RuntimePlatform != Device.WinPhone)
             {
@@ -86,23 +86,23 @@ namespace SCUScanner
 
         protected override async void OnStart()
         {
-            switch (BleAdapter.Status)
-            {
-                case AdapterStatus.Unsupported:
-                    await Dialogs.AlertAsync(Settings.Current.Resources["BluetoothUnsupportText"]);
-                    return;
-                case AdapterStatus.PoweredOff:
+            //switch (BleAdapter.Status)
+            //{
+            //    case AdapterStatus.Unsupported:
+            //        await Dialogs.AlertAsync(Settings.Current.Resources["BluetoothUnsupportText"]);
+            //        return;
+            //    case AdapterStatus.PoweredOff:
 
-                    bool res = await Dialogs.ConfirmAsync(Settings.Current.Resources["AskBluetoothSetText"], okText: Settings.Current.Resources["OkText"], cancelText: Settings.Current.Resources["CancelText"]);
-                    if (res)
-                    {
-                        if (BleAdapter.CanControlAdapterState())
-                            BleAdapter.SetAdapterState(true);
-                        else if (BleAdapter.CanOpenSettings())
-                            BleAdapter.OpenSettings();
-                    }
-                    break;
-            }
+            //        bool res = await Dialogs.ConfirmAsync(Settings.Current.Resources["AskBluetoothSetText"], okText: Settings.Current.Resources["OkText"], cancelText: Settings.Current.Resources["CancelText"]);
+            //        if (res)
+            //        {
+            //            if (BleAdapter.CanControlAdapterState())
+            //                BleAdapter.SetAdapterState(true);
+            //            else if (BleAdapter.CanOpenSettings())
+            //                BleAdapter.OpenSettings();
+            //        }
+            //        break;
+            //}
             //Check location permission
             if (Device.Android == Device.RuntimePlatform)
             {

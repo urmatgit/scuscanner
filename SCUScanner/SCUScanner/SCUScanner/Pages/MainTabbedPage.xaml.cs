@@ -1,4 +1,4 @@
-﻿using Plugin.BluetoothLE;
+﻿
 using SCUScanner.Models;
 using SCUScanner.ViewModels;
 using System;
@@ -37,26 +37,26 @@ namespace SCUScanner.Pages
             InitializeComponent();
             BindingContext = new BaseViewModel();
         }
-        public CharacterPage characterPage
-        {
-            get; set;
-        }
-        public DeviceSettingPage deviceSettingPage
-        {
-            get;set;
-        }
-        public ScanBluetoothPage ScanPage
-        {
-            get { return ScanningPage; }
-        }
-        public void CloseConnection()
-        {
-            ScanningPage.scanBluetoothViewModel.CleanTabPages();
-        }
+        //public CharacterPage characterPage
+        //{
+        //    get; set;
+        //}
+        //public DeviceSettingPage deviceSettingPage
+        //{
+        //    get;set;
+        //}
+        //public ScanBluetoothPage ScanPage
+        //{
+        //    get { return ScanningPage; }
+        //}
+        //public void CloseConnection()
+        //{
+        //    ScanningPage.scanBluetoothViewModel.CleanTabPages();
+        //}
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            ScanningPage.DoAppearing();
+//            ScanningPage.DoAppearing();
 
         }
         protected override void OnPagesChanged(NotifyCollectionChangedEventArgs e)
