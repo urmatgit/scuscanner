@@ -32,7 +32,7 @@ namespace SCUScanner.ViewModels
         public ScanResultViewModel DeviceViewModel { get; set; }
         SCUSendData ScuData { get; set; }
         System.Timers.Timer TimerAlarm;
-
+        
         //    public ObservableCollection<Group<GattCharacteristicViewModel>> GattCharacteristics { get; } = new ObservableCollection<Group<GattCharacteristicViewModel>>();
         //public ObservableCollection<GattDescriptorViewModel> GattDescriptors { get; } = new ObservableCollection<GattDescriptorViewModel>();
         public TabbedPage ParentTabbed { get; set; }
@@ -315,6 +315,12 @@ namespace SCUScanner.ViewModels
             get => isNotifying;
             set => this.RaiseAndSetIfChanged(ref isNotifying, value);
         }
+        private bool isActive;
+        public bool IsActive
+        {
+            get => isActive;
+            set => this.RaiseAndSetIfChanged(ref isActive, value);
+        }
         public void OnActivateOnLoad()
         {
             this.cleanup.Clear();
@@ -324,11 +330,12 @@ namespace SCUScanner.ViewModels
                .Subscribe(x =>
                {
                    this.Status = x;
-
+                   DeviceViewModel.UpdateButtonText();
                    switch (x)
                    {
                        case ConnectionStatus.Disconnecting:
                            this.ConnectText = "Disconnecting";
+                         //  DeviceViewModel.UpdateButtonText();
                            break;
                        case ConnectionStatus.Connecting:
                            this.ConnectText = "Connecting";
@@ -409,12 +416,21 @@ namespace SCUScanner.ViewModels
         }
         private async void NotifyDisable() {
 
-            if (App.mainTabbed.SelectedCharacteristic != null && IsNotifying)
+            if (App.mainTabbed.CurrentDeviceInfo.GattCharacteristic != null && IsNotifying)
             {
                 //     App.mainTabbed.SelectedCharacteristic.
                 try
                 {
-                    await App.mainTabbed.SelectedCharacteristic?.DisableNotifications();
+                    await App.mainTabbed.CurrentDeviceInfo.GattCharacteristic?.DisableNotifications();
+                    if (this.watcher != null)
+                    {
+                        this.watcher.Dispose();
+                        this.watcher = null;
+                       // App.mainTabbed.CurrentDeviceInfo.GattCharacteristic = null;
+
+                    }
+                    
+                    App.Dialogs.Toast("DisableNotifications");
                 }
                 catch (Exception er)
                 {
@@ -440,7 +456,8 @@ namespace SCUScanner.ViewModels
                     {
                         this.watcher.Dispose();
                         this.watcher = null;
-                        App.mainTabbed.SelectedCharacteristic = null;
+                        App.mainTabbed.CurrentDeviceInfo.GattCharacteristic= null;
+
                     }
                     //character.RegisterAndNotify().Subscribe(registerResult =>
                     //{
@@ -453,13 +470,15 @@ namespace SCUScanner.ViewModels
                         
                             Debug.WriteLine($"EnableNotifications- {n.ErrorMessage}");
 
-                            if (n.Success)
+                            if (n.Success && IsActive)
                             {
                                 this.watcher = n.Characteristic.WhenNotificationReceived().Subscribe(
                                     x => GetValue(x)
                                 );
                                 this.IsNotifying = true;
-                                App.mainTabbed.SelectedCharacteristic = character;
+                                App.mainTabbed.CurrentDeviceInfo.GattCharacteristic = character;
+                                App.mainTabbed.CurrentDeviceInfo.Device = device;
+                                App.Dialogs.Toast("EnableNotifications");
                             }
                         });
                     }
@@ -494,8 +513,8 @@ namespace SCUScanner.ViewModels
         private void GetValue(CharacteristicGattResult readresult)
         {
             this.LastValue = DateTime.Now;
-            if (App.mainTabbed.SelectedCharacteristic == null)
-                App.mainTabbed.SelectedCharacteristic = readresult.Characteristic;
+            if (App.mainTabbed.CurrentDeviceInfo.GattCharacteristic == null)
+                App.mainTabbed.CurrentDeviceInfo.GattCharacteristic = readresult.Characteristic;
             ScuData = null;
             if (!readresult.Success)
                 this.SourceText = "ERROR - " + readresult.ErrorMessage;
@@ -592,13 +611,14 @@ namespace SCUScanner.ViewModels
 
         public void Dispose()
         {
-            if (App.mainTabbed.SelectedCharacteristic != null)
+            if (App.mainTabbed.CurrentDeviceInfo.GattCharacteristic != null)
             {
-                App.mainTabbed.SelectedCharacteristic.DisableNotifications();
+                App.mainTabbed.CurrentDeviceInfo.GattCharacteristic.DisableNotifications();
                 IsNotifying = false;
-                App.mainTabbed.SelectedCharacteristic = null;
+                App.mainTabbed.CurrentDeviceInfo.GattCharacteristic = null;
             }
             device.CancelConnection();
+            App.mainTabbed.CurrentDeviceInfo.Device = null;
             DeviceViewModel.IsConnected = false;
             TimerAlarm.Stop();
             TimerAlarm.Dispose();
@@ -611,18 +631,27 @@ namespace SCUScanner.ViewModels
         }
         public override void OnActivate()
         {
+            IsActive = true;
             base.OnActivate();
             if (this.cleanup.Count == 0)
             {
                 OnActivateOnLoad();
             }
-            if (App.mainTabbed.SelectedCharacteristic != null && !IsNotifying)
+            if (App.mainTabbed.CurrentDeviceInfo.GattCharacteristic != null && !IsNotifying)
             {
-                NotifyEnable(App.mainTabbed.SelectedCharacteristic);
+                if (App.mainTabbed.CurrentDeviceInfo.Device == null) return;
+                //if (App.mainTabbed.CurrentDeviceInfo.Device.Status != ConnectionStatus.Connecting)
+                //    App.mainTabbed.CurrentDeviceInfo.Device.CancelConnection();
+                //    if (App.mainTabbed.CurrentDeviceInfo.Device.Status != ConnectionStatus.Connected)
+                //    App.mainTabbed.CurrentDeviceInfo.Device.Connect(
+                //                       new GattConnectionConfig() { AutoConnect = false }
+                //                       );
+                NotifyEnable(App.mainTabbed.CurrentDeviceInfo.GattCharacteristic);
             }
         }
         public override void OnDeactivate()
         {
+            IsActive = false;
             SettingsBase.OperatorName=OperatorName;
             NotifyDisable();
             base.OnDeactivate();

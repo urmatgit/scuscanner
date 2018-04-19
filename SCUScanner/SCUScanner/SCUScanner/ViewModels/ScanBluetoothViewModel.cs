@@ -87,13 +87,14 @@ namespace SCUScanner.ViewModels
                     var vm = this.Devices.FirstOrDefault(dev => dev.Uuid.Equals(x.Uuid));
                     if (vm != null)
                     {
-                        vm.IsConnected = x.Status == ConnectionStatus.Connected;
-                        if (!vm.IsConnected)
-                        {
-                            App.mainTabbed.CurrentConnectDeviceSN = "";
-                            if(!IsBroadcastNameChanged)
-                                LastConnectedItem = null;
-                        }
+                       // vm.IsConnected = x.Status == ConnectionStatus.Connected;
+                        Debug.WriteLine($"{vm.Name} status changed-{x.Status == ConnectionStatus.Connected}");
+                        //if (!vm.IsConnected)
+                        //{
+                        //    App.mainTabbed.CurrentConnectDeviceSN = "";
+                        //    if(!IsBroadcastNameChanged)
+                        //        LastConnectedItem = null;
+                        //}
                     }
                 });
 
@@ -167,7 +168,7 @@ namespace SCUScanner.ViewModels
                                parentTabbed.Children.Add(characterPage);
                                parentTabbed.Children.Add(deviceSettingPage);
                                parentTabbed.CurrentPage = characterPage;
-
+                               App.mainTabbed.CurrentDeviceInfo.Device = device;
                            }
                        }
                        App.Dialogs.Toast("Connected");
@@ -179,6 +180,7 @@ namespace SCUScanner.ViewModels
                        LastConnectedItem = null;
                        o.IsConnected = false;
                        App.mainTabbed.CurrentConnectDeviceSN = "";
+                       App.mainTabbed.CurrentDeviceInfo.Device = null;
                        parentTabbed.CurrentPage = CleanTabPages();
                        App.Dialogs.Toast("Disconnected");
 

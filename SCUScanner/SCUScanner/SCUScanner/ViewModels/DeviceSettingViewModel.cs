@@ -25,9 +25,9 @@ namespace SCUScanner.ViewModels
 
             SendCommand = ReactiveCommand.CreateFromTask(async () =>
              {
-                 if (App.mainTabbed != null && App.mainTabbed.SelectedCharacteristic!=null  )
+                 if (App.mainTabbed != null && App.mainTabbed.CurrentDeviceInfo.GattCharacteristic != null  )
                  {
-                     if (App.mainTabbed.SelectedCharacteristic.CanWrite())
+                     if (App.mainTabbed.CurrentDeviceInfo.GattCharacteristic.CanWrite())
                      {
                          StringBuilder stringBuilder = new StringBuilder();
                          bool DoDisconnect = false;
@@ -180,7 +180,7 @@ namespace SCUScanner.ViewModels
             
                 byte[] bytes = Encoding.UTF8.GetBytes(str);
 
-                result = await App.mainTabbed.SelectedCharacteristic.Write(bytes)
+                result = await App.mainTabbed.CurrentDeviceInfo.GattCharacteristic.Write(bytes)
                                   .Timeout(TimeSpan.FromSeconds(10))
                                   .ToTask();
                 
@@ -193,7 +193,7 @@ namespace SCUScanner.ViewModels
 
             byte[] bytes = Encoding.UTF8.GetBytes(str);
 
-             App.mainTabbed.SelectedCharacteristic.WriteWithoutResponse(bytes);
+             App.mainTabbed.CurrentDeviceInfo.GattCharacteristic.WriteWithoutResponse(bytes);
 
         
         }
