@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:BaseTabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:SCUScanner.Pages"
+             x:Class="SCUScanner.Pages.DeviceListPage"
+             Title="Discover devices"
+             x:Name="DevicePage">
+    <pages:BaseTabbedPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="DeviceItemTemplate">
+                <ViewCell>
+                  
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Triggers>
+                            <DataTrigger TargetType="Grid"
+                                 Binding="{Binding IsConnected}"
+                                 Value="true">
+                                <Setter Property="BackgroundColor" Value="#1A00FF00"></Setter>
+                            </DataTrigger>
+                        </Grid.Triggers>
+                        <StackLayout Orientation="Vertical" VerticalOptions="Center">
+                            <Label Text="{Binding Name}" FontSize="Large" />
+                            <Label Text="{Binding Id, StringFormat='{0}'}" TextColor="Gray" FontSize="Small"/>
+                        </StackLayout>
+                        <Label Grid.Column="1"
+                         Margin="10"
+                         Text="{Binding Rssi}"
+                         VerticalTextAlignment="Center"></Label>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ResourceDictionary>
+    </pages:BaseTabbedPage.Resources>
+    <pages:BaseTabbedPage.ToolbarItems>
+        <!--<ToolbarItem       Text="ScanText" Command="{Binding ScanToggleCommand}" Order="Primary" Priority="1"    />-->
+        <ToolbarItem       Text="{Binding ScanText}" Command="{Binding ScanToggleCommand}" Order="Primary" Priority="1"    />
+
+    </pages:BaseTabbedPage.ToolbarItems>
+    <pages:BaseTabbedPage.Children>
+        <pages:BasePage Title="Scan for devices">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row="0" BackgroundColor="#FF6969" Padding="10" IsVisible="{Binding IsStateOn, Converter={StaticResource InverseBoolean}}">
+                    <Label Text="{Binding StateText}" FontSize="18" HorizontalTextAlignment="Center"></Label>
+                </StackLayout>
+
+                <ListView Grid.Row="1" ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice, Mode=TwoWay}"
+                 IsPullToRefreshEnabled="True"
+                 RefreshCommand="{Binding RefreshCommand}"
+                 IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
+                 RowHeight="80"
+                 ItemTemplate="{StaticResource DeviceItemTemplate}">
+                </ListView>
+
+
+              
+            </Grid>
+        </pages:BasePage>
+        <pages:BasePage Title="System devices">
+        </pages:BasePage>
+    </pages:BaseTabbedPage.Children>
+
+</pages:BaseTabbedPage>

@@ -1,5 +1,5 @@
 ﻿
-using Plugin.BluetoothLE;
+
 using SCUScanner.Helpers;
 using SCUScanner.Services;
 using SCUScanner.ViewModels;
@@ -18,14 +18,14 @@ namespace SCUScanner.Pages
 	public partial class ScanBluetoothPage : BaseTabPage
     {
         bool IsBluetoothEnabled = false;
-       public  ScanBluetoothViewModel scanBluetoothViewModel;
+        DeviceListViewModel deviceListViewModel;
 
         public ScanBluetoothPage ()
 		{
 			InitializeComponent ();
-            Kod = GlobalConstants.MAIN_TAB_PAGE;   
-            BindingContext = scanBluetoothViewModel=new ScanBluetoothViewModel(Tabbed);
-            lblHintBluetoothAndroidText.IsVisible = !(lblHintBluetoothIOSText.IsVisible = Device.RuntimePlatform == Device.iOS);
+            Kod = GlobalConstants.MAIN_TAB_PAGE;
+            BindingContext = deviceListViewModel = new DeviceListViewModel();
+
             MessagingCenter.Subscribe<object, CultureChangedMessage>(this, string.Empty, (sender, agr) =>
             {
 
@@ -38,7 +38,7 @@ namespace SCUScanner.Pages
                     if (App.mainTabbed != null)
                     {
                         App.mainTabbed.Title= settings.Resources["MainText"];
-                        scanBluetoothViewModel.ScanTextChange(scanBluetoothViewModel.IsScanning);
+                     //   scanBluetoothViewModel.ScanTextChange(scanBluetoothViewModel.IsScanning);
                     }
                 }
             });
@@ -51,9 +51,7 @@ namespace SCUScanner.Pages
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            (BindingContext as ScanBluetoothViewModel). ParentTabbed = Tabbed;
-            App.mainTabbed.characterPage?.RunDisappearing();
-            App.mainTabbed.deviceSettingPage?.RunDisappearing();
+            
             (this.BindingContext as IViewModel)?.OnActivate();
         }
          

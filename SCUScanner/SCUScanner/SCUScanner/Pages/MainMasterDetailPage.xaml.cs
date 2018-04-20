@@ -51,12 +51,12 @@ namespace SCUScanner.Pages
             var CurrentDetailPage=navigation?.CurrentPage ;
             if (CurrentDetailPage == null || CurrentDetailPage.GetType().Name!=item.TargetType.Name || CurrentDetailPage.GetType().Name==typeof(MaintenancePage).Name)
             {
-                if (item.TargetType.Name==typeof(MainTabbedPage).Name)
+                if (item.TargetType.Name==typeof(DeviceListPage).Name)
                     if(App.mainTabbed ==null)
                     {
                         CurrentPage = (Page)Activator.CreateInstance(item.TargetType);
                         CurrentPage.Title = item.Title;
-                        App.mainTabbed = CurrentPage as MainTabbedPage;
+                        App.mainTabbed = CurrentPage as DeviceListPage;
                     }
                     else
                     {

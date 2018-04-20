@@ -132,7 +132,7 @@ namespace SCUScanner.ViewModels
                          await Navigation.PushAsync(webViewPageCS);
                      }
                  }
-                 SerialNumber = App.mainTabbed?.CurrentConnectDeviceSN;
+                //SerialNumber = App.mainTabbed?.CurrentConnectDeviceSN;
              });
         }
         private void DownLoadManual()

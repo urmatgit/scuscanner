@@ -36,7 +36,7 @@ namespace SCUScanner
                 return database;
             }
         }
-        public static SCUScanner.Pages.MainTabbedPage mainTabbed { get;  set; }
+        public static SCUScanner.Pages.DeviceListPage mainTabbed { get;  set; }
         public App()
         {
             InitializeComponent();
@@ -86,24 +86,7 @@ namespace SCUScanner
 
         protected override async void OnStart()
         {
-            //switch (BleAdapter.Status)
-            //{
-            //    case AdapterStatus.Unsupported:
-            //        await Dialogs.AlertAsync(Settings.Current.Resources["BluetoothUnsupportText"]);
-            //        return;
-            //    case AdapterStatus.PoweredOff:
-
-            //        bool res = await Dialogs.ConfirmAsync(Settings.Current.Resources["AskBluetoothSetText"], okText: Settings.Current.Resources["OkText"], cancelText: Settings.Current.Resources["CancelText"]);
-            //        if (res)
-            //        {
-            //            if (BleAdapter.CanControlAdapterState())
-            //                BleAdapter.SetAdapterState(true);
-            //            else if (BleAdapter.CanOpenSettings())
-            //                BleAdapter.OpenSettings();
-            //        }
-            //        break;
-            //}
-            //Check location permission
+           
             if (Device.Android == Device.RuntimePlatform)
             {
                
