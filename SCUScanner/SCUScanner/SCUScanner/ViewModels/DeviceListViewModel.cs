@@ -11,6 +11,7 @@ using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using ReactiveUI;
 using SCUScanner.Models;
+using SCUScanner.Pages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +28,7 @@ namespace SCUScanner.ViewModels
 
     public class DeviceListViewModel : BaseViewModel
     {
+        DeviceListPage _deviceListPage;
         private readonly IBluetoothLE _bluetoothLe;
         private readonly IUserDialogs _userDialogs;
         private readonly ISettings _settings;
@@ -45,37 +47,63 @@ namespace SCUScanner.ViewModels
             get => isStateOn;
             set => this.RaiseAndSetIfChanged(ref isStateOn, value);
         }
+        bool isConnected;
 
+        public bool IsConnected
+        {
+            get => isConnected;
+            set => this.RaiseAndSetIfChanged(ref isConnected, value);
+        }
         private CancellationTokenSource _cancellationTokenSource;
         public ICommand ScanToggleCommand { get; }
         public ICommand StopScanCommand { get; }
-        
+        public ICommand ConnectCommand { get; }
         public ObservableCollection<DeviceListItemViewModel> Devices { get; set; } = new ObservableCollection<DeviceListItemViewModel>();
         readonly IPermissions _permissions;
 
-        public DeviceListViewModel(IBluetoothLE bluetoothLe, IAdapter adapter, IUserDialogs userDialogs, ISettings settings, IPermissions permissions) 
+        public DeviceListViewModel(DeviceListPage deviceListPage, IBluetoothLE bluetoothLe, IAdapter adapter, IUserDialogs userDialogs, ISettings settings, IPermissions permissions) 
         {
+            _deviceListPage = deviceListPage;
             
             UpdateScanText(false);
             Adapter = adapter;
-            this.WhenAnyValue(vm => vm.IsRefreshing).Subscribe(r =>
-            {
-                UpdateScanText(r);
-            });
-         
             _permissions = permissions;
             _bluetoothLe = bluetoothLe;
             _userDialogs = userDialogs;
             _settings = settings;
+            this.WhenAnyValue(vm => vm.IsRefreshing).Subscribe(r =>
+            {
+                UpdateScanText(r);
+                string ONOF = r ? "On" : "Off";
+                _userDialogs.Toast($"Scanning  {ONOF}");
+            });
+         
+            
 
             IsRefreshing = Adapter.IsScanning;
             IsStateOn = _bluetoothLe.IsOn;
             ScanToggleCommand = ReactiveCommand.Create( () => TryStartScanning(true));
             StopScanCommand = ReactiveCommand.Create(() => StopScan());
-            _bluetoothLe.StateChanged += OnStateChanged;
+            ConnectCommand = ReactiveCommand.CreateFromTask<DeviceListItemViewModel>(async (o) =>
+             {
+                 //                 var selecte = o;
+                 if (o.IsConnected)
+                 {
+                     await DisconnectDevice(o);
+                     _deviceListPage.CurrentPage = _deviceListPage.DeviceListTab;
+                 }
+                 else
+                 {
+                   var res =  await ConnectDeviceAsync(o, false);
+                     if (res)
+                         _deviceListPage.CurrentPage= _deviceListPage.ConnectDeviceTab;
+                 }
+             });
+                _bluetoothLe.StateChanged += OnStateChanged;
             Adapter.DeviceDiscovered += OnDeviceDiscovered;
             Adapter.ScanTimeoutElapsed += Adapter_ScanTimeoutElapsed;
             UpdateStateText();
+            IsConnected = false;
             //Adapter.DeviceDisconnected += OnDeviceDisconnected;
             //Adapter.DeviceConnectionLost += OnDeviceConnectionLost;
             // quick and dirty :>
@@ -133,9 +161,9 @@ namespace SCUScanner.ViewModels
                     return "BLE is turning off. That's sad!";
                 case BluetoothState.Off:
                     if (Xamarin.Forms.Device.OS == Xamarin.Forms.TargetPlatform.Android)
-                        return Settings.Current.Resources["SetHintBluetoothAndroidText"];
+                        return Models.Settings.Current.Resources["SetHintBluetoothAndroidText"];
                     else
-                        return Settings.Current.Resources["SetHintBluetoothIOSText"];
+                        return Models.Settings.Current.Resources["SetHintBluetoothIOSText"];
                 default:
                     return "Unknown BLE state.";
             }
@@ -148,6 +176,7 @@ namespace SCUScanner.ViewModels
         private void UpdateIsScanning()
         {
             IsRefreshing = Adapter.IsScanning;
+            
         }
         private void OnStateChanged(object sender, BluetoothStateChangedArgs e)
         {
@@ -211,7 +240,7 @@ namespace SCUScanner.ViewModels
 
                     if (permissionResult.First().Value != PermissionStatus.Granted)
                     {
-                       await  _userDialogs.AlertAsync("Permission denied. Not scanning.");
+                       await  _userDialogs.AlertAsync(Resources["InfoPermissionLocationText"]);
                         return;
                     }
                 }
@@ -284,12 +313,73 @@ namespace SCUScanner.ViewModels
             //    ScanText = Resources["ScanText"];
         }
 
-       
-
-        
 
 
-       
+        private async Task<bool> ConnectDeviceAsync(DeviceListItemViewModel device, bool showPrompt = true)
+        {
+            
+            try
+            {
+                CancellationTokenSource tokenSource = new CancellationTokenSource();
+
+                var config = new ProgressDialogConfig()
+                {
+                    Title = $"{Resources["ConnectingText"] }  ({device.Name})",
+                    CancelText = Resources["CancelText"],
+                    IsDeterministic = false,
+                    OnCancel = tokenSource.Cancel
+                };
+
+                using (var progress = _userDialogs.Progress(config))
+                {
+                    progress.Show();
+
+                    await Adapter.ConnectToDeviceAsync(device.Device, new ConnectParameters(autoConnect: false, forceBleTransport: false), tokenSource.Token);
+                }
+
+                _userDialogs.Toast( $"{SettingsBase.Resources["ConnectStatusText"]}  {device.Device.Name}.");
+
+                //PreviousGuid = device.Device.Id;
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                _userDialogs.Alert(ex.Message, "Connection error");
+             
+                return false;
+            }
+            finally
+            {
+                _userDialogs.HideLoading();
+                device.Update();
+            }
+        }
+        private async Task DisconnectDevice(DeviceListItemViewModel device)
+        {
+            try
+            {
+                if (!device.IsConnected)
+                    return;
+
+                _userDialogs.ShowLoading($"{SettingsBase.Resources["DisConnectButtonText"]} {device.Name}...");
+
+                await Adapter.DisconnectDeviceAsync(device.Device);
+                _userDialogs.Toast($"{SettingsBase.Resources["DisconnectedStatusText"]} {device.Name}");
+            }
+            catch (Exception ex)
+            {
+                _userDialogs.Alert(ex.Message, "Disconnect error");
+            }
+            finally
+            {
+                device.Update();
+                _userDialogs.HideLoading();
+            }
+        }
+
+
+
     }
 
 }

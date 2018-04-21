@@ -137,7 +137,7 @@
     <value>Подключение...</value>
   </data>
   <data name="ConnectStatusText" xml:space="preserve">
-    <value>Connected</value>
+    <value>Подключень</value>
   </data>
   <data name="ContinuousScanText" xml:space="preserve">
     <value>Автоматически режим</value>
@@ -152,7 +152,7 @@
     <value>Разъединять</value>
   </data>
   <data name="DisconnectStatusText" xml:space="preserve">
-    <value>Disconnected</value>
+    <value>Отсоединен</value>
   </data>
   <data name="HelpText" xml:space="preserve">
     <value>Помощь</value>

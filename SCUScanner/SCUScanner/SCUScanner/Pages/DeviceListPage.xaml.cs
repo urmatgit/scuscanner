@@ -29,7 +29,8 @@ namespace SCUScanner.Pages
             var _userDialogs = UserDialogs.Instance;//  Mvx.Resolve<IUserDialogs>();
            var  _settings = CrossSettings.Current;
             var _permission = CrossPermissions.Current;
-            BindingContext = deviceListViewModel = new DeviceListViewModel(_bluetoothLe, adapter,_userDialogs,_settings, _permission);
+            BindingContext = deviceListViewModel = new DeviceListViewModel(this, _bluetoothLe, adapter,_userDialogs,_settings, _permission);
+            
             MessagingCenter.Subscribe<object, CultureChangedMessage>(this, string.Empty, (sender, agr) =>
             {
 
@@ -47,6 +48,14 @@ namespace SCUScanner.Pages
                 }
             });
 
+        }
+        public BasePage DeviceListTab
+        {
+            get => MainTabPage;
+        }
+        public BasePage ConnectDeviceTab
+        {
+            get => ConnectedTabPage;
         }
         protected override void OnAppearing()
         {

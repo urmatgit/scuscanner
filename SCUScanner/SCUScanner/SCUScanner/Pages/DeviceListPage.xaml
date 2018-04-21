@@ -65,10 +65,10 @@
 
             </Grid>
         </pages:BasePage>
-        <pages:BasePage Title="{Binding Resources[ConnectedDeviceCaptionText]}" IsVisible="True" Kod="ConnectedTabPage">
+        <pages:BasePage x:Name="ConnectedTabPage" Title="{Binding Resources[ConnectedDeviceCaptionText]}" IsVisible="{Binding IsConnected}" Kod="ConnectedTabPage">
             
         </pages:BasePage>
-        <pages:BasePage Title="{Binding Resources[DeviceSettingsCaptionText]}" IsVisible="True" Kod="WriteTabPage"> 
+        <pages:BasePage Title="{Binding Resources[DeviceSettingsCaptionText]}" IsVisible="{Binding IsConnected}" Kod="WriteTabPage"> 
 
         </pages:BasePage>
     </pages:BaseTabbedPage.Children>
