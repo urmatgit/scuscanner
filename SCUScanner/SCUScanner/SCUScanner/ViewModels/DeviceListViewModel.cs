@@ -45,7 +45,7 @@ namespace SCUScanner.ViewModels
             set => this.RaiseAndSetIfChanged(ref isRefreshing, value);
 
         }
-        bool isStateOn ;
+        bool isStateOn;
 
         public bool IsStateOn
         {
@@ -70,10 +70,14 @@ namespace SCUScanner.ViewModels
         public ObservableCollection<DeviceListItemViewModel> Devices { get; set; } = new ObservableCollection<DeviceListItemViewModel>();
         readonly IPermissions _permissions;
 
-        public DeviceListViewModel(DeviceListPage deviceListPage, IBluetoothLE bluetoothLe, IAdapter adapter, IUserDialogs userDialogs, ISettings settings, IPermissions permissions) 
+        public DeviceListViewModel(DeviceListPage deviceListPage, IBluetoothLE bluetoothLe, IAdapter adapter, IUserDialogs userDialogs, ISettings settings, IPermissions permissions)
         {
+
+            TimerAlarm = new System.Timers.Timer();
+            TimerAlarm.Interval = 500;
+            TimerAlarm.Elapsed += TimerAlarm_Elapsed;
             _deviceListPage = deviceListPage;
-            
+
             UpdateScanText(false);
             Adapter = adapter;
             _permissions = permissions;
@@ -86,43 +90,52 @@ namespace SCUScanner.ViewModels
                 string ONOF = r ? "On" : "Off";
                 _userDialogs.Toast($"Scanning  {ONOF}");
             });
-         
-            
+            this.WhenAnyValue(vm => vm.StatusColor).Subscribe(c =>
+            {
+                if (c == Color.Red || c == Color.Yellow)
+                {
+                    if (!TimerChangeColor)
+                        TimerAlarm.Start();
+                }
+                else
+                    TimerAlarm.Stop();
+            });
+
 
             IsRefreshing = Adapter.IsScanning;
             IsStateOn = _bluetoothLe.IsOn;
-            ScanToggleCommand = ReactiveCommand.Create( () => TryStartScanning(true));
+            ScanToggleCommand = ReactiveCommand.Create(() => TryStartScanning(true));
             StopScanCommand = ReactiveCommand.Create(() => StopScan());
-            DisconnectCommand = ReactiveCommand.CreateFromTask (async () =>
-             {
-               
-                 await DisconnectDevice(SelectedDevice);
-               
-             });
-             ConnectCommand = ReactiveCommand.CreateFromTask<DeviceListItemViewModel>(async (o) =>
-             {
-                 if (!IsStateOn) return;
+            DisconnectCommand = ReactiveCommand.CreateFromTask(async () =>
+            {
+
+                await DisconnectDevice(SelectedDevice);
+
+            });
+            ConnectCommand = ReactiveCommand.CreateFromTask<DeviceListItemViewModel>(async (o) =>
+            {
+                if (!IsStateOn) return;
                  //                 var selecte = o;
                  SelectedDevice = o;
-                 if (SelectedDevice.IsConnected)
-                 {
-                    
-                     await DisconnectDevice(SelectedDevice);
-                    
-                 }
-                 else
-                 {
-                   IsConnected =  await ConnectDeviceAsync(SelectedDevice, false);
-                     if (IsConnected)
-                     {
-                         _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
-                          
-                         await LoadServices(SelectedDevice);
-                     }
-                 }
-             });
-                _bluetoothLe.StateChanged += OnStateChanged;
-            
+                if (SelectedDevice.IsConnected)
+                {
+
+                    await DisconnectDevice(SelectedDevice);
+
+                }
+                else
+                {
+                    IsConnected = await ConnectDeviceAsync(SelectedDevice, false);
+                    if (IsConnected)
+                    {
+                        _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
+
+                        await LoadServices(SelectedDevice);
+                    }
+                }
+            });
+            _bluetoothLe.StateChanged += OnStateChanged;
+
             Adapter.DeviceDiscovered += OnDeviceDiscovered;
             Adapter.ScanTimeoutElapsed += Adapter_ScanTimeoutElapsed;
 
@@ -135,18 +148,18 @@ namespace SCUScanner.ViewModels
             //Adapter.DeviceConnected += (sender, e) => Adapter.DisconnectDeviceAsync(e.Device);
 
         }
-        
+
         private async void OnDeviceConnectionLost(object sender, DeviceErrorEventArgs e)
         {
             Devices.FirstOrDefault(d => d.Id == e.Device.Id)?.Update();
-             
+
             await StopUpdates();
             await DisconnectDevice(SelectedDevice);
             _userDialogs.HideLoading();
             _userDialogs.Toast($"Connection LOST {e.Device.Name}", TimeSpan.FromMilliseconds(6000));
-            
+
         }
-        private async void  OnDeviceDisconnected(object sender, DeviceEventArgs e)
+        private async void OnDeviceDisconnected(object sender, DeviceEventArgs e)
         {
             Devices.FirstOrDefault(d => d.Id == e.Device.Id)?.Update();
             await StopUpdates();
@@ -171,7 +184,7 @@ namespace SCUScanner.ViewModels
 
         private void Adapter_ScanTimeoutElapsed(object sender, EventArgs e)
         {
-            
+
             UpdateIsScanning();
             CleanupCancellationToken();
         }
@@ -218,14 +231,14 @@ namespace SCUScanner.ViewModels
         private void UpdateIsScanning()
         {
             IsRefreshing = Adapter.IsScanning;
-            
+
         }
         private void OnStateChanged(object sender, BluetoothStateChangedArgs e)
         {
 
             UpdateStateOn();
             UpdateStateText();
-            
+
             //RaisePropertyChanged(nameof(StateText));
             //TryStartScanning();
         }
@@ -249,7 +262,7 @@ namespace SCUScanner.ViewModels
             set => this.RaiseAndSetIfChanged(ref this.scantext, value);
         }
 
-        public override  async  void OnActivate(string kod)
+        public override async void OnActivate(string kod)
         {
             base.OnActivate();
             UpdateIsScanning();
@@ -260,10 +273,16 @@ namespace SCUScanner.ViewModels
                 if (kod == "MainTabPage" && !IsRefreshing && SettingsBase.AutoScan)
                 {
                     await TryStartScanning(true);
-                } else if (kod == "ConnectedTabPage") {
+                }
+                else if (kod == "ConnectedTabPage")
+                {
                     if (LastCharForUpdate != null)
+                    {
                         StartUpdates(LastCharForUpdate);
-                        }
+                        if (LastStateColorTimer)
+                            TimerAlarm.Enabled = true;
+                    }
+                }
             }
         }
         public override void OnDeactivate(string kod)
@@ -277,18 +296,18 @@ namespace SCUScanner.ViewModels
                 }
                 else if (kod == "ConnectedTabPage")
                 {
-                      StopUpdates();
+                    StopUpdates();
                 }
             }
             base.OnDeactivate();
-            
-            
+
+
         }
 
 
         private async Task TryStartScanning(bool refresh = false)
         {
-            
+
             if (Xamarin.Forms.Device.OS == Xamarin.Forms.TargetPlatform.Android)
             {
                 var status = await _permissions.CheckPermissionStatusAsync(Permission.Location);
@@ -298,7 +317,7 @@ namespace SCUScanner.ViewModels
 
                     if (permissionResult.First().Value != PermissionStatus.Granted)
                     {
-                       await  _userDialogs.AlertAsync(Resources["InfoPermissionLocationText"]);
+                        await _userDialogs.AlertAsync(Resources["InfoPermissionLocationText"]);
                         return;
                     }
                 }
@@ -308,7 +327,7 @@ namespace SCUScanner.ViewModels
             {
                 if (!IsRefreshing)
                 {
-               //     ScanText = Resources["StopScanText"];
+                    //     ScanText = Resources["StopScanText"];
                     IsRefreshing = true;
                     ScanForDevices();
                 }
@@ -318,7 +337,7 @@ namespace SCUScanner.ViewModels
                 }
             }
         }
-        
+
         private async void ScanForDevices()
         {
             Devices.Clear();
@@ -341,7 +360,7 @@ namespace SCUScanner.ViewModels
 
             _cancellationTokenSource = new CancellationTokenSource();
             //RaisePropertyChanged(() => StopScanCommand);
-          
+
             //RaisePropertyChanged(() => IsRefreshing);
             Adapter.ScanMode = ScanMode.LowLatency;
             Adapter.ScanTimeout = 30000;
@@ -375,7 +394,7 @@ namespace SCUScanner.ViewModels
 
         private async Task<bool> ConnectDeviceAsync(DeviceListItemViewModel device, bool showPrompt = true)
         {
-            
+
             try
             {
                 CancellationTokenSource tokenSource = new CancellationTokenSource();
@@ -395,7 +414,7 @@ namespace SCUScanner.ViewModels
                     await Adapter.ConnectToDeviceAsync(device.Device, new ConnectParameters(autoConnect: false, forceBleTransport: false), tokenSource.Token);
                 }
 
-                _userDialogs.Toast( $"{SettingsBase.Resources["ConnectStatusText"]}  {device.Device.Name}.");
+                _userDialogs.Toast($"{SettingsBase.Resources["ConnectStatusText"]}  {device.Device.Name}.");
 
                 //PreviousGuid = device.Device.Id;
                 return true;
@@ -404,7 +423,7 @@ namespace SCUScanner.ViewModels
             catch (Exception ex)
             {
                 _userDialogs.Alert(ex.Message, "Connection error");
-             
+
                 return false;
             }
             finally
@@ -448,12 +467,12 @@ namespace SCUScanner.ViewModels
                 _userDialogs.ShowLoading("Discovering services...");
 
                 var Services = await device.Device.GetServicesAsync();
-                var SCUServices=Services.Where(s=> s.Id.ToString() == GlobalConstants.UUID_MLDP_PRIVATE_SERVICE || s.Id.ToString() == GlobalConstants.UUID_TANSPARENT_PRIVATE_SERVICE);
+                var SCUServices = Services.Where(s => s.Id.ToString() == GlobalConstants.UUID_MLDP_PRIVATE_SERVICE || s.Id.ToString() == GlobalConstants.UUID_TANSPARENT_PRIVATE_SERVICE);
                 //mldpDataCharacteristic, transparentTxDataCharacteristic, transparentRxDataCharacteristic;
                 foreach (var service in SCUServices)
                 {
                     Debug.WriteLine(service.Id.ToString());
-                    transparentTxDataCharacteristic= await  service.GetCharacteristicAsync(Guid.Parse(GlobalConstants.UUID_TRANSPARENT_TX_PRIVATE_CHAR));
+                    transparentTxDataCharacteristic = await service.GetCharacteristicAsync(Guid.Parse(GlobalConstants.UUID_TRANSPARENT_TX_PRIVATE_CHAR));
                     if (transparentRxDataCharacteristic != null)
                     {
                         if (transparentRxDataCharacteristic.CanUpdate)
@@ -466,18 +485,18 @@ namespace SCUScanner.ViewModels
                     {
                         if (transparentTxDataCharacteristic.CanUpdate)
                         {
-                        //    StartUpdates(mldpDataCharacteristic);
+                            //    StartUpdates(mldpDataCharacteristic);
                         }
                     }
-                   var   _mldpDataCharacteristic = await service.GetCharacteristicAsync(Guid.Parse(GlobalConstants.UUID_MLDP_DATA_PRIVATE_CHAR));
-                    if (_mldpDataCharacteristic != null && mldpDataCharacteristic==null)
+                    var _mldpDataCharacteristic = await service.GetCharacteristicAsync(Guid.Parse(GlobalConstants.UUID_MLDP_DATA_PRIVATE_CHAR));
+                    if (_mldpDataCharacteristic != null && mldpDataCharacteristic == null)
                     {
                         if (_mldpDataCharacteristic.CanUpdate)
                         {
                             // mldpDataCharacteristic.ValueUpdated
                             mldpDataCharacteristic = _mldpDataCharacteristic;
                             StartUpdates(mldpDataCharacteristic);
-                            
+
                         }
                     }
                 }
@@ -507,15 +526,16 @@ namespace SCUScanner.ViewModels
                         LastCharForUpdate.ValueUpdated -= Characteristic_ValueUpdated;
                         await LastCharForUpdate.StopUpdatesAsync();
                         Thread.Sleep(100);
-                    }catch (Exception er)
+                    }
+                    catch (Exception er)
                     {
                         LastCharForUpdate = null;
                     }
                 }
-                
+
                 characteristic.ValueUpdated -= Characteristic_ValueUpdated;
                 characteristic.ValueUpdated += Characteristic_ValueUpdated;
-            await characteristic.StartUpdatesAsync();
+                await characteristic.StartUpdatesAsync();
                 _userDialogs.Toast($"Start updates");
                 LastCharForUpdate = characteristic;
             }
@@ -529,9 +549,9 @@ namespace SCUScanner.ViewModels
         private bool IsStartedJson = false;
         private void Characteristic_ValueUpdated(object sender, CharacteristicUpdatedEventArgs e)
         {
-            string value= Encoding.UTF8.GetString(e.Characteristic.Value, 0, e.Characteristic.Value.Length);
+            string value = Encoding.UTF8.GetString(e.Characteristic.Value, 0, e.Characteristic.Value.Length);
             //SourceText = value;
-        //    Debug.WriteLine(value);
+            //    Debug.WriteLine(value);
             if (value.StartsWith("{"))
             {
                 this.SourceText = value;
@@ -551,7 +571,7 @@ namespace SCUScanner.ViewModels
             StrJson = StrJson.Trim();
             if (IsStartedJson && StrJson.EndsWith("}"))
             {
-                SCUSendData ScuData = null; 
+                SCUSendData ScuData = null;
                 try
                 {
                     StrJson = Regex.Replace(StrJson, "\"ID\":(.[^,]+)", "\"ID\":\"$1\"");
@@ -585,32 +605,66 @@ namespace SCUScanner.ViewModels
                     AlarmLimit = ScuData.A;
                     SN = ScuData.SN;
                     HRS = ScuData.H;
-                    
+                    Warning = ScuData.W;
 
-                    //var tmpNewColor = ChangeStatusColor(RPM, Warning, AlarmLimit);
-                    //if (PreviewColor != tmpNewColor)
-                    //{
-                    //    try
-                    //    {
-                    //        StatusColor = tmpNewColor;
-                    //        PreviewColor = tmpNewColor;
-                    //    }
-                    //    catch (Exception er)
-                    //    {
-                    //        Debug.WriteLine($"Status color chage error-{er.Message}");
-                    //    }
+                    var tmpNewColor = ChangeStatusColor(RPM, Warning, AlarmLimit);
+                    if (PreviewColor != tmpNewColor)
+                    {
+                        try
+                        {
+                            StatusColor = tmpNewColor;
+                            PreviewColor = tmpNewColor;
+                        }
+                        catch (Exception er)
+                        {
+                            Debug.WriteLine($"Status color chage error-{er.Message}");
+                        }
 
-                    //}
+                    }
                 }
 
             }
 
 
         }
+        Color oldColor = Color.White;
+        bool TimerChangeColor = false;
+        private void TimerAlarm_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            TimerAlarm.Stop();
+            if (StatusColor == Color.Red || StatusColor == Color.Yellow || StatusColor == Color.White)
+            {
+                TimerChangeColor = true;
+                Color tmpColor = StatusColor;
+                if (tmpColor != Color.White)
+                {
+                    oldColor = tmpColor;
+                    tmpColor = Color.White;
+                }
+                else
+                {
+                    tmpColor = oldColor;
+                    oldColor = Color.White;
+                }
+                StatusColor = tmpColor;
+                TimerChangeColor = false;
+                TimerAlarm.Start();
+            }
+
+
+
+        }
+        private Color ChangeStatusColor(int s, int? w, int? a)
+        {
+            if (s > w) return Color.Green;
+            if (a < s && s <= w) return Color.Yellow;
+            if (s <= a) return Color.Red;
+            return Color.Red;
+        }
         private async Task StopAndClearCharacters()
         {
             StopUpdates();
-            mldpDataCharacteristic =transparentTxDataCharacteristic= transparentRxDataCharacteristic = null; 
+            mldpDataCharacteristic = transparentTxDataCharacteristic = transparentRxDataCharacteristic = null;
         }
         private async Task StopUpdate(ICharacteristic characteristic = null)
         {
@@ -623,17 +677,17 @@ namespace SCUScanner.ViewModels
                     await characteristic.StopUpdatesAsync();
                     Debug.WriteLine("Stop update");
                 }
-                
-                
+
+
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Stop update  er-{ex.Message}");
-                
+
             }
-             
+
         }
-        private async Task StopUpdates(ICharacteristic characteristic=null )
+        private async Task StopUpdates(ICharacteristic characteristic = null)
         {
             ////mldpDataCharacteristic, transparentTxDataCharacteristic, transparentRxDataCharacteristic;
             try
@@ -641,9 +695,9 @@ namespace SCUScanner.ViewModels
                 await StopUpdate(LastCharForUpdate);
                 await StopUpdate(mldpDataCharacteristic);
 
-               await StopUpdate(transparentTxDataCharacteristic);
+                await StopUpdate(transparentTxDataCharacteristic);
                 await StopUpdate(transparentRxDataCharacteristic);
-                
+
                 //   Messages.Insert(0, $"Stop updates");
 
 
@@ -658,6 +712,25 @@ namespace SCUScanner.ViewModels
             {
                 _updatesStarted = false;
             }
+            LastStateColorTimer = TimerAlarm.Enabled;
+            TimerAlarm.Stop();
+
+        }
+        bool LastStateColorTimer = false;
+        /// <summary>
+        /// для мигания 
+        /// </summary>
+        /// 
+        System.Timers.Timer TimerAlarm;
+        Color PreviewColor = Color.White;
+        private int? warning;
+        /// <summary>
+        /// W – Warning (уровень предупреждения) 
+        /// </summary>
+        public int? Warning
+        {
+            get => warning;
+            set => this.RaiseAndSetIfChanged(ref warning, value);
         }
         string name;
         public string Name
@@ -730,4 +803,4 @@ namespace SCUScanner.ViewModels
     }
 
 }
- 
+
