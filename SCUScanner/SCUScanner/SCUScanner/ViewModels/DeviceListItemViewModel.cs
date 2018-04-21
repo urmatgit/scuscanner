@@ -15,7 +15,7 @@ namespace SCUScanner.ViewModels
         public bool isConnected;
         public bool IsConnected
         {
-            get => IsConnected;
+            get => isConnected;
             set=>  this.RaiseAndSetIfChanged(ref isConnected,value);
          }
         public int rssi;
@@ -24,11 +24,45 @@ namespace SCUScanner.ViewModels
             get => rssi;
             set => this.RaiseAndSetIfChanged(ref rssi, value);
         }
-        public string Name => Device.Name;
+        string name;
+        public string Name
+        {
+            get => name;
+            set => this.RaiseAndSetIfChanged(ref name, value);
+
+        }
 
         public DeviceListItemViewModel(IDevice device)
         {
             Device = device;
+            Update(device);
+
+
+
+        }
+       
+        public void UpdateButtonText()
+        {
+           // var devicename = Device?.Name;
+            ConnectButtonText = IsConnected ? SettingsBase.Resources["DisConnectButtonText"] : SettingsBase.Resources["ConnectButtonText"];
+        }
+        string connectButtonText;
+        public string ConnectButtonText
+        {
+            get => connectButtonText;
+            set => this.RaiseAndSetIfChanged(ref this.connectButtonText, value);
+        }
+
+        public string Address
+        {
+            get
+            {
+                return Id.ToString() ;
+                //if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS)
+                //    return Device?.ToString();
+                //else
+                //    return Device?.NativeDevice.ToString();
+            }
         }
         public void Update(IDevice newDevice = null)
         {
@@ -37,7 +71,9 @@ namespace SCUScanner.ViewModels
                 Device = newDevice;
             }
             IsConnected= Device.State == DeviceState.Connected;
-            Rssi = Device.Rssi; 
+            Rssi = Device.Rssi;
+            Name = Device.Name;
+            UpdateButtonText();
             //RaisePropertyChanged(nameof(IsConnected));
             //RaisePropertyChanged(nameof(Rssi));
         }

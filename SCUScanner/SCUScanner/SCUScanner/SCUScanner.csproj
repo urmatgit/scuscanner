@@ -20,6 +20,7 @@
     <Compile Remove="ViewModels\DeviceSettingViewModel.cs" />
     <Compile Remove="ViewModels\DevicesViewModel.cs" />
     <Compile Remove="ViewModels\GattCharacteristicViewModel.cs" />
+    <Compile Remove="ViewModels\MvmBaseViewModel.cs" />
     <Compile Remove="ViewModels\ScanBluetoothViewModel.cs" />
     <Compile Remove="ViewModels\ScanResultViewModel.cs" />
     <Compile Remove="ViewModels\TestTimeViewModel.cs" />

@@ -9,6 +9,7 @@ using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
+using ReactiveUI;
 using SCUScanner.Models;
 using System;
 using System.Collections.Generic;
@@ -19,137 +20,74 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SCUScanner.ViewModels
 {
-    public class DeviceListViewModel: MvmBaseViewModel
+
+    public class DeviceListViewModel : BaseViewModel
     {
         private readonly IBluetoothLE _bluetoothLe;
         private readonly IUserDialogs _userDialogs;
         private readonly ISettings _settings;
-        public ObservableCollection<DeviceListItemViewModel> Devices { get; set; } = new ObservableCollection<DeviceListItemViewModel>();
-        public bool IsRefreshing => Adapter.IsScanning;
-        public bool IsStateOn => _bluetoothLe.IsOn;
-        public string StateText => GetStateText();
+        private readonly IAdapter Adapter;
+        private bool isRefreshing; //= Adapter.IsScanning;
+        public bool IsRefreshing
+        {
+            get => isRefreshing;
+            set => this.RaiseAndSetIfChanged(ref isRefreshing, value);
+
+        }
+        bool isStateOn ;
+
+        public bool IsStateOn
+        {
+            get => isStateOn;
+            set => this.RaiseAndSetIfChanged(ref isStateOn, value);
+        }
         private CancellationTokenSource _cancellationTokenSource;
-        private Guid _previousGuid;
-        public Guid PreviousGuid
+        public ICommand ScanToggleCommand { get; }
+        public ICommand StopScanCommand { get; }
+        
+        public ObservableCollection<DeviceListItemViewModel> Devices { get; set; } = new ObservableCollection<DeviceListItemViewModel>();
+        readonly IPermissions _permissions;
+
+        public DeviceListViewModel(IBluetoothLE bluetoothLe, IAdapter adapter, IUserDialogs userDialogs, ISettings settings, IPermissions permissions) 
         {
-            get { return _previousGuid; }
-            set
-            {
-                _previousGuid = value;
-                _settings.AddOrUpdateValue("lastguid", _previousGuid.ToString());
-                RaisePropertyChanged();
-                RaisePropertyChanged(() => ConnectToPreviousCommand);
-            }
+            ScanText = Resources["ScanText"];
+            Adapter = adapter;
+         
+         
+            _permissions = permissions;
+            _bluetoothLe = bluetoothLe;
+            _userDialogs = userDialogs;
+            _settings = settings;
+
+            IsRefreshing = Adapter.IsScanning;
+            IsStateOn = _bluetoothLe.IsOn;
+            ScanToggleCommand = ReactiveCommand.Create(() => TryStartScanning(true));
+            StopScanCommand = ReactiveCommand.Create(() => StopScan());
+            _bluetoothLe.StateChanged += OnStateChanged;
+            Adapter.DeviceDiscovered += OnDeviceDiscovered;
+            Adapter.ScanTimeoutElapsed += Adapter_ScanTimeoutElapsed;
+            //Adapter.DeviceDisconnected += OnDeviceDisconnected;
+            //Adapter.DeviceConnectionLost += OnDeviceConnectionLost;
+            // quick and dirty :>
+
+            //Adapter.DeviceConnected += (sender, e) => Adapter.DisconnectDeviceAsync(e.Device);
+
+        }
+        private void Adapter_ScanTimeoutElapsed(object sender, EventArgs e)
+        {
+            
+            UpdateIsScanning();
+            CleanupCancellationToken();
+        }
+        private void OnDeviceDiscovered(object sender, DeviceEventArgs args)
+        {
+            AddOrUpdateDevice(args.Device);
         }
 
-        //public MvxCommand scanToggleCommand = new MvxAsyncCommand(  () => TryStartScanning(true));
-        public MvxCommand ConnectToPreviousCommand => new MvxCommand(ConnectToPreviousDeviceAsync, CanConnectToPrevious);
-        public MvxCommand ScanToggleCommand => new MvxCommand(() => TryStartScanning(true));
-        public async Task TryStartScanning(bool refresh = false)
-        {
-            if (Xamarin.Forms.Device.OS == Xamarin.Forms.TargetPlatform.Android)
-            {
-                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
-                if (status != PermissionStatus.Granted)
-                {
-                    var permissionResult = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
-
-                    if (permissionResult.First().Value != PermissionStatus.Granted)
-                    {
-                        await App.Dialogs.AlertAsync("Permission denied. Not scanning.");
-                        return;
-                    }
-                }
-            }
-            if (IsStateOn && (refresh || !Devices.Any()) && !IsRefreshing)
-            {
-                ScanText = Settings.Current.Resources["StopScanText"];
-                ScanForDevices();
-            }
-        }
-        private async void ScanForDevices()
-        {
-            Devices.Clear();
-
-            foreach (var connectedDevice in Adapter.ConnectedDevices)
-            {
-                //update rssi for already connected evices (so tha 0 is not shown in the list)
-                try
-                {
-                    await connectedDevice.UpdateRssiAsync();
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                    _userDialogs.AlertAsync($"Failed to update RSSI for {connectedDevice.Name}");
-                }
-
-                AddOrUpdateDevice(connectedDevice);
-            }
-
-            _cancellationTokenSource = new CancellationTokenSource();
-            RaisePropertyChanged(() => StopScanCommand);
-
-            RaisePropertyChanged(() => IsRefreshing);
-            Adapter.ScanMode = ScanMode.LowLatency;
-            await Adapter.StartScanningForDevicesAsync(cancellationToken:_cancellationTokenSource.Token);
-        }
-        private void CleanupCancellationToken()
-        {
-            _cancellationTokenSource.Dispose();
-            _cancellationTokenSource = null;
-            RaisePropertyChanged(() => StopScanCommand);
-        }
-        private async void ConnectToPreviousDeviceAsync()
-        {
-            IDevice device;
-            try
-            {
-                CancellationTokenSource tokenSource = new CancellationTokenSource();
-
-                var config = new ProgressDialogConfig()
-                {
-                    Title = $"Searching for '{PreviousGuid}'",
-                    CancelText = "Cancel",
-                    IsDeterministic = false,
-                    OnCancel = tokenSource.Cancel
-                };
-
-                using (var progress = _userDialogs.Progress(config))
-                {
-                    progress.Show();
-
-                    device = await Adapter.ConnectToKnownDeviceAsync(PreviousGuid, new ConnectParameters(autoConnect: UseAutoConnect, forceBleTransport: false), tokenSource.Token);
-
-                }
-
-                _userDialogs.Toast($"Connected to {device.Name}.");
-
-                var deviceItem = Devices.FirstOrDefault(d => d.Device.Id == device.Id);
-                if (deviceItem == null)
-                {
-                    deviceItem = new DeviceListItemViewModel(device);
-                    Devices.Add(deviceItem);
-                }
-                else
-                {
-                    deviceItem.Update(device);
-                }
-            }
-            catch (Exception ex)
-            {
-                _userDialogs.Toast(ex.Message,TimeSpan.FromMilliseconds(5000));
-                return;
-            }
-        }
-
-        private bool CanConnectToPrevious()
-        {
-            return PreviousGuid != default(Guid);
-        }
         private string GetStateText()
         {
             switch (_bluetoothLe.State)
@@ -171,15 +109,119 @@ namespace SCUScanner.ViewModels
                         return Settings.Current.Resources["SetHintBluetoothAndroidText"];
                     else
                         return Settings.Current.Resources["SetHintBluetoothIOSText"];
-                //return "BLE is off. Turn it on!";
-
                 default:
                     return "Unknown BLE state.";
             }
         }
+        private void UpdateStateOn()
+        {
+            IsStateOn = _bluetoothLe.IsOn;
+        }
+        private void UpdateIsScanning()
+        {
+            IsRefreshing = Adapter.IsScanning;
+        }
+        private void OnStateChanged(object sender, BluetoothStateChangedArgs e)
+        {
+
+            UpdateStateOn();
+            var stattext = GetStateText();
+            //RaisePropertyChanged(nameof(StateText));
+            //TryStartScanning();
+        }
+        private void StopScan()
+        {
+            if (_cancellationTokenSource != null)
+            {
+                _cancellationTokenSource.Cancel();
+                CleanupCancellationToken();
+                IsRefreshing = Adapter.IsScanning;
+            }
+
+        }
+
+        string scantext;
+        public string ScanText
+        {
+            get => scantext;
+            set => this.RaiseAndSetIfChanged(ref this.scantext, value);
+        }
+
+        public override void OnActivate()
+        {
+            base.OnActivate();
+        }
+        public override void OnDeactivate()
+        {
+            base.OnDeactivate();
+            Adapter.StopScanningForDevicesAsync();
+            IsRefreshing=Adapter.IsScanning;
+        }
+
+
+        private async void TryStartScanning(bool refresh = false)
+        {
+            
+            if (Xamarin.Forms.Device.OS == Xamarin.Forms.TargetPlatform.Android)
+            {
+                var status = await _permissions.CheckPermissionStatusAsync(Permission.Location);
+                if (status != PermissionStatus.Granted)
+                {
+                    var permissionResult = await _permissions.RequestPermissionsAsync(Permission.Location);
+
+                    if (permissionResult.First().Value != PermissionStatus.Granted)
+                    {
+                       await  _userDialogs.AlertAsync("Permission denied. Not scanning.");
+                        return;
+                    }
+                }
+            }
+
+            if (IsStateOn && (refresh || !Devices.Any()))
+            {
+                if (!IsRefreshing)
+                {
+                    ScanText = Resources["StopScanText"];
+                    IsRefreshing = true;
+                    ScanForDevices();
+                }
+                else
+                {
+                    StopScan();
+                }
+            }
+        }
+
+        private async void ScanForDevices()
+        {
+            Devices.Clear();
+
+            foreach (var connectedDevice in Adapter.ConnectedDevices)
+            {
+                //update rssi for already connected evices (so tha 0 is not shown in the list)
+                try
+                {
+                    await connectedDevice.UpdateRssiAsync();
+                }
+                catch (Exception ex)
+                {
+                    //Mvx.Trace(ex.Message);
+                    await _userDialogs.AlertAsync($"Failed to update RSSI for {connectedDevice.Name}");
+                }
+
+                AddOrUpdateDevice(connectedDevice);
+            }
+
+            _cancellationTokenSource = new CancellationTokenSource();
+            //RaisePropertyChanged(() => StopScanCommand);
+          
+            //RaisePropertyChanged(() => IsRefreshing);
+            Adapter.ScanMode = ScanMode.LowLatency;
+            await Adapter.StartScanningForDevicesAsync(cancellationToken: _cancellationTokenSource.Token);
+        }
         private void AddOrUpdateDevice(IDevice device)
         {
-            InvokeOnMainThread(() =>
+            Device.BeginInvokeOnMainThread(() =>
             {
                 var vm = Devices.FirstOrDefault(d => d.Device.Id == device.Id);
                 if (vm != null)
@@ -192,102 +234,22 @@ namespace SCUScanner.ViewModels
                 }
             });
         }
-
-        private void RaisePropertyChanged(Func<object> p)
+        private void CleanupCancellationToken()
         {
-            throw new NotImplementedException();
+            _cancellationTokenSource.Dispose();
+            _cancellationTokenSource = null;
+            StopScanCommand.Execute(null);
+            if (!isRefreshing)
+                ScanText = Resources["ScanText"];
         }
 
-        public ICommand ConnectCommand { get; }
-        public MvxCommand StopScanCommand => new MvxCommand(() =>
-        {
-            _cancellationTokenSource.Cancel();
-            CleanupCancellationToken();
-            RaisePropertyChanged(() => IsRefreshing);
-        }, () => _cancellationTokenSource != null);
+       
 
-        public DeviceListViewModel(IAdapter adapter ) : base(adapter)
-        {
+        
 
-            _bluetoothLe = CrossBluetoothLE.Current; //  Mvx.Resolve<IBluetoothLE>();
-            _userDialogs = UserDialogs.Instance;//  Mvx.Resolve<IUserDialogs>();
-            _settings = CrossSettings.Current;
-            // quick and dirty :>
-            _bluetoothLe.StateChanged += OnStateChanged;
-            Adapter.DeviceDiscovered += OnDeviceDiscovered;
-            Adapter.ScanTimeoutElapsed += Adapter_ScanTimeoutElapsed;
-            Adapter.DeviceDisconnected += OnDeviceDisconnected;
-            Adapter.DeviceConnectionLost += OnDeviceConnectionLost;
-            ScanText = Settings.Current.Resources["ScanText"];
-        }
-        private void Adapter_ScanTimeoutElapsed(object sender, EventArgs e)
-        {
-            RaisePropertyChanged(() => IsRefreshing);
 
-            CleanupCancellationToken();
-        }
-        private void OnDeviceDisconnected(object sender, DeviceEventArgs e)
-        {
-            Devices.FirstOrDefault(d => d.Id == e.Device.Id)?.Update();
-            _userDialogs.HideLoading();
-            _userDialogs.Toast($"Disconnected {e.Device.Name}");
-        }
-
-        private void OnDeviceDiscovered(object sender, DeviceEventArgs args)
-        {
-            AddOrUpdateDevice(args.Device);
-        }
-        private Task GetPreviousGuidAsync()
-        {
-            return Task.Run(() =>
-            {
-                var guidString = _settings.GetValueOrDefault("lastguid", string.Empty);
-                PreviousGuid = !string.IsNullOrEmpty(guidString) ? Guid.Parse(guidString) : Guid.Empty;
-            });
-        }
-
-        private void OnDeviceConnectionLost(object sender, DeviceErrorEventArgs e)
-        {
-            Devices.FirstOrDefault(d => d.Id == e.Device.Id)?.Update();
-
-            _userDialogs.HideLoading();
-             _userDialogs.Toast($"Connection LOST {e.Device.Name}", TimeSpan.FromMilliseconds(6000));
-        }
-
-        private void OnStateChanged(object sender, BluetoothStateChangedArgs e)
-        {
-            RaisePropertyChanged(nameof(IsStateOn));
-            RaisePropertyChanged(nameof(StateText));
-            //TryStartScanning();
-        }
-
-        bool _useAutoConnect;
-        public bool UseAutoConnect
-        {
-            get
-            {
-                return _useAutoConnect;
-            }
-
-            set
-            {
-                if (_useAutoConnect == value)
-                    return;
-
-                _useAutoConnect = value;
-                RaisePropertyChanged();
-            }
-        }
-        string scanText;
-        public string ScanText{
-            get => scanText;
-            set
-            {
-                if (scanText == value) return;
-                scanText = value;
-                RaisePropertyChanged();
-            }
-        }
+       
+    }
 
 }
-}
+ 

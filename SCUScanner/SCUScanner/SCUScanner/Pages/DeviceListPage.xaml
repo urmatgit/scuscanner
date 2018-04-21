@@ -5,36 +5,7 @@
              x:Class="SCUScanner.Pages.DeviceListPage"
              Title="Discover devices"
              x:Name="DevicePage">
-    <pages:BaseTabbedPage.Resources>
-        <ResourceDictionary>
-            <DataTemplate x:Key="DeviceItemTemplate">
-                <ViewCell>
-                  
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid.Triggers>
-                            <DataTrigger TargetType="Grid"
-                                 Binding="{Binding IsConnected}"
-                                 Value="true">
-                                <Setter Property="BackgroundColor" Value="#1A00FF00"></Setter>
-                            </DataTrigger>
-                        </Grid.Triggers>
-                        <StackLayout Orientation="Vertical" VerticalOptions="Center">
-                            <Label Text="{Binding Name}" FontSize="Large" />
-                            <Label Text="{Binding Id, StringFormat='{0}'}" TextColor="Gray" FontSize="Small"/>
-                        </StackLayout>
-                        <Label Grid.Column="1"
-                         Margin="10"
-                         Text="{Binding Rssi}"
-                         VerticalTextAlignment="Center"></Label>
-                    </Grid>
-                </ViewCell>
-            </DataTemplate>
-        </ResourceDictionary>
-    </pages:BaseTabbedPage.Resources>
+    
     <pages:BaseTabbedPage.ToolbarItems>
         <!--<ToolbarItem       Text="ScanText" Command="{Binding ScanToggleCommand}" Order="Primary" Priority="1"    />-->
         <ToolbarItem       Text="{Binding ScanText}" Command="{Binding ScanToggleCommand}" Order="Primary" Priority="1"    />
@@ -46,26 +17,76 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
-                    
+                     
                 </Grid.RowDefinitions>
-                <StackLayout Grid.Row="0" BackgroundColor="#FF6969" Padding="10" IsVisible="{Binding IsStateOn, Converter={StaticResource InverseBoolean}}">
+                <StackLayout BackgroundColor="#FF6969" Padding="10" IsVisible="{Binding IsStateOn, Converter={StaticResource InverseBoolean}}">
                     <Label Text="{Binding StateText}" FontSize="18" HorizontalTextAlignment="Center"></Label>
                 </StackLayout>
 
-                <ListView Grid.Row="1" ItemsSource="{Binding Devices}" SelectedItem="{Binding SelectedDevice, Mode=TwoWay}"
-                 IsPullToRefreshEnabled="True"
-                 RefreshCommand="{Binding RefreshCommand}"
+                <ListView Grid.Row="1" ItemsSource="{Binding Devices}"  
+                  
+              
                  IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
-                 RowHeight="80"
-                 ItemTemplate="{StaticResource DeviceItemTemplate}">
+                 RowHeight="100"
+               >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View  >
+                                    <Grid Margin="5" Padding="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20" />
+                                            <RowDefinition Height="20" />
+                                            <RowDefinition Height="*" />
+                                            
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" FontAttributes="Bold" FontSize="15" />
+                                        <Label Text="{Binding Rssi, StringFormat='RSSI: {0}'}" Grid.Row="0" Grid.Column="2" TextColor="Green" />
+                                        <Label Text="{Binding Address}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" />
+
+
+                                     
+                                        <!--<Label Text="{Binding LocalName, StringFormat='Local Name: {0}'}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>-->
+                                        <!--<Label Text="{Binding Uuid, StringFormat='UUID: {0}'}" Grid.Row="1" Grid.ColumnSpan="2" FontAttributes="Italic" />-->
+                                        <!--<Label Text="{Binding ServiceCount, StringFormat='{0} Services'}" Grid.Row="3" Grid.Column="0" />-->
+                                        <!--<Label Text="Device Connected" IsVisible="{Binding IsConnected}" BackgroundColor="Yellow" TextColor="Black"  HorizontalTextAlignment="Center"
+                                               Grid.Column="0" Grid.Row="2" />-->
+                                        <!--Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=DevicePage}}"
+                               CommandParameter="{Binding}"-->
+                                        <!--<Button  Grid.Row="2"  Grid.Column="1"  Text="{Binding BindingContext.Resources[ConnectButtonText],Source={x:Reference Name=BleDevices}}"  Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=BleDevices}  }" CommandParameter="{Binding}"  />-->
+                                        <Button Margin="0"   Grid.Row="2"     Grid.Column="2" Grid.ColumnSpan="2"   Text="{Binding ConnectButtonText}"
+                                           BackgroundColor="Green"    TextColor="White" HeightRequest="60"/>
+                                        <!--<Label Text="{Binding IsConnectable, StringFormat='Connectable: {0}'}" Grid.Row="3" Grid.Column="0" />-->
+
+        
+
+                                        <!--<Label Text="{Binding ManufacturerData, StringFormat='Manufactuer Data: {0}'}" Grid.Row="4" Grid.ColumnSpan="2" />-->
+
+
+
+
+                                    </Grid>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
 
 
-              
+                
+
             </Grid>
         </pages:BasePage>
         <pages:BasePage Title="System devices">
+            
         </pages:BasePage>
     </pages:BaseTabbedPage.Children>
+
 
 </pages:BaseTabbedPage>

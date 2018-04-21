@@ -1,4 +1,5 @@
-﻿using SCUScanner.ViewModels;
+﻿using SCUScanner.Services;
+using SCUScanner.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,15 +13,13 @@ namespace SCUScanner.Pages
         {
             base.OnAppearing();
 
-            var viewModel = BindingContext as MvmBaseViewModel;
-            viewModel?.Resume();
+            (this.BindingContext as IViewModel)?.OnActivate();
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            var viewModel = BindingContext as MvmBaseViewModel;
-            viewModel?.Suspend();
+            (this.BindingContext as IViewModel)?.OnDeactivate();
         }
     }
 }
