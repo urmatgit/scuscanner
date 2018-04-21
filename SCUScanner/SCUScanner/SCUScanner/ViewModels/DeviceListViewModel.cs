@@ -77,7 +77,7 @@ namespace SCUScanner.ViewModels
             TimerAlarm.Interval = 500;
             TimerAlarm.Elapsed += TimerAlarm_Elapsed;
             _deviceListPage = deviceListPage;
-
+            OperatorName = SettingsBase.OperatorName;
             UpdateScanText(false);
             Adapter = adapter;
             _permissions = permissions;
@@ -115,8 +115,8 @@ namespace SCUScanner.ViewModels
             ConnectCommand = ReactiveCommand.CreateFromTask<DeviceListItemViewModel>(async (o) =>
             {
                 if (!IsStateOn) return;
-                 //                 var selecte = o;
-                 SelectedDevice = o;
+                //                 var selecte = o;
+                SelectedDevice = o;
                 if (SelectedDevice.IsConnected)
                 {
 
@@ -133,6 +133,42 @@ namespace SCUScanner.ViewModels
                         await LoadServices(SelectedDevice);
                     }
                 }
+            });
+            SaveCommand = ReactiveCommand.CreateFromTask(async () =>
+            {
+                //   return;// пока отключаем
+                if (ScuData == null) return;
+                SCUItem scuitem = null;
+
+
+                scuitem = new SCUItem()
+                {
+                    UnitName = ScuData.ID,
+                    SerialNo = ScuData.SN,
+
+                    BroadCastId = ScuData.ID,
+                    DateWithTime = this.LastValue,
+                    Speed = ScuData.S,
+                    HoursElapsed = HRS, //Потом из уст.
+                    AlarmHours = AlarmHours,//Потом из уст.
+                    AlarmSpeed = ScuData.A,
+                    Location = LocationName,
+                    Notes = Note,
+                    Operator = OperatorName
+                };
+
+
+                var id = await App.Database.SaveItemAsync(scuitem);
+                if (id > 0)
+                {
+                    _userDialogs.Toast("Saved");
+                }
+                else
+                {
+                    Debug.WriteLine($"Not saved {scuitem.Id}");
+                }
+
+                ScuData = null;
             });
             _bluetoothLe.StateChanged += OnStateChanged;
 
@@ -297,6 +333,7 @@ namespace SCUScanner.ViewModels
                 else if (kod == "ConnectedTabPage")
                 {
                     StopUpdates();
+                    SettingsBase.OperatorName = OperatorName;
                 }
             }
             base.OnDeactivate();
@@ -545,6 +582,7 @@ namespace SCUScanner.ViewModels
                 //await _userDialogs.AlertAsync(ex.Message);
             }
         }
+        SCUSendData ScuData { get; set; }
         private string StrJson = "";
         private bool IsStartedJson = false;
         private void Characteristic_ValueUpdated(object sender, CharacteristicUpdatedEventArgs e)
@@ -571,7 +609,7 @@ namespace SCUScanner.ViewModels
             StrJson = StrJson.Trim();
             if (IsStartedJson && StrJson.EndsWith("}"))
             {
-                SCUSendData ScuData = null;
+                ScuData = null;
                 try
                 {
                     StrJson = Regex.Replace(StrJson, "\"ID\":(.[^,]+)", "\"ID\":\"$1\"");
@@ -601,25 +639,33 @@ namespace SCUScanner.ViewModels
                 }
                 if (ScuData != null)
                 {
-                    RPM = ScuData.S;
-                    AlarmLimit = ScuData.A;
-                    SN = ScuData.SN;
-                    HRS = ScuData.H;
-                    Warning = ScuData.W;
-
-                    var tmpNewColor = ChangeStatusColor(RPM, Warning, AlarmLimit);
-                    if (PreviewColor != tmpNewColor)
+                    try
                     {
-                        try
-                        {
-                            StatusColor = tmpNewColor;
-                            PreviewColor = tmpNewColor;
-                        }
-                        catch (Exception er)
-                        {
-                            Debug.WriteLine($"Status color chage error-{er.Message}");
-                        }
+                        this.LastValue = DateTime.Now;
+                        RPM = ScuData.S;
+                        AlarmLimit = ScuData.A;
+                        SN = ScuData.SN;
+                        HRS = ScuData.H;
+                        Warning = ScuData.W;
 
+                        var tmpNewColor = ChangeStatusColor(RPM, Warning, AlarmLimit);
+                        if (PreviewColor != tmpNewColor)
+                        {
+                            try
+                            {
+                                StatusColor = tmpNewColor;
+                                PreviewColor = tmpNewColor;
+                            }
+                            catch (Exception er)
+                            {
+                                Debug.WriteLine($"Status color chage error-{er.Message}");
+                            }
+
+                        }
+                    }
+                    catch (Exception er)
+                    {
+                        Debug.WriteLine(er.Message);
                     }
                 }
 
@@ -715,6 +761,18 @@ namespace SCUScanner.ViewModels
             LastStateColorTimer = TimerAlarm.Enabled;
             TimerAlarm.Stop();
 
+        }
+        private int alarmHours = 700;
+        public int AlarmHours
+        {
+            get => alarmHours;
+            set => this.RaiseAndSetIfChanged(ref alarmHours, value);
+        }
+        DateTime lastValue;
+        public DateTime LastValue
+        {
+            get => this.lastValue;
+            private set => this.RaiseAndSetIfChanged(ref this.lastValue, value);
         }
         bool LastStateColorTimer = false;
         /// <summary>
