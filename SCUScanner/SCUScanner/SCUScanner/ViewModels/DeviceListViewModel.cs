@@ -10,6 +10,7 @@ using Plugin.Permissions.Abstractions;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using ReactiveUI;
+using SCUScanner.Helpers;
 using SCUScanner.Models;
 using SCUScanner.Pages;
 using System;
@@ -33,6 +34,7 @@ namespace SCUScanner.ViewModels
         private readonly IUserDialogs _userDialogs;
         private readonly ISettings _settings;
         private readonly IAdapter Adapter;
+        ICharacteristic mldpDataCharacteristic, transparentTxDataCharacteristic, transparentRxDataCharacteristic;
         private bool isRefreshing; //= Adapter.IsScanning;
         public bool IsRefreshing
         {
@@ -86,17 +88,22 @@ namespace SCUScanner.ViewModels
             StopScanCommand = ReactiveCommand.Create(() => StopScan());
             ConnectCommand = ReactiveCommand.CreateFromTask<DeviceListItemViewModel>(async (o) =>
              {
+                 if (!IsStateOn) return;
                  //                 var selecte = o;
                  if (o.IsConnected)
                  {
                      await DisconnectDevice(o);
                      _deviceListPage.CurrentPage = _deviceListPage.DeviceListTab;
+                     IsConnected = false;
                  }
                  else
                  {
-                   var res =  await ConnectDeviceAsync(o, false);
-                     if (res)
-                         _deviceListPage.CurrentPage= _deviceListPage.ConnectDeviceTab;
+                   IsConnected =  await ConnectDeviceAsync(o, false);
+                     if (IsConnected)
+                     {
+                         _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
+                         await LoadServices(o);
+                     }
                  }
              });
                 _bluetoothLe.StateChanged += OnStateChanged;
@@ -111,7 +118,7 @@ namespace SCUScanner.ViewModels
             //Adapter.DeviceConnected += (sender, e) => Adapter.DisconnectDeviceAsync(e.Device);
 
         }
-
+        #region Device list page
         private void UpdateStateText()
         {
             StateText = GetStateText();
@@ -199,6 +206,8 @@ namespace SCUScanner.ViewModels
         }
 
         string scantext;
+        private bool _updatesStarted;
+
         public string ScanText
         {
             get => scantext;
@@ -312,8 +321,8 @@ namespace SCUScanner.ViewModels
             //if (!isRefreshing)
             //    ScanText = Resources["ScanText"];
         }
-
-
+        #endregion
+        #region Connect to device
 
         private async Task<bool> ConnectDeviceAsync(DeviceListItemViewModel device, bool showPrompt = true)
         {
@@ -378,7 +387,100 @@ namespace SCUScanner.ViewModels
             }
         }
 
+        #endregion
+        #region Find service
+        private async Task LoadServices(DeviceListItemViewModel device)
+        {
+            try
+            {
+                _userDialogs.ShowLoading("Discovering services...");
 
+                var Services = await device.Device.GetServicesAsync();
+                var SCUServices=Services.Where(s=> s.Id.ToString() == GlobalConstants.UUID_MLDP_PRIVATE_SERVICE || s.Id.ToString() == GlobalConstants.UUID_TANSPARENT_PRIVATE_SERVICE);
+                //mldpDataCharacteristic, transparentTxDataCharacteristic, transparentRxDataCharacteristic;
+                foreach (var service in SCUServices)
+                {
+                    Debug.WriteLine(service.Id.ToString());
+                    transparentTxDataCharacteristic= await  service.GetCharacteristicAsync(Guid.Parse(GlobalConstants.UUID_TRANSPARENT_TX_PRIVATE_CHAR));
+                    if (transparentRxDataCharacteristic != null)
+                    {
+                        if (transparentRxDataCharacteristic.CanUpdate)
+                        {
+
+                        }
+                    }
+                    transparentTxDataCharacteristic = await service.GetCharacteristicAsync(Guid.Parse(GlobalConstants.UUID_TRANSPARENT_TX_PRIVATE_CHAR));
+                    if (transparentTxDataCharacteristic != null)
+                    {
+                        if (transparentTxDataCharacteristic.CanUpdate)
+                        {
+                            StartUpdates(mldpDataCharacteristic);
+                        }
+                    }
+                    mldpDataCharacteristic = await service.GetCharacteristicAsync(Guid.Parse(GlobalConstants.UUID_MLDP_DATA_PRIVATE_CHAR));
+                    if (mldpDataCharacteristic != null)
+                    {
+                        if (mldpDataCharacteristic.CanUpdate)
+                        {
+                            // mldpDataCharacteristic.ValueUpdated
+                            StartUpdates(mldpDataCharacteristic);
+                        }
+                    }
+                }
+
+                var finded = SCUServices.Count();
+            }
+            catch (Exception ex)
+            {
+                _userDialogs.Alert(ex.Message, "Error while discovering services");
+                Debug.WriteLine(ex.Message);
+            }
+            finally
+            {
+                _userDialogs.HideLoading();
+            }
+        }
+        private async void StartUpdates(ICharacteristic characteristic)
+        {
+            try
+            {
+                _updatesStarted = true;
+                characteristic.ValueUpdated -= Characteristic_ValueUpdated;
+                characteristic.ValueUpdated += Characteristic_ValueUpdated;
+            await characteristic.StartUpdatesAsync();
+            }
+            catch (Exception ex)
+            {
+                await _userDialogs.AlertAsync(ex.Message);
+            }
+        }
+
+        private void Characteristic_ValueUpdated(object sender, CharacteristicUpdatedEventArgs e)
+        {
+            string value= Encoding.UTF8.GetString(e.Characteristic.Value, 0, e.Characteristic.Value.Length);
+            Debug.WriteLine(value);
+        }
+
+        private async void StopUpdates(ICharacteristic characteristic)
+        {
+            try
+            {
+                _updatesStarted = false;
+
+                await characteristic.StopUpdatesAsync();
+                characteristic.ValueUpdated -= Characteristic_ValueUpdated;
+
+             //   Messages.Insert(0, $"Stop updates");
+
+                
+
+            }
+            catch (Exception ex)
+            {
+                await _userDialogs.AlertAsync(ex.Message);
+            }
+        }
+        #endregion
 
     }
 

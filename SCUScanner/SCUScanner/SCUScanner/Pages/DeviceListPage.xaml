@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pages="clr-namespace:SCUScanner.Pages"
              x:Class="SCUScanner.Pages.DeviceListPage"
+             xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
+                        xmlns:controls="clr-namespace:SCUScanner.Helpers"
              Title="Discover devices"
              x:Name="DevicePage">
     
@@ -65,11 +67,86 @@
 
             </Grid>
         </pages:BasePage>
-        <pages:BasePage x:Name="ConnectedTabPage" Title="{Binding Resources[ConnectedDeviceCaptionText]}" IsVisible="{Binding IsConnected}" Kod="ConnectedTabPage">
-            
-        </pages:BasePage>
-        <pages:BasePage Title="{Binding Resources[DeviceSettingsCaptionText]}" IsVisible="{Binding IsConnected}" Kod="WriteTabPage"> 
+        <pages:BasePage x:Name="ConnectedTabPage" Title="{Binding Resources[ConnectedDeviceCaptionText]}"   Kod="ConnectedTabPage">
+            <Grid Margin="10" IsEnabled="{Binding IsConnected}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="32"/>
 
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Name}"/>
+                <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding SN,StringFormat=' SN: {0}'}"/>
+                <StackLayout Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center">
+                    <gauge:SfDigitalGauge x:Name="digital" Value="{Binding RPM}" BackgroundColor="White" WidthRequest="120" CharacterStrokeColor="Red"
+                                        CharacterType="EightCrossEightDotMatrix"   
+                                      />
+
+                    <Label    Text="Rpm" Font="Bold,20" VerticalTextAlignment="Center" />
+                </StackLayout>
+                <StackLayout Grid.Column="3" Grid.Row="1" Grid.RowSpan="2" Orientation="Vertical">
+
+                    <Label Text="{Binding Resources[StatusText]}"/>
+                    <BoxView Color="{Binding StatusColor}" HeightRequest="20"/>
+                </StackLayout>
+                <Label Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Text="{Binding AlarmLimit, StringFormat='(Alarm at {0} rpm)'}" HorizontalOptions="Center"/>
+
+                <!--HR-->
+                <StackLayout Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label    Text="Alarms in: " Font="Bold,20" VerticalTextAlignment="Center" />
+                    <gauge:SfDigitalGauge x:Name="digitalHRS" Value="{Binding HRS}" BackgroundColor="White" WidthRequest="120" CharacterStrokeColor="Red"
+                                        CharacterType="EightCrossEightDotMatrix"   
+                                      />
+
+                    <Label    Text="Hrs" Font="Bold,20" VerticalTextAlignment="Center" />
+                </StackLayout>
+
+
+                <controls:PlaceholderEditor Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" Text="{Binding Note}" Placeholder="{Binding Resources[NoteText]}"  HeightRequest="60"  HorizontalOptions="Fill"  FontSize="Small"/>
+                <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="5"  x:Name="tLocationName" Text="{Binding LocationName}" Placeholder="{Binding Resources[LocationNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
+                <Entry Grid.Column="0" Grid.ColumnSpan="4"  Grid.Row="6"  x:Name="tOperatorName" Text="{Binding OperatorName}" Placeholder="{Binding Resources[OperatorNameText]}" HorizontalOptions="Fill" FontSize="Small"/>
+
+                <Button Grid.Column="0"  Grid.Row="7" VerticalOptions="Start"  Text="{Binding Resources[SaveText]}"
+                    Command="{Binding SaveCommand}"  BackgroundColor="Green"    TextColor="White"/>
+                <Button Grid.Column="1"  Grid.Row="7"   Text="{Binding Resources[DisConnectButtonText]}"
+                    Command="{Binding DisconnectCommand}"    BackgroundColor="Green"    TextColor="White"/>
+
+                <Button Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2" Image="share.png" Command="{Binding ValueShareCommand}"   BackgroundColor="Green"    TextColor="White"/>
+                <ScrollView Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="8" VerticalOptions="FillAndExpand" >
+                    <Label  Text="{Binding SourceText}" VerticalOptions="FillAndExpand"/>
+                </ScrollView>
+
+                <Button Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="9" VerticalOptions="End"  Text="{Binding Resources[DownloadText]}"
+                    Command="{Binding DownloadCommand}"  BackgroundColor="Green"    TextColor="White"/>
+
+
+
+
+            </Grid>
+        </pages:BasePage>
+        <pages:BasePage Title="{Binding Resources[DeviceSettingsCaptionText]}"    Kod="WriteTabPage">
+            <Grid IsEnabled="{Binding IsConnected}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Text="setting page"/>
+            </Grid>
         </pages:BasePage>
     </pages:BaseTabbedPage.Children>
 
