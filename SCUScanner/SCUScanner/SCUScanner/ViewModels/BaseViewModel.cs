@@ -18,12 +18,12 @@ namespace SCUScanner.ViewModels
         }
 
 
-        public virtual void OnActivate()
+        public virtual void OnActivate(string kod="")
         {
         }
 
 
-        public virtual void OnDeactivate()
+        public virtual void OnDeactivate(string kod="")
         {
         }
     }

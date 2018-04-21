@@ -12,7 +12,7 @@
 
     </pages:BaseTabbedPage.ToolbarItems>
     <pages:BaseTabbedPage.Children>
-        <pages:BasePage Title="Scan for devices">
+        <pages:BasePage Title="{Binding Resources[MainText]}" x:Name="MainTabPage" Kod="MainTabPage">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
@@ -43,34 +43,16 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto" />
                                             <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="150" />
                                         </Grid.ColumnDefinitions>
 
                                         <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" FontAttributes="Bold" FontSize="15" />
-                                        <Label Text="{Binding Rssi, StringFormat='RSSI: {0}'}" Grid.Row="0" Grid.Column="2" TextColor="Green" />
-                                        <Label Text="{Binding Address}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" />
-
-
-                                     
-                                        <!--<Label Text="{Binding LocalName, StringFormat='Local Name: {0}'}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>-->
-                                        <!--<Label Text="{Binding Uuid, StringFormat='UUID: {0}'}" Grid.Row="1" Grid.ColumnSpan="2" FontAttributes="Italic" />-->
-                                        <!--<Label Text="{Binding ServiceCount, StringFormat='{0} Services'}" Grid.Row="3" Grid.Column="0" />-->
-                                        <!--<Label Text="Device Connected" IsVisible="{Binding IsConnected}" BackgroundColor="Yellow" TextColor="Black"  HorizontalTextAlignment="Center"
-                                               Grid.Column="0" Grid.Row="2" />-->
-                                        <!--Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=DevicePage}}"
-                               CommandParameter="{Binding}"-->
-                                        <!--<Button  Grid.Row="2"  Grid.Column="1"  Text="{Binding BindingContext.Resources[ConnectButtonText],Source={x:Reference Name=BleDevices}}"  Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=BleDevices}  }" CommandParameter="{Binding}"  />-->
-                                        <Button Margin="0"   Grid.Row="2"     Grid.Column="2" Grid.ColumnSpan="2"   Text="{Binding ConnectButtonText}"
-                                           BackgroundColor="Green"    TextColor="White" HeightRequest="60"/>
-                                        <!--<Label Text="{Binding IsConnectable, StringFormat='Connectable: {0}'}" Grid.Row="3" Grid.Column="0" />-->
-
-        
-
-                                        <!--<Label Text="{Binding ManufacturerData, StringFormat='Manufactuer Data: {0}'}" Grid.Row="4" Grid.ColumnSpan="2" />-->
-
-
-
-
+                                        <Label Text="{Binding Rssi, StringFormat='RSSI: {0}'}" Grid.Row="0" Grid.Column="2" TextColor="Red" />
+                                        <Label Text="{Binding Address}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
+                                        <Button Margin="0"   Grid.Row="2"     Grid.Column="2"    Text="{Binding ConnectButtonText}"
+                                                Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=DevicePage}}"
+                               CommandParameter="{Binding}"
+                                           BackgroundColor="Green"    TextColor="White" HeightRequest="60"  />
                                     </Grid>
                                 </ViewCell.View>
                             </ViewCell>
@@ -83,8 +65,11 @@
 
             </Grid>
         </pages:BasePage>
-        <pages:BasePage Title="System devices">
+        <pages:BasePage Title="{Binding Resources[ConnectedDeviceCaptionText]}" IsVisible="True" Kod="ConnectedTabPage">
             
+        </pages:BasePage>
+        <pages:BasePage Title="{Binding Resources[DeviceSettingsCaptionText]}" IsVisible="True" Kod="WriteTabPage"> 
+
         </pages:BasePage>
     </pages:BaseTabbedPage.Children>
 

@@ -13,13 +13,13 @@ namespace SCUScanner.Pages
         {
             base.OnAppearing();
 
-            (this.BindingContext as IViewModel)?.OnActivate();
+           // (this.BindingContext as IViewModel)?.OnActivate();
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            (this.BindingContext as IViewModel)?.OnDeactivate();
+            //(this.BindingContext as IViewModel)?.OnDeactivate();
         }
     }
 }

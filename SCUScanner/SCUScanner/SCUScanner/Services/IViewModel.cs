@@ -9,7 +9,7 @@ namespace SCUScanner.Services
     {
         void Init(object args = null);
 
-        void OnActivate();
-        void OnDeactivate();
+        void OnActivate(string name="");
+        void OnDeactivate(string name = "");
     }
 }

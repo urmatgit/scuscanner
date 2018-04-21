@@ -45,6 +45,7 @@ namespace SCUScanner.ViewModels
             get => isStateOn;
             set => this.RaiseAndSetIfChanged(ref isStateOn, value);
         }
+
         private CancellationTokenSource _cancellationTokenSource;
         public ICommand ScanToggleCommand { get; }
         public ICommand StopScanCommand { get; }
@@ -54,9 +55,13 @@ namespace SCUScanner.ViewModels
 
         public DeviceListViewModel(IBluetoothLE bluetoothLe, IAdapter adapter, IUserDialogs userDialogs, ISettings settings, IPermissions permissions) 
         {
-            ScanText = Resources["ScanText"];
+            
+            UpdateScanText(false);
             Adapter = adapter;
-         
+            this.WhenAnyValue(vm => vm.IsRefreshing).Subscribe(r =>
+            {
+                UpdateScanText(r);
+            });
          
             _permissions = permissions;
             _bluetoothLe = bluetoothLe;
@@ -65,11 +70,12 @@ namespace SCUScanner.ViewModels
 
             IsRefreshing = Adapter.IsScanning;
             IsStateOn = _bluetoothLe.IsOn;
-            ScanToggleCommand = ReactiveCommand.Create(() => TryStartScanning(true));
+            ScanToggleCommand = ReactiveCommand.Create( () => TryStartScanning(true));
             StopScanCommand = ReactiveCommand.Create(() => StopScan());
             _bluetoothLe.StateChanged += OnStateChanged;
             Adapter.DeviceDiscovered += OnDeviceDiscovered;
             Adapter.ScanTimeoutElapsed += Adapter_ScanTimeoutElapsed;
+            UpdateStateText();
             //Adapter.DeviceDisconnected += OnDeviceDisconnected;
             //Adapter.DeviceConnectionLost += OnDeviceConnectionLost;
             // quick and dirty :>
@@ -77,6 +83,22 @@ namespace SCUScanner.ViewModels
             //Adapter.DeviceConnected += (sender, e) => Adapter.DisconnectDeviceAsync(e.Device);
 
         }
+
+        private void UpdateStateText()
+        {
+            StateText = GetStateText();
+        }
+
+        private void UpdateScanText(bool r)
+        {
+            if (r)
+            {
+                ScanText = Resources["StopScanText"];
+            }
+            else
+                ScanText = Resources["ScanText"];
+        }
+
         private void Adapter_ScanTimeoutElapsed(object sender, EventArgs e)
         {
             
@@ -87,7 +109,12 @@ namespace SCUScanner.ViewModels
         {
             AddOrUpdateDevice(args.Device);
         }
-
+        private string statetext;
+        public string StateText
+        {
+            get => statetext;
+            set => this.RaiseAndSetIfChanged(ref statetext, value);
+        }
         private string GetStateText()
         {
             switch (_bluetoothLe.State)
@@ -116,6 +143,7 @@ namespace SCUScanner.ViewModels
         private void UpdateStateOn()
         {
             IsStateOn = _bluetoothLe.IsOn;
+            UpdateStateText();
         }
         private void UpdateIsScanning()
         {
@@ -125,7 +153,8 @@ namespace SCUScanner.ViewModels
         {
 
             UpdateStateOn();
-            var stattext = GetStateText();
+            UpdateStateText();
+            
             //RaisePropertyChanged(nameof(StateText));
             //TryStartScanning();
         }
@@ -147,19 +176,30 @@ namespace SCUScanner.ViewModels
             set => this.RaiseAndSetIfChanged(ref this.scantext, value);
         }
 
-        public override void OnActivate()
+        public override  async  void OnActivate(string kod)
         {
             base.OnActivate();
+            UpdateIsScanning();
+            UpdateScanText(IsRefreshing);
+            UpdateStateText();
+            if (IsStateOn && !string.IsNullOrEmpty(kod) && kod== "MainTabPage" &&  !IsRefreshing && SettingsBase.AutoScan)
+            {
+                await  TryStartScanning(true);
+            }
         }
-        public override void OnDeactivate()
+        public override void OnDeactivate(string kod)
         {
             base.OnDeactivate();
-            Adapter.StopScanningForDevicesAsync();
-            IsRefreshing=Adapter.IsScanning;
+            if (!string.IsNullOrEmpty(kod) && kod == "MainTabPage")
+            {
+                Adapter.StopScanningForDevicesAsync();
+                UpdateIsScanning();
+            }
+            
         }
 
 
-        private async void TryStartScanning(bool refresh = false)
+        private async Task TryStartScanning(bool refresh = false)
         {
             
             if (Xamarin.Forms.Device.OS == Xamarin.Forms.TargetPlatform.Android)
@@ -181,7 +221,7 @@ namespace SCUScanner.ViewModels
             {
                 if (!IsRefreshing)
                 {
-                    ScanText = Resources["StopScanText"];
+               //     ScanText = Resources["StopScanText"];
                     IsRefreshing = true;
                     ScanForDevices();
                 }
@@ -191,7 +231,7 @@ namespace SCUScanner.ViewModels
                 }
             }
         }
-
+        
         private async void ScanForDevices()
         {
             Devices.Clear();
@@ -217,6 +257,7 @@ namespace SCUScanner.ViewModels
           
             //RaisePropertyChanged(() => IsRefreshing);
             Adapter.ScanMode = ScanMode.LowLatency;
+            Adapter.ScanTimeout = 30000;
             await Adapter.StartScanningForDevicesAsync(cancellationToken: _cancellationTokenSource.Token);
         }
         private void AddOrUpdateDevice(IDevice device)
@@ -238,9 +279,9 @@ namespace SCUScanner.ViewModels
         {
             _cancellationTokenSource.Dispose();
             _cancellationTokenSource = null;
-            StopScanCommand.Execute(null);
-            if (!isRefreshing)
-                ScanText = Resources["ScanText"];
+            UpdateIsScanning();
+            //if (!isRefreshing)
+            //    ScanText = Resources["ScanText"];
         }
 
        

@@ -30,8 +30,24 @@ namespace SCUScanner.Pages
            var  _settings = CrossSettings.Current;
             var _permission = CrossPermissions.Current;
             BindingContext = deviceListViewModel = new DeviceListViewModel(_bluetoothLe, adapter,_userDialogs,_settings, _permission);
+            MessagingCenter.Subscribe<object, CultureChangedMessage>(this, string.Empty, (sender, agr) =>
+            {
 
-		}
+                var arg = agr;
+                if (arg is CultureChangedMessage)
+                {
+                    // BindingContext = null;
+                    SCUScanner.Models.Settings settings = sender as SCUScanner.Models.Settings;
+                    this.Title = settings.Resources["MainText"];
+                    if (App.mainTabbed != null)
+                    {
+                        App.mainTabbed.Title = settings.Resources["MainText"];
+                        //   scanBluetoothViewModel.ScanTextChange(scanBluetoothViewModel.IsScanning);
+                    }
+                }
+            });
+
+        }
         protected override void OnAppearing()
         {
             base.OnAppearing();

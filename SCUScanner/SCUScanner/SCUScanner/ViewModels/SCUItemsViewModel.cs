@@ -119,7 +119,7 @@ namespace SCUScanner.ViewModels
           
                    //    CanLoadMoreItems = this.WhenAnyValue(vm => LoadedItemCount > ItemCounts);
         }
-        public override async void OnActivate()
+        public override async void OnActivate(string kod)
         {
             base.OnActivate();
             

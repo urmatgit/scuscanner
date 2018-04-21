@@ -175,7 +175,7 @@ namespace SCUScanner.ViewModels
             //    FillItems();
             FillItems();
         }
-        public override void OnActivate()
+        public override void OnActivate(string kod)
         {
             base.OnActivate();
             FillItems();

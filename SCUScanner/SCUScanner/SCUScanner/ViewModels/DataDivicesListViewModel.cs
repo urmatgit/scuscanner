@@ -34,7 +34,7 @@ namespace SCUScanner.ViewModels
                 
             });
         }
-        public override void OnActivate()
+        public override void OnActivate(string kod="")
         {
             base.OnActivate();
             FillDeviceList();
