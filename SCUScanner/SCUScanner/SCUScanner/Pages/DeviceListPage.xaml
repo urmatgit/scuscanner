@@ -5,6 +5,7 @@
              x:Class="SCUScanner.Pages.DeviceListPage"
              xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
                         xmlns:controls="clr-namespace:SCUScanner.Helpers"
+                        xmlns:localBeh="clr-namespace:SCUScanner.Helpers.Behaviors" 
              Title="Discover devices"
              x:Name="DevicePage">
     
@@ -139,13 +140,68 @@
             </Grid>
         </pages:BasePage>
         <pages:BasePage Title="{Binding Resources[DeviceSettingsCaptionText]}"  IsVisible="{Binding IsConnected}"  Kod="WriteTabPage">
-            <Grid >
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="120"/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Text="setting page"/>
+                <Entry Grid.Column="0" Grid.Row="0" Placeholder="{Binding Resources[BroadcastIdentityText]}" Text="{Binding BroadcastIdentity}">
+                    <Entry.Behaviors>
+                        <localBeh:MaxLengthValidatorBehavior  ErrorLabel="BroadcastErrorMessage" MaxLength="6"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Grid.Column="0" Grid.Row="1" x:Name="BroadcastErrorMessage" TextColor="Red" FontAttributes="Italic" FontSize="Small"/>
+                <Button Grid.Column="1" Grid.Row="0" Text="{Binding Resources[SendButtonText]}" Command="{Binding WriteCommnad}" CommandParameter="BI" BackgroundColor="Green"    TextColor="White" />
+                
+                <Entry Grid.Column="0" Grid.Row="2" Placeholder="{Binding Resources[AlarmLevelText]}" Text="{Binding AlarmLevel}" Keyboard="Numeric">
+                    <Entry.Behaviors>
+                        <localBeh:BetweenValueValidatorBehavior ErrorLabel="AlarmLevelErrorMessage" MinValue="24"  MaxValue="36"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Grid.Column="0" Grid.Row="3" x:Name="AlarmLevelErrorMessage" TextColor="Red" FontAttributes="Italic" FontSize="Small"/>
+                <Button Grid.Column="1" Grid.Row="2" CommandParameter="AL" Text="{Binding Resources[SendButtonText]}" Command="{Binding WriteCommnad}"  BackgroundColor="Green"    TextColor="White" />
+                
+                <Entry Grid.Column="0" Grid.Row="4" Placeholder="{Binding Resources[CutOffText]}" Text="{Binding CutOff}" Keyboard="Numeric">
+                    <Entry.Behaviors>
+                        <localBeh:BetweenValueValidatorBehavior ErrorLabel="CutOffErrorMessage" MinValue="36"  MaxValue="64"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Grid.Column="0" Grid.Row="5" x:Name="CutOffErrorMessage" TextColor="Red" FontAttributes="Italic" FontSize="Small"/>
+                <Button Grid.Column="1" Grid.Row="4" CommandParameter="CF" Text="{Binding Resources[SendButtonText]}" Command="{Binding WriteCommnad}"  BackgroundColor="Green"    TextColor="White" />
+                
+                <Entry Grid.Column="0" Grid.Row="6" Placeholder="{Binding Resources[AlarmHoursText]}" Text="{Binding AlarmHoursToWrite}" Keyboard="Numeric">
+                    <Entry.Behaviors>
+                        <localBeh:BetweenValueValidatorBehavior ErrorLabel="AlarmHoursErrorMessage" MinValue="0"  MaxValue="9999"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Grid.Column="0" Grid.Row="7" x:Name="AlarmHoursErrorMessage" TextColor="Red" FontAttributes="Italic" FontSize="Small"/>
+                <Button Grid.Column="1" Grid.Row="6" CommandParameter="AH" Text="{Binding Resources[SendButtonText]}" Command="{Binding WriteCommnad}"  BackgroundColor="Green"    TextColor="White" />
+                
+                <Entry Grid.Column="0" Grid.Row="8" Placeholder="{Binding Resources[SetSerialNumberText]}" Text="{Binding SetSerialNumber}">
+                    <Entry.Behaviors>
+                        <localBeh:MaxLengthValidatorBehavior  ErrorLabel="SerialNumberErrorMessage"  MaxLength="20"/>
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Grid.Column="0" Grid.Row="9" x:Name="SerialNumberErrorMessage" TextColor="Red" FontAttributes="Italic" FontSize="Small"/>
+                <Button Grid.Column="1" Grid.Row="8" CommandParameter="SN" Text="{Binding Resources[SendButtonText]}" Command="{Binding WriteCommnad}"  BackgroundColor="Green"    TextColor="White" />
+                
+                <Label Grid.Column="0" Grid.Row="10" Text="{Binding Resources[SetSerialNumberInfoText]}"  />
+                <!--<Button Grid.Column="0"  Grid.Row="11"   Text="{Binding Resources[SendButtonText]}"  
+                    Command="{Binding SendCommand}"  BackgroundColor="Green"    TextColor="White"/>-->
             </Grid>
         </pages:BasePage>
     </pages:BaseTabbedPage.Children>

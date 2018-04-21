@@ -10,6 +10,8 @@ using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
+using Plugin.Share;
+using Plugin.Share.Abstractions;
 using ReactiveUI;
 using SCUScanner.Helpers;
 using SCUScanner.Models;
@@ -67,6 +69,7 @@ namespace SCUScanner.ViewModels
         public ICommand DisconnectCommand { get; }
         public ICommand ValueShareCommand { get; }
         public ICommand DownloadCommand { get; }
+        public ICommand WriteCommnad { get; }
         public ObservableCollection<DeviceListItemViewModel> Devices { get; set; } = new ObservableCollection<DeviceListItemViewModel>();
         readonly IPermissions _permissions;
 
@@ -138,10 +141,10 @@ namespace SCUScanner.ViewModels
             {
                 //   return;// пока отключаем
                 if (ScuData == null) return;
-                SCUItem scuitem = null;
+              
 
 
-                scuitem = new SCUItem()
+                SCUItem scuitem = new SCUItem()
                 {
                     UnitName = ScuData.ID,
                     SerialNo = ScuData.SN,
@@ -170,6 +173,27 @@ namespace SCUScanner.ViewModels
 
                 ScuData = null;
             });
+            WriteCommnad = ReactiveCommand.CreateFromTask<string>(async (kod) =>
+            {
+                await WriteToDevice(kod);
+            });
+            ValueShareCommand = ReactiveCommand.CreateFromTask(async () =>
+            {
+
+
+                if (!CrossShare.IsSupported && string.IsNullOrEmpty(LastJsonForShare))
+                
+                    return;
+
+
+                await CrossShare.Current.Share(new ShareMessage
+                {
+                    Title = "Reception text",
+                    Text = SourceText
+
+                });
+
+            });
             _bluetoothLe.StateChanged += OnStateChanged;
 
             Adapter.DeviceDiscovered += OnDeviceDiscovered;
@@ -184,6 +208,8 @@ namespace SCUScanner.ViewModels
             //Adapter.DeviceConnected += (sender, e) => Adapter.DisconnectDeviceAsync(e.Device);
 
         }
+
+       
 
         private async void OnDeviceConnectionLost(object sender, DeviceErrorEventArgs e)
         {
@@ -623,7 +649,7 @@ namespace SCUScanner.ViewModels
 
                     ScuData = JsonConvert.DeserializeObject<SCUSendData>(StrJson);
                     Debug.WriteLine($"\nScuData-{StrJson}");
-
+                    LastJsonForShare = StrJson;
                 }
                 catch (Exception er)
                 {
@@ -855,6 +881,148 @@ namespace SCUScanner.ViewModels
         {
             get => sourceText;
             set => this.RaiseAndSetIfChanged(ref sourceText, value);
+        }
+        #endregion
+
+
+        #region Write to device
+        private string broadcastIdentity;
+
+        public string BroadcastIdentity
+        {
+            get => broadcastIdentity;
+            set => this.RaiseAndSetIfChanged(ref broadcastIdentity, value);
+        }
+        private string alarmLevel;
+        public string AlarmLevel
+        {
+            get => alarmLevel;
+            set => this.RaiseAndSetIfChanged(ref alarmLevel, value);
+        }
+        private string cutOff;
+        public string CutOff
+        {
+            get => cutOff;
+            set => this.RaiseAndSetIfChanged(ref cutOff, value);
+        }
+        private string alarmHoursToWrite;
+        public string AlarmHoursToWrite
+        {
+            get => alarmHoursToWrite;
+            set => this.RaiseAndSetIfChanged(ref alarmHoursToWrite, value);
+        }
+        private string setSerialNumber;
+        public string SetSerialNumber
+        {
+            get => setSerialNumber;
+            set => this.RaiseAndSetIfChanged(ref setSerialNumber, value);
+        }
+        public string LastJsonForShare { get; private set; }
+
+        private async Task WriteToDevice(string kod)
+        {
+            switch (kod)
+            {
+                case "BI":
+
+                    if (!string.IsNullOrEmpty(BroadcastIdentity))
+                    {
+                       if(await WriteValueAsync($"!{BroadcastIdentity}"))
+                        {
+                            int duration = 8;
+
+                            using (var dialog = App.Dialogs.Progress(string.Format(Resources["WaitForChangeIDText"], duration)))
+                            {
+                                int step = 100 / duration;
+                                while (dialog.PercentComplete < 100)
+                                {
+                                    await Task.Delay(TimeSpan.FromSeconds(1));
+                                    dialog.PercentComplete += step;
+                                }
+                            }
+                            DisconnectDevice(SelectedDevice);
+                        }
+                    }
+                    break;//BroadcastIdentity ID
+                case "AL":
+                    if (!string.IsNullOrEmpty(AlarmLevel))
+                        await WriteValueAsync($"^{AlarmLevel}");
+                    break;//larmLevel
+                case "CF":
+                    if (!string.IsNullOrEmpty(CutOff))
+                        await WriteValueAsync($"@{CutOff}");
+                    break;//CutOff
+                case "AH":
+                    if (!string.IsNullOrEmpty(AlarmHoursToWrite))
+                        await WriteValueAsync($"~{AlarmHoursToWrite.PadLeft(4, '0')}");
+                    break;//AlarmHours
+                case "SN":
+                    if (!string.IsNullOrEmpty(SetSerialNumber))
+                    {
+                        var serial = SetSerialNumber;
+                        if (serial.Length < 20)
+                        {
+                            serial += ">";
+                        }
+                        serial += $"${serial}";
+                        _userDialogs.ShowLoading(Resources["SendingValueText"]);
+                        try
+                        {
+                            foreach (char ch in serial)
+                            {
+                                await WriteValueAsync(ch.ToString(),false);
+                                System.Diagnostics.Debug.WriteLine(ch.ToString());
+                                Thread.Sleep(10);
+
+                            }
+                        }
+                        finally
+                        {
+                            _userDialogs.HideLoading();
+                            _userDialogs.Toast($"{Resources["SendingValueText"]} {serial}");
+                        }
+                        
+                    }
+                    break;//SerialNumber
+            }
+        }
+        private async Task<bool> WriteValueAsync(string value, bool showloading = true)
+        {
+            bool result = false;
+            try
+            {
+                
+                var data = GetBytes(value);
+                ICharacteristic writer = null;
+                if (mldpDataCharacteristic != null)
+                    writer = mldpDataCharacteristic;
+                else
+                    writer = transparentRxDataCharacteristic;
+                if (showloading)
+                 _userDialogs.ShowLoading(Resources["SendingValueText"]);
+                 result=   await writer.WriteAsync(data);
+                if (showloading)
+                    _userDialogs.HideLoading();
+
+                if (showloading)
+                    _userDialogs.Toast($"{Resources["SendingValueText"]} {value}");
+            }
+            catch (Exception ex)
+            {
+                if (showloading)
+                {
+                    _userDialogs.HideLoading();
+                    await _userDialogs.AlertAsync(ex.Message);
+                }
+                else
+                    Debug.WriteLine(ex.Message);
+                result = false;
+            }
+            return result;
+        }
+        private static byte[] GetBytes(string text)
+        {
+            return Encoding.UTF8.GetBytes(text);
         }
         #endregion
 

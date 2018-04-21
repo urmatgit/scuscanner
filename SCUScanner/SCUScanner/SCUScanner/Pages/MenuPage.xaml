@@ -28,7 +28,7 @@
           <Label
               Grid.Column="1"
               Grid.Row="1"
-              Text="Centriclean" TextColor="White"
+              Text="CentriСlean" TextColor="White"
               Style="{DynamicResource SubtitleStyle}"/>
         </Grid>
       </ListView.Header>

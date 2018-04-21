@@ -14,7 +14,7 @@ using Android.Widget;
 namespace SCUScanner.Droid
 {
 
-    [Activity(Label = "Centriclean", Icon = "@drawable/icon",NoHistory =true, Theme = "@style/SplashTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "CentriСlean", Icon = "@drawable/icon",NoHistory =true, Theme = "@style/SplashTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class SplashActivity: Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
