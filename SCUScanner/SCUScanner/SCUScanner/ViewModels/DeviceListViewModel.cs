@@ -1,6 +1,7 @@
 ﻿using Acr.UserDialogs;
 using MvvmCross;
 using MvvmCross.Commands;
+using Newtonsoft.Json;
 using Plugin.BLE;
 using Plugin.BLE.Abstractions;
 using Plugin.BLE.Abstractions.Contracts;
@@ -19,6 +20,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -30,6 +32,7 @@ namespace SCUScanner.ViewModels
     public class DeviceListViewModel : BaseViewModel
     {
         DeviceListPage _deviceListPage;
+        DeviceListItemViewModel SelectedDevice;
         private readonly IBluetoothLE _bluetoothLe;
         private readonly IUserDialogs _userDialogs;
         private readonly ISettings _settings;
@@ -60,6 +63,10 @@ namespace SCUScanner.ViewModels
         public ICommand ScanToggleCommand { get; }
         public ICommand StopScanCommand { get; }
         public ICommand ConnectCommand { get; }
+        public ICommand SaveCommand { get; }
+        public ICommand DisconnectCommand { get; }
+        public ICommand ValueShareCommand { get; }
+        public ICommand DownloadCommand { get; }
         public ObservableCollection<DeviceListItemViewModel> Devices { get; set; } = new ObservableCollection<DeviceListItemViewModel>();
         readonly IPermissions _permissions;
 
@@ -86,37 +93,65 @@ namespace SCUScanner.ViewModels
             IsStateOn = _bluetoothLe.IsOn;
             ScanToggleCommand = ReactiveCommand.Create( () => TryStartScanning(true));
             StopScanCommand = ReactiveCommand.Create(() => StopScan());
-            ConnectCommand = ReactiveCommand.CreateFromTask<DeviceListItemViewModel>(async (o) =>
+            DisconnectCommand = ReactiveCommand.CreateFromTask (async () =>
+             {
+               
+                 await DisconnectDevice(SelectedDevice);
+               
+             });
+             ConnectCommand = ReactiveCommand.CreateFromTask<DeviceListItemViewModel>(async (o) =>
              {
                  if (!IsStateOn) return;
                  //                 var selecte = o;
-                 if (o.IsConnected)
+                 SelectedDevice = o;
+                 if (SelectedDevice.IsConnected)
                  {
-                     await DisconnectDevice(o);
-                     _deviceListPage.CurrentPage = _deviceListPage.DeviceListTab;
-                     IsConnected = false;
+                    
+                     await DisconnectDevice(SelectedDevice);
+                    
                  }
                  else
                  {
-                   IsConnected =  await ConnectDeviceAsync(o, false);
+                   IsConnected =  await ConnectDeviceAsync(SelectedDevice, false);
                      if (IsConnected)
                      {
                          _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
-                         await LoadServices(o);
+                          
+                         await LoadServices(SelectedDevice);
                      }
                  }
              });
                 _bluetoothLe.StateChanged += OnStateChanged;
+            
             Adapter.DeviceDiscovered += OnDeviceDiscovered;
             Adapter.ScanTimeoutElapsed += Adapter_ScanTimeoutElapsed;
+
             UpdateStateText();
             IsConnected = false;
-            //Adapter.DeviceDisconnected += OnDeviceDisconnected;
-            //Adapter.DeviceConnectionLost += OnDeviceConnectionLost;
+            Adapter.DeviceDisconnected += OnDeviceDisconnected;
+            Adapter.DeviceConnectionLost += OnDeviceConnectionLost;
             // quick and dirty :>
 
             //Adapter.DeviceConnected += (sender, e) => Adapter.DisconnectDeviceAsync(e.Device);
 
+        }
+        
+        private async void OnDeviceConnectionLost(object sender, DeviceErrorEventArgs e)
+        {
+            Devices.FirstOrDefault(d => d.Id == e.Device.Id)?.Update();
+             
+            await StopUpdates();
+            await DisconnectDevice(SelectedDevice);
+            _userDialogs.HideLoading();
+            _userDialogs.Toast($"Connection LOST {e.Device.Name}", TimeSpan.FromMilliseconds(6000));
+            
+        }
+        private async void  OnDeviceDisconnected(object sender, DeviceEventArgs e)
+        {
+            Devices.FirstOrDefault(d => d.Id == e.Device.Id)?.Update();
+            await StopUpdates();
+            _userDialogs.HideLoading();
+            _userDialogs.Toast($"Disconnected {e.Device.Name}");
         }
         #region Device list page
         private void UpdateStateText()
@@ -220,19 +255,33 @@ namespace SCUScanner.ViewModels
             UpdateIsScanning();
             UpdateScanText(IsRefreshing);
             UpdateStateText();
-            if (IsStateOn && !string.IsNullOrEmpty(kod) && kod== "MainTabPage" &&  !IsRefreshing && SettingsBase.AutoScan)
+            if (IsStateOn && !string.IsNullOrEmpty(kod))
             {
-                await  TryStartScanning(true);
+                if (kod == "MainTabPage" && !IsRefreshing && SettingsBase.AutoScan)
+                {
+                    await TryStartScanning(true);
+                } else if (kod == "ConnectedTabPage") {
+                    if (LastCharForUpdate != null)
+                        StartUpdates(LastCharForUpdate);
+                        }
             }
         }
         public override void OnDeactivate(string kod)
         {
-            base.OnDeactivate();
-            if (!string.IsNullOrEmpty(kod) && kod == "MainTabPage")
+            if (!string.IsNullOrEmpty(kod))
             {
-                Adapter.StopScanningForDevicesAsync();
-                UpdateIsScanning();
+                if (kod == "MainTabPage")
+                {
+                    Adapter.StopScanningForDevicesAsync();
+                    UpdateIsScanning();
+                }
+                else if (kod == "ConnectedTabPage")
+                {
+                      StopUpdates();
+                }
             }
+            base.OnDeactivate();
+            
             
         }
 
@@ -385,6 +434,9 @@ namespace SCUScanner.ViewModels
                 device.Update();
                 _userDialogs.HideLoading();
             }
+            _deviceListPage.CurrentPage = _deviceListPage.DeviceListTab;
+            await StopAndClearCharacters();
+            IsConnected = false;
         }
 
         #endregion
@@ -414,16 +466,18 @@ namespace SCUScanner.ViewModels
                     {
                         if (transparentTxDataCharacteristic.CanUpdate)
                         {
-                            StartUpdates(mldpDataCharacteristic);
+                        //    StartUpdates(mldpDataCharacteristic);
                         }
                     }
-                    mldpDataCharacteristic = await service.GetCharacteristicAsync(Guid.Parse(GlobalConstants.UUID_MLDP_DATA_PRIVATE_CHAR));
-                    if (mldpDataCharacteristic != null)
+                   var   _mldpDataCharacteristic = await service.GetCharacteristicAsync(Guid.Parse(GlobalConstants.UUID_MLDP_DATA_PRIVATE_CHAR));
+                    if (_mldpDataCharacteristic != null && mldpDataCharacteristic==null)
                     {
-                        if (mldpDataCharacteristic.CanUpdate)
+                        if (_mldpDataCharacteristic.CanUpdate)
                         {
                             // mldpDataCharacteristic.ValueUpdated
+                            mldpDataCharacteristic = _mldpDataCharacteristic;
                             StartUpdates(mldpDataCharacteristic);
+                            
                         }
                     }
                 }
@@ -440,45 +494,236 @@ namespace SCUScanner.ViewModels
                 _userDialogs.HideLoading();
             }
         }
+        ICharacteristic LastCharForUpdate;
         private async void StartUpdates(ICharacteristic characteristic)
         {
             try
             {
                 _updatesStarted = true;
+                if (LastCharForUpdate != null)
+                {
+                    try
+                    {
+                        LastCharForUpdate.ValueUpdated -= Characteristic_ValueUpdated;
+                        await LastCharForUpdate.StopUpdatesAsync();
+                        Thread.Sleep(100);
+                    }catch (Exception er)
+                    {
+                        LastCharForUpdate = null;
+                    }
+                }
+                
                 characteristic.ValueUpdated -= Characteristic_ValueUpdated;
                 characteristic.ValueUpdated += Characteristic_ValueUpdated;
             await characteristic.StartUpdatesAsync();
+                _userDialogs.Toast($"Start updates");
+                LastCharForUpdate = characteristic;
             }
             catch (Exception ex)
             {
-                await _userDialogs.AlertAsync(ex.Message);
+                Debug.WriteLine($"{characteristic.Id}-{ex.Message}");
+                //await _userDialogs.AlertAsync(ex.Message);
             }
         }
-
+        private string StrJson = "";
+        private bool IsStartedJson = false;
         private void Characteristic_ValueUpdated(object sender, CharacteristicUpdatedEventArgs e)
         {
             string value= Encoding.UTF8.GetString(e.Characteristic.Value, 0, e.Characteristic.Value.Length);
-            Debug.WriteLine(value);
-        }
+            //SourceText = value;
+        //    Debug.WriteLine(value);
+            if (value.StartsWith("{"))
+            {
+                this.SourceText = value;
+                IsStartedJson = true;
+                StrJson = value;
+            }
+            else if (IsStartedJson)
+            {
+                this.SourceText += value;
+                StrJson += value;
+            }
+            else
+            {
+                StrJson = "";
+            }
+            Debug.Write(this.SourceText);
+            StrJson = StrJson.Trim();
+            if (IsStartedJson && StrJson.EndsWith("}"))
+            {
+                SCUSendData ScuData = null; 
+                try
+                {
+                    StrJson = Regex.Replace(StrJson, "\"ID\":(.[^,]+)", "\"ID\":\"$1\"");
+                    StrJson = Regex.Replace(StrJson, "\"S:(.[^,]+)", "\"S\":$1");
+                    StrJson = Regex.Replace(StrJson, "\"SN\":(.[^,]+)", "\"SN\":\"$1\"").Replace("%", "pc");
+                    //StrJson = StrJson
+                    //    .Replace("\"ID\":", "\"ID\":\"")
+                    //    .Replace(",\"SN\":", "\",\"SN\":\"")
+                    //    .Replace(",\"C\":", "\",\"C\":")
+                    //    .Replace("%", "pc");
 
-        private async void StopUpdates(ICharacteristic characteristic)
+                    ScuData = JsonConvert.DeserializeObject<SCUSendData>(StrJson);
+                    Debug.WriteLine($"\nScuData-{StrJson}");
+
+                }
+                catch (Exception er)
+                {
+                    //App.Dialogs.Alert("Deserialize data error- \n" + er.Message);
+
+
+                    ScuData = null;
+                }
+                finally
+                {
+                    StrJson = "";
+                    IsStartedJson = false;
+                }
+                if (ScuData != null)
+                {
+                    RPM = ScuData.S;
+                    AlarmLimit = ScuData.A;
+                    SN = ScuData.SN;
+                    HRS = ScuData.H;
+                    
+
+                    //var tmpNewColor = ChangeStatusColor(RPM, Warning, AlarmLimit);
+                    //if (PreviewColor != tmpNewColor)
+                    //{
+                    //    try
+                    //    {
+                    //        StatusColor = tmpNewColor;
+                    //        PreviewColor = tmpNewColor;
+                    //    }
+                    //    catch (Exception er)
+                    //    {
+                    //        Debug.WriteLine($"Status color chage error-{er.Message}");
+                    //    }
+
+                    //}
+                }
+
+            }
+
+
+        }
+        private async Task StopAndClearCharacters()
+        {
+            StopUpdates();
+            mldpDataCharacteristic =transparentTxDataCharacteristic= transparentRxDataCharacteristic = null; 
+        }
+        private async Task StopUpdate(ICharacteristic characteristic = null)
         {
             try
             {
-                _updatesStarted = false;
 
-                await characteristic.StopUpdatesAsync();
-                characteristic.ValueUpdated -= Characteristic_ValueUpdated;
-
-             //   Messages.Insert(0, $"Stop updates");
-
+                if (characteristic != null)
+                {
+                    characteristic.ValueUpdated -= Characteristic_ValueUpdated;
+                    await characteristic.StopUpdatesAsync();
+                    Debug.WriteLine("Stop update");
+                }
                 
-
+                
             }
             catch (Exception ex)
             {
+                Debug.WriteLine($"Stop update  er-{ex.Message}");
+                
+            }
+             
+        }
+        private async Task StopUpdates(ICharacteristic characteristic=null )
+        {
+            ////mldpDataCharacteristic, transparentTxDataCharacteristic, transparentRxDataCharacteristic;
+            try
+            {
+                await StopUpdate(LastCharForUpdate);
+                await StopUpdate(mldpDataCharacteristic);
+
+               await StopUpdate(transparentTxDataCharacteristic);
+                await StopUpdate(transparentRxDataCharacteristic);
+                
+                //   Messages.Insert(0, $"Stop updates");
+
+
+                _userDialogs.Toast($"Stop updates");
+            }
+            catch (Exception ex)
+            {
+
                 await _userDialogs.AlertAsync(ex.Message);
             }
+            finally
+            {
+                _updatesStarted = false;
+            }
+        }
+        string name;
+        public string Name
+        {
+            get => this.name;
+            private set => this.RaiseAndSetIfChanged(ref this.name, value);
+        }
+        private string sn;
+        public string SN
+        {
+            get => sn;
+            set => this.RaiseAndSetIfChanged(ref sn, value);
+        }
+        private int rpm;
+        /// <summary>
+        /// S-Speed текущая скорость вращения мотора, 
+        /// </summary>
+        public int RPM
+        {
+            get => rpm;
+            set => this.RaiseAndSetIfChanged(ref rpm, value);
+        }
+        private Color statusColor;
+        public Color StatusColor
+        {
+            get => statusColor;
+            set => this.RaiseAndSetIfChanged(ref statusColor, value);
+        }
+        private int? alarmLimit;
+        /// <summary>
+        /// A -Alarm Level (уровень тревоги), 
+        /// </summary>
+        public int? AlarmLimit
+        {
+            get => alarmLimit;
+            set => this.RaiseAndSetIfChanged(ref alarmLimit, value);
+        }
+        private int hrs;
+        public int HRS
+        {
+            get => hrs;
+            set => this.RaiseAndSetIfChanged(ref hrs, value);
+        }
+        private string note;
+        public string Note
+        {
+            get => note;
+            set => this.RaiseAndSetIfChanged(ref note, value);
+        }
+        private string locationName;
+        public string LocationName
+        {
+            get => locationName;
+            set => this.RaiseAndSetIfChanged(ref locationName, value);
+        }
+        private string operatorName;
+        public string OperatorName
+        {
+            get => operatorName;
+            set => this.RaiseAndSetIfChanged(ref operatorName, value);
+        }
+        private string sourceText;
+        public string SourceText
+        {
+            get => sourceText;
+            set => this.RaiseAndSetIfChanged(ref sourceText, value);
         }
         #endregion
 

@@ -67,8 +67,8 @@
 
             </Grid>
         </pages:BasePage>
-        <pages:BasePage x:Name="ConnectedTabPage" Title="{Binding Resources[ConnectedDeviceCaptionText]}"   Kod="ConnectedTabPage">
-            <Grid Margin="10" IsEnabled="{Binding IsConnected}">
+        <pages:BasePage x:Name="ConnectedTabPage" Title="{Binding Resources[ConnectedDeviceCaptionText]}" IsVisible="{Binding IsConnected}"   Kod="ConnectedTabPage">
+            <Grid Margin="10"  >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
@@ -138,8 +138,8 @@
 
             </Grid>
         </pages:BasePage>
-        <pages:BasePage Title="{Binding Resources[DeviceSettingsCaptionText]}"    Kod="WriteTabPage">
-            <Grid IsEnabled="{Binding IsConnected}">
+        <pages:BasePage Title="{Binding Resources[DeviceSettingsCaptionText]}"  IsVisible="{Binding IsConnected}"  Kod="WriteTabPage">
+            <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
