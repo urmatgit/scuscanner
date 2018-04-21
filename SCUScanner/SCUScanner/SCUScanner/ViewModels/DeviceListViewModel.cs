@@ -341,8 +341,7 @@ namespace SCUScanner.ViewModels
                     if (LastCharForUpdate != null)
                     {
                         StartUpdates(LastCharForUpdate);
-                        if (LastStateColorTimer)
-                            TimerAlarm.Enabled = true;
+                          TimerAlarm.Enabled = true;
                     }
                 }
             }
@@ -946,16 +945,25 @@ namespace SCUScanner.ViewModels
                     break;//BroadcastIdentity ID
                 case "AL":
                     if (!string.IsNullOrEmpty(AlarmLevel))
-                        await WriteValueAsync($"^{AlarmLevel}");
+                    {
+                       if (await WriteValueAsync($"^{AlarmLevel}"))
+                        _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
+                    }
                     break;//larmLevel
                 case "CF":
                     if (!string.IsNullOrEmpty(CutOff))
-                        await WriteValueAsync($"@{CutOff}");
-                    break;//CutOff
+                    {
+                       if (await WriteValueAsync($"@{CutOff}"))
+                        _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
+                    }
+                        break;//CutOff
                 case "AH":
                     if (!string.IsNullOrEmpty(AlarmHoursToWrite))
-                        await WriteValueAsync($"~{AlarmHoursToWrite.PadLeft(4, '0')}");
-                    break;//AlarmHours
+                    {
+                        if (await WriteValueAsync($"~{AlarmHoursToWrite.PadLeft(4, '0')}"))
+                        _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
+                    }
+                        break;//AlarmHours
                 case "SN":
                     if (!string.IsNullOrEmpty(SetSerialNumber))
                     {
@@ -966,11 +974,12 @@ namespace SCUScanner.ViewModels
                         }
                         serial += $"${serial}";
                         _userDialogs.ShowLoading(Resources["SendingValueText"]);
+                        bool res = true;
                         try
                         {
                             foreach (char ch in serial)
                             {
-                                await WriteValueAsync(ch.ToString(),false);
+                                res=res && await WriteValueAsync(ch.ToString(),false);
                                 System.Diagnostics.Debug.WriteLine(ch.ToString());
                                 Thread.Sleep(10);
 
@@ -981,7 +990,8 @@ namespace SCUScanner.ViewModels
                             _userDialogs.HideLoading();
                             _userDialogs.Toast($"{Resources["SendingValueText"]} {serial}");
                         }
-                        
+                        if (res)
+                            _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
                     }
                     break;//SerialNumber
             }
