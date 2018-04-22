@@ -61,12 +61,7 @@ namespace SCUScanner.ViewModels
             get => isConnected;
             set => this.RaiseAndSetIfChanged(ref isConnected, value);
         }
-        private bool _flgWaitDataUpate = false;
-        public bool flgWaitDataUpate
-        {
-            get=> _flgWaitDataUpate;
-            set => this.RaiseAndSetIfChanged(ref _flgWaitDataUpate, value);
-        }
+         
         private CancellationTokenSource _cancellationTokenSource;
         public ICommand ScanToggleCommand { get; }
         public ICommand StopScanCommand { get; }
@@ -85,21 +80,7 @@ namespace SCUScanner.ViewModels
             TimerAlarm = new System.Timers.Timer();
             TimerAlarm.Interval = 500;
             TimerAlarm.Elapsed += TimerAlarm_Elapsed;
-            TimerWaitDataUpdate = new System.Timers.Timer();
-            TimerWaitDataUpdate.Interval = GlobalConstants.WaitingForReconnecting;
-            TimerWaitDataUpdate.Elapsed += TimerWaitDataUpdate_Elapsed;
-            this.WhenAnyValue(vm => vm.flgWaitDataUpate).Subscribe(flg =>
-              {
-                  TimerWaitDataUpdate.Enabled = flg;
-                  //if (flg)
-                  //{
-                  //    TimerWaitDataUpdate.Start();
-                  //}else
-                  //{
-                  //    TimerWaitDataUpdate.Stop();
-                  //}
-                  
-              });
+             
             _deviceListPage = deviceListPage;
             OperatorName = SettingsBase.OperatorName;
             UpdateScanText(false);
@@ -231,15 +212,7 @@ namespace SCUScanner.ViewModels
 
         }
 
-        private async void TimerWaitDataUpdate_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            TimerWaitDataUpdate.Stop();
-            if (flgWaitDataUpate)
-            {
-                flgWaitDataUpate = false;
-                await DisconnectDevice(SelectedDevice, true);
-            }
-        }
+        
 
         private async void OnDeviceConnectionLost(object sender, DeviceErrorEventArgs e)
         {
@@ -460,7 +433,7 @@ namespace SCUScanner.ViewModels
 
             //RaisePropertyChanged(() => IsRefreshing);
             Adapter.ScanMode = ScanMode.LowLatency;
-            Adapter.ScanTimeout = 30000;
+            Adapter.ScanTimeout =SettingsBase.ManualScan? 30000: 60000*60;
             await Adapter.StartScanningForDevicesAsync(cancellationToken: _cancellationTokenSource.Token);
         }
         private void AddOrUpdateDevice(IDevice device)
@@ -564,7 +537,7 @@ namespace SCUScanner.ViewModels
 
             if (autoconnect)
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(3000);
                 //await TryStartScanning(true);
                 if (SelectedDevice != null)
                 {
@@ -660,7 +633,7 @@ namespace SCUScanner.ViewModels
                 await characteristic.StartUpdatesAsync();
                 _userDialogs.Toast($"Start updates");
                 LastCharForUpdate = characteristic;
-                flgWaitDataUpate = true;
+               
             }
             catch (Exception ex)
             {
@@ -674,7 +647,7 @@ namespace SCUScanner.ViewModels
         private void Characteristic_ValueUpdated(object sender, CharacteristicUpdatedEventArgs e)
         {
             string value = Encoding.UTF8.GetString(e.Characteristic.Value, 0, e.Characteristic.Value.Length);
-            flgWaitDataUpate = false;
+             
             //SourceText = value;
             //    Debug.WriteLine(value);
             if (value.StartsWith("{"))
@@ -825,7 +798,7 @@ namespace SCUScanner.ViewModels
             ////mldpDataCharacteristic, transparentTxDataCharacteristic, transparentRxDataCharacteristic;
             try
             {
-                flgWaitDataUpate = false;
+                 
                 await StopUpdate(LastCharForUpdate);
                 await StopUpdate(mldpDataCharacteristic);
 
@@ -869,7 +842,7 @@ namespace SCUScanner.ViewModels
         /// 
         System.Timers.Timer TimerAlarm;
 
-        System.Timers.Timer TimerWaitDataUpdate;
+      
         Color PreviewColor = Color.White;
         private int? warning;
         /// <summary>
