@@ -523,14 +523,29 @@ namespace SCUScanner.ViewModels
                     _userDialogs.HideLoading();
                 }
             }
-            _deviceListPage.CurrentPage = _deviceListPage.DeviceListTab;
             await StopAndClearCharacters();
+
             IsConnected = false;
+
             if (autoconnect)
             {
                 Thread.Sleep(3000);
-                await TryStartScanning(true);
+                //await TryStartScanning(true);
+                if (SelectedDevice != null)
+                {
+                    ConnectCommand.Execute(SelectedDevice);
+                }
             }
+            else if (_deviceListPage.CurrentPage != _deviceListPage.DeviceListTab)
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    _deviceListPage.CurrentPage = _deviceListPage.DeviceListTab;
+                });
+
+             
+            }
+        
         }
 
         #endregion
@@ -983,7 +998,8 @@ namespace SCUScanner.ViewModels
                             serial += ">";
                         }
                         serial += $"${serial}";
-                        _userDialogs.ShowLoading(Resources["SendingValueText"]);
+                        CancellationTokenSource tokenSource = new CancellationTokenSource();
+                        _userDialogs.Loading(Resources["SendingValueText"],tokenSource.Cancel);
                         bool res = true;
                         try
                         {
@@ -998,6 +1014,8 @@ namespace SCUScanner.ViewModels
                         finally
                         {
                             _userDialogs.HideLoading();
+                            tokenSource.Dispose();
+                            tokenSource = null;
                             _userDialogs.Toast($"{Resources["SendingValueText"]} {serial}");
                         }
                         if (res)
@@ -1009,11 +1027,11 @@ namespace SCUScanner.ViewModels
         private async Task<bool> WriteValueAsync(string value, bool showloading = true)
         {
             bool result = false;
-
+         
             try
             {
                 
-                CancellationTokenSource tokenSource = new CancellationTokenSource();
+                
                 
 
                 
@@ -1023,11 +1041,15 @@ namespace SCUScanner.ViewModels
                     writer = mldpDataCharacteristic;
                 else
                     writer = transparentRxDataCharacteristic;
-                if (showloading)
-                 _userDialogs.Loading(Resources["SendingValueText"],tokenSource.Cancel, Resources["CancelText"]);
+                //if (showloading)
+                // _userDialogs.Loading(Resources["SendingValueText"],tokenSource.Cancel, Resources["CancelText"]);
                  result=   await writer.WriteAsync(data);
-                if (showloading)
-                    _userDialogs.HideLoading();
+                //if (showloading)
+                //{
+                //    _userDialogs.HideLoading();
+                //    tokenSource.Dispose();
+                //    tokenSource = null;
+                //}
 
                 if (showloading)
                     _userDialogs.Toast($"{Resources["SendingValueText"]} {value}");
@@ -1036,13 +1058,19 @@ namespace SCUScanner.ViewModels
             {
                 if (showloading)
                 {
-                    _userDialogs.HideLoading();
+//                    _userDialogs.HideLoading();
                     await _userDialogs.AlertAsync(ex.Message);
                 }
                 else
                     Debug.WriteLine(ex.Message);
                 result = false;
             }
+            //finally
+            //{
+            //    _userDialogs.HideLoading();
+            //    tokenSource?.Dispose();
+            //    tokenSource = null;
+            //}
             return result;
         }
         private static byte[] GetBytes(string text)
