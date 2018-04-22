@@ -131,6 +131,7 @@ namespace SCUScanner.ViewModels
                     IsConnected = await ConnectDeviceAsync(SelectedDevice, false);
                     if (IsConnected)
                     {
+                        Name = SelectedDevice.Name;
                         _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
 
                         await LoadServices(SelectedDevice);
@@ -481,7 +482,7 @@ namespace SCUScanner.ViewModels
                     await Adapter.ConnectToDeviceAsync(device.Device, new ConnectParameters(autoConnect: false, forceBleTransport: false), tokenSource.Token);
                 }
 
-                _userDialogs.Toast($"{SettingsBase.Resources["ConnectStatusText"]}  {device.Device.Name}.");
+                _userDialogs.Toast($"{SettingsBase.Resources["ConnectStatusText"]}  {device.Name}.");
 
                 //PreviousGuid = device.Device.Id;
                 return true;
@@ -520,7 +521,9 @@ namespace SCUScanner.ViewModels
                 }
                 finally
                 {
+                    Debug.WriteLine($"New device name -{device.Name}");
                     device.Update();
+
                     _userDialogs.HideLoading();
                 }
             }
@@ -965,6 +968,8 @@ namespace SCUScanner.ViewModels
                                     dialog.PercentComplete += step;
                                 }
                             }
+                            SelectedDevice.Name = BroadcastIdentity;
+                            SelectedDevice.flgManualChangeName = true;
                            await DisconnectDevice(SelectedDevice,true);
                         }
                     }

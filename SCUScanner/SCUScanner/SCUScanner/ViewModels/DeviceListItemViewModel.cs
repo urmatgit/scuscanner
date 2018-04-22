@@ -3,6 +3,7 @@ using Plugin.BLE.Abstractions.Contracts;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace SCUScanner.ViewModels
@@ -36,11 +37,8 @@ namespace SCUScanner.ViewModels
         {
             Device = device;
             Update(device);
-
-
-
         }
-       
+        public bool flgManualChangeName { get; set; } = false;
         public void UpdateButtonText()
         {
            // var devicename = Device?.Name;
@@ -72,7 +70,11 @@ namespace SCUScanner.ViewModels
             }
             IsConnected= Device.State == DeviceState.Connected;
             Rssi = Device.Rssi;
-            Name = Device.Name;
+            Debug.WriteLine($"Update name {Device.Name} Old name {Name}");
+            if (!flgManualChangeName)
+            {
+                Name = Device.Name;
+            }
             UpdateButtonText();
             //RaisePropertyChanged(nameof(IsConnected));
             //RaisePropertyChanged(nameof(Rssi));
