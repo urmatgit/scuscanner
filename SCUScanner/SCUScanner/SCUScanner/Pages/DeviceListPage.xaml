@@ -26,9 +26,9 @@
                     <Label Text="{Binding StateText}" FontSize="18" HorizontalTextAlignment="Center"></Label>
                 </StackLayout>
 
-                <ListView Grid.Row="1" ItemsSource="{Binding Devices}"  
+                <controls:ListViewEx  Grid.Row="1" ItemsSource="{Binding Devices}"  
                   
-              
+               HasUnevenRows = "true"
                  IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
                  RowHeight="100"
                >
@@ -55,13 +55,13 @@
                                         <Button Margin="0"   Grid.Row="2"     Grid.Column="2"    Text="{Binding ConnectButtonText}"
                                                 Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=DevicePage}}"
                                CommandParameter="{Binding}"
-                                           BackgroundColor="Green"    TextColor="White" HeightRequest="60"  />
+                                           BackgroundColor="Green"    TextColor="White" HeightRequest="40"  />
                                     </Grid>
                                 </ViewCell.View>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                </ListView>
+                </controls:ListViewEx>
 
 
                 

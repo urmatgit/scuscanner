@@ -402,7 +402,11 @@ namespace SCUScanner.ViewModels
 
         private async void ScanForDevices()
         {
-            Devices.Clear();
+          
+            while (this.Devices.Any())
+            {
+                this.Devices.RemoveAt(0);
+            }
 
             foreach (var connectedDevice in Adapter.ConnectedDevices)
             {
@@ -494,30 +498,39 @@ namespace SCUScanner.ViewModels
                 device.Update();
             }
         }
-        private async Task DisconnectDevice(DeviceListItemViewModel device)
+        private async Task DisconnectDevice(DeviceListItemViewModel device, bool autoconnect = false)
         {
-            try
+            if (device.IsConnected)
             {
-                if (!device.IsConnected)
-                    return;
+                try
+                {
 
-                _userDialogs.ShowLoading($"{SettingsBase.Resources["DisConnectButtonText"]} {device.Name}...");
 
-                await Adapter.DisconnectDeviceAsync(device.Device);
-                _userDialogs.Toast($"{SettingsBase.Resources["DisconnectedStatusText"]} {device.Name}");
-            }
-            catch (Exception ex)
-            {
-                _userDialogs.Alert(ex.Message, "Disconnect error");
-            }
-            finally
-            {
-                device.Update();
-                _userDialogs.HideLoading();
+
+                    _userDialogs.ShowLoading($"{SettingsBase.Resources["DisConnectButtonText"]} {device.Name}...");
+
+                    await Adapter.DisconnectDeviceAsync(device.Device);
+                    _userDialogs.Toast($"{SettingsBase.Resources["DisconnectedStatusText"]} {device.Name}");
+
+                }
+                catch (Exception ex)
+                {
+                    _userDialogs.Alert(ex.Message, "Disconnect error");
+                }
+                finally
+                {
+                    device.Update();
+                    _userDialogs.HideLoading();
+                }
             }
             _deviceListPage.CurrentPage = _deviceListPage.DeviceListTab;
             await StopAndClearCharacters();
             IsConnected = false;
+            if (autoconnect)
+            {
+                Thread.Sleep(3000);
+                await TryStartScanning(true);
+            }
         }
 
         #endregion
@@ -526,7 +539,7 @@ namespace SCUScanner.ViewModels
         {
             try
             {
-                _userDialogs.ShowLoading("Discovering services...");
+              // _userDialogs.ShowLoading("Discovering services...");
 
                 var Services = await device.Device.GetServicesAsync();
                 var SCUServices = Services.Where(s => s.Id.ToString() == GlobalConstants.UUID_MLDP_PRIVATE_SERVICE || s.Id.ToString() == GlobalConstants.UUID_TANSPARENT_PRIVATE_SERVICE);
@@ -562,7 +575,7 @@ namespace SCUScanner.ViewModels
                         }
                     }
                 }
-
+             //   _userDialogs.HideLoading();
                 var finded = SCUServices.Count();
             }
             catch (Exception ex)
@@ -570,10 +583,7 @@ namespace SCUScanner.ViewModels
                 _userDialogs.Alert(ex.Message, "Error while discovering services");
                 Debug.WriteLine(ex.Message);
             }
-            finally
-            {
-                _userDialogs.HideLoading();
-            }
+           
         }
         ICharacteristic LastCharForUpdate;
         private async void StartUpdates(ICharacteristic characteristic)
@@ -939,7 +949,7 @@ namespace SCUScanner.ViewModels
                                     dialog.PercentComplete += step;
                                 }
                             }
-                            DisconnectDevice(SelectedDevice);
+                           await DisconnectDevice(SelectedDevice,true);
                         }
                     }
                     break;//BroadcastIdentity ID
@@ -999,8 +1009,13 @@ namespace SCUScanner.ViewModels
         private async Task<bool> WriteValueAsync(string value, bool showloading = true)
         {
             bool result = false;
+
             try
             {
+                
+                CancellationTokenSource tokenSource = new CancellationTokenSource();
+                
+
                 
                 var data = GetBytes(value);
                 ICharacteristic writer = null;
@@ -1009,7 +1024,7 @@ namespace SCUScanner.ViewModels
                 else
                     writer = transparentRxDataCharacteristic;
                 if (showloading)
-                 _userDialogs.ShowLoading(Resources["SendingValueText"]);
+                 _userDialogs.Loading(Resources["SendingValueText"],tokenSource.Cancel, Resources["CancelText"]);
                  result=   await writer.WriteAsync(data);
                 if (showloading)
                     _userDialogs.HideLoading();
