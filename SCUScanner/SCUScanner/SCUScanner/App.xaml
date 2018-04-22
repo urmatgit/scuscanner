@@ -8,6 +8,14 @@
 		<!-- Application resource dictionary -->
         <ResourceDictionary>
             <converters:InverseBooleanValueConverter x:Key="InverseBoolean"></converters:InverseBooleanValueConverter>
+            <OnPlatform x:TypeArguments="x:Double" x:Key="WindowBackgroundTable">
+                <On Platform="Android" Value="12" />
+                <On Platform="iOS" Value="15" />
+            </OnPlatform>
+
+            <Style TargetType="Button">
+                <Setter Property="FontSize" Value="{DynamicResource WindowBackgroundTable}" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
