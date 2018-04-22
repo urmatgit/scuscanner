@@ -472,7 +472,8 @@ namespace SCUScanner.ViewModels
                     IsDeterministic = false,
                     OnCancel = tokenSource.Cancel
                 };
-
+                //
+                StopScan();
                 using (var progress = _userDialogs.Progress(config))
                 {
                     progress.Show();
