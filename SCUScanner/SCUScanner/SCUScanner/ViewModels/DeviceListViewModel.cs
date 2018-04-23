@@ -74,7 +74,7 @@ namespace SCUScanner.ViewModels
         public ObservableCollection<DeviceListItemViewModel> Devices { get; set; } = new ObservableCollection<DeviceListItemViewModel>();
         readonly IPermissions _permissions;
 
-        public DeviceListViewModel(DeviceListPage deviceListPage, IBluetoothLE bluetoothLe, IAdapter adapter, IUserDialogs userDialogs, ISettings settings, IPermissions permissions)
+        public DeviceListViewModel(DeviceListPage deviceListPage, IBluetoothLE bluetoothLe, IAdapter adapter, IUserDialogs userDialogs, ISettings settings )
         {
 
             TimerAlarm = new System.Timers.Timer();
@@ -85,7 +85,7 @@ namespace SCUScanner.ViewModels
             OperatorName = SettingsBase.OperatorName;
             UpdateScanText(false);
             Adapter = adapter;
-            _permissions = permissions;
+           
             _bluetoothLe = bluetoothLe;
             _userDialogs = userDialogs;
             _settings = settings;
@@ -374,20 +374,7 @@ namespace SCUScanner.ViewModels
         private async Task TryStartScanning(bool refresh = false)
         {
 
-            if (Xamarin.Forms.Device.OS == Xamarin.Forms.TargetPlatform.Android)
-            {
-                var status = await _permissions.CheckPermissionStatusAsync(Permission.Location);
-                if (status != PermissionStatus.Granted)
-                {
-                    var permissionResult = await _permissions.RequestPermissionsAsync(Permission.Location);
-
-                    if (permissionResult.First().Value != PermissionStatus.Granted)
-                    {
-                        await _userDialogs.AlertAsync(Resources["InfoPermissionLocationText"]);
-                        return;
-                    }
-                }
-            }
+            
 
             if (IsStateOn && (refresh || !Devices.Any()))
             {

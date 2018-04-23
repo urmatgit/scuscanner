@@ -66,6 +66,7 @@ namespace SCUScanner
 
         private async Task CheckLocationPermission()
         {
+             
             var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
             if (status != PermissionStatus.Granted)
             {

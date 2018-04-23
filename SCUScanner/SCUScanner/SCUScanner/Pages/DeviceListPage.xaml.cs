@@ -28,8 +28,8 @@ namespace SCUScanner.Pages
            var  _bluetoothLe = CrossBluetoothLE.Current; //  Mvx.Resolve<IBluetoothLE>();
             var _userDialogs = UserDialogs.Instance;//  Mvx.Resolve<IUserDialogs>();
            var  _settings = CrossSettings.Current;
-            var _permission = CrossPermissions.Current;
-            BindingContext = deviceListViewModel = new DeviceListViewModel(this, _bluetoothLe, adapter,_userDialogs,_settings, _permission);
+          
+            BindingContext = deviceListViewModel = new DeviceListViewModel(this, _bluetoothLe, adapter,_userDialogs,_settings );
             
             MessagingCenter.Subscribe<object, CultureChangedMessage>(this, string.Empty, (sender, agr) =>
             {
