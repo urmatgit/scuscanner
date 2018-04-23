@@ -188,7 +188,7 @@ Turn On Bluetooth and press </value>
     <value>Stop scan</value>
   </data>
   <data name="InfoPermissionLocationText" xml:space="preserve">
-    <value>To access the hardware identifiers of nearby external devices via Bluetooth and Wi-Fi scans, your app must now have the ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION permissions</value>
+    <value>To access the hardware identifiers of nearby external devices via Bluetooth and Wi-Fi scans, your app needs ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION permissions</value>
   </data>
   <data name="LocationNameText" xml:space="preserve">
     <value>Location name</value>
@@ -230,14 +230,13 @@ Turn On Bluetooth and press </value>
     <value>Broadcast identity</value>
   </data>
   <data name="CutOffText" xml:space="preserve">
-    <value>Cut off %</value>
+    <value>Cut Off %</value>
   </data>
   <data name="SendButtonText" xml:space="preserve">
     <value>Send</value>
   </data>
   <data name="SetSerialNumberInfoText" xml:space="preserve">
-    <value>Set serial number note this text
-box only visible on factory version</value>
+    <value>Set serial number (only visible on factory version)</value>
   </data>
   <data name="SetSerialNumberText" xml:space="preserve">
     <value>Set serial number</value>
@@ -330,6 +329,6 @@ box only visible on factory version</value>
     <value>length must be up to {0} characters</value>
   </data>
   <data name="WaitForChangeIDText" xml:space="preserve">
-    <value>wait {0} seconds for its internal reboot  and then re-connect </value>
+    <value>wait {0} seconds for device reboot  and then re-connect </value>
   </data>
 </root>
