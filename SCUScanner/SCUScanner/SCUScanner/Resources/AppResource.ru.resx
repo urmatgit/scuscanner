@@ -140,7 +140,7 @@
     <value>Подключень</value>
   </data>
   <data name="ContinuousScanText" xml:space="preserve">
-    <value>Автоматически режим</value>
+    <value>Автоматический режим</value>
   </data>
   <data name="DataText" xml:space="preserve">
     <value>Данные</value>
@@ -149,10 +149,10 @@
     <value>Устройства</value>
   </data>
   <data name="DisConnectButtonText" xml:space="preserve">
-    <value>Разъединять</value>
+    <value>Отключить</value>
   </data>
   <data name="DisconnectStatusText" xml:space="preserve">
-    <value>Отсоединен</value>
+    <value>Отключен</value>
   </data>
   <data name="HelpText" xml:space="preserve">
     <value>Помощь</value>
@@ -191,7 +191,7 @@
     <value>Чтобы получить доступ к аппаратным идентификаторам близлежащих внешних устройств через сканирование Bluetooth и Wi-Fi, ваше приложение должно теперь иметь разрешения ACCESS_FINE_LOCATION или ACCESS_COARSE_LOCATION</value>
   </data>
   <data name="LocationNameText" xml:space="preserve">
-    <value>Местоположения</value>
+    <value>Местоположение</value>
   </data>
   <data name="MainText" xml:space="preserve">
     <value>Главная</value>
@@ -221,19 +221,19 @@
     <value>Статус</value>
   </data>
   <data name="AlarmHoursText" xml:space="preserve">
-    <value>Часы будильника</value>
+    <value>Alarm hours</value>
   </data>
   <data name="AlarmLevelText" xml:space="preserve">
-    <value>Уровень тревоги %</value>
+    <value>Alarm level %</value>
   </data>
   <data name="BroadcastIdentityText" xml:space="preserve">
-    <value>Номер передачика</value>
+    <value>Идентификатор устройства</value>
   </data>
   <data name="CutOffText" xml:space="preserve">
-    <value>Отрезать %</value>
+    <value>Cut Off %</value>
   </data>
   <data name="SendButtonText" xml:space="preserve">
-    <value>Отправить</value>
+    <value>Записать</value>
   </data>
   <data name="SetSerialNumberInfoText" xml:space="preserve">
     <value>Set serial number note this text
@@ -243,10 +243,10 @@ box only visible on factory version</value>
     <value>Установить серийный номер</value>
   </data>
   <data name="AlarmSpeedText" xml:space="preserve">
-    <value>Скорость Сигнала</value>
+    <value>Alarm Speed</value>
   </data>
   <data name="BroadcastIdText" xml:space="preserve">
-    <value>Передачик</value>
+    <value>Идентификатор</value>
   </data>
   <data name="DateWithTimeText" xml:space="preserve">
     <value>Дата и время</value>
@@ -276,7 +276,7 @@ box only visible on factory version</value>
     <value>Все поля</value>
   </data>
   <data name="ContainsText" xml:space="preserve">
-    <value>Содержить</value>
+    <value>Содержит</value>
   </data>
   <data name="EqualsText" xml:space="preserve">
     <value>Равно</value>
@@ -321,7 +321,7 @@ box only visible on factory version</value>
     <value>Удаление...</value>
   </data>
   <data name="SendingValueText" xml:space="preserve">
-    <value>Отправка значений...</value>
+    <value>Запись значений...</value>
   </data>
   <data name="RangeWillBeValueText" xml:space="preserve">
     <value>Диапазон должен быть между {0} и {1}</value>
@@ -330,6 +330,6 @@ box only visible on factory version</value>
     <value>длина должен быть до {0} символов</value>
   </data>
   <data name="WaitForChangeIDText" xml:space="preserve">
-    <value>подождите {0} секунд для его внутренней перезагрузки, а затем повторно одключиться</value>
+    <value>подождите {0} секунд для перезагрузки устройства, а затем подключитесь повторно</value>
   </data>
 </root>
