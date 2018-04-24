@@ -335,7 +335,7 @@ namespace SCUScanner.ViewModels
             UpdateStateText();
             if (IsStateOn && !string.IsNullOrEmpty(kod))
             {
-                if (kod == "MainTabPage" && !IsRefreshing && SettingsBase.AutoScan)
+                if (kod == "MainTabPage" && !IsRefreshing && SettingsBase.AutoScan &&  App.IsAccessToBle)
                 {
                     await TryStartScanning(true);
                 }
@@ -344,7 +344,13 @@ namespace SCUScanner.ViewModels
                     if (LastCharForUpdate != null)
                     {
                         StartUpdates(LastCharForUpdate);
-                          TimerAlarm.Enabled = true;
+                        TimerAlarm.Enabled = true;
+                    }
+                    else
+                    {
+                        var seletec = SelectedDevice;
+                        var con = IsConnected;
+                        //IsConnected = false;
                     }
                 }
             }
@@ -595,7 +601,7 @@ namespace SCUScanner.ViewModels
             }
            
         }
-        ICharacteristic LastCharForUpdate;
+        ICharacteristic LastCharForUpdate { get; set; }
         private async void StartUpdates(ICharacteristic characteristic)
         {
             try
@@ -759,15 +765,18 @@ namespace SCUScanner.ViewModels
            await StopUpdates();
             mldpDataCharacteristic = transparentTxDataCharacteristic = transparentRxDataCharacteristic = null;
         }
-        private async Task StopUpdate(ICharacteristic characteristic = null)
+        private void  StopUpdate(ICharacteristic characteristic = null)
         {
             try
             {
 
                 if (characteristic != null)
                 {
-                    characteristic.ValueUpdated -= Characteristic_ValueUpdated;
-                    await characteristic.StopUpdatesAsync();
+                    //Device.BeginInvokeOnMainThread(() =>
+                    //{
+                        characteristic.ValueUpdated -= Characteristic_ValueUpdated;
+                         characteristic.StopUpdatesAsync();
+                    //});
                     Debug.WriteLine("Stop update");
                 }
 
@@ -785,12 +794,14 @@ namespace SCUScanner.ViewModels
             ////mldpDataCharacteristic, transparentTxDataCharacteristic, transparentRxDataCharacteristic;
             try
             {
-                 
-                await StopUpdate(LastCharForUpdate);
-                await StopUpdate(mldpDataCharacteristic);
-
-                await StopUpdate(transparentTxDataCharacteristic);
-                await StopUpdate(transparentRxDataCharacteristic);
+                if (characteristic != null)
+                      StopUpdate(LastCharForUpdate);
+                if (mldpDataCharacteristic != null)
+                     StopUpdate(mldpDataCharacteristic);
+                if (transparentTxDataCharacteristic != null)
+                      StopUpdate(transparentTxDataCharacteristic);
+                if (transparentRxDataCharacteristic != null)
+                      StopUpdate(transparentRxDataCharacteristic);
 
                 //   Messages.Insert(0, $"Stop updates");
 
