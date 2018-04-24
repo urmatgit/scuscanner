@@ -1011,25 +1011,29 @@ namespace SCUScanner.ViewModels
                             serial += ">";
                         }
                         serial += $"${serial}";
-                        CancellationTokenSource tokenSource = new CancellationTokenSource();
-                        _userDialogs.Loading(Resources["SendingValueText"],tokenSource.Cancel);
                         bool res = true;
-                        try
+                        using (var cancelSrc = new CancellationTokenSource())
                         {
-                            foreach (char ch in serial)
+                            using (App.Dialogs.Loading(Resources["SendingValueText"], cancelSrc.Cancel, Resources["CancelText"]))
                             {
-                                res=res && await WriteValueAsync(ch.ToString(),false);
-                                System.Diagnostics.Debug.WriteLine(ch.ToString());
-                                Thread.Sleep(10);
+                               
+                                try
+                                {
+                                    foreach (char ch in serial)
+                                    {
+                                        res = res && await WriteValueAsync(ch.ToString(), false);
+                                        System.Diagnostics.Debug.WriteLine(ch.ToString());
+                                        Thread.Sleep(10);
 
+                                    }
+                                }
+                                finally
+                                {
+                                    
+                                    
+                                    _userDialogs.Toast($"{Resources["SendingValueText"]} {serial}");
+                                }
                             }
-                        }
-                        finally
-                        {
-                            _userDialogs.HideLoading();
-                            tokenSource.Dispose();
-                            tokenSource = null;
-                            _userDialogs.Toast($"{Resources["SendingValueText"]} {serial}");
                         }
                         if (res)
                             _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
