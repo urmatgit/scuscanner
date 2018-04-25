@@ -29,7 +29,7 @@ namespace SCUScanner.Pages
             var _userDialogs = UserDialogs.Instance;//  Mvx.Resolve<IUserDialogs>();
            var  _settings = CrossSettings.Current;
           
-            BindingContext = deviceListViewModel = new DeviceListViewModel(this, _bluetoothLe, adapter,_userDialogs,_settings );
+            BindingContext = deviceListViewModel = new DeviceListViewModel(this, _bluetoothLe, adapter,_userDialogs,_settings,Navigation );
             
             MessagingCenter.Subscribe<object, CultureChangedMessage>(this, string.Empty, (sender, agr) =>
             {

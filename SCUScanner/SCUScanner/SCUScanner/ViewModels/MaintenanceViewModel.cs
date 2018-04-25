@@ -16,7 +16,7 @@ namespace SCUScanner.ViewModels
     public class MaintenanceViewModel : BaseViewModel
     {
         private INavigation Navigation;
-        private const string FtpHost = "ftp://ftp.chester.ru";
+        
         public ICommand ScanQRCommand { get; }
         public ICommand DownloadManualCommand { get; }
         private string serialnumber;
@@ -26,16 +26,7 @@ namespace SCUScanner.ViewModels
             get => serialnumber;
             set => this.RaiseAndSetIfChanged(ref this.serialnumber, value);
         }
-        private string GetFileNameFromSerialNo(string serial)
-        {
-            string result = "";
-            int index_ = serial.LastIndexOf('-');
-            if (index_ == 0)
-                index_ = serial.Length;
-            result = serial.Substring(0, index_).ToLower() ;
-            result = $"{result}({SettingsBase.SelectedLang.ToLower()}).pdf";
-            return result;
-        }
+        
         public MaintenanceViewModel(INavigation navigation)
         {
             SerialNumber = App.mainTabbed?.deviceListViewModel?.SN;;
@@ -49,10 +40,10 @@ namespace SCUScanner.ViewModels
              {
                  //if (Path.GetExtension(SerialNumber) != "pdf")
                  //    SerialNumber += ".pdf";
-                 string filename = GetFileNameFromSerialNo(SerialNumber);
+                 string filename =Utils. GetFileNameFromSerialNo(SerialNumber, SettingsBase.SelectedLangKod.ToLower());
                  
                  var filenamelocal = Path.Combine(WorkDir, filename);
-                 FtpClient client = new FtpClient(FtpHost);
+                 FtpClient client = new FtpClient(GlobalConstants.FtpHost);
                  try
                  {
 

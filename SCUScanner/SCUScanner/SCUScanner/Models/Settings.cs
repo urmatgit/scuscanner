@@ -82,6 +82,22 @@ namespace SCUScanner.Models
                 }
             }
         }
+        string selectedlangKod;
+        public string SelectedLangKod
+        {
+            get => AppSettings.GetValueOrDefault(nameof(SelectedLangKod), "");
+            set
+            {
+                var orinal = SelectedLang;
+
+                if (AppSettings.AddOrUpdateValue(nameof(SelectedLangKod), value))
+                {
+                    
+                    this.RaiseAndSetIfChanged(ref this.selectedlangKod, value);
+                    //                    SetProperty(ref orinal, value);
+                }
+            }
+        }
         string selectedlang;
         public  string SelectedLang
         {

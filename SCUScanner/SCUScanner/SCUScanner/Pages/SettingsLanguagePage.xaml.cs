@@ -33,6 +33,7 @@ namespace SCUScanner.Pages
             //await DisplayAlert("Item Tapped", $"An item was tapped.{selected.Name}", "OK");
 
             Models.Settings.Current.SelectedLang = selected.Kod;
+            Models.Settings.Current.SelectedLangKod = selected.Kod;
             //    viewModel.SetResourcesLang(viewModel.Settings.Settings.SelectedLang);
             //App.CurrentLanguage = SelectedLanguage;
             DependencyService.Get<ILocalizeService>().SetLocale(selected.Kod);

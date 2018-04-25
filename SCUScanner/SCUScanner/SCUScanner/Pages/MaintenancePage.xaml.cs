@@ -27,6 +27,7 @@ namespace SCUScanner.Pages
         private async void BScanQR_Clicked(object sender, EventArgs e)
         {
             var scanPage = new ZXingScannerPage();
+            
             scanPage.OnScanResult += (result) => {
                 scanPage.IsScanning = false;
 
