@@ -38,7 +38,7 @@ namespace SCUScanner.ViewModels
         }
         public MaintenanceViewModel(INavigation navigation)
         {
-            SerialNumber = "";
+            SerialNumber = App.mainTabbed?.deviceListViewModel?.SN;;
             Navigation = navigation;
             WorkDir = DependencyService.Get<ISQLite>().GetWorkManualDir();
             ScanQRCommand = ReactiveCommand.CreateFromTask(async () =>

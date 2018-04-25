@@ -20,7 +20,7 @@ namespace SCUScanner.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class DeviceListPage : BaseTabbedPage
     {
-        DeviceListViewModel deviceListViewModel;
+      public DeviceListViewModel deviceListViewModel { get; set; }
         public DeviceListPage ()
 		{
 			InitializeComponent ();
