@@ -24,6 +24,7 @@ namespace SCUScanner
         public static IUserDialogs Dialogs;
         //public static IAdapter BleAdapter;
         public const string DATABASE_NAME = "SCUData.db";
+        public static bool IsAccessToBle=false;
         public static SCUDataRepository database;
         public static SCUDataRepository Database
         {
@@ -83,18 +84,19 @@ namespace SCUScanner
                     status = results[Permission.Location];
                 
             }
+            IsAccessToBle = true;
         }
 
-        protected override async void OnStart()
+        protected override  async void OnStart()
         {
            
             if (Device.Android == Device.RuntimePlatform)
             {
-               
-                    await CheckLocationPermission();
+
+                 await CheckLocationPermission();
                
             }
-            await Database.CreateTable();
+           await   Database.CreateTable();
             // Handle when your app starts
             //if (BleAdapter.Status == AdapterStatus.PoweredOff )
             //{
