@@ -119,28 +119,33 @@ namespace SCUScanner.ViewModels
             {
 
                 await DisconnectDevice(SelectedDevice);
+                SelectedDevice = null;
 
             });
             ConnectCommand = ReactiveCommand.CreateFromTask<DeviceListItemViewModel>(async (o) =>
             {
                 if (!IsStateOn) return;
                 //                 var selecte = o;
-                SelectedDevice = o;
-                if (SelectedDevice.IsConnected)
+               
+                if (o.IsConnected)
                 {
 
-                    await DisconnectDevice(SelectedDevice);
-
+                    await DisconnectDevice(o);
+                    if (o == SelectedDevice)
+                        SelectedDevice = null;
                 }
                 else
                 {
-                    IsConnected = await ConnectDeviceAsync(SelectedDevice, false);
+                    IsConnected = await ConnectDeviceAsync(o, false);
                     if (IsConnected)
                     {
+                        SelectedDevice = o;
                         Name = SelectedDevice.Name;
-                        _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
 
                         await LoadServices(SelectedDevice);
+                        _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
+                        
+                        
                     }
                 }
             });
@@ -552,9 +557,11 @@ namespace SCUScanner.ViewModels
 
         private async Task<bool> ConnectDeviceAsync(DeviceListItemViewModel device, bool showPrompt = true)
         {
-
+            bool resultConnection = true;
             try
             {
+
+                StopScan();
                 CancellationTokenSource tokenSource = new CancellationTokenSource();
 
                 var config = new ProgressDialogConfig()
@@ -565,7 +572,7 @@ namespace SCUScanner.ViewModels
                     OnCancel = tokenSource.Cancel
                 };
                 //
-                StopScan();
+                
                 using (var progress = _userDialogs.Progress(config))
                 {
                     progress.Show();
@@ -576,31 +583,29 @@ namespace SCUScanner.ViewModels
                 _userDialogs.Toast($"{SettingsBase.Resources["ConnectStatusText"]}  {device.Name}.");
 
                 //PreviousGuid = device.Device.Id;
-                return true;
+                resultConnection= true;
 
             }
             catch (Exception ex)
             {
                 _userDialogs.Alert(ex.Message, "Connection error");
 
-                return false;
+                resultConnection= false;
             }
             finally
             {
                 _userDialogs.HideLoading();
                 device.Update();
             }
+            return resultConnection;
         }
-        private async Task DisconnectDevice(DeviceListItemViewModel device, bool autoconnect = false)
+        private async Task DisconnectDevice(DeviceListItemViewModel device, bool chagepage = true)
         {
             await StopAndClearCharacters();
             if (device.IsConnected)
             {
                 try
                 {
-
-
-
                     _userDialogs.ShowLoading($"{SettingsBase.Resources["DisConnectButtonText"]} {device.Name}...");
 
                     await Adapter.DisconnectDeviceAsync(device.Device);
@@ -623,16 +628,7 @@ namespace SCUScanner.ViewModels
 
             IsConnected = false;
 
-            if (autoconnect)
-            {
-                Thread.Sleep(3000);
-                //await TryStartScanning(true);
-                if (SelectedDevice != null)
-                {
-                    ConnectCommand.Execute(SelectedDevice);
-                }
-            }
-            else if (_deviceListPage.CurrentPage != _deviceListPage.DeviceListTab)
+            if (chagepage && _deviceListPage.CurrentPage != _deviceListPage.DeviceListTab)
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -643,7 +639,51 @@ namespace SCUScanner.ViewModels
             }
         
         }
+        private async Task ConnectToPreviousDeviceAsync(DeviceListItemViewModel selectedDevice )
+        {
+            IDevice device;
+            try
+            {
+                CancellationTokenSource tokenSource = new CancellationTokenSource();
 
+                var config = new ProgressDialogConfig()
+                {
+                    Title = $"Searching for '{selectedDevice.Name}'",
+                    CancelText = "Cancel",
+                    IsDeterministic = false,
+                    OnCancel = tokenSource.Cancel
+                };
+
+                using (var progress = _userDialogs.Progress(config))
+                {
+                    progress.Show();
+
+                    device = await Adapter.ConnectToKnownDeviceAsync(selectedDevice.Id , new ConnectParameters(autoConnect: false, forceBleTransport: false), tokenSource.Token);
+
+                }
+
+                _userDialogs.Toast($"{SettingsBase.Resources["ConnectStatusText"]}  {device.Name}.");
+
+                AddOrUpdateDevice(device);
+                var deviceItem = Devices.FirstOrDefault(d => d.Device.Id == device.Id);
+                if (deviceItem == null)
+                {
+                    deviceItem = new DeviceListItemViewModel(device);
+                    Devices.Add(deviceItem);
+                    
+                }
+                else
+                {
+                    deviceItem.Update(device);
+                }
+                SelectedDevice = deviceItem;
+            }
+            catch (Exception ex)
+            {
+                await _userDialogs.AlartAsync(ex.Message);
+               
+            }
+        }
         #endregion
         #region Find service
         private async Task LoadServices(DeviceListItemViewModel device)
@@ -719,8 +759,9 @@ namespace SCUScanner.ViewModels
                 characteristic.ValueUpdated -= Characteristic_ValueUpdated;
                 characteristic.ValueUpdated += Characteristic_ValueUpdated;
                 await characteristic.StartUpdatesAsync();
-                _userDialogs.Toast($"Start updates");
                 LastCharForUpdate = characteristic;
+                _userDialogs.Toast($"Start updates");
+                
                
             }
             catch (Exception ex)
@@ -890,14 +931,18 @@ namespace SCUScanner.ViewModels
             try
             {
                 if (characteristic != null)
-                      StopUpdate(LastCharForUpdate);
-                if (mldpDataCharacteristic != null)
-                     StopUpdate(mldpDataCharacteristic);
-                if (transparentTxDataCharacteristic != null)
-                      StopUpdate(transparentTxDataCharacteristic);
-                if (transparentRxDataCharacteristic != null)
-                      StopUpdate(transparentRxDataCharacteristic);
-
+                {
+                    StopUpdate(LastCharForUpdate);
+                }
+                else
+                {
+                    if (mldpDataCharacteristic != null)
+                        StopUpdate(mldpDataCharacteristic);
+                    if (transparentTxDataCharacteristic != null)
+                        StopUpdate(transparentTxDataCharacteristic);
+                    if (transparentRxDataCharacteristic != null)
+                        StopUpdate(transparentRxDataCharacteristic);
+                }
                 //   Messages.Insert(0, $"Stop updates");
 
 
@@ -1060,6 +1105,9 @@ namespace SCUScanner.ViewModels
                        if(await WriteValueAsync($"!{BroadcastIdentity}"))
                         {
                             int duration = 8;
+                            SelectedDevice.Name = BroadcastIdentity;
+                            SelectedDevice.flgManualChangeName = true;
+                            await DisconnectDevice(SelectedDevice, false);
 
                             using (var dialog = App.Dialogs.Progress(string.Format(Resources["WaitForChangeIDText"], duration)))
                             {
@@ -1070,9 +1118,13 @@ namespace SCUScanner.ViewModels
                                     dialog.PercentComplete += step;
                                 }
                             }
-                            SelectedDevice.Name = BroadcastIdentity;
-                            SelectedDevice.flgManualChangeName = true;
-                           await DisconnectDevice(SelectedDevice,true);
+                            
+                            //await TryStartScanning(true);
+                            if (SelectedDevice != null)
+                            {
+                                await ConnectToPreviousDeviceAsync(SelectedDevice);
+                                //ConnectCommand.Execute(SelectedDevice);
+                            }
                         }
                     }
                     break;//BroadcastIdentity ID
