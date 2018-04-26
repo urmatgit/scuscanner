@@ -85,7 +85,15 @@ namespace SCUScanner.Models
         string selectedlangKod;
         public string SelectedLangKod
         {
-            get => AppSettings.GetValueOrDefault(nameof(SelectedLangKod), "");
+            get
+            {
+                var kod= AppSettings.GetValueOrDefault(nameof(SelectedLangKod), "");
+                if (string.IsNullOrEmpty(kod))
+                {
+                    kod = SelectedLang.Substring(0, 2);
+                }
+                return kod;
+            }
             set
             {
                 var orinal = SelectedLang;

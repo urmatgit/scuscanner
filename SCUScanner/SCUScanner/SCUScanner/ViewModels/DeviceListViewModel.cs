@@ -141,11 +141,9 @@ namespace SCUScanner.ViewModels
                     {
                         SelectedDevice = o;
                         Name = SelectedDevice.Name;
+                        await OpenConnectedPage(o);
 
-                        await LoadServices(SelectedDevice);
-                        _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
-                        
-                        
+
                     }
                 }
             });
@@ -208,94 +206,14 @@ namespace SCUScanner.ViewModels
             });
             DownloadCommand = ReactiveCommand.CreateFromTask(async () =>
             {
+                await Utils.DownloadManual<string>(SN, SettingsBase.SelectedLangKod.ToLower(), async (o) =>
+                {
+                    WebViewPageCS webViewPageCS = new WebViewPageCS(o);
+                    await Navigation.PushAsync(webViewPageCS);
+                });
                 //if (Path.GetExtension(SerialNumber) != "pdf")
                 //    SerialNumber += ".pdf";
-                string filename = Utils.GetFileNameFromSerialNo(SN, SettingsBase.SelectedLangKod.ToLower());
-                var WorkDir = DependencyService.Get<ISQLite>().GetWorkManualDir();
-                var filenamelocal = Path.Combine(WorkDir, filename);
-                FtpClient client = new FtpClient(GlobalConstants.FtpHost);
-                try
-                {
-
-                    client.Credentials = new NetworkCredential("chesterr_urmat", "Scuscanner2018");
-
-                    // begin connecting to the server
-                    await client.ConnectAsync();
-                    if (client.IsConnected)
-                    {
-
-
-                        {
-
-                            if (client.FileExists($"/manuals/{filename}"))
-                            {
-                                //if (File.Exists(filename))
-                                //{
-                                //    File.Delete(filename);
-                                //}
-                                bool dowloaded = false;
-                                try
-                                {
-                                    using (var cancelSrc = new CancellationTokenSource())
-                                    {
-                                        using (App.Dialogs.Loading(Resources["DownloadText"], cancelSrc.Cancel, Resources["CancelText"]))
-                                        {
-                                            string tmpFileName = filenamelocal + DateTime.Now.Second.ToString();
-                                            dowloaded = await client.DownloadFileAsync(tmpFileName, $"/manuals/{filename}", true);
-                                            File.Copy(tmpFileName, filenamelocal, true);
-                                            try
-                                            {
-                                                File.Delete(tmpFileName);
-                                            }
-                                            catch (Exception er)
-                                            {
-
-                                            }
-                                        }
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    await App.Dialogs.AlertAsync(ex.ToString());
-
-                                }
-                                //if (dowloaded || File.Exists(filename))
-                                //{
-                                //    WebViewPageCS webViewPageCS = new WebViewPageCS(filename);
-                                //    await Navigation.PushAsync(webViewPageCS);
-                                //}
-
-                            }
-                            else
-                            {
-
-                                await App.Dialogs.AlertAsync(Resources["ManualNotFoundText"]);
-                            }
-
-
-
-                        };
-                    }
-                    else
-                    {
-                        await App.Dialogs.AlertAsync(Resources["NoInternetConOrErrorText"]);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    await App.Dialogs.AlertAsync(Resources["NoInternetConOrErrorText"]);
-
-                }
-                finally
-                {
-                    await client?.DisconnectAsync();
-                    if (File.Exists(filenamelocal))
-                    {
-                        WebViewPageCS webViewPageCS = new WebViewPageCS(filenamelocal);
-                        await Navigation.PushAsync(webViewPageCS);
-                    }
-                }
-                //SerialNumber = App.mainTabbed?.CurrentConnectDeviceSN;
+              
             });
             _bluetoothLe.StateChanged += OnStateChanged;
 
@@ -312,7 +230,14 @@ namespace SCUScanner.ViewModels
 
         }
 
-        
+        private async Task OpenConnectedPage(DeviceListItemViewModel selecteddevice)
+        {
+          
+
+            await LoadServices(SelectedDevice);
+            if (_deviceListPage.CurrentPage!=_deviceListPage.ConnectDeviceTab)
+                _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
+        }
 
         private async void OnDeviceConnectionLost(object sender, DeviceErrorEventArgs e)
         {
@@ -625,8 +550,8 @@ namespace SCUScanner.ViewModels
                 }
             }
            
-
-            IsConnected = false;
+          
+                IsConnected = false;
 
             if (chagepage && _deviceListPage.CurrentPage != _deviceListPage.DeviceListTab)
             {
@@ -639,9 +564,10 @@ namespace SCUScanner.ViewModels
             }
         
         }
-        private async Task ConnectToPreviousDeviceAsync(DeviceListItemViewModel selectedDevice )
+        private async Task<bool> ConnectToPreviousDeviceAsync(DeviceListItemViewModel selectedDevice )
         {
             IDevice device;
+            bool result = true;
             try
             {
                 CancellationTokenSource tokenSource = new CancellationTokenSource();
@@ -680,9 +606,11 @@ namespace SCUScanner.ViewModels
             }
             catch (Exception ex)
             {
-                await _userDialogs.AlartAsync(ex.Message);
+                result = false;
+                await _userDialogs.AlertAsync(ex.Message);
                
             }
+            return result;
         }
         #endregion
         #region Find service
@@ -1122,7 +1050,13 @@ namespace SCUScanner.ViewModels
                             //await TryStartScanning(true);
                             if (SelectedDevice != null)
                             {
-                                await ConnectToPreviousDeviceAsync(SelectedDevice);
+
+                                if (await ConnectToPreviousDeviceAsync(SelectedDevice))
+                                {
+                                    Name = SelectedDevice.Name;
+                                    IsConnected = true;
+                                    await OpenConnectedPage(SelectedDevice);
+                                }
                                 //ConnectCommand.Execute(SelectedDevice);
                             }
                         }
