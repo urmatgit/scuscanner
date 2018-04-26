@@ -50,7 +50,7 @@
                         </Grid.ColumnDefinitions>
 
                         <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" HorizontalOptions="FillAndExpand"  Padding="0"  >
-                            <Grid HorizontalOptions="FillAndExpand" Padding="0">
+                            <Grid HorizontalOptions="FillAndExpand" ColumnSpacing="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100"/>
                                     <ColumnDefinition Width="*"/>
@@ -80,8 +80,8 @@
 
 
 
-                        <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Padding="0" >
-                            <Grid Padding="0">
+                        <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Padding="0"  BackgroundColor="Red">
+                            <Grid Padding="0" ColumnSpacing="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100"/>
                                     <ColumnDefinition Width="*"/>
@@ -95,8 +95,8 @@
                             </Grid>
                         </StackLayout>
 
-                        <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" Padding="0" >
-                            <Grid Padding="0">
+                        <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="3" Padding="0" >
+                            <Grid Padding="0" ColumnSpacing="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100"/>
                                     <ColumnDefinition Width="*"/>
@@ -110,18 +110,18 @@
                             </Grid>
                         </StackLayout>
                         <Label Grid.Column="0"  Grid.Row="4"  Text="{Binding BindingContext.Resources[LocationNameText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
-                        <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Text="{Binding Location}"/>
+                        <Label Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="4" Text="{Binding Location}"/>
 
                         <Label Grid.Column="0" Grid.Row="5" Text="{Binding BindingContext.Resources[OperatorText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
-                        <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Text="{Binding Operator}"/>
+                        <Label Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="5" Text="{Binding Operator}"/>
 
                         <Label Grid.Column="0" Grid.Row="6" Text="{Binding BindingContext.Resources[NotesText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
-                        <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" Text="{Binding Notes}"/>
+                        <Label Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="6" Text="{Binding Notes}"/>
 
                         <Label Grid.Column="0"  Grid.Row="7" Text="{Binding BindingContext.Resources[DateWithTimeText],Source={x:Reference Name=SCUItemsList}}" FontAttributes="Bold"/>
-                        <Label Grid.Column="1"  Grid.ColumnSpan="2" Grid.Row="7"  Text="{Binding DateWithTime}"/>
+                        <Label Grid.Column="1"  Grid.ColumnSpan="3" Grid.Row="7"  Text="{Binding DateWithTime}"/>
 
-                        <BoxView Grid.Column="0"    Grid.ColumnSpan="3" Grid.Row="8" BackgroundColor="Black"/>
+                        <BoxView Grid.Column="0"    Grid.ColumnSpan="4" Grid.Row="8" BackgroundColor="Black"/>
                     </Grid>
                 </DataTemplate>
             </syncfusion:SfListView.ItemTemplate>
