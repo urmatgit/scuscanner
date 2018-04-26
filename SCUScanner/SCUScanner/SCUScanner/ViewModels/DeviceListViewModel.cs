@@ -199,7 +199,7 @@ namespace SCUScanner.ViewModels
                 await CrossShare.Current.Share(new ShareMessage
                 {
                     Title = "Reception text",
-                    Text = SourceText
+                    Text = LastJsonForShare
 
                 });
 
