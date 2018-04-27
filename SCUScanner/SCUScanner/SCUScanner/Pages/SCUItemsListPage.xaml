@@ -80,7 +80,7 @@
 
 
 
-                        <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Padding="0"  BackgroundColor="Red">
+                        <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Padding="0"  >
                             <Grid Padding="0" ColumnSpacing="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100"/>
