@@ -140,6 +140,7 @@ namespace SCUScanner.ViewModels
                     if (IsConnected)
                     {
                         SelectedDevice = o;
+                        PreviewColor = Color.White;
                         Name = SelectedDevice.Name;
                         await OpenConnectedPage(o);
 
@@ -229,14 +230,17 @@ namespace SCUScanner.ViewModels
             //Adapter.DeviceConnected += (sender, e) => Adapter.DisconnectDeviceAsync(e.Device);
 
         }
-
+        bool OnOpenFirst = false; //block run update on first onactived
         private async Task OpenConnectedPage(DeviceListItemViewModel selecteddevice)
         {
-          
 
-            await LoadServices(SelectedDevice);
+           
+                OnOpenFirst = true;
+                await LoadServices(SelectedDevice);
+            
             if (_deviceListPage.CurrentPage!=_deviceListPage.ConnectDeviceTab)
                 _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
+            
         }
 
         private async void OnDeviceConnectionLost(object sender, DeviceErrorEventArgs e)
@@ -366,7 +370,7 @@ namespace SCUScanner.ViewModels
                 }
                 else if (kod == "ConnectedTabPage")
                 {
-                    if (LastCharForUpdate != null)
+                    if (LastCharForUpdate != null && !OnOpenFirst)
                     {
                         StartUpdates(LastCharForUpdate);
                         TimerAlarm.Enabled = true;
@@ -377,6 +381,7 @@ namespace SCUScanner.ViewModels
                         var con = IsConnected;
                         //IsConnected = false;
                     }
+                    OnOpenFirst = false;
                 }
             }
         }
@@ -675,8 +680,8 @@ namespace SCUScanner.ViewModels
                     try
                     {
                         LastCharForUpdate.ValueUpdated -= Characteristic_ValueUpdated;
-                        await LastCharForUpdate.StopUpdatesAsync();
-                        Thread.Sleep(100);
+                        // LastCharForUpdate.StopUpdatesAsync();
+                        //Thread.Sleep(100);
                     }
                     catch (Exception er)
                     {
@@ -686,7 +691,8 @@ namespace SCUScanner.ViewModels
 
                 characteristic.ValueUpdated -= Characteristic_ValueUpdated;
                 characteristic.ValueUpdated += Characteristic_ValueUpdated;
-                await characteristic.StartUpdatesAsync();
+                
+                 characteristic.StartUpdatesAsync();
                 LastCharForUpdate = characteristic;
                 _userDialogs.Toast($"Start updates");
                 
