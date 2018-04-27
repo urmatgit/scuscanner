@@ -323,10 +323,10 @@ Turn On Bluetooth and press </value>
     <value>Sending value...</value>
   </data>
   <data name="RangeWillBeValueText" xml:space="preserve">
-    <value>The range will be between {0} and {1}</value>
+    <value>Value between {0} and {1}</value>
   </data>
   <data name="LengthMustBeText" xml:space="preserve">
-    <value>length must be up to {0} characters</value>
+    <value>Length up to {0} characters</value>
   </data>
   <data name="WaitForChangeIDText" xml:space="preserve">
     <value>wait {0} seconds for device reboot  and then re-connect </value>

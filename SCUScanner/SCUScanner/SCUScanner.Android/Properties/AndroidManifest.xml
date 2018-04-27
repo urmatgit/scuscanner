@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="7" android:versionName="7.0" package="Centri_lean.Centri_lean" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="7" android:versionName="7.0" package="CentriClean.CentriClean" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="23" />
 	<application android:label="CentriClean"></application>
 	<uses-permission android:name="android.permission.BLUETOOTH" />
