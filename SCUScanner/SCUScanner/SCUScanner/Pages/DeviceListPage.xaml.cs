@@ -60,7 +60,10 @@ namespace SCUScanner.Pages
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
+            //if (Device.iOS == Device.RuntimePlatform)
+            //{
+            //    (this.BindingContext as IViewModel)?.OnActivate("MainTabPage");
+            //}else 
             (this.BindingContext as IViewModel)?.OnActivate();
         }
 

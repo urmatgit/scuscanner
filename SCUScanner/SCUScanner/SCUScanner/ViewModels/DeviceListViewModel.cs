@@ -119,7 +119,10 @@ namespace SCUScanner.ViewModels
 
 
             IsRefreshing = Adapter.IsScanning;
-            IsStateOn = _bluetoothLe.IsOn;
+            if (Device.iOS == Device.RuntimePlatform)
+                IsStateOn = true;
+            else
+                IsStateOn = _bluetoothLe.IsOn;
             ScanToggleCommand = ReactiveCommand.Create(() => TryStartScanning(true));
             StopScanCommand = ReactiveCommand.Create(() => StopScan());
             DisconnectCommand = ReactiveCommand.CreateFromTask(async () =>
