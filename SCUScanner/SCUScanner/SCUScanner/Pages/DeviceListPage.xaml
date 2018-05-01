@@ -10,9 +10,9 @@
              x:Name="DevicePage">
     
     <pages:BaseTabbedPage.ToolbarItems>
-        <!--<ToolbarItem       Text="ScanText" Command="{Binding ScanToggleCommand}" Order="Primary" Priority="1"    />-->
-        <ToolbarItem       Text="{Binding ScanText}" Command="{Binding ScanToggleCommand}" Order="Primary" Priority="1"    />
 
+        <ToolbarItem       Text="{Binding ScanText}" Command="{Binding ScanToggleCommand}" Order="Primary" Priority="1"    />
+      
     </pages:BaseTabbedPage.ToolbarItems>
     <pages:BaseTabbedPage.Children>
         <pages:BasePage Title="{Binding Resources[MainText]}" x:Name="MainTabPage" Kod="MainTabPage">
