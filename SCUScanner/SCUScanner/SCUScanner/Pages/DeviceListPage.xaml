@@ -28,7 +28,7 @@
 
                 <controls:ListViewEx  Grid.Row="1" ItemsSource="{Binding Devices}"  
                   
-               HasUnevenRows = "true"
+              
                  IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
                  RowHeight="100"
                >
