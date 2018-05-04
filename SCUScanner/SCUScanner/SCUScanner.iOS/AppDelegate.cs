@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using KeyboardOverlap.Forms.Plugin.iOSUnified;
 using Syncfusion.ListView.XForms.iOS;
 using Syncfusion.SfDataGrid.XForms.iOS;
 using Syncfusion.SfGauge.XForms.iOS;
@@ -27,6 +28,7 @@ namespace SCUScanner.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            KeyboardOverlapRenderer.Init();
             new SfDigitalGaugeRenderer();
             SfDataGridRenderer.Init();
             SfListViewRenderer.Init();

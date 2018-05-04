@@ -180,6 +180,9 @@
     <PackageReference Include="System.ComponentModel.Annotations">
       <Version>4.4.1</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugins.Forms.KeyboardOverlap">
+      <Version>1.0.0.4</Version>
+    </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>4.0.0.3-beta</Version>
     </PackageReference>

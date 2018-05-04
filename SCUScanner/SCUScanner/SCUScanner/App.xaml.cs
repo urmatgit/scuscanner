@@ -89,13 +89,15 @@ namespace SCUScanner
 
         protected override  async void OnStart()
         {
-           
+
             if (Device.Android == Device.RuntimePlatform)
             {
 
-                 await CheckLocationPermission();
-               
+                await CheckLocationPermission();
+
             }
+            else
+                App.IsAccessToBle = true;
            await   Database.CreateTable();
             // Handle when your app starts
             //if (BleAdapter.Status == AdapterStatus.PoweredOff )

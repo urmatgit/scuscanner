@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using SCUScanner.Models;
 using SCUScanner.Services;
+using Acr.UserDialogs;
 
 namespace SCUScanner.Pages
 {
@@ -66,7 +67,8 @@ namespace SCUScanner.Pages
                     var type = item.TargetType;
                     if (item.TargetType.Name == typeof(MaintenancePage).Name)
                     {
-                        var action=await DisplayActionSheet("", "", "", settings.Resources["EnterSerialNumberText"], settings.Resources["ListOfManualsText"]);
+                        
+                        var action=await DisplayActionSheet(null, null, null, settings.Resources["EnterSerialNumberText"], settings.Resources["ListOfManualsText"]);
                         if (action== settings.Resources["ListOfManualsText"])
                         {
                             type = typeof(ListOfManualPage);

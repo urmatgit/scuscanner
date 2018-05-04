@@ -44,12 +44,21 @@ namespace SCUScanner.ViewModels
         private readonly ISettings _settings;
         private readonly IAdapter Adapter;
         ICharacteristic mldpDataCharacteristic, transparentTxDataCharacteristic, transparentRxDataCharacteristic;
-        private bool isRefreshing; //= Adapter.IsScanning;
+        private bool IsStopClick = false;
+        private bool IsLoading = true;
+        private bool isRefreshing=false; //= Adapter.IsScanning;
+        
         public bool IsRefreshing
         {
             get => isRefreshing;
             set => this.RaiseAndSetIfChanged(ref isRefreshing, value);
 
+        }
+        private bool isVisibleScanText;
+        public bool IsVisibleScanText
+        {
+            get => isVisibleScanText;
+            set => this.RaiseAndSetIfChanged(ref isVisibleScanText, value);
         }
         bool isStateOn;
 
@@ -111,8 +120,12 @@ namespace SCUScanner.ViewModels
             });
 
 
-            IsRefreshing = Adapter.IsScanning;
-            IsStateOn = _bluetoothLe.IsOn;
+            
+            //if (Device.iOS == Device.RuntimePlatform)
+            //    IsStateOn = true;
+            //else
+                IsStateOn = _bluetoothLe.IsOn;
+            IsRefreshing = IsStateOn && Adapter.IsScanning;
             ScanToggleCommand = ReactiveCommand.Create(() => TryStartScanning(true));
             StopScanCommand = ReactiveCommand.Create(() => StopScan());
             DisconnectCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -137,6 +150,7 @@ namespace SCUScanner.ViewModels
                 else
                 {
                     IsConnected = await ConnectDeviceAsync(o, false);
+                    IsVisibleScanText = IsConnected;
                     if (IsConnected)
                     {
                         SelectedDevice = o;
@@ -321,7 +335,20 @@ namespace SCUScanner.ViewModels
         {
             IsStateOn = _bluetoothLe.IsOn;
             UpdateStateText();
-        }
+            if (Device.iOS == Device.RuntimePlatform && !IsStopClick && IsLoading && 
+                !IsRefreshing && SettingsBase.AutoScan && App.IsAccessToBle)
+            {
+                 TryStartScanning(true);
+            }
+            if (!IsStateOn)
+            {
+                IsRefreshing = false;
+                StopScan();
+
+            }
+
+                    
+            }
         private void UpdateIsScanning()
         {
             IsRefreshing = Adapter.IsScanning;
@@ -355,7 +382,7 @@ namespace SCUScanner.ViewModels
             get => scantext;
             set => this.RaiseAndSetIfChanged(ref this.scantext, value);
         }
-
+         
         public override async void OnActivate(string kod)
         {
             base.OnActivate();
@@ -364,24 +391,34 @@ namespace SCUScanner.ViewModels
             UpdateStateText();
             if (IsStateOn && !string.IsNullOrEmpty(kod))
             {
-                if (kod == "MainTabPage" && !IsRefreshing && SettingsBase.AutoScan &&  App.IsAccessToBle)
-                {
-                    await TryStartScanning(true);
+                if (kod == "MainTabPage") {
+
+                 //   ScanTextOnPublic = ScanText;
+                    if (!IsStopClick && !IsRefreshing && SettingsBase.AutoScan && App.IsAccessToBle)
+                    {
+                       
+                        await TryStartScanning(true);
+                    }
                 }
-                else if (kod == "ConnectedTabPage")
+                else
                 {
-                    if (LastCharForUpdate != null && !OnOpenFirst)
+                    IsLoading = false;
+                    ScanText = "";
+                    if (kod == "ConnectedTabPage")
                     {
-                        StartUpdates(LastCharForUpdate);
-                        TimerAlarm.Enabled = true;
+                        if (LastCharForUpdate != null && !OnOpenFirst)
+                        {
+                            StartUpdates(LastCharForUpdate);
+                            TimerAlarm.Enabled = true;
+                        }
+                        else
+                        {
+                            var seletec = SelectedDevice;
+                            var con = IsConnected;
+                            //IsConnected = false;
+                        }
+                        OnOpenFirst = false;
                     }
-                    else
-                    {
-                        var seletec = SelectedDevice;
-                        var con = IsConnected;
-                        //IsConnected = false;
-                    }
-                    OnOpenFirst = false;
                 }
             }
         }
@@ -410,7 +447,7 @@ namespace SCUScanner.ViewModels
         private async Task TryStartScanning(bool refresh = false)
         {
 
-            
+            IsLoading = false;
 
             if (IsStateOn && (refresh || !Devices.Any()))
             {
@@ -419,9 +456,12 @@ namespace SCUScanner.ViewModels
                     //     ScanText = Resources["StopScanText"];
                     IsRefreshing = true;
                     ScanForDevices();
+                    IsStopClick = false;
                 }
                 else
                 {
+                    IsStopClick = true;
+                    
                     StopScan();
                 }
             }
@@ -506,15 +546,19 @@ namespace SCUScanner.ViewModels
                 using (var progress = _userDialogs.Progress(config))
                 {
                     progress.Show();
-
-                    await Adapter.ConnectToDeviceAsync(device.Device, new ConnectParameters(autoConnect: false, forceBleTransport: false), tokenSource.Token);
+                    bool autoConnect = false;
+                    //if (Device.iOS == Device.RuntimePlatform)
+                    //{
+                    //    autoConnect = true;
+                    //}
+                    await Adapter.ConnectToDeviceAsync(device.Device, new ConnectParameters(autoConnect: autoConnect, forceBleTransport: false), tokenSource.Token);
                 }
 
                 _userDialogs.Toast($"{SettingsBase.Resources["ConnectStatusText"]}  {device.Name}.");
 
                 //PreviousGuid = device.Device.Id;
                 resultConnection= true;
-
+                
             }
             catch (Exception ex)
             {
