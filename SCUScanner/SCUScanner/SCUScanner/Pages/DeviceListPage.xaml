@@ -6,6 +6,7 @@
              xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
                         xmlns:controls="clr-namespace:SCUScanner.Helpers"
                         xmlns:localBeh="clr-namespace:SCUScanner.Helpers.Behaviors" 
+                      xmlns:syncfusion="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              Title="Discover devices"
              x:Name="DevicePage">
     
@@ -19,23 +20,32 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                      
                 </Grid.RowDefinitions>
                 <StackLayout BackgroundColor="#FF6969" Padding="10" IsVisible="{Binding IsStateOn, Converter={StaticResource InverseBoolean}}">
                     <Label Text="{Binding StateText}" FontSize="18" HorizontalTextAlignment="Center"></Label>
                 </StackLayout>
-
-                <controls:ListViewEx  Grid.Row="1" ItemsSource="{Binding Devices}"  
-                  
-              
-                 IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
-                 RowHeight="100"
+                <syncfusion:LoadMoreIndicator Grid.Row="1" HeightRequest="30" Color="Red" IsRunning="{Binding IsRefreshing}" IsVisible="{Binding IsRefreshing}" VerticalOptions="Center"/>
+                <controls:sfListViewEx Grid.Row="2" ItemsSource="{Binding Devices}"  
+                    LoadMoreOption="Auto"
+               SelectionMode="None" 
+                 IsBusy="{Binding IsRefreshing, Mode=OneWay}"
+                 ItemSize="100"
                >
-                    <ListView.ItemTemplate>
+                    <!--<syncfusion:SfListView.LoadMoreTemplate>
+                        <DataTemplate>
+                            <Grid>
+
+                                <syncfusion:LoadMoreIndicator Color="Red" IsRunning="{Binding IsRefreshing}" IsVisible="{Binding IsRefreshing}" VerticalOptions="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </syncfusion:SfListView.LoadMoreTemplate>-->
+                    <controls:sfListViewEx.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <ViewCell.View  >
+                               
                                     <Grid Margin="5" Padding="0">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="20" />
@@ -57,11 +67,12 @@
                                CommandParameter="{Binding}"
                                            BackgroundColor="Green"    TextColor="White" HeightRequest="40"  />
                                     </Grid>
-                                </ViewCell.View>
+                                
                             </ViewCell>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </controls:ListViewEx>
+                    </controls:sfListViewEx.ItemTemplate>
+                    
+                </controls:sfListViewEx>
 
 
                 
