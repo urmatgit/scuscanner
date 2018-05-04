@@ -44,8 +44,10 @@ namespace SCUScanner.ViewModels
         private readonly ISettings _settings;
         private readonly IAdapter Adapter;
         ICharacteristic mldpDataCharacteristic, transparentTxDataCharacteristic, transparentRxDataCharacteristic;
-        private bool isRefreshing; //= Adapter.IsScanning;
         private bool IsStopClick = false;
+        private bool IsLoading = true;
+        private bool isRefreshing=false; //= Adapter.IsScanning;
+        
         public bool IsRefreshing
         {
             get => isRefreshing;
@@ -118,11 +120,12 @@ namespace SCUScanner.ViewModels
             });
 
 
-            IsRefreshing = Adapter.IsScanning;
-            if (Device.iOS == Device.RuntimePlatform)
-                IsStateOn = true;
-            else
+            
+            //if (Device.iOS == Device.RuntimePlatform)
+            //    IsStateOn = true;
+            //else
                 IsStateOn = _bluetoothLe.IsOn;
+            IsRefreshing = IsStateOn && Adapter.IsScanning;
             ScanToggleCommand = ReactiveCommand.Create(() => TryStartScanning(true));
             StopScanCommand = ReactiveCommand.Create(() => StopScan());
             DisconnectCommand = ReactiveCommand.CreateFromTask(async () =>
@@ -332,7 +335,20 @@ namespace SCUScanner.ViewModels
         {
             IsStateOn = _bluetoothLe.IsOn;
             UpdateStateText();
-        }
+            if (Device.iOS == Device.RuntimePlatform && !IsStopClick && IsLoading && 
+                !IsRefreshing && SettingsBase.AutoScan && App.IsAccessToBle)
+            {
+                 TryStartScanning(true);
+            }
+            if (!IsStateOn)
+            {
+                IsRefreshing = false;
+                StopScan();
+
+            }
+
+                    
+            }
         private void UpdateIsScanning()
         {
             IsRefreshing = Adapter.IsScanning;
@@ -386,6 +402,7 @@ namespace SCUScanner.ViewModels
                 }
                 else
                 {
+                    IsLoading = false;
                     ScanText = "";
                     if (kod == "ConnectedTabPage")
                     {
@@ -430,7 +447,7 @@ namespace SCUScanner.ViewModels
         private async Task TryStartScanning(bool refresh = false)
         {
 
-            
+            IsLoading = false;
 
             if (IsStateOn && (refresh || !Devices.Any()))
             {
@@ -444,6 +461,7 @@ namespace SCUScanner.ViewModels
                 else
                 {
                     IsStopClick = true;
+                    
                     StopScan();
                 }
             }

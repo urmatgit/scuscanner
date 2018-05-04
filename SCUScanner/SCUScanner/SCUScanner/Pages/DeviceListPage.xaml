@@ -80,7 +80,8 @@
             </Grid>
         </pages:BasePage>
         <pages:BasePage x:Name="ConnectedTabPage" Title="{Binding Resources[ConnectedDeviceCaptionText]}" IsVisible="{Binding IsConnected}"   Kod="ConnectedTabPage">
-            <Grid Margin="10"  >
+            <ScrollView>
+                <Grid Margin="10"  >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
@@ -149,8 +150,11 @@
 
 
             </Grid>
+                
+                </ScrollView>
         </pages:BasePage>
         <pages:BasePage Title="{Binding Resources[DeviceSettingsCaptionText]}"  IsVisible="{Binding IsConnected}"  Kod="WriteTabPage">
+            <ScrollView>
             <Grid Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -215,6 +219,7 @@
                 <!--<Button Grid.Column="0"  Grid.Row="11"   Text="{Binding Resources[SendButtonText]}"  
                     Command="{Binding SendCommand}"  BackgroundColor="Green"    TextColor="White"/>-->
             </Grid>
+            </ScrollView>
         </pages:BasePage>
     </pages:BaseTabbedPage.Children>
 
