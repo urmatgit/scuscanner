@@ -305,6 +305,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloading, please wait ....
+        /// </summary>
+        internal static string DownloadWaitText {
+            get {
+                return ResourceManager.GetString("DownloadWaitText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter serial number.
         /// </summary>
         internal static string EnterSerialNumberText {

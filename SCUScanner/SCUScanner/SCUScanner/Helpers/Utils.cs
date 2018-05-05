@@ -19,7 +19,7 @@ namespace SCUScanner.Helpers
             int index_ = serial.LastIndexOf('-');
             if (index_ <= 0)
                 index_ = serial.Length;
-            result = serial.Substring(0, index_).ToLower();
+            result = serial.Substring(0, index_).ToUpper();
             result = $"{result}({lang}).pdf";
             return result;
         }
@@ -29,11 +29,11 @@ namespace SCUScanner.Helpers
             string filename = Utils.GetFileNameFromSerialNo(serial, kod);
 
             var filenamelocal = Path.Combine(WorkDir, filename);
-            FtpClient client = new FtpClient(GlobalConstants.FtpHost);
+            FtpClient client = new FtpClient(GlobalConstants.FtpHost,GlobalConstants.FtpPort, new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)"));
             try
             {
 
-                client.Credentials = new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)");
+               // client.Credentials = new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)");
                 //client.Credentials = new NetworkCredential("chesterr_urmat", "Scuscanner2018");
 
                 // begin connecting to the server
@@ -73,6 +73,7 @@ namespace SCUScanner.Helpers
                             }
                             catch (Exception ex)
                             {
+                                App.Dialogs.HideLoading();
                                 await App.Dialogs.AlertAsync(ex.ToString());
 
                             }
@@ -85,7 +86,7 @@ namespace SCUScanner.Helpers
                         }
                         else
                         {
-
+                            App.Dialogs.HideLoading();
                             await App.Dialogs.AlertAsync(Settings.Current.Resources["ManualNotFoundText"]);
                         }
 
@@ -95,11 +96,13 @@ namespace SCUScanner.Helpers
                 }
                 else
                 {
+                    App.Dialogs.HideLoading();
                     await App.Dialogs.AlertAsync(Settings.Current.Resources["NoInternetConOrErrorText"]);
                 }
             }
             catch (Exception ex)
             {
+                App.Dialogs.HideLoading();
                 await App.Dialogs.AlertAsync(Settings.Current.Resources["NoInternetConOrErrorText"]);
 
             }

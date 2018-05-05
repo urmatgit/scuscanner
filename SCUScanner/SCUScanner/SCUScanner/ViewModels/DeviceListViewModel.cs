@@ -221,11 +221,27 @@ namespace SCUScanner.ViewModels
             });
             DownloadCommand = ReactiveCommand.CreateFromTask(async () =>
             {
-                await Utils.DownloadManual<string>(SN, SettingsBase.SelectedLangKod.ToLower(), async (o) =>
+                CancellationTokenSource tokenSource = new CancellationTokenSource();
+
+                var config = new ProgressDialogConfig()
                 {
-                    WebViewPageCS webViewPageCS = new WebViewPageCS(o);
-                    await Navigation.PushAsync(webViewPageCS);
-                });
+                    Title = $"{Resources["DownloadWaitText"] }  ({SN})",
+                    CancelText = Resources["CancelText"],
+                    IsDeterministic = false,
+                    OnCancel = tokenSource.Cancel
+                };
+                //
+
+                using (var progress = _userDialogs.Progress(config))
+                {
+                    progress.Show();
+                    await Utils.DownloadManual<string>(SN.ToUpper(), SettingsBase.SelectedLangKod.ToUpper(), async (o) =>
+                    {
+                        WebViewPageCS webViewPageCS = new WebViewPageCS(o);
+                        await Navigation.PushAsync(webViewPageCS);
+                    });
+                }
+               
                 //if (Path.GetExtension(SerialNumber) != "pdf")
                 //    SerialNumber += ".pdf";
               

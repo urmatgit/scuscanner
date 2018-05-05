@@ -1,4 +1,5 @@
-﻿using FluentFTP;
+﻿using Acr.UserDialogs;
+using FluentFTP;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using ReactiveUI;
@@ -71,12 +72,27 @@ namespace SCUScanner.ViewModels
              {
                  //if (Path.GetExtension(SerialNumber) != "pdf")
                  //    SerialNumber += ".pdf";
+                 CancellationTokenSource tokenSource = new CancellationTokenSource();
 
-                await  Utils.DownloadManual<string>(SerialNumber, SettingsBase.SelectedLangKod.ToLower(), async (o) =>
-                {
-                    WebViewPageCS webViewPageCS = new WebViewPageCS(o);
-                    await Navigation.PushAsync(webViewPageCS);
-                });
+                 var config = new ProgressDialogConfig()
+                 {
+                     Title = $"{Resources["DownloadWaitText"] }  ({SerialNumber})",
+                     CancelText = Resources["CancelText"],
+                     IsDeterministic = false,
+                     OnCancel = tokenSource.Cancel
+                 };
+                 //
+
+                 using (var progress = App.Dialogs.Progress(config))
+                 {
+                     progress.Show();
+                     await Utils.DownloadManual<string>(SerialNumber.ToUpper(), SettingsBase.SelectedLangKod.ToUpper(), async (o) =>
+                     {
+                         WebViewPageCS webViewPageCS = new WebViewPageCS(o);
+                         await Navigation.PushAsync(webViewPageCS);
+                     });
+                 }
+                
                  //string filename =Utils. GetFileNameFromSerialNo(SerialNumber, SettingsBase.SelectedLangKod.ToLower());
                  
                  //var filenamelocal = Path.Combine(WorkDir, filename);

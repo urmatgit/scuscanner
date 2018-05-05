@@ -27,7 +27,7 @@ namespace SCUScanner.iOS.Controls
             get
             {
                 UITextAttributes selectedTextAttributes = new UITextAttributes();
-                selectedTextAttributes.Font = UIFont.SystemFontOfSize(20.0F);  //UIFont.FromName("ChalkboardSE-Bold", 12.0F); // SELECTED
+                selectedTextAttributes.Font = UIFont.SystemFontOfSize(16.0F);  //UIFont.FromName("ChalkboardSE-Bold", 12.0F); // SELECTED
                 if (base.SelectedViewController != null)
                 {
                     base.SelectedViewController.TabBarItem.SetTitleTextAttributes(selectedTextAttributes, UIControlState.Normal);
