@@ -33,7 +33,8 @@ namespace SCUScanner.Helpers
             try
             {
 
-                client.Credentials = new NetworkCredential("chesterr_urmat", "Scuscanner2018");
+                client.Credentials = new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)");
+                //client.Credentials = new NetworkCredential("chesterr_urmat", "Scuscanner2018");
 
                 // begin connecting to the server
                 await client.ConnectAsync();

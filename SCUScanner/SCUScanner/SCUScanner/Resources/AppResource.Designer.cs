@@ -521,7 +521,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RMP.
+        ///   Looks up a localized string similar to RPM.
         /// </summary>
         internal static string RMPText {
             get {

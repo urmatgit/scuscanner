@@ -79,7 +79,7 @@
     <ConsolePause>False</ConsolePause>
     <MtouchArch>ARMv7, ARMv7s, ARM64</MtouchArch>
     <BuildIpa>True</BuildIpa>
-    <CodesignProvision>New_5devices</CodesignProvision>
+    <CodesignProvision>New_6devices</CodesignProvision>
     <CodesignKey>iPhone Distribution: Maxim Osipenko (GSHESUSNEG)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <IpaMetadata>Info.plist</IpaMetadata>

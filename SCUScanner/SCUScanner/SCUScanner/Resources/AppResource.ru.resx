@@ -303,7 +303,7 @@ box only visible on factory version</value>
     <value>Нет доступа в Интернет или ошибка подключения. Открываю локальную копию руководства</value>
   </data>
   <data name="RMPText" xml:space="preserve">
-    <value>RMP</value>
+    <value>RPM</value>
   </data>
   <data name="AlarmText" xml:space="preserve">
     <value>Alarm at</value>

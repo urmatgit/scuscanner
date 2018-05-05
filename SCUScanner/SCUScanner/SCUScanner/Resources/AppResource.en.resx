@@ -302,7 +302,7 @@ Turn On Bluetooth and press </value>
     <value>No Internet access or connection error. Open local copy of manual</value>
   </data>
   <data name="RMPText" xml:space="preserve">
-    <value>RMP</value>
+    <value>RPM</value>
   </data>
   <data name="AlarmText" xml:space="preserve">
     <value>Alarm at</value>
