@@ -23,6 +23,19 @@ namespace SCUScanner.Models
             this.WhenAnyValue(vm => vm.AutoScan).Subscribe(val => { ManualScan = !val; });
             this.WhenAnyValue(vm => vm.ManualScan).Subscribe(val => { AutoScan = !val; });
         }
+        bool showDebugJson = false;
+        public bool ShowDebugJson
+        {
+            get => AppSettings.GetValueOrDefault(nameof(ShowDebugJson), false);
+            set
+            {
+                var original = ShowDebugJson;
+                if (AppSettings.AddOrUpdateValue(nameof(ShowDebugJson), value))
+                {
+                    this.RaiseAndSetIfChanged(ref this.showDebugJson, value);
+                }
+            }
+        }
         /// <summary>
         /// if false =Continuouse, true -manual
         /// </summary>

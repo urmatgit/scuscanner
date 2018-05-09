@@ -17,6 +17,7 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <!--Text="{local:Translate ContinuousScanText}}"-->
                 <Label  Grid.Column="0" Grid.Row="0" Text="{Binding Resources[ContinuousScanText]}" VerticalTextAlignment="Center" />
@@ -35,9 +36,13 @@
                 </StackLayout>
 
                 <Button Grid.Column="1" Grid.Row="2" Command="{Binding SelectLangCommnad}" Text=">" VerticalOptions="Center"/>
+
+                <Label Grid.Column="0" Grid.Row="3" Text="{Binding Resources[DebugModeText]}" VerticalTextAlignment="Center"/>
+                <Switch BindingContext="{Binding SettingsBase}" Grid.Column="1" Grid.Row="3" IsToggled="{Binding ShowDebugJson}"/>
             </Grid>
             
             
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
+    

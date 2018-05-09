@@ -334,4 +334,7 @@ Turn On Bluetooth and press </value>
   <data name="DownloadWaitText" xml:space="preserve">
     <value>Downloading, please wait ...</value>
   </data>
+  <data name="DebugModeText" xml:space="preserve">
+    <value>Debug mode</value>
+  </data>
 </root>
