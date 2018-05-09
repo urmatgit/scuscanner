@@ -1,4 +1,5 @@
-﻿using FluentFTP;
+﻿using Acr.UserDialogs;
+using FluentFTP;
 using SCUScanner.Models;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace SCUScanner.Helpers
             result = $"{result}({lang}).pdf";
             return result;
         }
-        public static async Task  DownloadManual<TParam>(string serial,string kod, Func<string, Task> navigate)
+        public static async Task  DownloadManual<TParam>(string serial,string kod, IProgressDialog progressDialog, Func<string, Task> navigate)
         {
              var  WorkDir = DependencyService.Get<ISQLite>().GetWorkManualDir();
             string filename = Utils.GetFileNameFromSerialNo(serial, kod);
@@ -73,6 +74,7 @@ namespace SCUScanner.Helpers
                             }
                             catch (Exception ex)
                             {
+                                progressDialog.Hide();
                                 App.Dialogs.HideLoading();
                                 await App.Dialogs.AlertAsync(ex.ToString());
 
@@ -86,6 +88,7 @@ namespace SCUScanner.Helpers
                         }
                         else
                         {
+                            progressDialog.Hide();
                             App.Dialogs.HideLoading();
                             await App.Dialogs.AlertAsync(Settings.Current.Resources["ManualNotFoundText"]);
                         }
@@ -96,12 +99,14 @@ namespace SCUScanner.Helpers
                 }
                 else
                 {
+                    progressDialog.Hide();
                     App.Dialogs.HideLoading();
                     await App.Dialogs.AlertAsync(Settings.Current.Resources["NoInternetConOrErrorText"]);
                 }
             }
             catch (Exception ex)
             {
+                progressDialog.Hide();
                 App.Dialogs.HideLoading();
                 await App.Dialogs.AlertAsync(Settings.Current.Resources["NoInternetConOrErrorText"]);
 

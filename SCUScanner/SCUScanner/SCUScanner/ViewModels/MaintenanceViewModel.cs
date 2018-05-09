@@ -86,7 +86,7 @@ namespace SCUScanner.ViewModels
                  using (var progress = App.Dialogs.Progress(config))
                  {
                      progress.Show();
-                     await Utils.DownloadManual<string>(SerialNumber.ToUpper(), SettingsBase.SelectedLangKod.ToUpper(), async (o) =>
+                     await Utils.DownloadManual<string>(SerialNumber.ToUpper(), SettingsBase.SelectedLangKod.ToUpper(),progress, async (o) =>
                      {
                          WebViewPageCS webViewPageCS = new WebViewPageCS(o);
                          await Navigation.PushAsync(webViewPageCS);
