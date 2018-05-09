@@ -211,7 +211,10 @@
                     <Entry.Behaviors>
                         <localBeh:MaxLengthValidatorBehavior  ErrorLabel="SerialNumberErrorMessage"  MaxLength="20"/>
                     </Entry.Behaviors>
-                </Entry>
+                        <Entry.Effects>
+                            <controls:ClearEntryEffect />
+                        </Entry.Effects>
+                    </Entry>
                 <Label Grid.Column="0" Grid.Row="9" x:Name="SerialNumberErrorMessage" TextColor="Red" FontAttributes="Italic" FontSize="Small"/>
                 <Button Grid.Column="1" Grid.Row="8" CommandParameter="SN" Text="{Binding Resources[SendButtonText]}" Command="{Binding WriteCommnad}"   BackgroundColor="Green"    TextColor="White" />
                 
