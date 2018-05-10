@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>CentriClean</string>
 	<key>CFBundleIdentifier</key>
-	<string>home.TestKey</string>
+	<string>com.chestersw.SCUScanner</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>CFBundleIconFiles</key>
