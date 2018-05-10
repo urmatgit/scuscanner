@@ -242,6 +242,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Debug mode.
+        /// </summary>
+        internal static string DebugModeText {
+            get {
+                return ResourceManager.GetString("DebugModeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         internal static string DeleteText {

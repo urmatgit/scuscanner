@@ -179,7 +179,7 @@ Turn On Bluetooth and press </value>
     <value>On your iOS device, tap Settings &gt; Bluetooth and make sure Bluetooth switch is in position "On".</value>
   </data>
   <data name="SettingsText" xml:space="preserve">
-    <value>SettingsEn</value>
+    <value>Settings</value>
   </data>
   <data name="SparesText" xml:space="preserve">
     <value>Spares</value>
@@ -333,5 +333,8 @@ Turn On Bluetooth and press </value>
   </data>
   <data name="DownloadWaitText" xml:space="preserve">
     <value>Downloading, please wait ...</value>
+  </data>
+  <data name="DebugModeText" xml:space="preserve">
+    <value>Debug mode</value>
   </data>
 </root>

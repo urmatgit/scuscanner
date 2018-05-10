@@ -140,7 +140,7 @@
 
                 <Button Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2" Image="share.png" Command="{Binding ValueShareCommand}"   BackgroundColor="Green"    TextColor="White"/>
                 <ScrollView Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="8" VerticalOptions="FillAndExpand" >
-                    <Label  Text="{Binding SourceText}" VerticalOptions="FillAndExpand"/>
+                        <Label  Text="{Binding SourceText}" VerticalOptions="FillAndExpand" IsVisible="{Binding ShowSourceJson}" />
                 </ScrollView>
 
                 <Button Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="9" VerticalOptions="End"  Text="{Binding Resources[DownloadText]}"
@@ -211,7 +211,10 @@
                     <Entry.Behaviors>
                         <localBeh:MaxLengthValidatorBehavior  ErrorLabel="SerialNumberErrorMessage"  MaxLength="20"/>
                     </Entry.Behaviors>
-                </Entry>
+                        <Entry.Effects>
+                            <controls:ClearEntryEffect />
+                        </Entry.Effects>
+                    </Entry>
                 <Label Grid.Column="0" Grid.Row="9" x:Name="SerialNumberErrorMessage" TextColor="Red" FontAttributes="Italic" FontSize="Small"/>
                 <Button Grid.Column="1" Grid.Row="8" CommandParameter="SN" Text="{Binding Resources[SendButtonText]}" Command="{Binding WriteCommnad}"   BackgroundColor="Green"    TextColor="White" />
                 

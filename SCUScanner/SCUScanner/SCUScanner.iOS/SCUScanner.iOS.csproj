@@ -104,6 +104,7 @@
     <Compile Include="Controls\ExtendedTabbedPageRenderer.cs" />
     <Compile Include="Controls\CustomLabelRenderer.cs" />
     <Compile Include="Controls\PlaceholderEditorRenderer.cs" />
+    <Compile Include="Effects\ClearEntryEffect.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Services\LocalizeService.cs" />

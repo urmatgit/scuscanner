@@ -46,6 +46,12 @@ namespace SCUScanner.ViewModels
         ICharacteristic mldpDataCharacteristic, transparentTxDataCharacteristic, transparentRxDataCharacteristic;
         private bool IsStopClick = false;
         private bool IsLoading = true;
+        private bool showSourceJson;
+        public bool ShowSourceJson
+        {
+            get => showSourceJson;
+            set => this.RaiseAndSetIfChanged(ref showSourceJson, value);
+        }
         private bool isRefreshing=false; //= Adapter.IsScanning;
         
         public bool IsRefreshing
@@ -93,12 +99,12 @@ namespace SCUScanner.ViewModels
             TimerAlarm = new System.Timers.Timer();
             TimerAlarm.Interval = 500;
             TimerAlarm.Elapsed += TimerAlarm_Elapsed;
-             
+
             _deviceListPage = deviceListPage;
             OperatorName = SettingsBase.OperatorName;
             UpdateScanText(false);
             Adapter = adapter;
-           
+
             _bluetoothLe = bluetoothLe;
             _userDialogs = userDialogs;
             _settings = settings;
@@ -108,6 +114,7 @@ namespace SCUScanner.ViewModels
                 string ONOF = r ? "On" : "Off";
                 _userDialogs.Toast($"Scanning  {ONOF}");
             });
+            this.WhenAnyValue(vm => vm.SettingsBase.ShowDebugJson).Subscribe(d => ShowSourceJson = d);
             this.WhenAnyValue(vm => vm.StatusColor).Subscribe(c =>
             {
                 if (c == Color.Red || c == Color.Yellow)
@@ -235,7 +242,7 @@ namespace SCUScanner.ViewModels
                 using (var progress = _userDialogs.Progress(config))
                 {
                     progress.Show();
-                    await Utils.DownloadManual<string>(SN.ToUpper(), SettingsBase.SelectedLangKod.ToUpper(), async (o) =>
+                    await Utils.DownloadManual<string>(SN.ToUpper(), SettingsBase.SelectedLangKod.ToUpper(),progress, async (o) =>
                     {
                         WebViewPageCS webViewPageCS = new WebViewPageCS(o);
                         await Navigation.PushAsync(webViewPageCS);
@@ -775,7 +782,8 @@ namespace SCUScanner.ViewModels
             //    Debug.WriteLine(value);
             if (value.StartsWith("{"))
             {
-                this.SourceText = value;
+                
+                       this.SourceText = value;
                 IsStartedJson = true;
                 StrJson = value;
             }
