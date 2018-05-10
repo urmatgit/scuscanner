@@ -139,7 +139,7 @@
                     Command="{Binding DisconnectCommand}"    BackgroundColor="Green"    TextColor="White"/>
 
                 <Button Grid.Column="2" Grid.Row="7" Grid.ColumnSpan="2" Image="share.png" Command="{Binding ValueShareCommand}"   BackgroundColor="Green"    TextColor="White"/>
-                <ScrollView Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="8" VerticalOptions="FillAndExpand" >
+                    <ScrollView Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="8" VerticalOptions="FillAndExpand"  IsVisible="{Binding ShowSourceJson}">
                         <Label  Text="{Binding SourceText}" VerticalOptions="FillAndExpand" IsVisible="{Binding ShowSourceJson}" />
                 </ScrollView>
 
