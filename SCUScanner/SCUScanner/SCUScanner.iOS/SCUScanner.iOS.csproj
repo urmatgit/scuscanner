@@ -170,13 +170,16 @@
       <Version>1.5.1</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfDataGrid">
-      <Version>16.1.0.32</Version>
+      <Version>16.2.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfGauge">
-      <Version>16.1.0.32</Version>
+      <Version>16.2.0.46</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfImageEditor">
+      <Version>16.2.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfListView">
-      <Version>16.1.0.32</Version>
+      <Version>16.2.0.46</Version>
     </PackageReference>
     <PackageReference Include="System.ComponentModel.Annotations">
       <Version>4.4.1</Version>

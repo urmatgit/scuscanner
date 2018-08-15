@@ -40,6 +40,7 @@ namespace SCUScanner
         public static SCUScanner.Pages.DeviceListPage mainTabbed { get;  set; }
         public App()
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTU2MTFAMzEzNjJlMzIyZTMwR09JdHZ0cmFVakkzKzI4cVRwNS81Y1E1aUNPY21Na3JRd1ZvV2UvVkFSVT0=");
             InitializeComponent();
             Dialogs = UserDialogs.Instance;
             //BleAdapter = CrossBleAdapter.Current;
