@@ -60,6 +60,7 @@ namespace SCUScanner.ViewModels
         {
 
             SerialNumber = App.mainTabbed?.deviceListViewModel?.SN;;
+            App.SerialNumber = SerialNumber;
              PermissionCamera();
 
             Navigation = navigation;

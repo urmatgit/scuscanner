@@ -22,6 +22,7 @@ namespace SCUScanner
     {
         public static string CurrentLanguage = "EN";
         public static IUserDialogs Dialogs;
+        public static string SerialNumber = "";
         //public static IAdapter BleAdapter;
         public const string DATABASE_NAME = "SCUData.db";
         public static bool IsAccessToBle=false;

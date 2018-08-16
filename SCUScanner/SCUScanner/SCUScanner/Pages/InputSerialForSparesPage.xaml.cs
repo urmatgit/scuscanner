@@ -12,34 +12,35 @@ using ZXing.Net.Mobile.Forms;
 namespace SCUScanner.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class MaintenancePage : ContentPage
+	public partial class InputSerialForSparesPage : ContentPage
 	{
-        MaintenanceViewModel maintenanceViewModel;
-        
-        public MaintenancePage ()
+		public InputSerialForSparesPage ()
 		{
 			InitializeComponent ();
-            BindingContext = maintenanceViewModel = new MaintenanceViewModel(Navigation);
+            BindingContext = new BaseViewModel();
             bScanQR.Clicked += BScanQR_Clicked;
-
         }
-
         private async void BScanQR_Clicked(object sender, EventArgs e)
         {
             var scanPage = new ZXingScannerPage();
-            
+
             scanPage.OnScanResult += (result) => {
                 scanPage.IsScanning = false;
 
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     Navigation.PopAsync();
-                    maintenanceViewModel.SerialNumber = result.Text;
+                    eSerialNumber.Text = result.Text;
                     App.SerialNumber= result.Text;
                     //  DisplayAlert("Scanned Barcode", result.Text, "OK");
                 });
             };
             await Navigation.PushAsync(scanPage);
+        }
+
+        private async void SparesStart_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SparePage());
         }
     }
 }

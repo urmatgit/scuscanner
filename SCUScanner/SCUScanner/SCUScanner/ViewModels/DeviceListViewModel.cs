@@ -126,6 +126,10 @@ namespace SCUScanner.ViewModels
                     TimerAlarm.Stop();
             });
 
+            this.WhenAnyValue(vm => vm.SN).Subscribe(sn =>
+            {
+                App.SerialNumber = sn;
+            });
 
             
             //if (Device.iOS == Device.RuntimePlatform)

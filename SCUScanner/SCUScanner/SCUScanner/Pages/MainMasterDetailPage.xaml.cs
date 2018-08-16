@@ -74,6 +74,12 @@ namespace SCUScanner.Pages
                             type = typeof(ListOfManualPage);
                             //type = typeof(TestListViewPage);
                         }
+                    }else if (item.PageCode== "SparesText")
+                    {
+                        if (string.IsNullOrEmpty(App.SerialNumber))
+                        {
+                            type = typeof(InputSerialForSparesPage);
+                        }
                     }
 
 
