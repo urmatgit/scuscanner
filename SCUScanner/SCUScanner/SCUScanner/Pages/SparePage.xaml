@@ -1,14 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mr="clr-namespace:MR.Gestures;assembly=MR.Gestures"
              xmlns:sfImage="clr-namespace:Syncfusion.SfImageEditor.XForms;assembly=Syncfusion.SfImageEditor.XForms"
              x:Class="SCUScanner.Pages.SparePage">
     <ContentPage.Content>
-        <sfImage:SfImageEditor x:Name="imgViewer" PanningMode="SingleFinger"  Source="{Binding Image1}"  >
+        <mr:StackLayout VerticalOptions="Fill" HorizontalOptions="Fill">
+            <sfImage:SfImageEditor x:Name="imgViewer" PanningMode="SingleFinger"  Source="{Binding ImageSpare}"  >
             <sfImage:SfImageEditor.ToolbarSettings>
                 <sfImage:ToolbarSettings IsVisible="false" />
             </sfImage:SfImageEditor.ToolbarSettings>
             
         </sfImage:SfImageEditor>
+            <Button Text="AddTest" Command="{Binding AddCommand}"></Button>
+        </mr:StackLayout>
+
     </ContentPage.Content>
 </ContentPage>

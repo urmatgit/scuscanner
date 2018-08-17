@@ -305,7 +305,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download Manual.
+        ///   Looks up a localized string similar to Download file.
         /// </summary>
         internal static string DownloadText {
             get {

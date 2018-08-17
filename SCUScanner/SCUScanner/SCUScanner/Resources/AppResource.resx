@@ -218,7 +218,7 @@ Turn On Bluetooth and press </value>
     <value>Operator</value>
   </data>
   <data name="DownloadText" xml:space="preserve">
-    <value>Download Manual</value>
+    <value>Download file</value>
   </data>
   <data name="AlarmHoursText" xml:space="preserve">
     <value>Alarm hours</value>

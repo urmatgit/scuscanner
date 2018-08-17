@@ -12,47 +12,37 @@ using System.Windows.Input;
 
 namespace SCUScanner.ViewModels
 {
-    public class CartViewModel : BaseViewModel
+    public class CartsViewModel : BaseViewModel
     {
         public ObservableCollection<CartItemViewModel> Carts { get; set; } = new ObservableCollection<CartItemViewModel>();
         //private ICommand _clear;
         public ICommand ClearCommand { get; }
-        //{
-        //    get
-        //    {
-        //        if (_clear == null)
-        //        {
-        //            _clear =ReactiveCommand.Create<Part>((o)=>{ //  new RelayCommand((o) => {
-        //                Carts.Clear();
-        //            }, (e) => { return Carts.Count > 0; } );
-        //        }
-        //        return _clear;
-        //    }
-        //}
-    //   private ICommand _share;
         public ICommand ShareCommand { get; }
-        //{
-        //    get
-        //    {
-        //        if (_share == null)
-        //        {
-        //            _share = new RelayCommand((o) => {
-        //                DoShare();
-        //            }, (e) => { return Carts.Count > 0; });
-        //        }
-        //        return _clear;
-        //    }
-        //}
-
+        
         private void DoShare()
         {
-            
+            var shareText = App.analizeSpare.GenerateResultSTR(GetPartList());
         }
-        public CartViewModel()
+        public List<Cart> GetPartList()
+        {
+
+            var parts1 = from p in Carts
+                         select new Cart()
+                         {
+                             Part = p.Part,
+                             Count = p.PartCount,
+                             Thump = App.analizeSpare.GetThump(p.Part.PartNumber)
+                         };
+            return parts1.ToList();
+        }
+        public CartsViewModel()
         {
             ClearCommand = ReactiveCommand.Create(() => {
                 Carts.Clear();
-            }, this.WhenAnyValue(vm=>vm.Carts.Count>0));
+            });
+            ShareCommand = ReactiveCommand.Create(() => {
+                DoShare();
+            });
         }
         public void AddCart(Part part)
         {

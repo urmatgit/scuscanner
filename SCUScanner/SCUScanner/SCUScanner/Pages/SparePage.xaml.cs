@@ -18,6 +18,13 @@ namespace SCUScanner.Pages
 		{
 			InitializeComponent ();
             BindingContext = spareViewModel = new SpareViewModel();
+            spareViewModel.ImageSpare = ImageSource.FromFile(App.analizeSpare.LocalImagePath);
+            
 		}
-	}
+        protected override void OnAppearing()
+        {
+            
+            base.OnAppearing();
+        }
+    }
 }

@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SCUScanner.Pages.CartsPage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="Clear" Grid.Column="0" Width="100" HorizontalOptions ="Start" Command="{Binding ClearCommand}"></Button>
+                <Button Text="Share" Grid.Column="1" Width="100" HorizontalOptions="End" Command="{Binding ShareCommand}"></Button>
+            </Grid>
+
+            <ListView Grid.Row="1" ItemsSource="{Binding Carts}" HorizontalOptions="Fill">
+                <ListView.ItemTemplate >
+                    <DataTemplate >
+                        <Grid HorizontalOptions="Fill" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Text="-" Grid.Row="0" Grid.Column="0" Command="{Binding DecCommand}"></Button>
+                            <Button Text="+" Grid.Row="0" Grid.Column="2" Command="{Binding IncCommand}"></Button>
+                            <Label Text="{Binding PartCount}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"></Label>
+
+                            <Image Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"  Source="{Binding Thump}"></Image>
+                            <StackLayout HorizontalOptions="Center"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
+                                <Label Text="{Binding PartNumber}"   ></Label>
+                                <Label Text=","    ></Label>
+                                <Label Text="{Binding PartName}"  ></Label>
+                            </StackLayout>
+                            <!--<Label  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">
+                                <Label.Text>
+                                    < Multi StringFormat="{}{0},  {1}">
+                                        <Binding  Path="Part.PartNumber"/>
+                                        <Binding  Path="Part.PartName"/>
+                                    </>
+                                </Label.Text>
+                            </Label>-->
+                        </Grid>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

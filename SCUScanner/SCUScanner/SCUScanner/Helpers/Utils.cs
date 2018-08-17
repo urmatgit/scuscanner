@@ -27,16 +27,19 @@ namespace SCUScanner.Helpers
         public static async Task  DownloadManual<TParam>(string serial,string kod, IProgressDialog progressDialog, Func<string, Task> navigate)
         {
              var  WorkDir = DependencyService.Get<ISQLite>().GetWorkManualDir();
+            WorkDir = Path.Combine(WorkDir, "manuals");
+            if (!Directory.Exists(WorkDir))
+            {
+                Directory.CreateDirectory(WorkDir);
+            }
             string filename = Utils.GetFileNameFromSerialNo(serial, kod);
 
-            var filenamelocal = Path.Combine(WorkDir, filename);
+            var filenamelocal = Path.Combine(WorkDir,  filename);
             FtpClient client = new FtpClient(GlobalConstants.FtpHost,GlobalConstants.FtpPort, new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)"));
             try
             {
 
-               // client.Credentials = new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)");
-                //client.Credentials = new NetworkCredential("chesterr_urmat", "Scuscanner2018");
-
+             
                 // begin connecting to the server
                 await client.ConnectAsync();
                 if (client.IsConnected)
@@ -47,10 +50,7 @@ namespace SCUScanner.Helpers
 
                         if (client.FileExists($"/manuals/{filename}"))
                         {
-                            //if (File.Exists(filename))
-                            //{
-                            //    File.Delete(filename);
-                            //}
+                            
                             bool dowloaded = false;
                             try
                             {

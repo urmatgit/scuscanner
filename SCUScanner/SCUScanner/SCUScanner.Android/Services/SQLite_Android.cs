@@ -29,7 +29,7 @@ namespace SCUScanner.Droid.Services
         public string GetWorkManualDir()
         {
             var workdir= System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
-            workdir = Path.Combine(workdir, "manuals");
+            workdir = Path.Combine(workdir, "scuscanner");
             if (!Directory.Exists(workdir))
                 Directory.CreateDirectory(workdir);
             return workdir;

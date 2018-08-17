@@ -38,6 +38,7 @@ namespace SCUScanner
                 return database;
             }
         }
+        public static AnalizeSpare analizeSpare { get;   set; }
         public static SCUScanner.Pages.DeviceListPage mainTabbed { get;  set; }
         public App()
         {

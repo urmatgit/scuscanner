@@ -28,6 +28,7 @@ namespace SCUScanner.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            MR.Gestures.iOS.Settings.LicenseKey = "CB2F-LQLC-HAY5-7DMG-DSZZ-FAEX-RF5D-3RYN-FE74-4RN3-NVVD-34LH-DEMV";
             KeyboardOverlapRenderer.Init();
             new SfDigitalGaugeRenderer();
             SfDataGridRenderer.Init();

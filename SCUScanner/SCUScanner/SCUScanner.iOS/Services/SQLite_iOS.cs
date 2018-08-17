@@ -26,7 +26,7 @@ namespace SCUScanner.iOS.Services
         public string GetWorkManualDir()
         {
             var workdir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            workdir = Path.Combine(workdir, "manuals");
+            workdir = Path.Combine(workdir, "scuscanner");
             if (!Directory.Exists(workdir))
                 Directory.CreateDirectory(workdir);
             return workdir;
