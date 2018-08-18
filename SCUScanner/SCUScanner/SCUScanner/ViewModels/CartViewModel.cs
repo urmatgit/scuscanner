@@ -1,10 +1,14 @@
-﻿using ReactiveUI;
+﻿using Plugin.Messaging;
+using Plugin.Share;
+using Plugin.Share.Abstractions;
+using ReactiveUI;
 using SCUScanner.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,10 +23,24 @@ namespace SCUScanner.ViewModels
         //private ICommand _clear;
         public ICommand ClearCommand { get; }
         public ICommand ShareCommand { get; }
-        
-        private void DoShare()
+        public ICommand SendEmailCommand { get; }
+        private  async void DoShare()
         {
             var shareText = App.analizeSpare.GenerateResultSTR(GetPartList());
+            await CrossShare.Current.Share(new ShareMessage
+            {
+                Title =string.Format(Resources["SharePartTitle"],App.SerialNumber),
+                Text = shareText
+                
+
+            });
+        }
+        bool   isHasCart = false;
+        public bool IsHasCart
+        {
+
+            get => isHasCart;
+            set => this.RaiseAndSetIfChanged(ref isHasCart, value);
         }
         public List<Cart> GetPartList()
         {
@@ -39,11 +57,34 @@ namespace SCUScanner.ViewModels
         {
             ClearCommand = ReactiveCommand.Create(() => {
                 Carts.Clear();
-            });
+                IsHasCart = false;
+            },this.WhenAnyValue(vm=>vm.IsHasCart));
             ShareCommand = ReactiveCommand.Create(() => {
                 DoShare();
-            });
+            }, this.WhenAnyValue(vm => vm.IsHasCart));
+            SendEmailCommand = ReactiveCommand.Create(() => {
+                DoSendEmail();
+            }, this.WhenAnyValue(vm => vm.IsHasCart));
         }
+
+        private async void DoSendEmail()
+        {
+            var shareText = App.analizeSpare.GenerateResultSTR(GetPartList());
+            var emailMessenger = CrossMessaging.Current.EmailMessenger;
+            if (emailMessenger.CanSendEmail)
+            {
+                var email = new EmailMessageBuilder()
+                        .To(App.analizeSpare.GetEmailTo())
+                        .Subject(string.Format(Resources["SharePartTitle"], App.SerialNumber))
+                        .Body(shareText)
+                       .Build();
+                emailMessenger.SendEmail(email);
+            }
+            else
+                await App.Dialogs.AlertAsync("Can`t send email!!!");
+
+        }
+
         public void AddCart(Part part)
         {
             var finded = Carts.FirstOrDefault(p => p.Part.PartNumber == part.PartNumber);
@@ -60,6 +101,11 @@ namespace SCUScanner.ViewModels
                 Carts.Remove(obj);
             };
             Carts.Add(cart);
+            IsHasCart = true;
+        }
+        public int TotalSum()
+        {
+            return Carts.Sum(p => p.PartCount);
         }
         
     }

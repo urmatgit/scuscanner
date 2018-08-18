@@ -3,10 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mr="clr-namespace:MR.Gestures;assembly=MR.Gestures"
              xmlns:sfImage="clr-namespace:Syncfusion.SfImageEditor.XForms;assembly=Syncfusion.SfImageEditor.XForms"
+             xmlns:views="clr-namespace:SCUScanner.Pages.Views"
+              NavigationPage.HasNavigationBar="false"
+   NavigationPage.HasBackButton="false"
              x:Class="SCUScanner.Pages.SparePage">
     <ContentPage.Content>
-        <RelativeLayout>
-            <mr:StackLayout VerticalOptions="Fill" HorizontalOptions="Fill">
+        <StackLayout>
+            <views:NavigationBarView x:Name="NavigationBarView"  Title="{Binding CartCount}" />
+        <StackLayout VerticalOptions="FillAndExpand">
+            <mr:StackLayout VerticalOptions="Fill" HorizontalOptions="Fill" >
             <sfImage:SfImageEditor x:Name="imgViewer" PanningMode="SingleFinger"  Source="{Binding ImageSpare}"  >
             <sfImage:SfImageEditor.ToolbarSettings>
                 <sfImage:ToolbarSettings IsVisible="false" />
@@ -15,16 +20,9 @@
         </sfImage:SfImageEditor>
         
         </mr:StackLayout>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Text="AddTest" Command="{Binding AddCommand}" BackgroundColor="Green" TextColor="White"></Button>
-                <Button Grid.Column="1" Text="Cart" Clicked="ShowCartClick" BackgroundColor="Green" TextColor="White"></Button >
-            </Grid>
+                    <Button   Text="AddTest random" Command="{Binding AddCommand}" BackgroundColor="Green" TextColor="White" VerticalOptions="EndAndExpand"></Button>
             
-        </RelativeLayout>
+        </StackLayout>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

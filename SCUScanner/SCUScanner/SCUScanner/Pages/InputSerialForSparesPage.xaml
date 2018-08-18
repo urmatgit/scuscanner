@@ -11,9 +11,9 @@
                 </Entry.Effects>
             </Entry>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center"> 
-                <Button x:Name="bScanQR" Text="{Binding Resources[ScanQRCode]}"   WidthRequest="150"
+                <Button x:Name="bScanQR" Text="{Binding Resources[ScanQRCode]}"   WidthRequest="170"
                     BackgroundColor="Green" TextColor="White"></Button>
-                <Button x:Name="SparesStart" Text="{Binding Resources[SparesText]}" Clicked="SparesStart_Clicked" WidthRequest="150"
+                <Button x:Name="SparesStart" Text="{Binding Resources[SparesText]}" Clicked="SparesStart_Clicked" WidthRequest="170"
                     VerticalOptions="EndAndExpand" BackgroundColor="Green" TextColor="White"></Button>
             </StackLayout>
         </StackLayout>

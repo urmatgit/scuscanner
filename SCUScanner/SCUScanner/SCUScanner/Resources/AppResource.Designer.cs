@@ -440,7 +440,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manual not found.
+        ///   Looks up a localized string similar to file not found.
         /// </summary>
         internal static string ManualNotFoundText {
             get {
@@ -662,6 +662,33 @@ namespace SCUScanner.Resources {
         internal static string SettingsText {
             get {
                 return ResourceManager.GetString("SettingsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not edit this section.
+        /// </summary>
+        internal static string SharePartText2 {
+            get {
+                return ResourceManager.GetString("SharePartText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please supply your contact number below.
+        /// </summary>
+        internal static string SharePartText3 {
+            get {
+                return ResourceManager.GetString("SharePartText3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share parts {0}.
+        /// </summary>
+        internal static string SharePartTitle {
+            get {
+                return ResourceManager.GetString("SharePartTitle", resourceCulture);
             }
         }
         

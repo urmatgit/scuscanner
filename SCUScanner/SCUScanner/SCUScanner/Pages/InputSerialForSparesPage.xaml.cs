@@ -45,24 +45,7 @@ namespace SCUScanner.Pages
         private async void SparesStart_Clicked(object sender, EventArgs e)
         {
             App.SerialNumber = eSerialNumber.Text;
-            App.analizeSpare = new Services.AnalizeSpare(App.SerialNumber);
-            CancellationTokenSource tokenSource = new CancellationTokenSource();
-
-            var config = new ProgressDialogConfig()
-            {
-                Title = $"{SCUScanner.Models.Settings.Current.Resources["DownloadWaitText"] }  ({App.SerialNumber})",
-                //                CancelText = Models.Settings.Current.Resources["CancelText"],
-                IsDeterministic = false,
-                OnCancel = tokenSource.Cancel
-            };
-            //
-
-            using (var progress = App.Dialogs.Progress(config))
-            {
-                progress.Show();
-                await App.analizeSpare.ReadCSV(progress);
-                //spareViewModel.ImageSpare = ImageSource.FromFile(App.analizeSpare.LocalImagePath);
-            }
+            await SparePage.InitSparePage();
             await Navigation.PushAsync(new SparePage());
         }
     }

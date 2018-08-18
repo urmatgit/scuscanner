@@ -297,7 +297,7 @@ box only visible on factory version</value>
     <value>Scan the units QR code</value>
   </data>
   <data name="ManualNotFoundText" xml:space="preserve">
-    <value>Manual not found</value>
+    <value>file not found</value>
   </data>
   <data name="NoInternetConOrErrorText" xml:space="preserve">
     <value>No Internet access or connection error. Open local copy of manual</value>
@@ -337,5 +337,14 @@ box only visible on factory version</value>
   </data>
   <data name="DebugModeText" xml:space="preserve">
     <value>Debug mode</value>
+  </data>
+  <data name="SharePartText2" xml:space="preserve">
+    <value>Do not edit this section</value>
+  </data>
+  <data name="SharePartText3" xml:space="preserve">
+    <value>Please supply your contact number below</value>
+  </data>
+  <data name="SharePartTitle" xml:space="preserve">
+    <value>Share parts {0}</value>
   </data>
 </root>

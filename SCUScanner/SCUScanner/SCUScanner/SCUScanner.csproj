@@ -52,6 +52,7 @@
     <PackageReference Include="Syncfusion.Xamarin.SfImageEditor" Version="16.2.0.46" />
     <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="16.2.0.46" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.1" />
+    <PackageReference Include="Xam.Plugins.Messaging" Version="5.1.0" />
     <PackageReference Include="Xam.Plugins.Settings" Version="4.0.0.3-beta" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.1.444934" />
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
@@ -95,6 +96,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\SparePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\Views\NavigationBarView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\AppResource.en.resx">

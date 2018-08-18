@@ -16,6 +16,9 @@
             <Style TargetType="Button">
                 <Setter Property="FontSize" Value="{DynamicResource WindowBackgroundTable}" />
             </Style>
+            <Style x:Key="SpareCaption" TargetType="Grid">
+                <Setter Property="BackgroundColor" Value="#211e1e" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

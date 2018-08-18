@@ -10,6 +10,12 @@ namespace SCUScanner.ViewModels
    public class SpareViewModel: BaseViewModel
     {
         public ICommand AddCommand { get; }
+        private string cartCount="";
+        public string CartCount
+        {
+            get => cartCount;
+            set => this.RaiseAndSetIfChanged(ref cartCount, value);
+        }
         private ImageSource imageSpare;
         public ImageSource ImageSpare
         {
@@ -23,7 +29,13 @@ namespace SCUScanner.ViewModels
             {
             var rnd = new Random();
             App.analizeSpare.vmCarts.AddCart(App.analizeSpare.CSVParser.Parts[rnd.Next(0, App.analizeSpare.CSVParser.Parts.Count - 1)]);
+                CartCount = App.analizeSpare.vmCarts.TotalSum().ToString();
             });
+        }
+        public override void OnActivate(string kod = "")
+        {
+            CartCount = App.analizeSpare.vmCarts.TotalSum().ToString();
+            base.OnActivate(kod);
         }
 
     }

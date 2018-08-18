@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:controls="clr-namespace:SCUScanner.Helpers"
              x:Class="SCUScanner.Pages.CartsPage">
     <ContentPage.Content>
         <Grid>
@@ -11,24 +12,42 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" BackgroundColor="Gray">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
 
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Text="Clear" Grid.Column="0" HorizontalOptions ="Start" Command="{Binding ClearCommand}"></Button>
-                <Button Text="Share" Grid.Column="1"  HorizontalOptions="End" Command="{Binding ShareCommand}"></Button>
+                <!--<Button Text="Clear" Grid.Column="0" HorizontalOptions ="Start" Command="{Binding ClearCommand}"></Button>-->
+                <Image    Source="ShoppingCartClear.png" Grid.Column="0" HorizontalOptions ="Start"  WidthRequest="30" HeightRequest="20">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ClearCommand}" NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <StackLayout Orientation="Horizontal" Grid.Column="1" HorizontalOptions="End" >
+                    <Image    Source="send64.png"  WidthRequest="30" HeightRequest="20">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SendEmailCommand}" NumberOfTapsRequired="1" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <!--<Button Image="send64.png"   WidthRequest="30" HeightRequest="20"  Command="{Binding SendEmailCommand}" BackgroundColor="Green"    TextColor="White" ></Button>-->
+                    <Image    Source="share.png"  WidthRequest="30" HeightRequest="20">
+                    <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ShareCommand}" NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                    </Image>
+                    <!--<Button Image="share.png"   WidthRequest="30" HeightRequest="20" BackgroundColor="Green"    TextColor="White"    Command="{Binding ShareCommand}"></Button>-->
+                </StackLayout>
             </Grid>
 
-            <ListView Grid.Row="1" ItemsSource="{Binding Carts}" HorizontalOptions="Fill" RowHeight="100" >
-                <ListView.ItemTemplate >
+            <controls:sfListViewEx Grid.Row="1" ItemsSource="{Binding Carts}" HorizontalOptions="Fill"  ItemSize="80" DisableRowSelection="True" >
+                <controls:sfListViewEx.ItemTemplate >
                     <DataTemplate>
                         <ViewCell >
                             <Grid >
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
@@ -36,18 +55,18 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                                <Label Text="-" Grid.Row="0" Grid.Column="0" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center">
-                                    <Label.GestureRecognizers>
+                                <Image  Source="minus64.png" Grid.Row="0" Grid.Column="0" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding DecCommand}" NumberOfTapsRequired="1" />
-                                    </Label.GestureRecognizers>
-                                </Label>
-                                <Label Text="+" Grid.Row="0" Grid.Column="2" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center">
-                                    <Label.GestureRecognizers>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Image  Source="plus64.png" Grid.Row="0" Grid.Column="2" WidthRequest="24" HeightRequest="24"  HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding IncCommand}" NumberOfTapsRequired="1" />
-                                    </Label.GestureRecognizers>
+                                    </Image.GestureRecognizers>
                                     
-                                </Label>
-                            <Label Text="{Binding PartCount}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"></Label>
+                                </Image>
+                                <Label Text="{Binding PartCount}" Font="16" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"></Label>
 
                             <Image Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"  Source="{Binding Thump}"></Image>
                             <StackLayout HorizontalOptions="Center"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
@@ -66,8 +85,8 @@
                         </Grid>
                             </ViewCell>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </controls:sfListViewEx.ItemTemplate>
+            </controls:sfListViewEx>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

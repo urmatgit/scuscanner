@@ -80,6 +80,11 @@ namespace SCUScanner.Pages
                         {
                             type = typeof(InputSerialForSparesPage);
                         }
+                        else
+                        {
+                            await SparePage.InitSparePage();
+                            type = typeof(SparePage);
+                        }
                     }
 
 

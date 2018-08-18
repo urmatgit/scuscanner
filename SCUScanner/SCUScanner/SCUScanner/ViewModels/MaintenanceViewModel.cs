@@ -71,6 +71,7 @@ namespace SCUScanner.ViewModels
              });
             DownloadManualCommand = ReactiveCommand.CreateFromTask(async () =>
              {
+                 App.SerialNumber = SerialNumber;
                  //if (Path.GetExtension(SerialNumber) != "pdf")
                  //    SerialNumber += ".pdf";
                  CancellationTokenSource tokenSource = new CancellationTokenSource();

@@ -19,13 +19,13 @@ namespace SCUScanner.Helpers
         {
             ReadAndParcePart(path);
             Debug.WriteLine($"Parts-{Parts.Count}");
-            //ReadAndParceEmail(emailpath);
-            //Debug.WriteLine($"Emails-{Emails.Count}");
+            ReadAndParceEmail(emailpath);
+            Debug.WriteLine($"Emails-{Emails.Count}");
 
         }
         private void ReadAndParceEmail(string path)
         {
-            if (string.IsNullOrEmpty(path)) return;
+            if (string.IsNullOrEmpty(path) || !File.Exists(path)) return;
             Emails = File.ReadAllLines(path)
                 .Skip(1)
                 .Select(l => FromLineEmailCSV(l))
@@ -33,7 +33,7 @@ namespace SCUScanner.Helpers
         }
         private void ReadAndParcePart(string path)
         {
-            if (string.IsNullOrEmpty(path)) return;
+            if (string.IsNullOrEmpty(path) || !File.Exists(path))  return;
 
                 Parts = File.ReadAllLines(path)
                     .Skip(1)

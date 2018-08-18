@@ -65,8 +65,13 @@ namespace SCUScanner.Services
 
 
 
-        public string GetEmailTo()
+        public  string GetEmailTo()
         {
+            if (CSVParser.Emails==null || CSVParser.Emails.Count == 0)
+            {
+                App.Dialogs.Alert("not find send to emails!");
+                return "";
+            }
             string bb = GetFileNameFromSerialNo(_serialnumber);
             bb = bb.Substring(bb.Length - 2);
             string email = CSVParser.Emails.FirstOrDefault(e => e.BB == bb)?.email;
@@ -85,17 +90,17 @@ namespace SCUScanner.Services
             StringBuilder stringBuilder = new StringBuilder();
             ///TODO translate
             stringBuilder.AppendLine();
-            stringBuilder.AppendLine($"Spare Parts {_serialnumber}");
+            stringBuilder.AppendLine(string.Format(Models.Settings.Current.Resources["SharePartTitle"], _serialnumber));
             stringBuilder.AppendLine();
-            stringBuilder.AppendLine("Do not edit this section");
-            stringBuilder.AppendLine("-".PadRight(100));
+            stringBuilder.AppendLine(Settings.Current.Resources["SharePartText2"]);// Do not edit this section");
+            stringBuilder.AppendLine("-".PadRight(60,'-'));
             //
             foreach (Cart cart in carts)
             {
                 stringBuilder.AppendLine($"{cart.Count},{cart.Part.PartNumber},{cart.Part.PartName}");
             }
-            stringBuilder.AppendLine("-".PadRight(100));
-            stringBuilder.AppendLine("Please supply your contact number below");
+            stringBuilder.AppendLine("-".PadRight(60, '-'));
+            stringBuilder.AppendLine(Settings.Current.Resources["SharePartText3"]);//"Please supply your contact number below");
             return stringBuilder.ToString();
         }
         private string GetFileNameFromSerialNo(string serial)
@@ -111,7 +116,7 @@ namespace SCUScanner.Services
             {
                 Directory.CreateDirectory(filenamepath);
             }
-
+            string resultfilepath= Path.Combine(filenamepath, filename);
             var remotefilename = $"/{path}/{filename}";
             FtpClient client = new FtpClient(GlobalConstants.FtpHost, GlobalConstants.FtpPort, new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)"));
             try
@@ -138,9 +143,10 @@ namespace SCUScanner.Services
                                 //    using (App.Dialogs.Loading(Settings.Current.Resources["DownloadWaitText"], cancelSrc.Cancel, Settings.Current.Resources["CancelText"]))
                                 //    {
                                         string tmpFileName = Path.Combine(filenamepath, filename + DateTime.Now.Second.ToString());
+                                        
                                         dowloaded = await client.DownloadFileAsync(tmpFileName, $"{remotefilename}", true);
-                                        filenamepath = Path.Combine(filenamepath, filename);
-                                        File.Copy(tmpFileName, filenamepath, true);
+                                        
+                                        File.Copy(tmpFileName, resultfilepath, true);
                                         try
                                         {
                                             File.Delete(tmpFileName);
@@ -155,7 +161,7 @@ namespace SCUScanner.Services
                             catch (Exception ex)
                             {
                                 
-                                App.Dialogs.Toast(ex.ToString());
+                                App.Dialogs.Toast($"{filename}: {ex.ToString()}");
                                 //await App.Dialogs.AlertAsync(ex.ToString());
 
                             }
@@ -194,7 +200,7 @@ namespace SCUScanner.Services
             {
                 await client?.DisconnectAsync();
             }
-            return filenamepath;
+            return resultfilepath;
         }
         private async Task<string> DownLoadThumps(string path, List<Part> partsnumbers)
         {
