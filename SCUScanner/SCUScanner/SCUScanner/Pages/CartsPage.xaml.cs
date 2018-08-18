@@ -16,7 +16,7 @@ namespace SCUScanner.Pages
 		public CartsPage ()
 		{
 			InitializeComponent ();
-            BindingContext = App.analizeSpare.Carts;
+            BindingContext = App.analizeSpare.vmCarts;
 		}
 	}
 }

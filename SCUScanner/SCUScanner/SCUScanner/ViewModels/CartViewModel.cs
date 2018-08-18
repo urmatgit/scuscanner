@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace SCUScanner.ViewModels
 {
@@ -30,8 +31,7 @@ namespace SCUScanner.ViewModels
                          select new Cart()
                          {
                              Part = p.Part,
-                             Count = p.PartCount,
-                             Thump = App.analizeSpare.GetThump(p.Part.PartNumber)
+                             Count = p.PartCount
                          };
             return parts1.ToList();
         }
@@ -53,6 +53,7 @@ namespace SCUScanner.ViewModels
                 return;
             }
             var cart = new CartItemViewModel(part);
+            cart.Thump = App.analizeSpare.GetThump(part.PartNumber);
             cart.OnPartZeroOrLess += (s, a) =>
             {
                 var obj = s as CartItemViewModel;
@@ -69,7 +70,7 @@ namespace SCUScanner.ViewModels
         public ICommand DecCommand { get; }
 
         public ICommand IncCommand { get; }
-
+        public ImageSource Thump { get; set; }
         public Part Part { get; set; }
 
         private int partCount;

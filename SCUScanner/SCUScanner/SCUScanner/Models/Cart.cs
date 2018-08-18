@@ -12,6 +12,6 @@ namespace SCUScanner.Models
         public int Id { get; set; }
         public int Count { get; set; }
         public Part Part { get; set; }
-        public ImageSource Thump { get; set; }
+        
     }
 }

@@ -26,5 +26,10 @@ namespace SCUScanner.Pages
             
             base.OnAppearing();
         }
+
+        private async void ShowCartClick(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new CartsPage());
+        }
     }
 }

@@ -17,14 +17,15 @@
 
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Text="Clear" Grid.Column="0" Width="100" HorizontalOptions ="Start" Command="{Binding ClearCommand}"></Button>
-                <Button Text="Share" Grid.Column="1" Width="100" HorizontalOptions="End" Command="{Binding ShareCommand}"></Button>
+                <Button Text="Clear" Grid.Column="0" HorizontalOptions ="Start" Command="{Binding ClearCommand}"></Button>
+                <Button Text="Share" Grid.Column="1"  HorizontalOptions="End" Command="{Binding ShareCommand}"></Button>
             </Grid>
 
-            <ListView Grid.Row="1" ItemsSource="{Binding Carts}" HorizontalOptions="Fill">
+            <ListView Grid.Row="1" ItemsSource="{Binding Carts}" HorizontalOptions="Fill" RowHeight="100" >
                 <ListView.ItemTemplate >
-                    <DataTemplate >
-                        <Grid HorizontalOptions="Fill" >
+                    <DataTemplate>
+                        <ViewCell >
+                            <Grid >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
@@ -35,15 +36,24 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button Text="-" Grid.Row="0" Grid.Column="0" Command="{Binding DecCommand}"></Button>
-                            <Button Text="+" Grid.Row="0" Grid.Column="2" Command="{Binding IncCommand}"></Button>
+                                <Label Text="-" Grid.Row="0" Grid.Column="0" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding DecCommand}" NumberOfTapsRequired="1" />
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Label Text="+" Grid.Row="0" Grid.Column="2" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding IncCommand}" NumberOfTapsRequired="1" />
+                                    </Label.GestureRecognizers>
+                                    
+                                </Label>
                             <Label Text="{Binding PartCount}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"></Label>
 
                             <Image Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"  Source="{Binding Thump}"></Image>
                             <StackLayout HorizontalOptions="Center"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
-                                <Label Text="{Binding PartNumber}"   ></Label>
-                                <Label Text=","    ></Label>
-                                <Label Text="{Binding PartName}"  ></Label>
+                                    <Label Text="{Binding Part.PartNumber}"   ></Label>
+                                <Label Text="," ></Label>
+                                    <Label Text="{Binding Part.PartName}"  ></Label>
                             </StackLayout>
                             <!--<Label  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">
                                 <Label.Text>
@@ -54,7 +64,7 @@
                                 </Label.Text>
                             </Label>-->
                         </Grid>
-
+                            </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

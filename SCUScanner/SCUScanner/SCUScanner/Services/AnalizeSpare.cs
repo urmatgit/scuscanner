@@ -25,14 +25,14 @@ namespace SCUScanner.Services
         private const string ImagesPath = "images";
         private const string FtpHost = "ftp://ftp.chester.ru";
         public CSVParser CSVParser { get; private set; }
-        public CartsViewModel Carts { get; private set; }
+        public CartsViewModel vmCarts { get;   set; }
         string WorkDir;
         string RootPath { get; set; }
         public string LocalImagePath { get; set; }
         string _serialnumber { get; set; }
         public AnalizeSpare(string serialnumber)
         {
-            Carts = new CartsViewModel();
+            vmCarts = new CartsViewModel();
             WorkDir = DependencyService.Get<ISQLite>().GetWorkManualDir();
             RootPath = "/";
             _serialnumber = serialnumber;
@@ -133,10 +133,10 @@ namespace SCUScanner.Services
                             bool dowloaded = false;
                             try
                             {
-                                using (var cancelSrc = new CancellationTokenSource())
-                                {
-                                    using (App.Dialogs.Loading(Settings.Current.Resources["DownloadWaitText"], cancelSrc.Cancel, Settings.Current.Resources["CancelText"]))
-                                    {
+                                //using (var cancelSrc = new CancellationTokenSource())
+                                //{
+                                //    using (App.Dialogs.Loading(Settings.Current.Resources["DownloadWaitText"], cancelSrc.Cancel, Settings.Current.Resources["CancelText"]))
+                                //    {
                                         string tmpFileName = Path.Combine(filenamepath, filename + DateTime.Now.Second.ToString());
                                         dowloaded = await client.DownloadFileAsync(tmpFileName, $"{remotefilename}", true);
                                         filenamepath = Path.Combine(filenamepath, filename);
@@ -149,8 +149,8 @@ namespace SCUScanner.Services
                                         {
 
                                         }
-                                    }
-                                }
+                                //    }
+                                //}
                             }
                             catch (Exception ex)
                             {
@@ -169,7 +169,7 @@ namespace SCUScanner.Services
                         else
                         {
                             
-                            App.Dialogs.Toast(Settings.Current.Resources["ManualNotFoundText"]);
+                            App.Dialogs.Toast($"{filename} {Settings.Current.Resources["ManualNotFoundText"]}");
                            // await App.Dialogs.AlertAsync(Settings.Current.Resources["ManualNotFoundText"]);
                         }
 
@@ -229,10 +229,10 @@ namespace SCUScanner.Services
                             bool dowloaded = false;
                             try
                             {
-                                using (var cancelSrc = new CancellationTokenSource())
-                                {
-                                    using (App.Dialogs.Loading(Settings.Current.Resources["DownloadWaitText"], cancelSrc.Cancel, Settings.Current.Resources["CancelText"]))
-                                    {
+                                //using (var cancelSrc = new CancellationTokenSource())
+                                //{
+                                //    using (App.Dialogs.Loading(Settings.Current.Resources["DownloadWaitText"], cancelSrc.Cancel, Settings.Current.Resources["CancelText"]))
+                                //    {
                                         string tmpFileName = Path.Combine(filenamepath, filename + DateTime.Now.Second.ToString());
                                         dowloaded = await client.DownloadFileAsync(tmpFileName, $"{remotefilename}", true);
                                         filenamepath = Path.Combine(filenamepath, filename);
@@ -245,8 +245,8 @@ namespace SCUScanner.Services
                                         {
                                             continue;
                                         }
-                                    }
-                                }
+                                //    }
+                                //}
                             }
                             catch (Exception ex)
                             {
@@ -266,7 +266,8 @@ namespace SCUScanner.Services
                         }
                         else
                         {
-                            App.Dialogs.Toast(Settings.Current.Resources["ManualNotFoundText"]);
+                            App.Dialogs.Toast($"{filename} {Settings.Current.Resources["ManualNotFoundText"]}");
+                            //App.Dialogs.Toast(Settings.Current.Resources["ManualNotFoundText"]);
                             //Debug.WriteLine(Settings.Current.Resources["ManualNotFoundText"]);
                             //await App.Dialogs.AlertAsync(Settings.Current.Resources["ManualNotFoundText"]);
                         }

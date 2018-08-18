@@ -22,7 +22,7 @@ namespace SCUScanner.ViewModels
             AddCommand = ReactiveCommand.Create(() =>
             {
             var rnd = new Random();
-            App.analizeSpare.Carts.AddCart(App.analizeSpare.CSVParser.Parts[rnd.Next(0, App.analizeSpare.CSVParser.Parts.Count - 1)]);
+            App.analizeSpare.vmCarts.AddCart(App.analizeSpare.CSVParser.Parts[rnd.Next(0, App.analizeSpare.CSVParser.Parts.Count - 1)]);
             });
         }
 
