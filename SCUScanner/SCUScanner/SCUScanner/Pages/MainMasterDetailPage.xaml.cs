@@ -9,6 +9,7 @@ using Xamarin.Forms.Xaml;
 using SCUScanner.Models;
 using SCUScanner.Services;
 using Acr.UserDialogs;
+using Syncfusion.SfImageEditor.XForms;
 
 namespace SCUScanner.Pages
 {
@@ -76,6 +77,8 @@ namespace SCUScanner.Pages
                         }
                     }else if (item.PageCode== "SparesText")
                     {
+
+
                         if (string.IsNullOrEmpty(App.SerialNumber))
                         {
                             type = typeof(InputSerialForSparesPage);
@@ -97,5 +100,6 @@ namespace SCUScanner.Pages
 
             MasterPage.ListView.SelectedItem = null;
         }
+         
     }
 }

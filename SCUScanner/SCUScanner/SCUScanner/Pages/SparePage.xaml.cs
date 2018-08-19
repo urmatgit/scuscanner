@@ -1,7 +1,9 @@
 ﻿using Acr.UserDialogs;
 using SCUScanner.ViewModels;
+using Syncfusion.SfImageEditor.XForms;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -19,8 +21,25 @@ namespace SCUScanner.Pages
 		public SparePage ()
 		{
 			InitializeComponent ();
-            BindingContext = spareViewModel = new SpareViewModel();
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+
+            }
+            else
+            {
+                NavigationPage.SetHasNavigationBar(this, false);
+                NavigationPage.SetHasBackButton(this, false);
+            }
+            spareViewModel = new SpareViewModel();
             spareViewModel.ImageSpare = ImageSource.FromFile(App.analizeSpare.LocalImagePath);
+            BindingContext = spareViewModel;
+           
+
+            //editor.Source = imagesource;
+             
+            //var bytes= System.IO.File.ReadAllBytes(App.analizeSpare.LocalImagePath);
+            //MemoryStream mem = new MemoryStream(bytes);
+
             //NavigationBarView.FirstNameLabel.Text = "3";
 
         }
@@ -45,8 +64,16 @@ namespace SCUScanner.Pages
                 //spareViewModel.ImageSpare = ImageSource.FromFile(App.analizeSpare.LocalImagePath);
             }
         }
+        protected override void OnSizeAllocated(double width, double height)
+        {
+           
+
+            base.OnSizeAllocated(width, height);
+            //imgViewer.WidthRequest = width - NavigationBarView.Width;
+        }
         protected override void OnAppearing()
         {
+            
             spareViewModel.OnActivate();
             base.OnAppearing();
         }

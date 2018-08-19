@@ -4,25 +4,70 @@
              xmlns:mr="clr-namespace:MR.Gestures;assembly=MR.Gestures"
              xmlns:sfImage="clr-namespace:Syncfusion.SfImageEditor.XForms;assembly=Syncfusion.SfImageEditor.XForms"
              xmlns:views="clr-namespace:SCUScanner.Pages.Views"
-              NavigationPage.HasNavigationBar="false"
-   NavigationPage.HasBackButton="false"
              x:Class="SCUScanner.Pages.SparePage">
-    <ContentPage.Content>
-        <StackLayout>
-            <views:NavigationBarView x:Name="NavigationBarView"  Title="{Binding CartCount}" />
-        <StackLayout VerticalOptions="FillAndExpand">
-            <mr:StackLayout VerticalOptions="Fill" HorizontalOptions="Fill" >
-            <sfImage:SfImageEditor x:Name="imgViewer" PanningMode="SingleFinger"  Source="{Binding ImageSpare}"  >
+             
+
+    <StackLayout Padding="0">
+        <StackLayout HeightRequest="45" >
+                <views:NavigationBarView   x:Name="NavigationBarView"  Title="{Binding CartCount}" HeightRequest="45"/>
+            </StackLayout >
+        <mr:AbsoluteLayout 
+                RelativeLayout.XConstraint="{ConstraintExpression Type=Constant, Constant=0}"
+			RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=0}"
+			RelativeLayout.WidthConstraint="{ConstraintExpression Type= RelativeToParent, Property=Width}"
+			RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.65}"
+                
+                VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Blue" Padding="0"
+                            
+                           
+			
+			TappedCommand="{Binding TappedCommand}"
+			
+            TappingCommand="{Binding TappingCommand}"
+		 	DoubleTappedCommand="{Binding DoubleTappedCommand}"
+            
+			PanningCommand="{Binding PanningCommand}"
+			PannedCommand="{Binding PannedCommand}"
+			
+			PinchingCommand="{Binding PinchingCommand}"
+			PinchedCommand="{Binding PinchedCommand}"
+		 
+                            
+                            >
+         
+            <sfImage:SfImageEditor  Margin="0"   x:Name="imgViewer" PanningMode="SingleFinger" EnableZooming="False" Source="{Binding ImageSpare}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red"
+                                      AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                                        X="{Binding ViewX, Mode=OneWayToSource}"
+				    Y="{Binding ViewY, Mode=OneWayToSource}"
+				    Width="{Binding ViewWidth, Mode=OneWayToSource}"
+				    Height="{Binding ViewHeight, Mode=OneWayToSource}"
+                                     Scale="{Binding Scale}"
+                                     TranslationX="{Binding TranslationX}"
+					TranslationY="{Binding TranslationY}"
+					AnchorX="{Binding AnchorX}"
+					AnchorY="{Binding AnchorY}"
+                                     >
             <sfImage:SfImageEditor.ToolbarSettings>
-                <sfImage:ToolbarSettings IsVisible="false" />
+                <sfImage:ToolbarSettings IsVisible="False" />
             </sfImage:SfImageEditor.ToolbarSettings>
             
         </sfImage:SfImageEditor>
-        
-        </mr:StackLayout>
-                    <Button   Text="AddTest random" Command="{Binding AddCommand}" BackgroundColor="Green" TextColor="White" VerticalOptions="EndAndExpand"></Button>
-            
+            <Button Text="click"
+                    AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="0,1,-1,-1"
+                     X="{Binding ViewX, Mode=OneWayToSource}"
+				    Y="{Binding ViewY, Mode=OneWayToSource}"
+				    Width="{Binding ViewWidth, Mode=OneWayToSource}"
+				    Height="{Binding ViewHeight, Mode=OneWayToSource}"
+                                     Scale="{Binding Scale}"
+                                     TranslationX="{Binding TranslationX}"
+					TranslationY="{Binding TranslationY}"
+					AnchorX="{Binding AnchorX}"
+					AnchorY="{Binding AnchorY}"
+                    ></Button>
+            </mr:AbsoluteLayout>
+            <!--<StackLayout HeightRequest="30" VerticalOptions="EndAndExpand">
+                <Button   Text="AddTest random" Command="{Binding AddCommand}" BackgroundColor="Green" TextColor="White" ></Button>
+            </StackLayout>-->
         </StackLayout>
-        </StackLayout>
-    </ContentPage.Content>
 </ContentPage>

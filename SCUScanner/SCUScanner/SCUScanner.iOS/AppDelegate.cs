@@ -7,7 +7,7 @@ using KeyboardOverlap.Forms.Plugin.iOSUnified;
 using Syncfusion.ListView.XForms.iOS;
 using Syncfusion.SfDataGrid.XForms.iOS;
 using Syncfusion.SfGauge.XForms.iOS;
-
+using Syncfusion.SfImageEditor.XForms.iOS;
 using UIKit;
 
 namespace SCUScanner.iOS
@@ -27,12 +27,14 @@ namespace SCUScanner.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            MR.Gestures.iOS.Settings.LicenseKey = "CB2F-LQLC-HAY5-7DMG-DSZZ-FAEX-RF5D-3RYN-FE74-4RN3-NVVD-34LH-DEMV";
             global::Xamarin.Forms.Forms.Init();
             MR.Gestures.iOS.Settings.LicenseKey = "CB2F-LQLC-HAY5-7DMG-DSZZ-FAEX-RF5D-3RYN-FE74-4RN3-NVVD-34LH-DEMV";
             KeyboardOverlapRenderer.Init();
             new SfDigitalGaugeRenderer();
             SfDataGridRenderer.Init();
             SfListViewRenderer.Init();
+            SfImageEditorRenderer.Init();
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             LoadApplication(new App());
             
