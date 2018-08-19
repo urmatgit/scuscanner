@@ -15,7 +15,7 @@ using Xamarin.Forms.Xaml;
 namespace SCUScanner.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class SparePage : ContentPage
+	public partial class SparePage :MR.Gestures.ContentPage
 	{
         SpareViewModel spareViewModel;
 		public SparePage ()
@@ -81,6 +81,11 @@ namespace SCUScanner.Pages
         private async void ShowCartClick(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new CartsPage());
+        }
+
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            await App.Dialogs.AlertAsync("Clicked");
         }
     }
 }
