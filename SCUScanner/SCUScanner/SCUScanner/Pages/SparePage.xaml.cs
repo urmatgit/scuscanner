@@ -58,6 +58,8 @@ namespace SCUScanner.Pages
                 PartButton button = new PartButton(part);
                 button.OnLongPressed += (s, e) =>
                 {
+                    App.analizeSpare.vmCarts.AddCart(button.Part);
+                    spareViewModel.CartCount = App.analizeSpare.vmCarts.TotalSum().ToString();
                     App.Dialogs.Alert(button.Part.PartName);
                 };
                 button.Text = part.PartNumber;
