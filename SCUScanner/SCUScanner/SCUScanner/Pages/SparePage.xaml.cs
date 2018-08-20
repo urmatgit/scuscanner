@@ -85,7 +85,14 @@ namespace SCUScanner.Pages
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
-            await App.Dialogs.AlertAsync("Clicked");
+            Button btn = sender as Button;
+            await App.Dialogs.AlertAsync(btn.Text);
+        }
+
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            Frame btn = sender as Frame;
+            await App.Dialogs.AlertAsync(btn.Id.ToString());
         }
     }
 }

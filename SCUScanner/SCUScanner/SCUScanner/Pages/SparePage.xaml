@@ -17,7 +17,20 @@
 			PinchedCommand="{Binding PinchedCommand}"
 		 
                 >
-             
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="transparentButtonStyle" TargetType="Button">
+              
+
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="BorderColor" Value="Blue"/>
+                <Setter Property="BorderRadius" Value="0"/>
+                <Setter Property="BorderWidth" Value="2"/>
+            </Style>
+
+            
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <StackLayout Padding="0" BackgroundColor="Yellow">
                 <views:NavigationBarView   x:Name="NavigationBarView"  Title="{Binding CartCount}" HeightRequest="45"/>
@@ -52,9 +65,21 @@
                     </sfImage:SfImageEditor.ToolbarSettings>
 
                 </sfImage:SfImageEditor>
-                <Button Text="click" Opacity="0" Clicked="Button_Clicked">
+                <Button Text="click1"  Clicked="Button_Clicked" BorderColor="Black" BackgroundColor="Transparent"
+                        AbsoluteLayout.LayoutBounds="5,5,100,100"      >
                     
                 </Button>
+                <Button Text="click2"  Clicked="Button_Clicked"  Style="{StaticResource transparentButtonStyle}"
+                        AbsoluteLayout.LayoutBounds="100,5,100,100"      >
+
+                </Button>
+                <Frame HasShadow="False" OutlineColor ="Blue"   BackgroundColor="Transparent"  x:Name="fram1" 
+                       AbsoluteLayout.LayoutBounds="5,100,100,100"
+                       >
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                    </Frame.GestureRecognizers>
+                </Frame>
             </AbsoluteLayout>
         </Frame>
           
