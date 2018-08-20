@@ -15,7 +15,7 @@
 			
 			PinchingCommand="{Binding PinchingCommand}"
 			PinchedCommand="{Binding PinchedCommand}"
-		 
+		 x:Name="pgSpare"
                 >
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -52,7 +52,7 @@
 					AnchorX="{Binding AnchorX}"
 					AnchorY="{Binding AnchorY}"
 				   >
-            <AbsoluteLayout BackgroundColor="Blue" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+            <AbsoluteLayout BackgroundColor="Blue"  x:Name="absLayout"
 			    Margin="0"
                 >
             <sfImage:SfImageEditor   Margin="0"   x:Name="imgViewer" PanningMode="SingleFinger" EnableZooming="False" Source="{Binding ImageSpare}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red"
@@ -65,21 +65,19 @@
                     </sfImage:SfImageEditor.ToolbarSettings>
 
                 </sfImage:SfImageEditor>
-                <Button Text="click1"  Clicked="Button_Clicked" BorderColor="Black" BackgroundColor="Transparent"
-                        AbsoluteLayout.LayoutBounds="5,5,100,100"      >
+                <!--<Button Text="click1"  Clicked="Button_Clicked" Style="{StaticResource transparentButtonStyle}"
+                        AbsoluteLayout.LayoutBounds="0,0,100,100"    
+                            
+                           >
                     
                 </Button>
                 <Button Text="click2"  Clicked="Button_Clicked"  Style="{StaticResource transparentButtonStyle}"
-                        AbsoluteLayout.LayoutBounds="100,5,100,100"      >
+                        AbsoluteLayout.LayoutBounds="0,50,100,100"  
+                         
+                           >
 
-                </Button>
-                <Frame HasShadow="False" OutlineColor ="Blue"   BackgroundColor="Transparent"  x:Name="fram1" 
-                       AbsoluteLayout.LayoutBounds="5,100,100,100"
-                       >
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-                    </Frame.GestureRecognizers>
-                </Frame>
+                </Button>-->
+                 
             </AbsoluteLayout>
         </Frame>
           
