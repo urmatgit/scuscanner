@@ -20,13 +20,7 @@ namespace SCUScanner.Helpers
         public PartButton(Part part)
         {
             this.Part = part;
-            //< Setter Property = "BackgroundColor" Value = "Transparent" />
-
-            //      < Setter Property = "BorderColor" Value = "Blue" />
-
-            //         < Setter Property = "BorderRadius" Value = "0" />
-
-            //            < Setter Property = "BorderWidth" Value = "2" />
+           
             BackgroundColor =Xamarin.Forms.Color.Transparent;
             BorderColor = Xamarin.Forms.Color.Gray;
             BorderWidth = 1;

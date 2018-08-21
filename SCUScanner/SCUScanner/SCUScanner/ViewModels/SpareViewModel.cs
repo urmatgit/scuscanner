@@ -61,9 +61,12 @@ namespace SCUScanner.ViewModels
             PannedCommand = new Command<PanEventArgs>(OnPanned);
             SwipedCommand = new Command<SwipeEventArgs>(OnSwiped);
 
-            ImageSpare = ImageSource.FromFile(App.analizeSpare.LocalImagePath);
-            
-            
+            if (App.analizeSpare.ErrorConnect)
+                ImageSpare = ImageSource.FromResource(App.analizeSpare.LocalImagePath);
+            else
+                ImageSpare = ImageSource.FromFile(App.analizeSpare.LocalImagePath);
+            App.Dialogs.Toast($"Loaded {App.analizeSpare.LocalImagePath}");
+
         }
 
         private void OnSwiped(SwipeEventArgs obj)

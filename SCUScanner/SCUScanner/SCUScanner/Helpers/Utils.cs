@@ -16,11 +16,13 @@ namespace SCUScanner.Helpers
     {
         public static string GetFileNameFromSerialNo(string serial,string lang)
         {
+
             string result = "";
-            int index_ = serial.LastIndexOf('-');
-            if (index_ <= 0)
-                index_ = serial.Length;
-            result = serial.Substring(0, index_).ToUpper();
+            //int index_ = serial.LastIndexOf('-');
+            //if (index_ <= 0)
+            //    index_ = serial.Length;
+            //result = serial.Substring(0, index_).ToUpper();
+            result = serial.Substring(0, 15);
             result = $"{result}({lang}).pdf";
             return result;
         }

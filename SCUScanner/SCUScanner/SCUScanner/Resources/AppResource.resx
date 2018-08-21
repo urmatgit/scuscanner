@@ -347,4 +347,7 @@ box only visible on factory version</value>
   <data name="SharePartTitle" xml:space="preserve">
     <value>Share parts {0}</value>
   </data>
+  <data name="AddToOrderText" xml:space="preserve">
+    <value>Add to order</value>
+  </data>
 </root>

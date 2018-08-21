@@ -13,8 +13,8 @@ namespace SCUScanner.Helpers
     public class CSVParser
 
     {
-        public List<Part> Parts { get; private set; }
-        public List<Email> Emails { get; private set; }
+        public List<Part> Parts { get; private set; } = new List<Part>();
+        public List<Email> Emails { get; private set; } = new List<Email>();
         public CSVParser(string path, string emailpath)
         {
             ReadAndParcePart(path);

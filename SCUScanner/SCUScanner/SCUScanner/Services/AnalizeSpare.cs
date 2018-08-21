@@ -30,6 +30,7 @@ namespace SCUScanner.Services
         string RootPath { get; set; }
         public string LocalImagePath { get; set; }
         string _serialnumber { get; set; }
+        public bool ErrorConnect { get; set; } = false;
         public AnalizeSpare(string serialnumber)
         {
             vmCarts = new CartsViewModel();
@@ -43,10 +44,15 @@ namespace SCUScanner.Services
 
         public async Task ReadCSV(IProgressDialog progressDialog)
         {
+            ErrorConnect = false;
             var filename = GetFileNameFromSerialNo(_serialnumber);
             string path = await DownLoad(CSVPath, $"{filename}.csv");
+            
             string emailpath = await DownLoad(EmailsPath, $"brandemails.csv");
-            LocalImagePath = await DownLoad(ImagesPath, $"{filename}.png");
+            if (ErrorConnect)
+                LocalImagePath = "SCUScanner.img.MP60002_0100100.png";
+            else 
+                LocalImagePath = await DownLoad(ImagesPath, $"{filename}.png");
             CSVParser = new CSVParser(path, emailpath);
             await DownLoadThumps(ThumpPath, CSVParser.Parts);
         }
@@ -117,6 +123,7 @@ namespace SCUScanner.Services
                 Directory.CreateDirectory(filenamepath);
             }
             string resultfilepath= Path.Combine(filenamepath, filename);
+            if (ErrorConnect) return resultfilepath;
             var remotefilename = $"/{path}/{filename}";
             FtpClient client = new FtpClient(GlobalConstants.FtpHost, GlobalConstants.FtpPort, new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)"));
             try
@@ -185,14 +192,14 @@ namespace SCUScanner.Services
                 }
                 else
                 {
-                    
+                    ErrorConnect = true;
                     App.Dialogs.Toast(Settings.Current.Resources["NoInternetConOrErrorText"]);
                     //await App.Dialogs.AlertAsync(Settings.Current.Resources["NoInternetConOrErrorText"]);
                 }
             }
             catch (Exception ex)
             {
-                
+                ErrorConnect = true;
                 await App.Dialogs.AlertAsync(Settings.Current.Resources["NoInternetConOrErrorText"]);
                 filenamepath = "";
             }

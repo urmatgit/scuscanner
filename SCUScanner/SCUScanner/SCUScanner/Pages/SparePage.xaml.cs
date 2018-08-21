@@ -56,17 +56,35 @@ namespace SCUScanner.Pages
             foreach(Part part in App.analizeSpare.CSVParser.Parts)
             {
                 PartButton button = new PartButton(part);
-                button.OnLongPressed += (s, e) =>
-                {
-                    App.analizeSpare.vmCarts.AddCart(button.Part);
-                    spareViewModel.CartCount = App.analizeSpare.vmCarts.TotalSum().ToString();
-                    App.Dialogs.Alert(button.Part.PartName);
-                };
+                button.OnLongPressed += Button_OnLongPressed;
+
+            
                 button.Text = part.PartNumber;
                 absLayout.Children.Add(button, new Rectangle(part.Rect.X / scaleX, part.Rect.Y / scaleY, part.Rect.Width / scaleX, part.Rect.Height / scaleY));
 
             }
         }
+
+        private void Button_OnLongPressed(object sender, EventArgs e)
+        {
+            PartButton button = sender as PartButton;
+            using (App.Dialogs.ActionSheet(new ActionSheetConfig()
+                .SetTitle("")
+                .Add(Models.Settings.Current.Resources["AddToOrderText"], () =>
+                {
+                    App.analizeSpare.vmCarts.AddCart(button.Part);
+                    spareViewModel.CartCount = App.analizeSpare.vmCarts.TotalSum().ToString();
+                })
+                .SetCancel(Models.Settings.Current.Resources["CancelText"])
+                ))
+            {
+
+            }
+
+
+                App.Dialogs.Alert(button.Part.PartName);
+        }
+
         private void ImgViewer_ImageLoaded(object sender, ImageLoadedEventArgs args)
         {
             

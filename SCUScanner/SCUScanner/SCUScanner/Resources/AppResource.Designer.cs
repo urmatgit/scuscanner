@@ -61,6 +61,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add to order.
+        /// </summary>
+        internal static string AddToOrderText {
+            get {
+                return ResourceManager.GetString("AddToOrderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alarm hours.
         /// </summary>
         internal static string AlarmHoursText {
