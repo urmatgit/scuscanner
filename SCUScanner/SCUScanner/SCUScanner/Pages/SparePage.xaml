@@ -12,7 +12,7 @@
             
 			PanningCommand="{Binding PanningCommand}"
 			PannedCommand="{Binding PannedCommand}"
-			
+			LongPressedCommand="{Binding LongPressedCommand}"
 			PinchingCommand="{Binding PinchingCommand}"
 			PinchedCommand="{Binding PinchedCommand}"
 		 x:Name="pgSpare"

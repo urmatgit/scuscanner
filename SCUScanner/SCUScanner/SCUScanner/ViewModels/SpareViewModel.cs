@@ -76,7 +76,7 @@ namespace SCUScanner.ViewModels
 
         private void OnLongPressed(LongPressEventArgs obj)
         {
-            var e = obj;
+            AddCommand.Execute(null);
         }
 
         private void OnLongPressing(LongPressEventArgs obj)
