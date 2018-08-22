@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using Acr.UserDialogs;
 using Plugin.Permissions;
+using Plugin.CurrentActivity;
 
 namespace SCUScanner.Droid
 {
@@ -20,6 +21,7 @@ namespace SCUScanner.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
             Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity = this;
+            CrossCurrentActivity.Current.Activity = this;
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);

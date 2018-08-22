@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
+using UIKit;
+using Xamarin.Forms;
 
 //[assembly: Dependency(typeof(SQLite_iOS))]
 [assembly: Xamarin.Forms.Dependency(typeof(SQLite_iOS))]
@@ -32,7 +34,11 @@ namespace SCUScanner.iOS.Services
             return workdir;
              
         }
+        public Size GetImageOrgSize(string path)
+        {
+            UIImage image = UIImage.FromFile(path);
+            return new Size((double)image.Size.Width, (double)image.Size.Height);
+        }
 
-        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using Plugin.DeviceOrientation;
 using SCUScanner.Helpers;
 using SCUScanner.Models;
 using SCUScanner.ViewModels;
@@ -20,8 +21,7 @@ namespace SCUScanner.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SparePage : ContentPage
 	{
-        const int OrgImageWidth = 4958;
-        const int OrgImageHeight = 7015;
+     
 
         SpareViewModel spareViewModel;
 		public SparePage ()
@@ -48,7 +48,7 @@ namespace SCUScanner.Pages
             //MemoryStream mem = new MemoryStream(bytes);
 
             //NavigationBarView.FirstNameLabel.Text = "3";
-
+            CrossDeviceOrientation.Current.LockOrientation(CrossDeviceOrientation.Current.CurrentOrientation);
         }
 
         private void NavigationBarView_OnOptionOK(object sender, EventArgsShowBorderChange e)
@@ -62,8 +62,8 @@ namespace SCUScanner.Pages
 
         private void AddButtons()
         {
-            double scaleX = imgViewer.Bounds.Width * 100 / OrgImageWidth;
-            double scaleY = imgViewer.Bounds.Height * 100 / OrgImageHeight;
+            double scaleX = imgViewer.Bounds.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
+            double scaleY = imgViewer.Bounds.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
             foreach(Part part in App.analizeSpare.CSVParser.Parts)
             {
                 PartButton button = new PartButton(part);
@@ -71,7 +71,7 @@ namespace SCUScanner.Pages
 
             
                 button.Text = part.PartNumber;
-                absLayout.Children.Add(button, new Rectangle(part.Rect.X / scaleX, part.Rect.Y / scaleY, part.Rect.Width / scaleX, part.Rect.Height / scaleY));
+                absLayout.Children.Add(button, new Rectangle(part.Rect.X * scaleX, part.Rect.Y * scaleY, part.Rect.Width * scaleX, part.Rect.Height * scaleY));
 
             }
         }
@@ -128,6 +128,7 @@ namespace SCUScanner.Pages
                 await App.analizeSpare.ReadCSV(progress);
                 //spareViewModel.ImageSpare = ImageSource.FromFile(App.analizeSpare.LocalImagePath);
             }
+            
         }
         protected override void OnSizeAllocated(double width, double height)
         {
@@ -144,7 +145,11 @@ namespace SCUScanner.Pages
             base.OnAppearing();
             AddButtons();
         }
-
+        protected override void OnDisappearing()
+        {
+            CrossDeviceOrientation.Current.UnlockOrientation();
+            base.OnDisappearing();
+        }
         private async void ShowCartClick(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new CartsPage());

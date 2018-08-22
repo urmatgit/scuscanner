@@ -1,5 +1,6 @@
 ﻿using MR.Gestures;
 using ReactiveUI;
+using SCUScanner.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +11,9 @@ namespace SCUScanner.ViewModels
 {
    public class SpareViewModel: BaseViewModel
     {
+        public double OrgImageWidth { get; set; } = 4958;
+        public double OrgImageHeight { get; set; } = 7015;
+
         public ICommand AddCommand { get; }
         public ICommand DownCommand { get; protected set; }
         public ICommand UpCommand { get; protected set; }
@@ -61,10 +65,17 @@ namespace SCUScanner.ViewModels
             PannedCommand = new Command<PanEventArgs>(OnPanned);
             SwipedCommand = new Command<SwipeEventArgs>(OnSwiped);
 
-            if (App.analizeSpare.ErrorConnect) // пока временно!!!
-                ImageSpare = ImageSource.FromResource(App.analizeSpare.LocalImagePath);
-            else
-                ImageSpare = ImageSource.FromFile(App.analizeSpare.LocalImagePath);
+            //if (App.analizeSpare.ErrorConnect) // пока временно!!!
+            //    ImageSpare = ImageSource.FromResource(App.analizeSpare.LocalImagePath);
+            //else
+
+            var size = DependencyService.Get<ISQLite>().GetImageOrgSize(App.analizeSpare.LocalImagePath);
+            OrgImageHeight = size.Height;
+            OrgImageWidth = size.Width;
+            
+                GC.Collect();
+            GC.Collect();
+            ImageSpare = ImageSource. FromFile(App.analizeSpare.LocalImagePath);
             App.Dialogs.Toast($"Loaded {App.analizeSpare.LocalImagePath}");
 
         }
@@ -167,8 +178,9 @@ namespace SCUScanner.ViewModels
         {
 
             var obj = e;
-            //TranslationX += e.ViewPosition.X;
-            //TranslationY += e.ViewPosition.Y;
+            double dexX = (e.ViewPosition.Width * Scale - e.ViewPosition.Width) / 2;
+            double dexY = (e.ViewPosition.Height * Scale - e.ViewPosition.Height) / 2;
+           //  e.Touches[0].X
         }
         protected   void OnPanned(MR.Gestures.PanEventArgs e)
         {
