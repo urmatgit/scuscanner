@@ -11,61 +11,36 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="44"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="44"></ColumnDefinition>
+                <ColumnDefinition Width="44"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <ContentView Grid.Row="0" Grid.Column="0">
-                <Image Source="back1600.png"
-WidthRequest="24"
-HeightRequest="24"
-HorizontalOptions="Center" VerticalOptions="Center"/>
+            <ContentView Grid.Row="0" Grid.Column="0"  >
+                <Image Source="back1600.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center"/>
                 <ContentView.GestureRecognizers>
                     <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped"  />
                 </ContentView.GestureRecognizers>
             </ContentView>
-            <Label x:Name="lblTitle" TextColor="DarkSlateGray"
-HorizontalOptions="CenterAndExpand"
-VerticalOptions="CenterAndExpand"
-Grid.Row="0" Grid.Column="1"/>
-            <ContentView Grid.Row="0" Grid.Column="2" Margin="0,5,5,0">
-
+            <Label x:Name="lblTitle" TextColor="DarkSlateGray" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="1"/>
+            <ContentView Grid.Row="0" Grid.Column="2"     >
+                <RelativeLayout  >
+                    <Image Source="Option.png" HeightRequest="40" WidthRequest="40" x:Name="OptionBoxView" />
+                </RelativeLayout>
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer x:Name="tapOption" Tapped="tapOption_Tapped" />
+                </ContentView.GestureRecognizers>
+            </ContentView>
+            
+            <ContentView Grid.Row="0" Grid.Column="3" Margin="0,5,5,0"  >
                 <RelativeLayout>
-                    <Image Source="ShoppingCart.png" HeightRequest="30" WidthRequest="30" x:Name="yellowBoxView"
- RelativeLayout.YConstraint="{ConstraintExpression
- Type=RelativeToParent,
- Property=Height,
- Factor=0.018,Constant=0}"
-  
-RelativeLayout.XConstraint="{ConstraintExpression
- Type=RelativeToParent,
- Property=Width,
- Factor=0.85,Constant=0}"
-/>
-                    <Image Source="circlexxl.png" HeightRequest="15" WidthRequest="15" x:Name="redBoxView"
- RelativeLayout.YConstraint="{ConstraintExpression
- Type=RelativeToView,
- Property=Y,
- ElementName=yellowBoxView,
- Factor=1,Constant=-5}"
-  
-RelativeLayout.XConstraint="{ConstraintExpression
- Type=RelativeToView,
- Property=X,
- ElementName=yellowBoxView,
- Factor=1,Constant=25}"
-/>
+                    <Image Source="ShoppingCart.png" HeightRequest="30" WidthRequest="30" x:Name="yellowBoxView"  
+                           RelativeLayout.YConstraint="{ConstraintExpression  Type=RelativeToParent, Property=Height, Factor=0.018,Constant=0}"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0,Constant=0}"/>
+                    <Image Source="circlexxl.png" HeightRequest="15" WidthRequest="15" x:Name="redBoxView" 
+                           RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, Property=Y, ElementName=yellowBoxView,  Factor=1,Constant=-5}"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToView, Property=X, ElementName=yellowBoxView, Factor=1,Constant=25}"/>
                     <Label HorizontalTextAlignment="Center"   Font="9" TextColor="White" HeightRequest="10" WidthRequest="20" x:Name="labelText"
- RelativeLayout.YConstraint="{ConstraintExpression
- Type=RelativeToView,
- Property=Y,
- ElementName=yellowBoxView,
- Factor=1,Constant=-5}"
-  
-RelativeLayout.XConstraint="{ConstraintExpression
- Type=RelativeToView,
- Property=X,
- ElementName=yellowBoxView,
- Factor=1,Constant=25}"
-/>
+                           RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, Property=Y, ElementName=yellowBoxView, Factor=1,Constant=-5}"
+                            RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToView, Property=X, ElementName=yellowBoxView, Factor=1,Constant=25}"/>
                 </RelativeLayout>
 
                 <ContentView.GestureRecognizers>
@@ -73,8 +48,7 @@ RelativeLayout.XConstraint="{ConstraintExpression
                 </ContentView.GestureRecognizers>
             </ContentView>
 
-            <BoxView BackgroundColor="Red" Grid.ColumnSpan="3"
-Grid.Row="1" Grid.Column="0" />
+            <BoxView BackgroundColor="Red" Grid.ColumnSpan="4" Grid.Row="1" Grid.Column="0" />
         </Grid>
     </ContentView.Content>
 </ContentView>

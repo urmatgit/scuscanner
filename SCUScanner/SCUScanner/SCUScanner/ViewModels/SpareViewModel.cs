@@ -61,7 +61,7 @@ namespace SCUScanner.ViewModels
             PannedCommand = new Command<PanEventArgs>(OnPanned);
             SwipedCommand = new Command<SwipeEventArgs>(OnSwiped);
 
-            if (App.analizeSpare.ErrorConnect)
+            if (App.analizeSpare.ErrorConnect) // пока временно!!!
                 ImageSpare = ImageSource.FromResource(App.analizeSpare.LocalImagePath);
             else
                 ImageSpare = ImageSource.FromFile(App.analizeSpare.LocalImagePath);
@@ -76,7 +76,7 @@ namespace SCUScanner.ViewModels
 
         private void OnLongPressed(LongPressEventArgs obj)
         {
-            AddCommand.Execute(null);
+            // AddCommand.Execute(null);
         }
 
         private void OnLongPressing(LongPressEventArgs obj)

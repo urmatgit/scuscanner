@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SCUScanner.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace SCUScanner.Pages.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class NavigationBarView : ContentView
     {
+        public event EventHandler<EventArgsShowBorderChange> OnOptionOK;
 		public NavigationBarView ()
 		{
 			InitializeComponent ();
@@ -49,6 +51,14 @@ namespace SCUScanner.Pages.Views
         private async void Tapcart_OnTapped(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new CartsPage());
+        }
+
+        private async void tapOption_Tapped(object sender, EventArgs e)
+        {
+        
+            await Navigation.PushModalAsync(new SparesSettingPage(OnOptionOK));
+        
+            
         }
     }
 }

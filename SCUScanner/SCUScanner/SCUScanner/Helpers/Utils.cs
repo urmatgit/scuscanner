@@ -12,6 +12,11 @@ using Xamarin.Forms;
 
 namespace SCUScanner.Helpers
 {
+    public class EventArgsShowBorderChange: EventArgs
+    {
+        public bool OldValue { get; set; }
+        public bool NewValue { get; set; }
+    }
    public static class Utils
     {
         public static string GetFileNameFromSerialNo(string serial,string lang)

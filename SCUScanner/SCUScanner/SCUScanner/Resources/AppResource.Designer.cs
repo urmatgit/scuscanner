@@ -666,6 +666,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show part border.
+        /// </summary>
+        internal static string SettingPartBorderText {
+            get {
+                return ResourceManager.GetString("SettingPartBorderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         internal static string SettingsText {

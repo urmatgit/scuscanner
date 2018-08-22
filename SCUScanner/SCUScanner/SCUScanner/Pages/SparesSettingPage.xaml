@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SCUScanner.Pages.SparesSettingPage"
+             Title="Spare setting"  BackgroundColor="Transparent"
+             >
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,40,0,0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent">
+            <StackLayout Orientation="Horizontal">
+                <Label   Text="{Binding Resources[SettingPartBorderText]}" VerticalTextAlignment="Center" />
+                <Switch BindingContext="{Binding SettingsBase}"  IsToggled="{Binding ShowPartBoder}"/>
+            </StackLayout>
+
+            <Button x:Name="dismissButton" Text="{Binding Resources[OkText]}" Clicked="OnDismissButtonClicked" BackgroundColor="Green" TextColor="White" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -41,14 +41,25 @@ namespace SCUScanner.Pages
             BindingContext = spareViewModel;
 
             imgViewer.ImageLoaded += ImgViewer_ImageLoaded;
+            NavigationBarView.OnOptionOK += NavigationBarView_OnOptionOK;
             //editor.Source = imagesource;
 
             //var bytes= System.IO.File.ReadAllBytes(App.analizeSpare.LocalImagePath);
             //MemoryStream mem = new MemoryStream(bytes);
 
             //NavigationBarView.FirstNameLabel.Text = "3";
-         
+
         }
+
+        private void NavigationBarView_OnOptionOK(object sender, EventArgsShowBorderChange e)
+        {
+            if(e.OldValue!=e.NewValue)
+            {
+                DrawPartBorder(e.NewValue);
+
+            }
+        }
+
         private void AddButtons()
         {
             double scaleX = imgViewer.Bounds.Width * 100 / OrgImageWidth;
@@ -64,25 +75,31 @@ namespace SCUScanner.Pages
 
             }
         }
-
-        private void Button_OnLongPressed(object sender, EventArgs e)
+        private void DrawPartBorder(bool draw)
+        {
+            foreach(PartButton button in  absLayout.Children.Where(c=>c is PartButton))
+            {
+                if (draw)
+                    button.DrawBorder();
+                else
+                    button.RemoveBorder();
+            }
+        }
+        private   void Button_OnLongPressed(object sender, EventArgs e)
         {
             PartButton button = sender as PartButton;
-            using (App.Dialogs.ActionSheet(new ActionSheetConfig()
-                .SetTitle("")
+             App.Dialogs.ActionSheet (new ActionSheetConfig()
+                .SetTitle($"{button.Part.PartNumber},{button.Part.PartName}")
                 .Add(Models.Settings.Current.Resources["AddToOrderText"], () =>
                 {
                     App.analizeSpare.vmCarts.AddCart(button.Part);
                     spareViewModel.CartCount = App.analizeSpare.vmCarts.TotalSum().ToString();
                 })
                 .SetCancel(Models.Settings.Current.Resources["CancelText"])
-                ))
-            {
-
-            }
+                );
 
 
-                App.Dialogs.Alert(button.Part.PartName);
+               
         }
 
         private void ImgViewer_ImageLoaded(object sender, ImageLoadedEventArgs args)

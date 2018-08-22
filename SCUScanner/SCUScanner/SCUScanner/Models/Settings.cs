@@ -36,6 +36,21 @@ namespace SCUScanner.Models
                 }
             }
         }
+        bool showPartBorder = true;
+        public bool ShowPartBoder
+        {
+            get => AppSettings.GetValueOrDefault(nameof(ShowPartBoder), true);
+            set
+            {
+                if (AppSettings.AddOrUpdateValue(nameof(ShowPartBoder), value))
+                {
+                    //SetProperty(ref original, value);
+                    //OnPropertyChanged("ManualScan");
+                    this.RaiseAndSetIfChanged(ref this.showPartBorder, value);
+                    //   ManualScan = !this.scanmode;
+                }
+            }
+        }
         /// <summary>
         /// if false =Continuouse, true -manual
         /// </summary>

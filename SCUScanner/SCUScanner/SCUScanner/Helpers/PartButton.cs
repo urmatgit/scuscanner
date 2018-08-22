@@ -22,12 +22,28 @@ namespace SCUScanner.Helpers
             this.Part = part;
            
             BackgroundColor =Xamarin.Forms.Color.Transparent;
-            BorderColor = Xamarin.Forms.Color.Gray;
-            BorderWidth = 1;
+            if (Models.Settings.Current.ShowPartBoder)
+            {
+                DrawBorder();
+            }
+            else
+            {
+                BorderColor = Xamarin.Forms.Color.Transparent;
+                BorderWidth = 1;
+            }
             this.Clicked += PartButton_Clicked;
             this.LongPressed += PartButton_LongPressed;
         }
-
+        public void RemoveBorder()
+        {
+            BorderColor = Xamarin.Forms.Color.Transparent;
+            BorderWidth = 1;
+        }
+        public void DrawBorder()
+        {
+            BorderColor = Xamarin.Forms.Color.Gray;
+            BorderWidth = 1;
+        }
         private void PartButton_LongPressed(object sender, LongPressEventArgs e)
         {
             OnLongPressed?.Invoke(this, e);

@@ -217,6 +217,11 @@ namespace SCUScanner.Services
                 Directory.CreateDirectory(filenamepath);
             }
 
+            if (ErrorConnect)
+            {
+
+                return filenamepath;
+            }
 
             FtpClient client = new FtpClient(GlobalConstants.FtpHost, GlobalConstants.FtpPort, new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)"));
             try
