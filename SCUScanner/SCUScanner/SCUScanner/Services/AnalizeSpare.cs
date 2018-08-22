@@ -49,9 +49,9 @@ namespace SCUScanner.Services
             string path = await DownLoad(CSVPath, $"{filename}.csv");
             
             string emailpath = await DownLoad(EmailsPath, $"brandemails.csv");
-            if (ErrorConnect)
-                LocalImagePath = "SCUScanner.img.MP60002_0100100.png";
-            else 
+            //if (ErrorConnect)
+            //    LocalImagePath = "SCUScanner.img.MP60002_0100100.png";
+            //else 
                 LocalImagePath = await DownLoad(ImagesPath, $"{filename}.png");
             CSVParser = new CSVParser(path, emailpath);
             await DownLoadThumps(ThumpPath, CSVParser.Parts);
