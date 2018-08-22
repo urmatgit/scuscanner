@@ -174,8 +174,9 @@ namespace SCUScanner.ViewModels
         {
 
             var obj = e;
-            //TranslationX += e.DeltaDistance.X;
-            //TranslationY += e.DeltaDistance.Y;
+
+            var x= TranslationX;
+            var y =TranslationY;
         }
         protected   void OnPinched(MR.Gestures.PinchEventArgs e)
         {
@@ -188,21 +189,28 @@ namespace SCUScanner.ViewModels
 
         protected   void OnPanning(MR.Gestures.PanEventArgs e)
         {
-            
 
+         
             TranslationX += e.DeltaDistance.X;
             TranslationY += e.DeltaDistance.Y;
-            if (Scale==1 && TranslationX < e.ViewPosition.X)
-                TranslationX = e.ViewPosition.X;
-            if (Scale == 1 && (e.ViewPosition.Y+TranslationY) < e.ViewPosition.Y)
-                TranslationY = 0;
-            if (Scale == 1 &&  TranslationX + e.ViewPosition.Width > e.ViewPosition.Width)
+
+            double dexX = (e.ViewPosition.Width * Scale - e.ViewPosition.Width)/2;
+            double dexY = (e.ViewPosition.Height * Scale - e.ViewPosition.Height)/2;
+            
+            if (TranslationX < dexX*-1)
+                TranslationX = dexX * -1;
+            //if (Scale==1 && TranslationX < e.ViewPosition.X)
+            //    TranslationX = e.ViewPosition.X;
+            if (TranslationY < e.ViewPosition.Y + dexY*-1)
+                TranslationY = e.ViewPosition.Y + dexY * -1;
+
+            if (TranslationX + e.ViewPosition.Width > e.ViewPosition.Width+dexX)
             {
-                TranslationX = 0;
+                TranslationX = dexX;
             }
-            if (Scale == 1 && TranslationY + e.ViewPosition.Height > e.ViewPosition.Height)
+            if ( TranslationY + e.ViewPosition.Height > e.ViewPosition.Height+dexY )
             {
-                TranslationY = 0;
+                TranslationY =  dexY  ;
             }
 
         }
@@ -213,7 +221,12 @@ namespace SCUScanner.ViewModels
             SetAnchor(e.Center);
             var newScale = Scale * e.DeltaScale;
             Scale = Math.Min(5, Math.Max(0.1, newScale));
-          if (Scale < 1) Scale = 1;
+            if (Scale < 1)
+            {
+                Scale = 1;
+                TranslationX = 0;
+                TranslationY = 0;
+            }
         }
 
         protected void SetAnchor(Point center)

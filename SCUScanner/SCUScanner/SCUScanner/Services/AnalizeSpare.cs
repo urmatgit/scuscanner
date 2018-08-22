@@ -253,8 +253,10 @@ namespace SCUScanner.Services
                                 //    {
                                         string tmpFileName = Path.Combine(filenamepath, filename + DateTime.Now.Second.ToString());
                                         dowloaded = await client.DownloadFileAsync(tmpFileName, $"{remotefilename}", true);
-                                        filenamepath = Path.Combine(filenamepath, filename);
-                                        File.Copy(tmpFileName, filenamepath, true);
+                                        var  filenlocal = Path.Combine(filenamepath, filename);
+                                //if (File.Exists(filenlocal))
+                                //    File.Delete(filenlocal);
+                                        File.Copy(tmpFileName, filenlocal, true);
                                         try
                                         {
                                             File.Delete(tmpFileName);

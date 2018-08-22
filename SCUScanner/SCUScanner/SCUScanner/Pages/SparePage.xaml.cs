@@ -18,7 +18,7 @@ using Xamarin.Forms.Xaml;
 namespace SCUScanner.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class SparePage :MR.Gestures.ContentPage
+	public partial class SparePage : ContentPage
 	{
         const int OrgImageWidth = 4958;
         const int OrgImageHeight = 7015;
