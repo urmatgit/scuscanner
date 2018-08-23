@@ -15,16 +15,18 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
+using SkiaSharp;
+using SkiaSharp.Views;
 namespace SCUScanner.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SparePage : MR.Gestures.ContentPage
 	{
-     
 
+        SKCanvas _SKCanvas;
         SpareViewModel spareViewModel;
-		public SparePage ()
+        bool IsPartAdded = false;
+        public SparePage ()
 		{
 			InitializeComponent ();
             if (Device.RuntimePlatform == Device.iOS)
@@ -63,18 +65,26 @@ namespace SCUScanner.Pages
         private void AddButtons()
         {
             
-            double scaleX = imgViewer.Bounds.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
-            double scaleY = imgViewer.Bounds.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
-            foreach(Part part in App.analizeSpare.CSVParser.Parts)
-            {
-                PartButton button = new PartButton(part);
-                button.OnLongPressed += Button_OnLongPressed;
-
+            //double scaleX = imgViewer.Bounds.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
+            //double scaleY = imgViewer.Bounds.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
             
-                button.Text = part.PartNumber;
+            double scaleX = skCanvas.CanvasSize.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
+            double scaleY = skCanvas.CanvasSize.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
+            
+            foreach (Part part in App.analizeSpare.CSVParser.Parts)
+            {
                 part.ReSize(scaleX, scaleY);
-                absLayout.Children.Add(button, part.Rect);
-               
+
+                //PartButton button = new PartButton(part);
+                //button.OnLongPressed += Button_OnLongPressed;
+
+
+                //button.Text = part.PartNumber;
+
+                //absLayout.Children.Add(button, part.Rect);
+                SKRect sKRect = new SKRect((float)part.Rect.X, (float)part.Rect.Y,(float)part.Rect.Width,  (float)part.Rect.Height);
+                
+                _SKCanvas.DrawRect(sKRect , new SKPaint() { Color = SKColors.Blue, Style = SKPaintStyle.Stroke });
 
             }
         }
@@ -152,7 +162,7 @@ namespace SCUScanner.Pages
             
             spareViewModel.OnActivate();
             base.OnAppearing();
-            AddButtons();
+         //   AddButtons();
         }
         protected override void OnDisappearing()
         {
@@ -179,8 +189,20 @@ namespace SCUScanner.Pages
             await App.Dialogs.AlertAsync(btn.Id.ToString());
         }
 
-        
-
-        
+        private void OnPainting(object sender, SkiaSharp.Views.Forms.SKPaintSurfaceEventArgs e)
+        {
+            var surface = e.Surface;
+            // then we get the canvas that we can draw on
+            _SKCanvas = surface.Canvas;
+            // clear the canvas / view
+            _SKCanvas.Clear(SKColors.Transparent);
+            spareViewModel.SKViewDexX =(skCanvas.CanvasSize.Width /imgViewer.Width);
+            spareViewModel.SKViewDexY =(skCanvas.CanvasSize.Height / imgViewer.Height);
+            if (!IsPartAdded)
+            {
+                AddButtons();
+                IsPartAdded = true;
+            }
+        }
     }
 }

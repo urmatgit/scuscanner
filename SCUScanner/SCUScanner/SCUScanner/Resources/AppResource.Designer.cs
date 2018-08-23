@@ -593,6 +593,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select part.
+        /// </summary>
+        internal static string SelectPartText {
+            get {
+                return ResourceManager.GetString("SelectPartText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select.
         /// </summary>
         internal static string SelectText {

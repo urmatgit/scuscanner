@@ -1,6 +1,8 @@
-﻿using MR.Gestures;
+﻿using Acr.UserDialogs;
+using MR.Gestures;
 using ReactiveUI;
 using SCUScanner.Helpers;
+using SCUScanner.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +15,8 @@ namespace SCUScanner.ViewModels
     {
         public double OrgImageWidth { get; set; } = 4958;
         public double OrgImageHeight { get; set; } = 7015;
+        public double SKViewDexX { get; set; } = 1;
+        public double SKViewDexY { get; set; } = 1;
 
         public ICommand AddCommand { get; }
         public ICommand DownCommand { get; protected set; }
@@ -183,7 +187,32 @@ namespace SCUScanner.ViewModels
             double x = e.Touches[0].X + dexX - TranslationX;
             double y = e.Touches[0].Y + dexY - TranslationY;
             //  e.Touches[0].X
+            x = (SKViewDexX * x);
+            y = SKViewDexY * y;
             var parts = App.analizeSpare.CheckContain(x, y);
+            if (parts.Length>0)
+            {
+                SelectPart(parts);
+            }
+        }
+        private void SelectPart(Part[] parts)
+        {
+            var actions = new ActionSheetConfig()
+                .SetTitle($"{Resources["SelectPartText"]}");
+
+            foreach (Part part in parts)
+            {
+                actions.Add($"{part.PartNumber},{part.PartName}",()=>
+                {
+                    App.analizeSpare.vmCarts.AddCart(part);
+                    CartCount = App.analizeSpare.vmCarts.TotalSum().ToString();
+                });
+            }
+            actions.SetCancel(Models.Settings.Current.Resources["CancelText"]);
+
+            App.Dialogs.ActionSheet(actions);
+               
+
         }
         protected   void OnPanned(MR.Gestures.PanEventArgs e)
         {
@@ -212,21 +241,21 @@ namespace SCUScanner.ViewModels
 
             double dexX = (e.ViewPosition.Width * Scale - e.ViewPosition.Width)/2;
             double dexY = (e.ViewPosition.Height * Scale - e.ViewPosition.Height)/2;
-            
+            double dexY1 = (e.ViewPosition.Y * Scale - e.ViewPosition.Y);
             if (TranslationX < dexX*-1)
                 TranslationX = dexX * -1;
             //if (Scale==1 && TranslationX < e.ViewPosition.X)
             //    TranslationX = e.ViewPosition.X;
-            if (TranslationY < e.ViewPosition.Y - dexY*-1)
-                TranslationY = e.ViewPosition.Y - dexY * -1;
+            if (TranslationY   <dexY1+ dexY*-1)
+                TranslationY = dexY1+ dexY * -1;
 
             if (TranslationX + e.ViewPosition.Width > e.ViewPosition.Width+dexX)
             {
                 TranslationX = dexX;
             }
-            if ( TranslationY + e.ViewPosition.Height > e.ViewPosition.Height+dexY )
+            if ( TranslationY + e.ViewPosition.Height >e.ViewPosition.Height+ dexY-dexY1 )
             {
-                TranslationY =  dexY  ;
+                TranslationY =  dexY-dexY1  ;
             }
 
         }

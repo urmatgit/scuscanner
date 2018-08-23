@@ -51,7 +51,7 @@ namespace SCUScanner.Services
         }
         public async Task ReadCSV(IProgressDialog progressDialog)
         {
-            ErrorConnect = false;
+            ErrorConnect = true;
             var filename = GetFileNameFromSerialNo(_serialnumber);
             string path = await DownLoad(CSVPath, $"{filename}.csv");
             

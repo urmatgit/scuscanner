@@ -177,6 +177,9 @@
     <PackageReference Include="ReactiveUI">
       <Version>8.0.0-alpha0117</Version>
     </PackageReference>
+    <PackageReference Include="SkiaSharp.Views.Forms">
+      <Version>1.60.3</Version>
+    </PackageReference>
     <PackageReference Include="sqlite-net-standard">
       <Version>1.5.1</Version>
     </PackageReference>
