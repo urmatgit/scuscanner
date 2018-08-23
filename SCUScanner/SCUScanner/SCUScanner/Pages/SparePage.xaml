@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<mr:ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mr="clr-namespace:MR.Gestures;assembly=MR.Gestures"
              xmlns:sfImage="clr-namespace:Syncfusion.SfImageEditor.XForms;assembly=Syncfusion.SfImageEditor.XForms"
@@ -9,16 +9,7 @@
                
 		 x:Name="pgSpare"
              
-              TappedCommand="{Binding TappedCommand}"
-			
-            TappingCommand="{Binding TappingCommand}"
-		 	DoubleTappedCommand="{Binding DoubleTappedCommand}"
-            
-			PanningCommand="{Binding PanningCommand}"
-			PannedCommand="{Binding PannedCommand}"
-			LongPressedCommand="{Binding LongPressedCommand}"
-			PinchingCommand="{Binding PinchingCommand}"
-			PinchedCommand="{Binding PinchedCommand}"
+             
                 >
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -37,7 +28,20 @@
 
     <StackLayout Padding="0" BackgroundColor="Yellow">
                 <views:NavigationBarView   x:Name="NavigationBarView"  Title="{Binding CartCount}" HeightRequest="45"/>
-        
+
+        <mr:StackLayout Padding="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+             TappedCommand="{Binding TappedCommand}"
+			
+            TappingCommand="{Binding TappingCommand}"
+		 	DoubleTappedCommand="{Binding DoubleTappedCommand}"
+            
+			PanningCommand="{Binding PanningCommand}"
+			PannedCommand="{Binding PannedCommand}"
+			LongPressedCommand="{Binding LongPressedCommand}"
+			PinchingCommand="{Binding PinchingCommand}"
+			PinchedCommand="{Binding PinchedCommand}"
+            >
+            
       
             <Frame  
 				   BackgroundColor="Brown"
@@ -89,10 +93,10 @@
             
         </Frame>
 
+        </mr:StackLayout>
 
-        
         <!--<StackLayout HeightRequest="30" VerticalOptions="EndAndExpand">
                 <Button   Text="AddTest random" Command="{Binding AddCommand}" BackgroundColor="Green" TextColor="White" ></Button>
             </StackLayout>-->
         </StackLayout>
-</mr:ContentPage>
+</ContentPage>

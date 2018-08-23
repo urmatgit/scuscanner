@@ -20,7 +20,7 @@ using SkiaSharp.Views;
 namespace SCUScanner.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class SparePage : MR.Gestures.ContentPage
+	public partial class SparePage : ContentPage
 	{
 
         SKCanvas _SKCanvas;
@@ -65,15 +65,15 @@ namespace SCUScanner.Pages
         private void AddButtons()
         {
             
-            //double scaleX = imgViewer.Bounds.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
-            //double scaleY = imgViewer.Bounds.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
+            double scaleX = imgViewer.Bounds.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
+            double scaleY = imgViewer.Bounds.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
             
-            double scaleX = skCanvas.CanvasSize.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
-            double scaleY = skCanvas.CanvasSize.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
+            double scaleXDraw = skCanvas.CanvasSize.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
+            double scaleYDraw = skCanvas.CanvasSize.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
             
             foreach (Part part in App.analizeSpare.CSVParser.Parts)
             {
-                part.ReSize(scaleX, scaleY);
+               
 
                 //PartButton button = new PartButton(part);
                 //button.OnLongPressed += Button_OnLongPressed;
@@ -82,11 +82,19 @@ namespace SCUScanner.Pages
                 //button.Text = part.PartNumber;
 
                 //absLayout.Children.Add(button, part.Rect);
-                SKRect sKRect = new SKRect((float)part.Rect.X, (float)part.Rect.Y,(float)part.Rect.Width,  (float)part.Rect.Height);
+                float x = (float)(part.Rect.X * scaleXDraw);
+                float y = (float)(part.Rect.Y * scaleYDraw);
+                SKRect sKRect = new SKRect(x, y,x+(float)(part.Rect.Width*scaleXDraw), y+(float)(part.Rect.Height*scaleYDraw));
                 
                 _SKCanvas.DrawRect(sKRect , new SKPaint() { Color = SKColors.Blue, Style = SKPaintStyle.Stroke });
-
+                _SKCanvas.DrawText(part.PartNumber, new SKPoint() { X = sKRect.Left, Y = sKRect.Top }, new SKPaint() { Color = SKColors.Brown, Style = SKPaintStyle.Stroke });
+                if (!IsPartAdded)
+                    part.ReSize(scaleX, scaleY);
             }
+
+            
+                IsPartAdded = true;
+            
         }
         private void DrawPartBorder(bool draw)
         {
@@ -198,11 +206,8 @@ namespace SCUScanner.Pages
             _SKCanvas.Clear(SKColors.Transparent);
             spareViewModel.SKViewDexX =(skCanvas.CanvasSize.Width /imgViewer.Width);
             spareViewModel.SKViewDexY =(skCanvas.CanvasSize.Height / imgViewer.Height);
-            if (!IsPartAdded)
-            {
-                AddButtons();
-                IsPartAdded = true;
-            }
+           
+            AddButtons();
         }
     }
 }

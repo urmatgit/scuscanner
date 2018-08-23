@@ -187,8 +187,8 @@ namespace SCUScanner.ViewModels
             double x = e.Touches[0].X + dexX - TranslationX;
             double y = e.Touches[0].Y + dexY - TranslationY;
             //  e.Touches[0].X
-            x = (SKViewDexX * x);
-            y = SKViewDexY * y;
+            //x = (SKViewDexX * (x-dexX));
+            //y = SKViewDexY * (y-dexY);
             var parts = App.analizeSpare.CheckContain(x, y);
             if (parts.Length>0)
             {
@@ -241,7 +241,7 @@ namespace SCUScanner.ViewModels
 
             double dexX = (e.ViewPosition.Width * Scale - e.ViewPosition.Width)/2;
             double dexY = (e.ViewPosition.Height * Scale - e.ViewPosition.Height)/2;
-            double dexY1 = (e.ViewPosition.Y * Scale - e.ViewPosition.Y);
+            double dexY1 = (e.ViewPosition.Y * Scale - e.ViewPosition.Y)/2;
             if (TranslationX < dexX*-1)
                 TranslationX = dexX * -1;
             //if (Scale==1 && TranslationX < e.ViewPosition.X)
