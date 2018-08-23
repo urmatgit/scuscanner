@@ -41,7 +41,14 @@ namespace SCUScanner.Services
 
         }
 
-
+        public void ConvertToNewScale(double dexX,double dexY)
+        {
+            foreach (Part part in CSVParser.Parts)
+            {
+                part.ReSize (dexX, dexY);
+                
+            }
+        }
         public async Task ReadCSV(IProgressDialog progressDialog)
         {
             ErrorConnect = false;
@@ -63,7 +70,7 @@ namespace SCUScanner.Services
                 return ImageSource.FromFile(path);
             return null;
         }
-        public Part[] CheckContain(int x, int y)
+        public Part[] CheckContain(double x,double y)
         {
             return CSVParser.CheckContainInRect(x, y);
         }

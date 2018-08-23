@@ -19,7 +19,7 @@ using Xamarin.Forms.Xaml;
 namespace SCUScanner.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class SparePage : ContentPage
+	public partial class SparePage : MR.Gestures.ContentPage
 	{
      
 
@@ -62,6 +62,7 @@ namespace SCUScanner.Pages
 
         private void AddButtons()
         {
+            
             double scaleX = imgViewer.Bounds.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
             double scaleY = imgViewer.Bounds.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
             foreach(Part part in App.analizeSpare.CSVParser.Parts)
@@ -71,7 +72,9 @@ namespace SCUScanner.Pages
 
             
                 button.Text = part.PartNumber;
-                absLayout.Children.Add(button, new Rectangle(part.Rect.X * scaleX, part.Rect.Y * scaleY, part.Rect.Width * scaleX, part.Rect.Height * scaleY));
+                part.ReSize(scaleX, scaleY);
+                absLayout.Children.Add(button, part.Rect);
+               
 
             }
         }
@@ -135,7 +138,13 @@ namespace SCUScanner.Pages
            
 
             base.OnSizeAllocated(width, height);
-          
+            //imgViewer.AddShape(ShapeType.Rectangle, new PenSettings()
+            //{
+            //    Color = Color.Brown,
+            //    Mode = Mode.Stroke,
+            //    StrokeWidth = 2,
+            //    Bounds = new Rectangle(10, 10, 50, 50)
+          //  });
             //imgViewer.WidthRequest = width - NavigationBarView.Width;
         }
         protected override void OnAppearing()

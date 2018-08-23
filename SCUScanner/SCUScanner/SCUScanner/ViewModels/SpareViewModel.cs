@@ -180,7 +180,10 @@ namespace SCUScanner.ViewModels
             var obj = e;
             double dexX = (e.ViewPosition.Width * Scale - e.ViewPosition.Width) / 2;
             double dexY = (e.ViewPosition.Height * Scale - e.ViewPosition.Height) / 2;
-           //  e.Touches[0].X
+            double x = e.Touches[0].X + dexX - TranslationX;
+            double y = e.Touches[0].Y + dexY - TranslationY;
+            //  e.Touches[0].X
+            var parts = App.analizeSpare.CheckContain(x, y);
         }
         protected   void OnPanned(MR.Gestures.PanEventArgs e)
         {
@@ -189,6 +192,7 @@ namespace SCUScanner.ViewModels
 
             var x= TranslationX;
             var y =TranslationY;
+            
         }
         protected   void OnPinched(MR.Gestures.PinchEventArgs e)
         {
@@ -213,8 +217,8 @@ namespace SCUScanner.ViewModels
                 TranslationX = dexX * -1;
             //if (Scale==1 && TranslationX < e.ViewPosition.X)
             //    TranslationX = e.ViewPosition.X;
-            if (TranslationY < e.ViewPosition.Y + dexY*-1)
-                TranslationY = e.ViewPosition.Y + dexY * -1;
+            if (TranslationY < e.ViewPosition.Y - dexY*-1)
+                TranslationY = e.ViewPosition.Y - dexY * -1;
 
             if (TranslationX + e.ViewPosition.Width > e.ViewPosition.Width+dexX)
             {
