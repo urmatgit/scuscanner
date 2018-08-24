@@ -4,9 +4,12 @@
              xmlns:mr="clr-namespace:MR.Gestures;assembly=MR.Gestures"
              xmlns:sfImage="clr-namespace:Syncfusion.SfImageEditor.XForms;assembly=Syncfusion.SfImageEditor.XForms"
              xmlns:views="clr-namespace:SCUScanner.Pages.Views"
+            xmlns:sk="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              x:Class="SCUScanner.Pages.SparePage"
                
 		 x:Name="pgSpare"
+             
+             
                 >
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -25,8 +28,9 @@
 
     <StackLayout Padding="0" BackgroundColor="Yellow">
                 <views:NavigationBarView   x:Name="NavigationBarView"  Title="{Binding CartCount}" HeightRequest="45"/>
-        <mr:StackLayout  Padding="0"  BackgroundColor="Blue" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
-                       TappedCommand="{Binding TappedCommand}"
+
+        <mr:StackLayout Padding="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+             TappedCommand="{Binding TappedCommand}"
 			
             TappingCommand="{Binding TappingCommand}"
 		 	DoubleTappedCommand="{Binding DoubleTappedCommand}"
@@ -36,7 +40,8 @@
 			LongPressedCommand="{Binding LongPressedCommand}"
 			PinchingCommand="{Binding PinchingCommand}"
 			PinchedCommand="{Binding PinchedCommand}"
-                      >
+            >
+            
       
             <Frame  
 				   BackgroundColor="Brown"
@@ -57,7 +62,7 @@
             <AbsoluteLayout BackgroundColor="Blue"  x:Name="absLayout"
 			    Margin="0"
                 >
-            <sfImage:SfImageEditor   Margin="0"   x:Name="imgViewer" PanningMode="SingleFinger" EnableZooming="False" Source="{Binding ImageSpare}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red"
+                <sfImage:SfImageEditor   Margin="0"   x:Name="imgViewer" PanningMode="SingleFinger" EnableZooming="False" Source="{Binding ImageSpare}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red"
                                       AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All"
                                          
@@ -67,6 +72,10 @@
                     </sfImage:SfImageEditor.ToolbarSettings>
 
                 </sfImage:SfImageEditor>
+                <sk:SKCanvasView x:Name="skCanvas" PaintSurface="OnPainting" BackgroundColor="Transparent" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
+                                 AbsoluteLayout.LayoutBounds="0,0,1,1"
+                                 AbsoluteLayout.LayoutFlags="All"
+                                 ></sk:SKCanvasView>
                 <!--<Button Text="click1"  Clicked="Button_Clicked" Style="{StaticResource transparentButtonStyle}"
                         AbsoluteLayout.LayoutBounds="0,0,100,100"    
                             
@@ -79,12 +88,13 @@
                            >
 
                 </Button>-->
-                 
+                
             </AbsoluteLayout>
+            
         </Frame>
 
-
         </mr:StackLayout>
+
         <!--<StackLayout HeightRequest="30" VerticalOptions="EndAndExpand">
                 <Button   Text="AddTest random" Command="{Binding AddCommand}" BackgroundColor="Green" TextColor="White" ></Button>
             </StackLayout>-->

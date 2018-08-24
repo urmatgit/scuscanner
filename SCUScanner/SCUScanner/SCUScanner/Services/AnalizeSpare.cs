@@ -41,20 +41,39 @@ namespace SCUScanner.Services
 
         }
 
-
+        public void ConvertToNewScale(double dexX,double dexY)
+        {
+            foreach (Part part in CSVParser.Parts)
+            {
+                part.ReSize (dexX, dexY);
+                
+            }
+        }
         public async Task ReadCSV(IProgressDialog progressDialog)
         {
-            ErrorConnect = false;
+            ErrorConnect = true;
+            FtpClient client=null;
+            try
+            {
+                  client = new FtpClient(GlobalConstants.FtpHost, GlobalConstants.FtpPort, new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)"));
+            }catch (Exception er)
+            {
+                ErrorConnect = true;
+                await App.Dialogs.AlertAsync(Settings.Current.Resources["NoInternetConOrErrorText"]);
+
+            }
             var filename = GetFileNameFromSerialNo(_serialnumber);
-            string path = await DownLoad(CSVPath, $"{filename}.csv");
+            string path = await DownLoad(CSVPath, $"{filename}.csv",client);
             
-            string emailpath = await DownLoad(EmailsPath, $"brandemails.csv");
+            string emailpath = await DownLoad(EmailsPath, $"brandemails.csv", client);
             //if (ErrorConnect)
             //    LocalImagePath = "SCUScanner.img.MP60002_0100100.png";
             //else 
-                LocalImagePath = await DownLoad(ImagesPath, $"{filename}.png");
+                LocalImagePath = await DownLoad(ImagesPath, $"{filename}.png", client);
             CSVParser = new CSVParser(path, emailpath);
-            await DownLoadThumps(ThumpPath, CSVParser.Parts);
+            await DownLoadThumps(ThumpPath, CSVParser.Parts,client);
+               await client?.DisconnectAsync();
+            
         }
         public ImageSource GetThump(string partnumber)
         {
@@ -63,7 +82,7 @@ namespace SCUScanner.Services
                 return ImageSource.FromFile(path);
             return null;
         }
-        public Part[] CheckContain(int x, int y)
+        public Part[] CheckContain(double x,double y)
         {
             return CSVParser.CheckContainInRect(x, y);
         }
@@ -115,7 +134,7 @@ namespace SCUScanner.Services
            
         }
         #region FTP
-        private async Task<string> DownLoad(string path, string filename)
+        private async Task<string> DownLoad(string path, string filename, FtpClient client)
         {
             var filenamepath = Path.Combine(WorkDir, path);
             if (!Directory.Exists(filenamepath))
@@ -123,54 +142,67 @@ namespace SCUScanner.Services
                 Directory.CreateDirectory(filenamepath);
             }
             string resultfilepath= Path.Combine(filenamepath, filename);
-            if (ErrorConnect) return resultfilepath;
+            if (ErrorConnect || client==null) return resultfilepath;
             var remotefilename = $"/{path}/{filename}";
-            FtpClient client = new FtpClient(GlobalConstants.FtpHost, GlobalConstants.FtpPort, new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)"));
+            
             try
             {
 
-                 
+
 
                 // begin connecting to the server
-                await client.ConnectAsync();
+                if (!client.IsConnected)
+                    await client.ConnectAsync();
                 if (client.IsConnected)
                 {
 
 
                     {
-
-                        if (client.FileExists($"{remotefilename}"))
+                    
+                        if ( client.FileExists($"{remotefilename}"))
                         {
-                            
-                            bool dowloaded = false;
-                            try
-                            {
-                                //using (var cancelSrc = new CancellationTokenSource())
-                                //{
-                                //    using (App.Dialogs.Loading(Settings.Current.Resources["DownloadWaitText"], cancelSrc.Cancel, Settings.Current.Resources["CancelText"]))
-                                //    {
-                                        string tmpFileName = Path.Combine(filenamepath, filename + DateTime.Now.Second.ToString());
-                                        
-                                        dowloaded = await client.DownloadFileAsync(tmpFileName, $"{remotefilename}", true);
-                                        
-                                        File.Copy(tmpFileName, resultfilepath, true);
-                                        try
-                                        {
-                                            File.Delete(tmpFileName);
-                                        }
-                                        catch (Exception er)
-                                        {
+                            FileInfo localfile = new FileInfo(resultfilepath);
 
-                                        }
-                                //    }
-                                //}
-                            }
-                            catch (Exception ex)
+                            Debug.WriteLine($"client.GetFileSize(remotefilename)-{client.GetFileSize(remotefilename)}");
+                            Debug.WriteLine($"localfile.Length-{localfile.Length}");
+                            
+                            Debug.WriteLine($"client.GetModifiedTime-{client.GetModifiedTime(remotefilename)}");
+                            Debug.WriteLine($"localfile.LastWriteTime-{localfile.LastWriteTime}");
+
+                            
+                            if (!File.Exists(resultfilepath) || client.GetFileSize(remotefilename) != localfile.Length )
                             {
                                 
-                                App.Dialogs.Toast($"{filename}: {ex.ToString()}");
-                                //await App.Dialogs.AlertAsync(ex.ToString());
+                                bool dowloaded = false;
+                                try
+                                {
+                                    //using (var cancelSrc = new CancellationTokenSource())
+                                    //{
+                                    //    using (App.Dialogs.Loading(Settings.Current.Resources["DownloadWaitText"], cancelSrc.Cancel, Settings.Current.Resources["CancelText"]))
+                                    //    {
+                                    string tmpFileName = Path.Combine(filenamepath, filename + DateTime.Now.Second.ToString());
 
+                                    dowloaded = await client.DownloadFileAsync(tmpFileName, $"{remotefilename}", true);
+
+                                    File.Copy(tmpFileName, resultfilepath, true);
+                                    try
+                                    {
+                                        File.Delete(tmpFileName);
+                                    }
+                                    catch (Exception er)
+                                    {
+
+                                    }
+                                    //    }
+                                    //}
+                                }
+                                catch (Exception ex)
+                                {
+
+                                    App.Dialogs.Toast($"{filename}: {ex.ToString()}");
+                                    //await App.Dialogs.AlertAsync(ex.ToString());
+
+                                }
                             }
                             //if (dowloaded || File.Exists(filename))
                             //{
@@ -203,13 +235,13 @@ namespace SCUScanner.Services
                 await App.Dialogs.AlertAsync(Settings.Current.Resources["NoInternetConOrErrorText"]);
                 filenamepath = "";
             }
-            finally
-            {
-                await client?.DisconnectAsync();
-            }
+            //finally
+            //{
+            //    await client?.DisconnectAsync();
+            //}
             return resultfilepath;
         }
-        private async Task<string> DownLoadThumps(string path, List<Part> partsnumbers)
+        private async Task<string> DownLoadThumps(string path, List<Part> partsnumbers, FtpClient client)
         {
             var filenamepath = Path.Combine(WorkDir, path);
             if (!Directory.Exists(filenamepath))
@@ -217,20 +249,18 @@ namespace SCUScanner.Services
                 Directory.CreateDirectory(filenamepath);
             }
 
-            if (ErrorConnect)
+            if (ErrorConnect || client==null)
             {
 
                 return filenamepath;
             }
 
-            FtpClient client = new FtpClient(GlobalConstants.FtpHost, GlobalConstants.FtpPort, new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)"));
             try
             {
 
             
-
-                // begin connecting to the server
-                await client.ConnectAsync();
+                if (!client.IsConnected)
+                    await client.ConnectAsync();
                 if (client.IsConnected)
                 {
 
@@ -240,42 +270,43 @@ namespace SCUScanner.Services
                         var remotefilename = $"/{path}/{filename}";
                         if (client.FileExists($"{remotefilename}"))
                         {
-                            //if (File.Exists(filename))
-                            //{
-                            //    File.Delete(filename);
-                            //}
-                            bool dowloaded = false;
-                            try
+                            var filenlocal = Path.Combine(filenamepath, filename);
+                            FileInfo localfile = new FileInfo(filenlocal);
+                            if (!File.Exists(filenlocal) || client.GetFileSize(remotefilename) != localfile.Length )
                             {
-                                //using (var cancelSrc = new CancellationTokenSource())
-                                //{
-                                //    using (App.Dialogs.Loading(Settings.Current.Resources["DownloadWaitText"], cancelSrc.Cancel, Settings.Current.Resources["CancelText"]))
-                                //    {
-                                        string tmpFileName = Path.Combine(filenamepath, filename + DateTime.Now.Second.ToString());
-                                        dowloaded = await client.DownloadFileAsync(tmpFileName, $"{remotefilename}", true);
-                                        var  filenlocal = Path.Combine(filenamepath, filename);
-                                //if (File.Exists(filenlocal))
-                                //    File.Delete(filenlocal);
-                                        File.Copy(tmpFileName, filenlocal, true);
-                                        try
-                                        {
-                                            File.Delete(tmpFileName);
-                                        }
-                                        catch (Exception er)
-                                        {
-                                            continue;
-                                        }
-                                //    }
-                                //}
-                            }
-                            catch (Exception ex)
-                            {
-                              //  progressDialog.Hide();
-                              //  App.Dialogs.HideLoading();
-                                //await App.Dialogs.AlertAsync(ex.ToString());
-                                App.Dialogs.Toast(ex.Message);
-                                
-                                continue;
+                                bool dowloaded = false;
+                                try
+                                {
+                                    //using (var cancelSrc = new CancellationTokenSource())
+                                    //{
+                                    //    using (App.Dialogs.Loading(Settings.Current.Resources["DownloadWaitText"], cancelSrc.Cancel, Settings.Current.Resources["CancelText"]))
+                                    //    {
+                                    string tmpFileName = Path.Combine(filenamepath, filename + DateTime.Now.Second.ToString());
+                                    dowloaded = await client.DownloadFileAsync(tmpFileName, $"{remotefilename}", true);
+                                 
+                                    //if (File.Exists(filenlocal))
+                                    //    File.Delete(filenlocal);
+                                    File.Copy(tmpFileName, filenlocal, true);
+                                    try
+                                    {
+                                        File.Delete(tmpFileName);
+                                    }
+                                    catch (Exception er)
+                                    {
+                                        continue;
+                                    }
+                                    //    }
+                                    //}
+                                }
+                                catch (Exception ex)
+                                {
+                                    //  progressDialog.Hide();
+                                    //  App.Dialogs.HideLoading();
+                                    //await App.Dialogs.AlertAsync(ex.ToString());
+                                    App.Dialogs.Toast(ex.Message);
+
+                                    continue;
+                                }
                             }
                             //if (dowloaded || File.Exists(filename))
                             //{
@@ -309,10 +340,7 @@ namespace SCUScanner.Services
                 await App.Dialogs.AlertAsync(Settings.Current.Resources["NoInternetConOrErrorText"]);
                 filenamepath = "";
             }
-            finally
-            {
-                await client?.DisconnectAsync();
-            }
+           
             return filenamepath;
         }
         #endregion

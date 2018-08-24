@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using Plugin.DeviceOrientation;
 using SCUScanner.Helpers;
 using SCUScanner.Models;
 using SCUScanner.ViewModels;
@@ -14,17 +15,18 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
+using SkiaSharp;
+using SkiaSharp.Views;
 namespace SCUScanner.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SparePage : ContentPage
 	{
-        const int OrgImageWidth = 4958;
-        const int OrgImageHeight = 7015;
 
+        SKCanvas _SKCanvas;
         SpareViewModel spareViewModel;
-		public SparePage ()
+        bool IsPartAdded = false;
+        public SparePage ()
 		{
 			InitializeComponent ();
             if (Device.RuntimePlatform == Device.iOS)
@@ -48,7 +50,7 @@ namespace SCUScanner.Pages
             //MemoryStream mem = new MemoryStream(bytes);
 
             //NavigationBarView.FirstNameLabel.Text = "3";
-
+            CrossDeviceOrientation.Current.LockOrientation(CrossDeviceOrientation.Current.CurrentOrientation);
         }
 
         private void NavigationBarView_OnOptionOK(object sender, EventArgsShowBorderChange e)
@@ -62,28 +64,59 @@ namespace SCUScanner.Pages
 
         private void AddButtons()
         {
-            double scaleX = imgViewer.Bounds.Width * 100 / OrgImageWidth;
-            double scaleY = imgViewer.Bounds.Height * 100 / OrgImageHeight;
-            foreach(Part part in App.analizeSpare.CSVParser.Parts)
+       //     if (!Models.Settings.Current.ShowPartBoder && IsPartAdded) return;
+            double scaleX = imgViewer.Bounds.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
+            double scaleY = imgViewer.Bounds.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
+            
+            double scaleXDraw = skCanvas.CanvasSize.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
+            double scaleYDraw = skCanvas.CanvasSize.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
+            
+            foreach (Part part in App.analizeSpare.CSVParser.Parts)
             {
-                PartButton button = new PartButton(part);
-                button.OnLongPressed += Button_OnLongPressed;
+
+
+                //PartButton button = new PartButton(part);
+                //button.OnLongPressed += Button_OnLongPressed;
+
+
+                //button.Text = part.PartNumber;
+
+                //absLayout.Children.Add(button, part.Rect);
+                SKColor sKColor = SKColors.Blue;
+                SKColor textColor = SKColors.Brown;
+                if (Models.Settings.Current.ShowPartBoder)
+                {
+                    //   sKColor = SKColors.Transparent;
+                    // textColor = SKColors.Transparent;
+
+                    float x = (float)(part.OrgRect.X * scaleXDraw);
+                    float y = (float)(part.OrgRect.Y * scaleYDraw);
+                    SKRect sKRect = new SKRect(x, y, x + (float)(part.OrgRect.Width * scaleXDraw), y + (float)(part.OrgRect.Height * scaleYDraw));
+
+                    _SKCanvas.DrawRect(sKRect, new SKPaint() { Color = sKColor, Style = SKPaintStyle.Stroke });
+                    _SKCanvas.DrawText(part.PartNumber, new SKPoint() { X = sKRect.Left, Y = sKRect.Top }, new SKPaint() { Color = textColor, Style = SKPaintStyle.Stroke });
+                }
+                if (!IsPartAdded)
+                    part.ReSize(scaleX, scaleY);
+            }
 
             
-                button.Text = part.PartNumber;
-                absLayout.Children.Add(button, new Rectangle(part.Rect.X / scaleX, part.Rect.Y / scaleY, part.Rect.Width / scaleX, part.Rect.Height / scaleY));
-
-            }
+                IsPartAdded = true;
+            
         }
         private void DrawPartBorder(bool draw)
         {
-            foreach(PartButton button in  absLayout.Children.Where(c=>c is PartButton))
-            {
-                if (draw)
-                    button.DrawBorder();
-                else
-                    button.RemoveBorder();
-            }
+            skCanvas.InvalidateSurface();
+
+
+            //    AddButtons();
+            //foreach(PartButton button in  absLayout.Children.Where(c=>c is PartButton))
+            //{
+            //    if (draw)
+            //        button.DrawBorder();
+            //    else
+            //        button.RemoveBorder();
+            //}
         }
         private   void Button_OnLongPressed(object sender, EventArgs e)
         {
@@ -128,13 +161,20 @@ namespace SCUScanner.Pages
                 await App.analizeSpare.ReadCSV(progress);
                 //spareViewModel.ImageSpare = ImageSource.FromFile(App.analizeSpare.LocalImagePath);
             }
+            
         }
         protected override void OnSizeAllocated(double width, double height)
         {
            
 
             base.OnSizeAllocated(width, height);
-          
+            //imgViewer.AddShape(ShapeType.Rectangle, new PenSettings()
+            //{
+            //    Color = Color.Brown,
+            //    Mode = Mode.Stroke,
+            //    StrokeWidth = 2,
+            //    Bounds = new Rectangle(10, 10, 50, 50)
+          //  });
             //imgViewer.WidthRequest = width - NavigationBarView.Width;
         }
         protected override void OnAppearing()
@@ -142,9 +182,13 @@ namespace SCUScanner.Pages
             
             spareViewModel.OnActivate();
             base.OnAppearing();
-            AddButtons();
+         //   AddButtons();
         }
-
+        protected override void OnDisappearing()
+        {
+            CrossDeviceOrientation.Current.UnlockOrientation();
+            base.OnDisappearing();
+        }
         private async void ShowCartClick(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new CartsPage());
@@ -165,8 +209,17 @@ namespace SCUScanner.Pages
             await App.Dialogs.AlertAsync(btn.Id.ToString());
         }
 
-        
-
-        
+        private void OnPainting(object sender, SkiaSharp.Views.Forms.SKPaintSurfaceEventArgs e)
+        {
+            var surface = e.Surface;
+            // then we get the canvas that we can draw on
+            _SKCanvas = surface.Canvas;
+            // clear the canvas / view
+            _SKCanvas.Clear(SKColors.Transparent);
+            spareViewModel.SKViewDexX =(skCanvas.CanvasSize.Width /imgViewer.Width);
+            spareViewModel.SKViewDexY =(skCanvas.CanvasSize.Height / imgViewer.Height);
+        //   if (Models.Settings.Current.ShowPartBoder)
+            AddButtons();
+        }
     }
 }

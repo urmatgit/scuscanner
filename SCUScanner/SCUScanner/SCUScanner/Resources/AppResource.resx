@@ -353,4 +353,7 @@ box only visible on factory version</value>
   <data name="SettingPartBorderText" xml:space="preserve">
     <value>Show part border</value>
   </data>
+  <data name="SelectPartText" xml:space="preserve">
+    <value>Select part</value>
+  </data>
 </root>
