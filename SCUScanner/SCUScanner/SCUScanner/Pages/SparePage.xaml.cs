@@ -64,12 +64,12 @@ namespace SCUScanner.Pages
 
         private void AddButtons()
         {
-       //     if (!Models.Settings.Current.ShowPartBoder && IsPartAdded) return;
-            //double scaleX = imgViewer.Bounds.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
-            //double scaleY = imgViewer.Bounds.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
-            
-            double scaleXDraw = skCanvas.CanvasSize.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
-            double scaleYDraw = skCanvas.CanvasSize.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
+            //     if (!Models.Settings.Current.ShowPartBoder && IsPartAdded) return;
+            float scaleX = (float)( skCanvas.Width / spareViewModel.OrgImageWidth);// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
+            float scaleY = (float)(skCanvas.Height / spareViewModel.OrgImageHeight);// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
+
+            float scaleXDraw = (float)(skCanvas.CanvasSize.Width / spareViewModel.OrgImageWidth);// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
+            float scaleYDraw = (float)(skCanvas.CanvasSize.Height / spareViewModel.OrgImageHeight);// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
             
             foreach (Part part in App.analizeSpare.CSVParser.Parts)
             {
@@ -89,15 +89,15 @@ namespace SCUScanner.Pages
                     //   sKColor = SKColors.Transparent;
                     // textColor = SKColors.Transparent;
 
-                    float x = (float)(part.OrgRect.X * scaleXDraw);
-                    float y =(float)(part.OrgRect.Y * scaleYDraw);
-                    SKRect sKRect = new SKRect(x, y, x + (float)(part.OrgRect.Width * scaleXDraw), y + (float)(part.OrgRect.Height * scaleYDraw));
-
+                    float x = (float)(part.OrgRect.Left * scaleXDraw);
+                    float y =(float)(part.OrgRect.Top * scaleYDraw);
+                    SKRect sKRect = new SKRect(x, y, (float)(part.OrgRect.Right * scaleXDraw), (float)(part.OrgRect.Bottom * scaleYDraw));
+                    
                     _SKCanvas.DrawRect(sKRect, new SKPaint() { Color = sKColor, Style = SKPaintStyle.Stroke });
                     _SKCanvas.DrawText(part.PartNumber, new SKPoint() { X = sKRect.Left, Y = sKRect.Top }, new SKPaint() { Color = textColor, Style = SKPaintStyle.Stroke });
                 }
                 if (!IsPartAdded)
-                    part.ReSize(scaleXDraw, scaleYDraw);
+                    part.ReSize(scaleX, scaleY);
             }
 
             
@@ -196,7 +196,7 @@ namespace SCUScanner.Pages
         private async void Button_Clicked(object sender, EventArgs e)
         {
             Debug.WriteLine($"Page bound (w,h) {this.Bounds.Width} -{this.Bounds.Height} ");
-            Debug.WriteLine($"Abslayout bound (w,h) {this.absLayout.Width} -{this.absLayout.Bounds.Height} ");
+            //Debug.WriteLine($"Abslayout bound (w,h) {this.absLayout.Width} -{this.absLayout.Bounds.Height} ");
      //       Debug.WriteLine($"SFImageEdit bound (w,h) {this.imgViewer. Bounds.Width} -{this.imgViewer.Bounds.Height} ");
             Button btn = sender as Button;
             await App.Dialogs.AlertAsync(btn.Text);

@@ -41,7 +41,7 @@ namespace SCUScanner.Services
 
         }
 
-        public void ConvertToNewScale(double dexX,double dexY)
+        public void ConvertToNewScale(float dexX,float dexY)
         {
             foreach (Part part in CSVParser.Parts)
             {
@@ -82,11 +82,11 @@ namespace SCUScanner.Services
                 return ImageSource.FromFile(path);
             return null;
         }
-        public Part[] CheckContain(double x,double y)
+        public Part[] CheckContain(float x, float y)
         {
             return CSVParser.CheckContainInRect(x, y);
         }
-        public Part[] CheckContain(double x, double y,double dx,double dy,double tx,double ty)
+        public Part[] CheckContain(float x, float y, float dx, float dy, float tx, float ty)
         {
             return CSVParser.CheckContainInRect(x, y,dx,dy,tx,ty);
             //    return CSVParser.CheckContainInRect(x, y);

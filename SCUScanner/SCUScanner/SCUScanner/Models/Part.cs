@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 
 using System.Linq;
@@ -15,19 +16,19 @@ namespace SCUScanner.Models
         public string PartName { get; set; }
         public string PartNumber { get; set; }
         public string IssueDate { get; set; }
-        public double LeftPixel { get; set; }
-        public double UpperPixel { get; set; }
-        public double RightPixel { get; set; }
-        public double LowerPixel { get; set; }
-        public  Rectangle Rect { get; set; }
-        public Rectangle OrgRect { get; set; }
-        public void ReSize(double dexX, double dexY)
+        public float LeftPixel { get; set; }
+        public float UpperPixel { get; set; }
+        public float RightPixel { get; set; }
+        public float LowerPixel { get; set; }
+        public SKRect Rect { get; set; }
+        public SKRect OrgRect { get; set; }
+        public void ReSize(float dexX, float dexY)
         {
             LeftPixel = LeftPixel * dexX;
             RightPixel = RightPixel * dexX;
             UpperPixel = UpperPixel * dexY;
             LowerPixel = LowerPixel * dexY;
-            Rect = new Xamarin.Forms.Rectangle(LeftPixel, UpperPixel, RightPixel, LowerPixel);
+            Rect = new SKRect(  LeftPixel,  UpperPixel,  RightPixel, LowerPixel);
         }
         
     }

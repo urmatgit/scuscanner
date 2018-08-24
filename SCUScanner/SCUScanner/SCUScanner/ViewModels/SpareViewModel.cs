@@ -182,11 +182,11 @@ namespace SCUScanner.ViewModels
         {
 
             var obj = e;
-            double dexX = (e.ViewPosition.Width * Scale - e.ViewPosition.Width) / 2;
-            double dexY = (e.ViewPosition.Height * Scale - e.ViewPosition.Height) / 2;
-            double x = e.Touches[0].X * Scale; //+ dexX - TranslationX;
-            double y = e.Touches[0].Y * Scale;//+ dexY - TranslationY;
-            var parts = App.analizeSpare.CheckContain(x, y, Scale, Scale, TranslationX,  TranslationY);
+            float dexX =(float) (e.ViewPosition.Width * Scale - e.ViewPosition.Width) / 2;
+            float dexY = (float)(e.ViewPosition.Height * Scale - e.ViewPosition.Height) / 2;
+            float x = (float)(e.Touches[0].X * Scale); //+ dexX - TranslationX;
+            float y = (float)(e.Touches[0].Y * Scale);//+ dexY - TranslationY;
+            var parts = App.analizeSpare.CheckContain(x, y, (float)Scale, (float)Scale, (float)TranslationX, (float)TranslationY);
             if (parts.Length>0)
             {
                 SelectPart(parts);

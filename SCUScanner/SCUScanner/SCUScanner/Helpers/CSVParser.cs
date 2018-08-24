@@ -60,11 +60,11 @@ namespace SCUScanner.Helpers
             part.LowerPixel = Convert.ToInt32(values[5]);
             part.LeftPixel = Convert.ToInt32(values[6]);
             part.RightPixel = Convert.ToInt32(values[7]);
-            part.Rect = new Xamarin.Forms.Rectangle (part.LeftPixel, part.UpperPixel, part.RightPixel- part.LeftPixel, part.LowerPixel- part.UpperPixel);
-            part.OrgRect = new Xamarin.Forms.Rectangle(part.LeftPixel, part.UpperPixel, part.RightPixel - part.LeftPixel, part.LowerPixel-part.UpperPixel);
+            part.Rect = new    SkiaSharp.SKRect( part.LeftPixel, part.UpperPixel, part.RightPixel, part.LowerPixel);
+            part.OrgRect =    new SkiaSharp.SKRect( part.LeftPixel, part.UpperPixel, part.RightPixel , part.LowerPixel);
             return part;
         }
-        public Part[] CheckContainInRect(double x,double y)
+        public Part[] CheckContainInRect(float x, float y)
         {
             List<Part> parts = new List<Part>();
             if (Parts == null || Parts.Count == 0) return parts.ToArray();
@@ -85,14 +85,14 @@ namespace SCUScanner.Helpers
         /// <param name="tx"></param>
         /// <param name="ty"></param>
         /// <returns></returns>
-        public Part[] CheckContainInRect(double x, double y,double dx,double dy,double tx,double ty)
+        public Part[] CheckContainInRect(float x, float y, float dx, float dy, float tx, float ty)
         {
             List<Part> parts = new List<Part>();
             if (Parts == null || Parts.Count == 0) return parts.ToArray();
             foreach (Part part in Parts)
             {
 
-                Xamarin.Forms.Rectangle rec = new Xamarin.Forms.Rectangle(part.Rect.X * dx + tx, part.Rect.Y * dx + tx, part.Rect.Width * dx, part.Rect.Height * dy);
+                SkiaSharp.SKRect rec = new SkiaSharp.SKRect(part.Rect.Left * dx + tx, part.Rect.Top * dx + tx, part.Rect.Right * dx, part.Rect.Bottom * dy);
                 if (rec.Contains(x,y))
                 {
                     parts.Add(part);
