@@ -64,7 +64,7 @@ namespace SCUScanner.Pages
 
         private void AddButtons()
         {
-            
+       //     if (!Models.Settings.Current.ShowPartBoder && IsPartAdded) return;
             double scaleX = imgViewer.Bounds.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
             double scaleY = imgViewer.Bounds.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
             
@@ -73,7 +73,7 @@ namespace SCUScanner.Pages
             
             foreach (Part part in App.analizeSpare.CSVParser.Parts)
             {
-               
+
 
                 //PartButton button = new PartButton(part);
                 //button.OnLongPressed += Button_OnLongPressed;
@@ -82,12 +82,20 @@ namespace SCUScanner.Pages
                 //button.Text = part.PartNumber;
 
                 //absLayout.Children.Add(button, part.Rect);
-                float x = (float)(part.Rect.X * scaleXDraw);
-                float y = (float)(part.Rect.Y * scaleYDraw);
-                SKRect sKRect = new SKRect(x, y,x+(float)(part.Rect.Width*scaleXDraw), y+(float)(part.Rect.Height*scaleYDraw));
-                
-                _SKCanvas.DrawRect(sKRect , new SKPaint() { Color = SKColors.Blue, Style = SKPaintStyle.Stroke });
-                _SKCanvas.DrawText(part.PartNumber, new SKPoint() { X = sKRect.Left, Y = sKRect.Top }, new SKPaint() { Color = SKColors.Brown, Style = SKPaintStyle.Stroke });
+                SKColor sKColor = SKColors.Blue;
+                SKColor textColor = SKColors.Brown;
+                if (Models.Settings.Current.ShowPartBoder)
+                {
+                    //   sKColor = SKColors.Transparent;
+                    // textColor = SKColors.Transparent;
+
+                    float x = (float)(part.OrgRect.X * scaleXDraw);
+                    float y = (float)(part.OrgRect.Y * scaleYDraw);
+                    SKRect sKRect = new SKRect(x, y, x + (float)(part.OrgRect.Width * scaleXDraw), y + (float)(part.OrgRect.Height * scaleYDraw));
+
+                    _SKCanvas.DrawRect(sKRect, new SKPaint() { Color = sKColor, Style = SKPaintStyle.Stroke });
+                    _SKCanvas.DrawText(part.PartNumber, new SKPoint() { X = sKRect.Left, Y = sKRect.Top }, new SKPaint() { Color = textColor, Style = SKPaintStyle.Stroke });
+                }
                 if (!IsPartAdded)
                     part.ReSize(scaleX, scaleY);
             }
@@ -98,13 +106,17 @@ namespace SCUScanner.Pages
         }
         private void DrawPartBorder(bool draw)
         {
-            foreach(PartButton button in  absLayout.Children.Where(c=>c is PartButton))
-            {
-                if (draw)
-                    button.DrawBorder();
-                else
-                    button.RemoveBorder();
-            }
+            skCanvas.InvalidateSurface();
+
+
+            //    AddButtons();
+            //foreach(PartButton button in  absLayout.Children.Where(c=>c is PartButton))
+            //{
+            //    if (draw)
+            //        button.DrawBorder();
+            //    else
+            //        button.RemoveBorder();
+            //}
         }
         private   void Button_OnLongPressed(object sender, EventArgs e)
         {
@@ -206,7 +218,7 @@ namespace SCUScanner.Pages
             _SKCanvas.Clear(SKColors.Transparent);
             spareViewModel.SKViewDexX =(skCanvas.CanvasSize.Width /imgViewer.Width);
             spareViewModel.SKViewDexY =(skCanvas.CanvasSize.Height / imgViewer.Height);
-           
+        //   if (Models.Settings.Current.ShowPartBoder)
             AddButtons();
         }
     }

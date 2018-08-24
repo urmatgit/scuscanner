@@ -186,9 +186,6 @@ namespace SCUScanner.ViewModels
             double dexY = (e.ViewPosition.Height * Scale - e.ViewPosition.Height) / 2;
             double x = e.Touches[0].X + dexX - TranslationX;
             double y = e.Touches[0].Y + dexY - TranslationY;
-            //  e.Touches[0].X
-            //x = (SKViewDexX * (x-dexX));
-            //y = SKViewDexY * (y-dexY);
             var parts = App.analizeSpare.CheckContain(x, y);
             if (parts.Length>0)
             {

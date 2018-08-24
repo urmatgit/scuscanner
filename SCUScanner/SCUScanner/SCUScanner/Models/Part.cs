@@ -20,6 +20,7 @@ namespace SCUScanner.Models
         public double RightPixel { get; set; }
         public double LowerPixel { get; set; }
         public  Rectangle Rect { get; set; }
+        public Rectangle OrgRect { get; set; }
         public void ReSize(double dexX, double dexY)
         {
             LeftPixel = LeftPixel * dexX;

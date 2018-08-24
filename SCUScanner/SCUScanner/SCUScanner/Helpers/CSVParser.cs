@@ -61,6 +61,7 @@ namespace SCUScanner.Helpers
             part.LeftPixel = Convert.ToInt32(values[6]);
             part.RightPixel = Convert.ToInt32(values[7]);
             part.Rect = new Xamarin.Forms.Rectangle (part.LeftPixel, part.UpperPixel, part.RightPixel, part.LowerPixel);
+            part.OrgRect = new Xamarin.Forms.Rectangle(part.LeftPixel, part.UpperPixel, part.RightPixel, part.LowerPixel);
             return part;
         }
         public Part[] CheckContainInRect(double x,double y)
