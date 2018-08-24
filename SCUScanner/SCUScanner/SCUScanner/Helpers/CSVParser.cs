@@ -60,8 +60,8 @@ namespace SCUScanner.Helpers
             part.LowerPixel = Convert.ToInt32(values[5]);
             part.LeftPixel = Convert.ToInt32(values[6]);
             part.RightPixel = Convert.ToInt32(values[7]);
-            part.Rect = new Xamarin.Forms.Rectangle (part.LeftPixel, part.UpperPixel, part.RightPixel, part.LowerPixel);
-            part.OrgRect = new Xamarin.Forms.Rectangle(part.LeftPixel, part.UpperPixel, part.RightPixel, part.LowerPixel);
+            part.Rect = new Xamarin.Forms.Rectangle (part.LeftPixel, part.UpperPixel, part.RightPixel- part.LeftPixel, part.LowerPixel- part.UpperPixel);
+            part.OrgRect = new Xamarin.Forms.Rectangle(part.LeftPixel, part.UpperPixel, part.RightPixel - part.LeftPixel, part.LowerPixel-part.UpperPixel);
             return part;
         }
         public Part[] CheckContainInRect(double x,double y)
@@ -72,6 +72,33 @@ namespace SCUScanner.Helpers
             {
                 if (part.Rect.Contains(x, y))
                     parts.Add(part);
+            }
+            return parts.ToArray();
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x">point x</param>
+        /// <param name="y"></param>
+        /// <param name="dx"></param>
+        /// <param name="dy"></param>
+        /// <param name="tx"></param>
+        /// <param name="ty"></param>
+        /// <returns></returns>
+        public Part[] CheckContainInRect(double x, double y,double dx,double dy,double tx,double ty)
+        {
+            List<Part> parts = new List<Part>();
+            if (Parts == null || Parts.Count == 0) return parts.ToArray();
+            foreach (Part part in Parts)
+            {
+
+                Xamarin.Forms.Rectangle rec = new Xamarin.Forms.Rectangle(part.Rect.X * dx + tx, part.Rect.Y * dx + tx, part.Rect.Width + dx, part.Rect.Height + dy);
+                if (rec.Contains(x,y))
+                {
+                    parts.Add(part);
+                }
+                //if (part.Rect.Contains(x, y))
+                //    parts.Add(part);
             }
             return parts.ToArray();
         }

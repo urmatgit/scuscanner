@@ -51,7 +51,7 @@ namespace SCUScanner.Services
         }
         public async Task ReadCSV(IProgressDialog progressDialog)
         {
-            ErrorConnect = true;
+            ErrorConnect = false;
             FtpClient client=null;
             try
             {
@@ -86,7 +86,11 @@ namespace SCUScanner.Services
         {
             return CSVParser.CheckContainInRect(x, y);
         }
-
+        public Part[] CheckContain(double x, double y,double dx,double dy,double tx,double ty)
+        {
+            return CSVParser.CheckContainInRect(x, y,dx,dy,tx,ty);
+            //    return CSVParser.CheckContainInRect(x, y);
+        }
 
 
 
