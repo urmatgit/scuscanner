@@ -13,6 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Helpers\ImageMeter.cs" />
+    <Compile Remove="Helpers\SfImageEditorEx.cs" />
     <Compile Remove="Pages\CharacterPage.xaml.cs" />
     <Compile Remove="Pages\ConnectedDevicePage.xaml.cs" />
     <Compile Remove="Pages\DeviceSettingPage.xaml.cs" />
@@ -60,7 +62,6 @@
     <PackageReference Include="Syncfusion.Licensing" Version="16.2.0.46" />
     <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="16.2.0.46" />
     <PackageReference Include="Syncfusion.Xamarin.SfGauge" Version="16.2.0.46" />
-    <PackageReference Include="Syncfusion.Xamarin.SfImageEditor" Version="16.2.0.46" />
     <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="16.2.0.46" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.1" />
     <PackageReference Include="Xam.Plugins.Messaging" Version="5.1.0" />

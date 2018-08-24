@@ -9,7 +9,7 @@ using Xamarin.Forms.Xaml;
 using SCUScanner.Models;
 using SCUScanner.Services;
 using Acr.UserDialogs;
-using Syncfusion.SfImageEditor.XForms;
+
 
 namespace SCUScanner.Pages
 {

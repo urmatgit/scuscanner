@@ -79,7 +79,7 @@ namespace SCUScanner.ViewModels
             
                 GC.Collect();
             GC.Collect();
-            ImageSpare = ImageSource. FromFile(App.analizeSpare.LocalImagePath);
+          //  ImageSpare = ImageSource. FromFile(App.analizeSpare.LocalImagePath);
             App.Dialogs.Toast($"Loaded {App.analizeSpare.LocalImagePath}");
 
         }

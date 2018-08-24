@@ -3,7 +3,7 @@ using Plugin.DeviceOrientation;
 using SCUScanner.Helpers;
 using SCUScanner.Models;
 using SCUScanner.ViewModels;
-using Syncfusion.SfImageEditor.XForms;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -42,7 +42,7 @@ namespace SCUScanner.Pages
             
             BindingContext = spareViewModel;
 
-            imgViewer.ImageLoaded += ImgViewer_ImageLoaded;
+             
             NavigationBarView.OnOptionOK += NavigationBarView_OnOptionOK;
             //editor.Source = imagesource;
 
@@ -65,8 +65,8 @@ namespace SCUScanner.Pages
         private void AddButtons()
         {
        //     if (!Models.Settings.Current.ShowPartBoder && IsPartAdded) return;
-            double scaleX = imgViewer.Bounds.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
-            double scaleY = imgViewer.Bounds.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
+            //double scaleX = imgViewer.Bounds.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
+            //double scaleY = imgViewer.Bounds.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
             
             double scaleXDraw = skCanvas.CanvasSize.Width / spareViewModel.OrgImageWidth;// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
             double scaleYDraw = skCanvas.CanvasSize.Height / spareViewModel.OrgImageHeight;// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
@@ -89,15 +89,15 @@ namespace SCUScanner.Pages
                     //   sKColor = SKColors.Transparent;
                     // textColor = SKColors.Transparent;
 
-                    float x =14+ (float)(part.OrgRect.X * scaleXDraw);
-                    float y =21+ (float)(part.OrgRect.Y * scaleYDraw);
+                    float x = (float)(part.OrgRect.X * scaleXDraw);
+                    float y =(float)(part.OrgRect.Y * scaleYDraw);
                     SKRect sKRect = new SKRect(x, y, x + (float)(part.OrgRect.Width * scaleXDraw), y + (float)(part.OrgRect.Height * scaleYDraw));
 
                     _SKCanvas.DrawRect(sKRect, new SKPaint() { Color = sKColor, Style = SKPaintStyle.Stroke });
                     _SKCanvas.DrawText(part.PartNumber, new SKPoint() { X = sKRect.Left, Y = sKRect.Top }, new SKPaint() { Color = textColor, Style = SKPaintStyle.Stroke });
                 }
                 if (!IsPartAdded)
-                    part.ReSize(scaleX, scaleY);
+                    part.ReSize(scaleXDraw, scaleYDraw);
             }
 
             
@@ -135,11 +135,7 @@ namespace SCUScanner.Pages
                
         }
 
-        private void ImgViewer_ImageLoaded(object sender, ImageLoadedEventArgs args)
-        {
-            
-           
-        }
+        
 
         public static async Task InitSparePage()
         {
@@ -201,7 +197,7 @@ namespace SCUScanner.Pages
         {
             Debug.WriteLine($"Page bound (w,h) {this.Bounds.Width} -{this.Bounds.Height} ");
             Debug.WriteLine($"Abslayout bound (w,h) {this.absLayout.Width} -{this.absLayout.Bounds.Height} ");
-            Debug.WriteLine($"SFImageEdit bound (w,h) {this.imgViewer. Bounds.Width} -{this.imgViewer.Bounds.Height} ");
+     //       Debug.WriteLine($"SFImageEdit bound (w,h) {this.imgViewer. Bounds.Width} -{this.imgViewer.Bounds.Height} ");
             Button btn = sender as Button;
             await App.Dialogs.AlertAsync(btn.Text);
         }
@@ -217,11 +213,21 @@ namespace SCUScanner.Pages
             var surface = e.Surface;
             // then we get the canvas that we can draw on
             _SKCanvas = surface.Canvas;
+            
+            SKBitmap sourceBitmap = SKBitmap.Decode(App.analizeSpare.LocalImagePath);
+            
+                Debug.WriteLine($"Image info -{sourceBitmap.Info.Width}-{sourceBitmap.Info.Height}");
             // clear the canvas / view
             _SKCanvas.Clear(SKColors.Transparent);
-            spareViewModel.SKViewDexX =(skCanvas.CanvasSize.Width /imgViewer.Width);
-            spareViewModel.SKViewDexY =(skCanvas.CanvasSize.Height / imgViewer.Height);
-        //   if (Models.Settings.Current.ShowPartBoder)
+            SKPaint paint = new SKPaint
+            {
+                IsAntialias = true,
+                FilterQuality = SKFilterQuality.High
+            };
+            _SKCanvas.DrawBitmap (sourceBitmap, e.Info.Rect,paint);
+            //spareViewModel.SKViewDexX =(skCanvas.CanvasSize.Width /imgViewer.Width);
+            //spareViewModel.SKViewDexY =(skCanvas.CanvasSize.Height / imgViewer.Height);
+            //   if (Models.Settings.Current.ShowPartBoder)
             AddButtons();
         }
     }

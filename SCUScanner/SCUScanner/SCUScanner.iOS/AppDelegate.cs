@@ -7,7 +7,7 @@ using KeyboardOverlap.Forms.Plugin.iOSUnified;
 using Syncfusion.ListView.XForms.iOS;
 using Syncfusion.SfDataGrid.XForms.iOS;
 using Syncfusion.SfGauge.XForms.iOS;
-using Syncfusion.SfImageEditor.XForms.iOS;
+
 using UIKit;
 
 namespace SCUScanner.iOS
@@ -34,7 +34,7 @@ namespace SCUScanner.iOS
             new SfDigitalGaugeRenderer();
             SfDataGridRenderer.Init();
             SfListViewRenderer.Init();
-            SfImageEditorRenderer.Init();
+          
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             LoadApplication(new App());
             

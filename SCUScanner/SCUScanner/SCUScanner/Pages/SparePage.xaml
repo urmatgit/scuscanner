@@ -62,7 +62,7 @@
             <AbsoluteLayout BackgroundColor="Blue"  x:Name="absLayout"
 			    Margin="0"
                 >
-                <sfImage:SfImageEditor   Margin="0"   x:Name="imgViewer" PanningMode="SingleFinger" EnableZooming="False" Source="{Binding ImageSpare}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red"
+                <!--<sfImage:SfImageEditor   Margin="0"   x:Name="imgViewer" PanningMode="SingleFinger" EnableZooming="False" Source="{Binding ImageSpare}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red"
                                       AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All"
                                          
@@ -71,7 +71,7 @@
                         <sfImage:ToolbarSettings IsVisible="False" />
                     </sfImage:SfImageEditor.ToolbarSettings>
 
-                </sfImage:SfImageEditor>
+                </sfImage:SfImageEditor>-->
                 <sk:SKCanvasView x:Name="skCanvas" PaintSurface="OnPainting" BackgroundColor="Transparent" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
                                  AbsoluteLayout.LayoutBounds="0,0,1,1"
                                  AbsoluteLayout.LayoutFlags="All"
