@@ -92,7 +92,7 @@ namespace SCUScanner.Helpers
             foreach (Part part in Parts)
             {
 
-                Xamarin.Forms.Rectangle rec = new Xamarin.Forms.Rectangle(part.Rect.X * dx + tx, part.Rect.Y * dx + tx, part.Rect.Width + dx, part.Rect.Height + dy);
+                Xamarin.Forms.Rectangle rec = new Xamarin.Forms.Rectangle(part.Rect.X * dx + tx, part.Rect.Y * dx + tx, part.Rect.Width * dx, part.Rect.Height * dy);
                 if (rec.Contains(x,y))
                 {
                     parts.Add(part);

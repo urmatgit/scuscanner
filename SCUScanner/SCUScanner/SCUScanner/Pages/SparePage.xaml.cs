@@ -89,8 +89,8 @@ namespace SCUScanner.Pages
                     //   sKColor = SKColors.Transparent;
                     // textColor = SKColors.Transparent;
 
-                    float x = (float)(part.OrgRect.X * scaleXDraw);
-                    float y = (float)(part.OrgRect.Y * scaleYDraw);
+                    float x =14+ (float)(part.OrgRect.X * scaleXDraw);
+                    float y =21+ (float)(part.OrgRect.Y * scaleYDraw);
                     SKRect sKRect = new SKRect(x, y, x + (float)(part.OrgRect.Width * scaleXDraw), y + (float)(part.OrgRect.Height * scaleYDraw));
 
                     _SKCanvas.DrawRect(sKRect, new SKPaint() { Color = sKColor, Style = SKPaintStyle.Stroke });
@@ -182,12 +182,15 @@ namespace SCUScanner.Pages
             
             spareViewModel.OnActivate();
             base.OnAppearing();
-         //   AddButtons();
+            (Application.Current.MainPage as MainMasterDetailPage).IsGestureEnabled = false;
+            //   AddButtons();
         }
         protected override void OnDisappearing()
         {
             CrossDeviceOrientation.Current.UnlockOrientation();
+            (Application.Current.MainPage as MainMasterDetailPage).IsGestureEnabled = true;
             base.OnDisappearing();
+            
         }
         private async void ShowCartClick(object sender, EventArgs e)
         {

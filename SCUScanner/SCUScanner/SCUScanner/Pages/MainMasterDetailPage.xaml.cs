@@ -45,6 +45,7 @@ namespace SCUScanner.Pages
 
         private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            
             var item = e.SelectedItem as MasterDetailPageMenuItem;
             if (item == null)
                 return;
