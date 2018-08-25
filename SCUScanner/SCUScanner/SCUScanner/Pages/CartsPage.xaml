@@ -4,9 +4,9 @@
               xmlns:controls="clr-namespace:SCUScanner.Helpers"
              x:Class="SCUScanner.Pages.CartsPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="CartClear" Order="Primary" Icon="ShoppingCartClear.png"  Command="{Binding ClearCommand}" Text="Item 1" Priority="0" />
-        <ToolbarItem Name="sendEmail" Order="Primary" Icon="send64.png" Text="Item 2" Command="{Binding SendEmailCommand}"  Priority="1" />
-        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="share.png" Text="Item 2" Command="{Binding ShareCommand}" Priority="2" />
+        <ToolbarItem Name="CartClear" Order="Primary" Icon="ShoppingCartClear.png"  Command="{Binding ClearCommand}"   Priority="0" />
+        <ToolbarItem Name="sendEmail" Order="Primary" Icon="send64.png"   Command="{Binding SendEmailCommand}"  Priority="1" />
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="share.png"   Command="{Binding ShareCommand}" Priority="2" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
        
