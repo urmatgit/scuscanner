@@ -59,8 +59,8 @@ namespace SCUScanner.ViewModels
         public  MaintenanceViewModel(INavigation navigation)
         {
 
-            SerialNumber = App.mainTabbed?.deviceListViewModel?.SN;;
-            App.SerialNumber = SerialNumber;
+            SerialNumber = App.SerialNumber;// App.mainTabbed?.deviceListViewModel?.SN;;
+            //App.SerialNumber = SerialNumber;
              PermissionCamera();
 
             Navigation = navigation;
