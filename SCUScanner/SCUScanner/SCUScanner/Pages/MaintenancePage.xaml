@@ -10,9 +10,9 @@
                     <controls:ClearEntryEffect />
                 </Entry.Effects>
             </Entry>
-            <Button x:Name="bScanQR" Text="{Binding Resources[ScanQRCode]}" Command="{Binding ScanQRCommand}"
+            <Button x:Name="bScanQR" Text="{Binding Resources[ScanQRCode]}" Command="{Binding ScanQRCommand}" VerticalOptions="Start"
                     BackgroundColor="Green" TextColor="White"></Button>
-            <StackLayout VerticalOptions="EndAndExpand" >
+            <StackLayout VerticalOptions="EndAndExpand" Margin="0,0,0,50" >
 
                 <Button x:Name="bSpares" Text="{Binding Resources[SparesText]}" Clicked="bSpareClicked"
                      BackgroundColor="Green" TextColor="White"></Button>

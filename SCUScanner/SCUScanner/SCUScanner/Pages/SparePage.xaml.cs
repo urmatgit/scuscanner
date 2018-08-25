@@ -31,7 +31,7 @@ namespace SCUScanner.Pages
 			InitializeComponent ();
             if (Device.RuntimePlatform == Device.iOS)
             {
-
+              
             }
             else
             {

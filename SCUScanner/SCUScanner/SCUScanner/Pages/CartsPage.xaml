@@ -12,7 +12,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Row="0" BackgroundColor="Gray">
+            <Grid Grid.Row="0" Style="{StaticResource SpareCaption}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
 

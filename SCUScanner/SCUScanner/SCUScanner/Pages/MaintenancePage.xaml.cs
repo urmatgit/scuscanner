@@ -21,8 +21,9 @@ namespace SCUScanner.Pages
 			InitializeComponent ();
             BindingContext = maintenanceViewModel = new MaintenanceViewModel(Navigation);
             bScanQR.Clicked += BScanQR_Clicked;
+#if DEBUG
             eSerialNumber.Text = "MP60002-0100100";
-
+#endif
         }
         private async void bSpareClicked(object sender, EventArgs e)
         {

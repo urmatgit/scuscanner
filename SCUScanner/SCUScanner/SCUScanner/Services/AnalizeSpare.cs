@@ -51,7 +51,7 @@ namespace SCUScanner.Services
         }
         public async Task ReadCSV(IProgressDialog progressDialog)
         {
-            ErrorConnect = true;
+            ErrorConnect = false;
             FtpClient client=null;
             try
             {

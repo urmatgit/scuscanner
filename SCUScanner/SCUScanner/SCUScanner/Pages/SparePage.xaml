@@ -11,6 +11,11 @@
              
              
                 >
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem Name="Option" Order="Primary" Icon="Option.png"  Command="{Binding ClearCommand}"   Priority="0" />
+        <ToolbarItem Name="ShoppingCart" Order="Primary" Icon="ShoppingCart.png"   Command="{Binding SendEmailCommand}"  Priority="1" />
+        
+    </ContentPage.ToolbarItems>-->
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="transparentButtonStyle" TargetType="Button">
