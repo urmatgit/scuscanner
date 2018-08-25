@@ -80,7 +80,8 @@ namespace SCUScanner.ViewModels
                 GC.Collect();
             GC.Collect();
           //  ImageSpare = ImageSource. FromFile(App.analizeSpare.LocalImagePath);
-            App.Dialogs.Toast($"Loaded {App.analizeSpare.LocalImagePath}");
+          
+          
 
         }
 
@@ -182,11 +183,13 @@ namespace SCUScanner.ViewModels
         {
 
             var obj = e;
-            float dexX =(float) (e.ViewPosition.Width * Scale - e.ViewPosition.Width) / 2;
-            float dexY = (float)(e.ViewPosition.Height * Scale - e.ViewPosition.Height) / 2;
-            float x = (float)(e.Touches[0].X * Scale); //+ dexX - TranslationX;
-            float y = (float)(e.Touches[0].Y * Scale);//+ dexY - TranslationY;
-            var parts = App.analizeSpare.CheckContain(x, y, (float)Scale, (float)Scale, (float)TranslationX, (float)TranslationY);
+            float dexX =(float) TranslationX * -1;// (float) (e.ViewPosition.Width * Scale - e.ViewPosition.Width) / 2;
+            float dexY = (float)TranslationY * -1; //(e.ViewPosition.Height * Scale - e.ViewPosition.Height) / 2;
+            float x =Math.Abs( (float)((e.Touches[0].X  +  TranslationX)/Scale) );
+            float y =Math.Abs((float)((e.Touches[0].Y  + TranslationY)/Scale));
+
+
+            var parts = App.analizeSpare.CheckContain(x, y, (float)1, (float)1, (float)0, (float)0);
             if (parts.Length>0)
             {
                 SelectPart(parts);

@@ -299,7 +299,7 @@ Turn On Bluetooth and press </value>
     <value>Manual not found</value>
   </data>
   <data name="NoInternetConOrErrorText" xml:space="preserve">
-    <value>No Internet access or connection error. Open local copy of manual</value>
+    <value>No Internet access or connection error. Open local copy of files</value>
   </data>
   <data name="RMPText" xml:space="preserve">
     <value>RPM</value>

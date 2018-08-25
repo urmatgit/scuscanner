@@ -56,6 +56,7 @@ namespace SCUScanner.Services
             try
             {
                   client = new FtpClient(GlobalConstants.FtpHost, GlobalConstants.FtpPort, new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)"));
+                
             }catch (Exception er)
             {
                 ErrorConnect = true;
@@ -70,6 +71,11 @@ namespace SCUScanner.Services
             //    LocalImagePath = "SCUScanner.img.MP60002_0100100.png";
             //else 
                 LocalImagePath = await DownLoad(ImagesPath, $"{filename}.png", client);
+            if (File.Exists(App.analizeSpare.LocalImagePath))
+            {
+                App.Dialogs.Toast($"Loaded {App.analizeSpare.LocalImagePath}");
+            }else
+                App.Dialogs.Toast($"File not found {App.analizeSpare.LocalImagePath}");
             CSVParser = new CSVParser(path, emailpath);
             await DownLoadThumps(ThumpPath, CSVParser.Parts,client);
                await client?.DisconnectAsync();
@@ -167,11 +173,13 @@ namespace SCUScanner.Services
                         {
                             FileInfo localfile = new FileInfo(resultfilepath);
 
-                            Debug.WriteLine($"client.GetFileSize(remotefilename)-{client.GetFileSize(remotefilename)}");
-                            Debug.WriteLine($"localfile.Length-{localfile.Length}");
+                            //Debug.WriteLine($"client.GetFileSize(remotefilename)-{client.GetFileSize(remotefilename)}");
                             
-                            Debug.WriteLine($"client.GetModifiedTime-{client.GetModifiedTime(remotefilename)}");
-                            Debug.WriteLine($"localfile.LastWriteTime-{localfile.LastWriteTime}");
+                            
+                            //Debug.WriteLine($"client.GetModifiedTime-{client.GetModifiedTime(remotefilename)}");
+
+                            //Debug.WriteLine($"localfile.Length-{localfile.Length}");
+                            //Debug.WriteLine($"localfile.LastWriteTime-{localfile.LastWriteTime}");
 
                             
                             if (!File.Exists(resultfilepath) || client.GetFileSize(remotefilename) != localfile.Length )

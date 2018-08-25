@@ -213,18 +213,21 @@ namespace SCUScanner.Pages
             var surface = e.Surface;
             // then we get the canvas that we can draw on
             _SKCanvas = surface.Canvas;
-            
-            SKBitmap sourceBitmap = SKBitmap.Decode(App.analizeSpare.LocalImagePath);
-            
-                Debug.WriteLine($"Image info -{sourceBitmap.Info.Width}-{sourceBitmap.Info.Height}");
-            // clear the canvas / view
             _SKCanvas.Clear(SKColors.Transparent);
-            SKPaint paint = new SKPaint
+            if (File.Exists(App.analizeSpare.LocalImagePath))
             {
-                IsAntialias = true,
-                FilterQuality = SKFilterQuality.High
-            };
-            _SKCanvas.DrawBitmap (sourceBitmap, e.Info.Rect,paint);
+                SKBitmap sourceBitmap = SKBitmap.Decode(App.analizeSpare.LocalImagePath);
+
+                Debug.WriteLine($"Image info -{sourceBitmap.Info.Width}-{sourceBitmap.Info.Height}");
+                // clear the canvas / view
+
+                SKPaint paint = new SKPaint
+                {
+                    IsAntialias = true,
+                    FilterQuality = SKFilterQuality.High
+                };
+                _SKCanvas.DrawBitmap(sourceBitmap, e.Info.Rect, paint);
+            }
             //spareViewModel.SKViewDexX =(skCanvas.CanvasSize.Width /imgViewer.Width);
             //spareViewModel.SKViewDexY =(skCanvas.CanvasSize.Height / imgViewer.Height);
             //   if (Models.Settings.Current.ShowPartBoder)

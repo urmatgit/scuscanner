@@ -300,7 +300,7 @@ box only visible on factory version</value>
     <value>file not found</value>
   </data>
   <data name="NoInternetConOrErrorText" xml:space="preserve">
-    <value>No Internet access or connection error. Open local copy of manual</value>
+    <value>No Internet access or connection error. Open local copy of files</value>
   </data>
   <data name="AlarmText" xml:space="preserve">
     <value>Alarm at</value>

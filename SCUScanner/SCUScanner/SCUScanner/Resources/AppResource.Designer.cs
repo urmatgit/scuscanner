@@ -476,7 +476,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No Internet access or connection error. Open local copy of manual.
+        ///   Looks up a localized string similar to No Internet access or connection error. Open local copy of files.
         /// </summary>
         internal static string NoInternetConOrErrorText {
             get {
