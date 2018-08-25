@@ -23,27 +23,28 @@ namespace SCUScanner.Pages
 	public partial class SparePage : ContentPage
 	{
 
+        public event EventHandler<EventArgsShowBorderChange> OnOptionOK;
         SKCanvas _SKCanvas;
         SpareViewModel spareViewModel;
         bool IsPartAdded = false;
         public SparePage ()
 		{
 			InitializeComponent ();
-            if (Device.RuntimePlatform == Device.iOS)
-            {
+            //if (Device.RuntimePlatform == Device.iOS)
+            //{
               
-            }
-            else
-            {
-                NavigationPage.SetHasNavigationBar(this, false);
-                NavigationPage.SetHasBackButton(this, false);
-            }
-            spareViewModel = new SpareViewModel();
+            //}
+            //else
+            //{
+            //    NavigationPage.SetHasNavigationBar(this, false);
+            //    NavigationPage.SetHasBackButton(this, false);
+            //}
+            spareViewModel = new SpareViewModel(Navigation);
             
             BindingContext = spareViewModel;
 
              
-            NavigationBarView.OnOptionOK += NavigationBarView_OnOptionOK;
+            this.OnOptionOK += NavigationBarView_OnOptionOK;
             //editor.Source = imagesource;
 
             //var bytes= System.IO.File.ReadAllBytes(App.analizeSpare.LocalImagePath);
@@ -232,6 +233,11 @@ namespace SCUScanner.Pages
             //spareViewModel.SKViewDexY =(skCanvas.CanvasSize.Height / imgViewer.Height);
             //   if (Models.Settings.Current.ShowPartBoder)
             AddButtons();
+        }
+
+        private async void OptionClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new SparesSettingPage(OnOptionOK));
         }
     }
 }

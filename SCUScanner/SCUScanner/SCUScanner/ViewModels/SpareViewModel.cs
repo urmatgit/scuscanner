@@ -3,6 +3,7 @@ using MR.Gestures;
 using ReactiveUI;
 using SCUScanner.Helpers;
 using SCUScanner.Models;
+using SCUScanner.Pages;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,11 +34,19 @@ namespace SCUScanner.ViewModels
         public ICommand SwipedCommand { get; protected set; }
         public ICommand RotatingCommand { get; protected set; }
         public ICommand RotatedCommand { get; protected set; }
+        public ICommand ShoppingCartCommand { get; protected set; }
         private string cartCount="";
         public string CartCount
         {
             get => cartCount;
             set => this.RaiseAndSetIfChanged(ref cartCount, value);
+        }
+        bool isHasCart = false;
+        public bool IsHasCart
+        {
+
+            get => isHasCart;
+            set => this.RaiseAndSetIfChanged(ref isHasCart, value);
         }
         private ImageSource imageSpare;
         public ImageSource ImageSpare
@@ -45,7 +54,7 @@ namespace SCUScanner.ViewModels
             get =>   imageSpare; 
             set=> this.RaiseAndSetIfChanged(ref imageSpare, value);
         }
-        public SpareViewModel()
+        public SpareViewModel(INavigation navigation)
         {
             //ImageSpare = ImageSource.FromFile(App.analizeSpare.LocalImagePath);
             AddCommand = ReactiveCommand.Create(() =>
@@ -54,8 +63,12 @@ namespace SCUScanner.ViewModels
             App.analizeSpare.vmCarts.AddCart(App.analizeSpare.CSVParser.Parts[rnd.Next(0, App.analizeSpare.CSVParser.Parts.Count - 1)]);
                 CartCount = App.analizeSpare.vmCarts.TotalSum().ToString();
             });
-
-
+            this.WhenAnyValue(vm => vm.CartCount).Subscribe(c =>
+            {
+                  
+                IsHasCart = c != "0" && !string.IsNullOrEmpty(c);
+            });
+            
             DownCommand = new Command<DownUpEventArgs>(OnDown);
             UpCommand = new Command<DownUpEventArgs>(OnUp);
             TappingCommand = new Command<TapEventArgs>(OnTapping);
@@ -68,7 +81,11 @@ namespace SCUScanner.ViewModels
             PanningCommand = new Command<PanEventArgs>(OnPanning);
             PannedCommand = new Command<PanEventArgs>(OnPanned);
             SwipedCommand = new Command<SwipeEventArgs>(OnSwiped);
+            ShoppingCartCommand = ReactiveCommand.CreateFromTask(async () =>
+             {
+                 await navigation.PushAsync(new CartsPage());
 
+             }, this.WhenAnyValue(vm => vm.IsHasCart));
             //if (App.analizeSpare.ErrorConnect) // пока временно!!!
             //    ImageSpare = ImageSource.FromResource(App.analizeSpare.LocalImagePath);
             //else

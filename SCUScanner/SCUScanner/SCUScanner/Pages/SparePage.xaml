@@ -11,11 +11,11 @@
              
              
                 >
-    <!--<ContentPage.ToolbarItems>
-        <ToolbarItem Name="Option" Order="Primary" Icon="Option.png"  Command="{Binding ClearCommand}"   Priority="0" />
-        <ToolbarItem Name="ShoppingCart" Order="Primary" Icon="ShoppingCart.png"   Command="{Binding SendEmailCommand}"  Priority="1" />
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="Option" Order="Primary" Icon="Option.png"   Clicked="OptionClicked"   Priority="0" />
+        <ToolbarItem Name="ShoppingCart" Order="Primary" Icon="ShoppingCart.png"   Command="{Binding ShoppingCartCommand}"  Priority="1"  />
         
-    </ContentPage.ToolbarItems>-->
+    </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="transparentButtonStyle" TargetType="Button">
@@ -32,7 +32,7 @@
     </ContentPage.Resources>
 
     <StackLayout Padding="0" BackgroundColor="Yellow">
-                <views:NavigationBarView   x:Name="NavigationBarView"  Title="{Binding CartCount}" HeightRequest="45"/>
+                <!--<views:NavigationBarView   x:Name="NavigationBarView"  Title="{Binding CartCount}" HeightRequest="45"/>-->
 
         <mr:StackLayout Padding="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
              TappedCommand="{Binding TappedCommand}"
