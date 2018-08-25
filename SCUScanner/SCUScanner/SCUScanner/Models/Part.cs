@@ -15,6 +15,10 @@ namespace SCUScanner.Models
         public int ID { get; set; }
         public string PartName { get; set; }
         public string PartNumber { get; set; }
+        public string PartInfo { get
+            {
+                return $"{PartNumber},{PartName}";
+            } }
         public string IssueDate { get; set; }
         public float LeftPixel { get; set; }
         public float UpperPixel { get; set; }

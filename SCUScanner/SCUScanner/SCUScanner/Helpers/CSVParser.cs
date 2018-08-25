@@ -27,7 +27,6 @@ namespace SCUScanner.Helpers
         {
             if (string.IsNullOrEmpty(path) || !File.Exists(path)) return;
             Emails = File.ReadAllLines(path)
-                .Skip(1)
                 .Select(l => FromLineEmailCSV(l))
                 .ToList();
         }

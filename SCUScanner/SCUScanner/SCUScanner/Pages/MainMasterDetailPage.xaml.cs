@@ -67,29 +67,29 @@ namespace SCUScanner.Pages
                     }
                 else {
                     var type = item.TargetType;
-                    if (item.TargetType.Name == typeof(MaintenancePage).Name)
-                    {
+                    //if (item.TargetType.Name == typeof(MaintenancePage).Name)
+                    //{
                         
-                        var action=await DisplayActionSheet(null, null, null, settings.Resources["EnterSerialNumberText"], settings.Resources["ListOfManualsText"]);
-                        if (action== settings.Resources["ListOfManualsText"])
-                        {
-                            type = typeof(ListOfManualPage);
-                            //type = typeof(TestListViewPage);
-                        }
-                    }else if (item.PageCode== "SparesText")
-                    {
+                    //    var action=await DisplayActionSheet(null, null, null, settings.Resources["EnterSerialNumberText"], settings.Resources["ListOfManualsText"]);
+                    //    if (action== settings.Resources["ListOfManualsText"])
+                    //    {
+                    //        type = typeof(ListOfManualPage);
+                    //        //type = typeof(TestListViewPage);
+                    //    }
+                    //}else if (item.PageCode== "SparesText")
+                    //{
 
 
-                        if (string.IsNullOrEmpty(App.SerialNumber))
-                        {
-                            type = typeof(InputSerialForSparesPage);
-                        }
-                        else
-                        {
-                            await SparePage.InitSparePage();
-                            type = typeof(SparePage);
-                        }
-                    }
+                    //    if (string.IsNullOrEmpty(App.SerialNumber))
+                    //    {
+                    //        type = typeof(InputSerialForSparesPage);
+                    //    }
+                    //    else
+                    //    {
+                    //        await SparePage.InitSparePage();
+                    //        type = typeof(SparePage);
+                    //    }
+                    //}
 
 
                     CurrentPage = (Page)Activator.CreateInstance(type);

@@ -711,7 +711,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Share parts {0}.
+        ///   Looks up a localized string similar to Spare parts {0}.
         /// </summary>
         internal static string SharePartTitle {
             get {

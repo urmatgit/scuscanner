@@ -23,7 +23,14 @@ namespace SCUScanner.Pages
             bScanQR.Clicked += BScanQR_Clicked;
 
         }
+        private async void bSpareClicked(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(eSerialNumber.Text)) return;
+            App.SerialNumber = eSerialNumber.Text;
 
+            await SparePage.InitSparePage();
+            await Navigation.PushAsync(new SparePage());
+        }
         private async void BScanQR_Clicked(object sender, EventArgs e)
         {
             var scanPage = new ZXingScannerPage();
@@ -40,6 +47,12 @@ namespace SCUScanner.Pages
                 });
             };
             await Navigation.PushAsync(scanPage);
+        }
+
+        private async void bListOfManualsClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ListOfManualPage());
+           
         }
     }
 }

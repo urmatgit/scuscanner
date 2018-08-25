@@ -12,8 +12,16 @@
             </Entry>
             <Button x:Name="bScanQR" Text="{Binding Resources[ScanQRCode]}" Command="{Binding ScanQRCommand}"
                     BackgroundColor="Green" TextColor="White"></Button>
+            <StackLayout VerticalOptions="EndAndExpand" >
+
+                <Button x:Name="bSpares" Text="{Binding Resources[SparesText]}" Clicked="bSpareClicked"
+                     BackgroundColor="Green" TextColor="White"></Button>
+                <Button x:Name="bListOfManuals" Text="{Binding Resources[ListOfManualsText]}" Clicked="bListOfManualsClicked"
+                     BackgroundColor="Green" TextColor="White"></Button>
+                
             <Button x:Name="bDownloadManual" Text="{Binding Resources[DownloadText]}" Command="{Binding DownloadManualCommand}"
-                    VerticalOptions="EndAndExpand" BackgroundColor="Green" TextColor="White"></Button>
+                     BackgroundColor="Green" TextColor="White"></Button>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

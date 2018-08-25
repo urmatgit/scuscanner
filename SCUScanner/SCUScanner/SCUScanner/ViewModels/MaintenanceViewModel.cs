@@ -72,6 +72,7 @@ namespace SCUScanner.ViewModels
             DownloadManualCommand = ReactiveCommand.CreateFromTask(async () =>
              {
                  App.SerialNumber = SerialNumber;
+                 if (string.IsNullOrEmpty(SerialNumber)) return;
                  //if (Path.GetExtension(SerialNumber) != "pdf")
                  //    SerialNumber += ".pdf";
                  CancellationTokenSource tokenSource = new CancellationTokenSource();
@@ -88,7 +89,7 @@ namespace SCUScanner.ViewModels
                  using (var progress = App.Dialogs.Progress(config))
                  {
                      progress.Show();
-                     await Utils.DownloadManual<string>(SerialNumber.ToUpper(), SettingsBase.SelectedLangKod.ToUpper(),progress, async (o) =>
+                     await Utils.DownloadManual<string>(SerialNumber.ToUpper(), SettingsBase.SelectedLangKod.ToLower(),progress, async (o) =>
                      {
                          WebViewPageCS webViewPageCS = new WebViewPageCS(o);
                          await Navigation.PushAsync(webViewPageCS);
