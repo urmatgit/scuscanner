@@ -50,7 +50,7 @@ namespace SCUScanner.Pages.Views
         }
         private async void Tapcart_OnTapped(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new CartsPage());
+            await Navigation.PushAsync(new CartsPage());
         }
 
         private async void tapOption_Tapped(object sender, EventArgs e)
