@@ -223,6 +223,7 @@ namespace SCUScanner.ViewModels
                 {
                     App.analizeSpare.vmCarts.AddCart(part);
                     CartCount = App.analizeSpare.vmCarts.TotalSum().ToString();
+                    App.Dialogs.Toast($"+ {part.PartInfo}");
                 });
             }
             actions.SetCancel(Models.Settings.Current.Resources["CancelText"]);
