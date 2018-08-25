@@ -3,22 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:controls="clr-namespace:SCUScanner.Helpers"
              x:Class="SCUScanner.Pages.CartsPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="CartClear" Order="Primary" Icon="ShoppingCartClear.png"  Command="{Binding ClearCommand}" Text="Item 1" Priority="0" />
+        <ToolbarItem Name="sendEmail" Order="Primary" Icon="send64.png" Text="Item 2" Command="{Binding SendEmailCommand}"  Priority="1" />
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="share.png" Text="Item 2" Command="{Binding ShareCommand}" Priority="2" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Row="0" BackgroundColor="Gray">
+       
+            <!--<Grid Grid.Row="0" BackgroundColor="Gray">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
 
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <!--<Button Text="Clear" Grid.Column="0" HorizontalOptions ="Start" Command="{Binding ClearCommand}"></Button>-->
+                --><!--<Button Text="Clear" Grid.Column="0" HorizontalOptions ="Start" Command="{Binding ClearCommand}"></Button>--><!--
                 <Image    Source="ShoppingCartClear.png" Grid.Column="0" HorizontalOptions ="Start"  WidthRequest="30" HeightRequest="20">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ClearCommand}" NumberOfTapsRequired="1" />
@@ -30,17 +28,17 @@
                             <TapGestureRecognizer Command="{Binding SendEmailCommand}" NumberOfTapsRequired="1" />
                         </Image.GestureRecognizers>
                     </Image>
-                    <!--<Button Image="send64.png"   WidthRequest="30" HeightRequest="20"  Command="{Binding SendEmailCommand}" BackgroundColor="Green"    TextColor="White" ></Button>-->
+                    --><!--<Button Image="send64.png"   WidthRequest="30" HeightRequest="20"  Command="{Binding SendEmailCommand}" BackgroundColor="Green"    TextColor="White" ></Button>--><!--
                     <Image    Source="share.png"  WidthRequest="30" HeightRequest="20" Margin="0,0,5,0">
                     <Image.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding ShareCommand}" NumberOfTapsRequired="1" />
                     </Image.GestureRecognizers>
                     </Image>
-                    <!--<Button Image="share.png"   WidthRequest="30" HeightRequest="20" BackgroundColor="Green"    TextColor="White"    Command="{Binding ShareCommand}"></Button>-->
+                    --><!--<Button Image="share.png"   WidthRequest="30" HeightRequest="20" BackgroundColor="Green"    TextColor="White"    Command="{Binding ShareCommand}"></Button>--><!--
                 </StackLayout>
-            </Grid>
+            </Grid>-->
 
-            <controls:sfListViewEx Grid.Row="1" ItemsSource="{Binding Carts}" HorizontalOptions="Fill"   AutoFitMode="Height"  DisableRowSelection="True" >
+            <controls:sfListViewEx   ItemsSource="{Binding Carts}" HorizontalOptions="Fill"   AutoFitMode="Height"  DisableRowSelection="True" >
                 <controls:sfListViewEx.ItemTemplate >
                     <DataTemplate>
                         <ViewCell >
@@ -89,6 +87,6 @@
                     </DataTemplate>
                 </controls:sfListViewEx.ItemTemplate>
             </controls:sfListViewEx>
-        </Grid>
+        
     </ContentPage.Content>
 </ContentPage>
