@@ -314,6 +314,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download New list.
+        /// </summary>
+        internal static string DownloadNewListText {
+            get {
+                return ResourceManager.GetString("DownloadNewListText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download file.
         /// </summary>
         internal static string DownloadText {
@@ -584,6 +593,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select an option.
+        /// </summary>
+        internal static string SelectAnOptionText {
+            get {
+                return ResourceManager.GetString("SelectAnOptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         internal static string SelectedLanguageCodeText {
@@ -761,6 +779,15 @@ namespace SCUScanner.Resources {
         internal static string UnitNameText {
             get {
                 return ResourceManager.GetString("UnitNameText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use existing list.
+        /// </summary>
+        internal static string UseExistingListText {
+            get {
+                return ResourceManager.GetString("UseExistingListText", resourceCulture);
             }
         }
         

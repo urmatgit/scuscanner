@@ -55,10 +55,24 @@ namespace SCUScanner.Helpers
             part.PartName = values[1];
             part.PartNumber = values[2];
             part.IssueDate = values[3];
-            part.UpperPixel = Convert.ToInt32(values[4]);
+
+            part.UpperPixel = Convert.ToInt32 (values[4]);
+
             part.LowerPixel = Convert.ToInt32(values[5]);
+            if (part.UpperPixel > part.LowerPixel)
+            {
+                var tmp = part.UpperPixel;
+                part.UpperPixel = part.LowerPixel;
+                part.LowerPixel = tmp;
+            }
             part.LeftPixel = Convert.ToInt32(values[6]);
             part.RightPixel = Convert.ToInt32(values[7]);
+            if (part.LeftPixel > part.RightPixel)
+            {
+                var tmp = part.LeftPixel;
+                part.LeftPixel = part.RightPixel;
+                part.RightPixel = tmp;
+            }
             part.Rect = new    SkiaSharp.SKRect( part.LeftPixel, part.UpperPixel, part.RightPixel, part.LowerPixel);
             part.OrgRect =    new SkiaSharp.SKRect( part.LeftPixel, part.UpperPixel, part.RightPixel , part.LowerPixel);
             return part;

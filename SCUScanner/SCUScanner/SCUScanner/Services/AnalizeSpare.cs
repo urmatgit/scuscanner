@@ -49,19 +49,23 @@ namespace SCUScanner.Services
                 
             }
         }
-        public async Task ReadCSV(IProgressDialog progressDialog)
+        public async Task ReadCSV(IProgressDialog progressDialog,bool uselocal=false)
         {
-            ErrorConnect = false;
+            ErrorConnect = uselocal;
             FtpClient client=null;
-            try
+            if (!uselocal)
             {
-                  client = new FtpClient(GlobalConstants.FtpHost, GlobalConstants.FtpPort, new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)"));
-                
-            }catch (Exception er)
-            {
-                ErrorConnect = true;
-                await App.Dialogs.AlertAsync(Settings.Current.Resources["NoInternetConOrErrorText"]);
+                try
+                {
+                    client = new FtpClient(GlobalConstants.FtpHost, GlobalConstants.FtpPort, new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)"));
 
+                }
+                catch (Exception er)
+                {
+                    ErrorConnect = true;
+                    await App.Dialogs.AlertAsync(Settings.Current.Resources["NoInternetConOrErrorText"]);
+
+                }
             }
             var filename = GetFileNameFromSerialNo(_serialnumber);
             string path = await DownLoad(CSVPath, $"{filename}.csv",client);
@@ -78,6 +82,7 @@ namespace SCUScanner.Services
             //    App.Dialogs.Toast($"File not found {App.analizeSpare.LocalImagePath}");
             CSVParser = new CSVParser(path, emailpath);
             await DownLoadThumps(ThumpPath, CSVParser.Parts,client);
+            if (!uselocal)
                await client?.DisconnectAsync();
             
         }

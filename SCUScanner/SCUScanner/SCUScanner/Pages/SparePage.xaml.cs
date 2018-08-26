@@ -138,7 +138,7 @@ namespace SCUScanner.Pages
 
         
 
-        public static async Task InitSparePage()
+        public static async Task InitSparePage(bool uselocal=false)
         {
             App.analizeSpare = new Services.AnalizeSpare(App.SerialNumber);
             CancellationTokenSource tokenSource = new CancellationTokenSource();
@@ -155,7 +155,7 @@ namespace SCUScanner.Pages
             using (var progress = App.Dialogs.Progress(config))
             {
                 progress.Show();
-                await App.analizeSpare.ReadCSV(progress);
+                await App.analizeSpare.ReadCSV(progress, uselocal);
                 //spareViewModel.ImageSpare = ImageSource.FromFile(App.analizeSpare.LocalImagePath);
             }
             

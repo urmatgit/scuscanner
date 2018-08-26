@@ -356,4 +356,13 @@ box only visible on factory version</value>
   <data name="SelectPartText" xml:space="preserve">
     <value>Select part</value>
   </data>
+  <data name="DownloadNewListText" xml:space="preserve">
+    <value>Download New list</value>
+  </data>
+  <data name="SelectAnOptionText" xml:space="preserve">
+    <value>Select an option</value>
+  </data>
+  <data name="UseExistingListText" xml:space="preserve">
+    <value>Use existing list</value>
+  </data>
 </root>

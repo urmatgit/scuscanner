@@ -1,4 +1,5 @@
-﻿using SCUScanner.ViewModels;
+﻿using Acr.UserDialogs;
+using SCUScanner.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,29 @@ namespace SCUScanner.Pages
             if (string.IsNullOrEmpty(eSerialNumber.Text)) return;
             App.SerialNumber = eSerialNumber.Text;
 
-            await SparePage.InitSparePage();
+            
+            var actions = new ActionSheetConfig()
+              .SetTitle($"{maintenanceViewModel.Resources["SelectAnOptionText"]}");
+
+            
+                actions.Add($"{maintenanceViewModel.Resources["DownloadNewListText"]}", () =>
+                {
+                    RunSpare(false);
+                });
+            actions.Add($"{maintenanceViewModel.Resources["UseExistingListText"]}", () =>
+            {
+                RunSpare(true);
+            });
+
+            actions.SetCancel(Models.Settings.Current.Resources["CancelText"]);
+
+            App.Dialogs.ActionSheet(actions);
+
+   
+        }
+        private async void RunSpare(bool useold)
+        {
+            await SparePage.InitSparePage(useold);
             await Navigation.PushAsync(new SparePage());
         }
         private async void BScanQR_Clicked(object sender, EventArgs e)
