@@ -43,7 +43,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="img\MP60002_0100100.png" />
+    <None Remove="Docs\Help(en).pdf" />
+    <None Remove="Docs\MP60002_0100100.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Docs\Help%28en%29.pdf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -82,6 +87,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Docs\Help%28en%29.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Update="Pages\CartsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -122,9 +130,5 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AppResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="img\" />
   </ItemGroup>
 </Project>

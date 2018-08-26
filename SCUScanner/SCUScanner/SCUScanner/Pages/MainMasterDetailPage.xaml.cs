@@ -9,7 +9,7 @@ using Xamarin.Forms.Xaml;
 using SCUScanner.Models;
 using SCUScanner.Services;
 using Acr.UserDialogs;
-
+using SCUScanner.Helpers;
 
 namespace SCUScanner.Pages
 {
@@ -69,7 +69,7 @@ namespace SCUScanner.Pages
                     var type = item.TargetType;
                     //if (item.TargetType.Name == typeof(MaintenancePage).Name)
                     //{
-                        
+
                     //    var action=await DisplayActionSheet(null, null, null, settings.Resources["EnterSerialNumberText"], settings.Resources["ListOfManualsText"]);
                     //    if (action== settings.Resources["ListOfManualsText"])
                     //    {
@@ -91,8 +91,22 @@ namespace SCUScanner.Pages
                     //    }
                     //}
 
+                    if (item.TargetType.Name == typeof(WebViewPageCS).Name)
+                    {
+                        var WorkDir = DependencyService.Get<ISQLite>().GetWorkManualDir();
+                        string filename = "Help(en).pdf";
+                        filename = System.IO.Path.Combine(WorkDir, filename);
+                        if (!System.IO.File.Exists(filename)) {
+                            if (ResourceLoader.SaveResourceToFile(WorkDir, "SCUScanner.Docs.Help(en).pdf",System.IO.Path.GetFileName(filename)))
+                            {
 
-                    CurrentPage = (Page)Activator.CreateInstance(type);
+                            }
+                          }
+                    
+                        CurrentPage = (Page)Activator.CreateInstance(type, filename);
+                    }
+                    else
+                        CurrentPage = (Page)Activator.CreateInstance(type);
                     CurrentPage.Title = item.Title;
                 }
                 Detail = new NavigationPage(CurrentPage);
