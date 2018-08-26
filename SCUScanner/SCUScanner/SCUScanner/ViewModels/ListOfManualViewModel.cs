@@ -18,6 +18,10 @@ namespace SCUScanner.ViewModels
             
             WorkManualDir =  DependencyService.Get<ISQLite>().GetWorkManualDir();
             WorkManualDir = Path.Combine(WorkManualDir, "manuals");
+            if (!Directory.Exists(WorkManualDir))
+            {
+                Directory.CreateDirectory(WorkManualDir);
+            }
             Items = new ObservableCollection<string>();
             AddManualsToItem();
         }
