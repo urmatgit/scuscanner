@@ -264,16 +264,16 @@ namespace SCUScanner.ViewModels
                 TranslationX = dexX * -1;
             //if (Scale==1 && TranslationX < e.ViewPosition.X)
             //    TranslationX = e.ViewPosition.X;
-            if (TranslationY   <dexY1+ dexY*-1)
-                TranslationY = dexY1+ dexY * -1;
+            if (TranslationY   < dexY*-1)
+                TranslationY =  dexY * -1;
 
             if (TranslationX + e.ViewPosition.Width > e.ViewPosition.Width+dexX)
             {
                 TranslationX = dexX;
             }
-            if ( TranslationY + e.ViewPosition.Height >e.ViewPosition.Height+ dexY-dexY1 )
+            if ( TranslationY + e.ViewPosition.Height >e.ViewPosition.Height+dexY )
             {
-                TranslationY =  dexY-dexY1  ;
+                TranslationY =  dexY  ;
             }
 
         }

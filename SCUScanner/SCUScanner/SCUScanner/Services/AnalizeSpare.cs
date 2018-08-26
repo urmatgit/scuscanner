@@ -51,7 +51,7 @@ namespace SCUScanner.Services
         }
         public async Task ReadCSV(IProgressDialog progressDialog)
         {
-            ErrorConnect = false;
+            ErrorConnect = true;
             FtpClient client=null;
             try
             {
@@ -71,11 +71,11 @@ namespace SCUScanner.Services
             //    LocalImagePath = "SCUScanner.img.MP60002_0100100.png";
             //else 
                 LocalImagePath = await DownLoad(ImagesPath, $"{filename}.png", client);
-            if (File.Exists(App.analizeSpare.LocalImagePath))
-            {
-                App.Dialogs.Toast($"Loaded {App.analizeSpare.LocalImagePath}");
-            }else
-                App.Dialogs.Toast($"File not found {App.analizeSpare.LocalImagePath}");
+            //if (File.Exists(App.analizeSpare.LocalImagePath))
+            //{
+            //    App.Dialogs.Toast($"Loaded {App.analizeSpare.LocalImagePath}");
+            //}else
+            //    App.Dialogs.Toast($"File not found {App.analizeSpare.LocalImagePath}");
             CSVParser = new CSVParser(path, emailpath);
             await DownLoadThumps(ThumpPath, CSVParser.Parts,client);
                await client?.DisconnectAsync();
@@ -205,6 +205,7 @@ namespace SCUScanner.Services
                                     {
 
                                     }
+                                    App.Dialogs.Toast($"{Settings.Current.Resources["DownloadText"]}- {filename}");
                                     //    }
                                     //}
                                 }
