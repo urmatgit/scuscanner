@@ -63,7 +63,7 @@ namespace SCUScanner
                 }
 
             }
-
+            App.Dialogs.Alert("MainMasterDetailPage");
             MainPage = new SCUScanner.Pages.MainMasterDetailPage();
         }
 
@@ -96,8 +96,9 @@ namespace SCUScanner
             if (Device.Android == Device.RuntimePlatform)
             {
 
+               
                 await CheckLocationPermission();
-
+               
             }
             else
                 App.IsAccessToBle = true;

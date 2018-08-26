@@ -1,5 +1,5 @@
 ﻿using Acr.UserDialogs;
-using MvvmCross;
+
 using Plugin.BLE;
 using Plugin.BLE.Abstractions.Contracts;
 using Plugin.Permissions;

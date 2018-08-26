@@ -1,7 +1,5 @@
 ﻿using Acr.UserDialogs;
 using FluentFTP;
-using MvvmCross;
-using MvvmCross.Commands;
 using Newtonsoft.Json;
 using Plugin.BLE;
 using Plugin.BLE.Abstractions;
