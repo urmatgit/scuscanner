@@ -314,6 +314,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloaded .
+        /// </summary>
+        internal static string DownloadedText {
+            get {
+                return ResourceManager.GetString("DownloadedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download New list.
         /// </summary>
         internal static string DownloadNewListText {
@@ -323,7 +332,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download file.
+        ///   Looks up a localized string similar to Download manual.
         /// </summary>
         internal static string DownloadText {
             get {

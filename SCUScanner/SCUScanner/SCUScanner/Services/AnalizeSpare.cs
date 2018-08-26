@@ -210,7 +210,7 @@ namespace SCUScanner.Services
                                     {
 
                                     }
-                                    App.Dialogs.Toast($"{Settings.Current.Resources["DownloadText"]}- {filename}");
+                                    App.Dialogs.Toast($"{Settings.Current.Resources["DownloadedText"]}- {filename}");
                                     //    }
                                     //}
                                 }

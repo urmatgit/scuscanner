@@ -218,7 +218,7 @@ Turn On Bluetooth and press </value>
     <value>Operator</value>
   </data>
   <data name="DownloadText" xml:space="preserve">
-    <value>Download file</value>
+    <value>Download manual</value>
   </data>
   <data name="AlarmHoursText" xml:space="preserve">
     <value>Alarm hours</value>
@@ -355,6 +355,9 @@ box only visible on factory version</value>
   </data>
   <data name="SelectPartText" xml:space="preserve">
     <value>Select part</value>
+  </data>
+  <data name="DownloadedText" xml:space="preserve">
+    <value>Downloaded </value>
   </data>
   <data name="DownloadNewListText" xml:space="preserve">
     <value>Download New list</value>
