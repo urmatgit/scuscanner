@@ -63,7 +63,7 @@ namespace SCUScanner
                 }
 
             }
-            App.Dialogs.Alert("MainMasterDetailPage");
+           
             MainPage = new SCUScanner.Pages.MainMasterDetailPage();
         }
 
