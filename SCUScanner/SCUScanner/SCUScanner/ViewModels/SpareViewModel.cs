@@ -14,8 +14,8 @@ namespace SCUScanner.ViewModels
 {
    public class SpareViewModel: BaseViewModel
     {
-        public double OrgImageWidth { get; set; } = 4958;
-        public double OrgImageHeight { get; set; } = 7015;
+        public double OrgImageWidth { get; set; } = 0;
+        public double OrgImageHeight { get; set; } = 0;
         public double SKViewDexX { get; set; } = 1;
         public double SKViewDexY { get; set; } = 1;
 
@@ -95,13 +95,15 @@ namespace SCUScanner.ViewModels
             //if (App.analizeSpare.ErrorConnect) // пока временно!!!
             //    ImageSpare = ImageSource.FromResource(App.analizeSpare.LocalImagePath);
             //else
+            if (System.IO.File.Exists(App.analizeSpare.LocalImagePath))
+            {
+                var size = DependencyService.Get<ISQLite>().GetImageOrgSize(App.analizeSpare.LocalImagePath);
+                OrgImageHeight = size.Height;
+                OrgImageWidth = size.Width;
 
-            var size = DependencyService.Get<ISQLite>().GetImageOrgSize(App.analizeSpare.LocalImagePath);
-            OrgImageHeight = size.Height;
-            OrgImageWidth = size.Width;
-            
                 GC.Collect();
-            GC.Collect();
+                GC.Collect();
+            }
           //  ImageSpare = ImageSource. FromFile(App.analizeSpare.LocalImagePath);
           
           

@@ -296,7 +296,7 @@ Turn On Bluetooth and press </value>
     <value>Scan the units QR code</value>
   </data>
   <data name="ManualNotFoundText" xml:space="preserve">
-    <value>Manual not found</value>
+    <value>file not found</value>
   </data>
   <data name="NoInternetConOrErrorText" xml:space="preserve">
     <value>No Internet access or connection error. Open local copy of files</value>

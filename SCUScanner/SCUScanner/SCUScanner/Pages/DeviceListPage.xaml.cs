@@ -64,6 +64,7 @@ namespace SCUScanner.Pages
             //{
             //    (this.BindingContext as IViewModel)?.OnActivate("MainTabPage");
             //}else 
+         //   this.BindingContext = deviceListViewModel;
             (this.BindingContext as IViewModel)?.OnActivate();
         }
 
@@ -71,6 +72,7 @@ namespace SCUScanner.Pages
         {
             base.OnDisappearing();
             (this.BindingContext as IViewModel)?.OnDeactivate();
+
         }
     }
 }

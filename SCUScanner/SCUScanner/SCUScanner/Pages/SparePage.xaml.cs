@@ -70,7 +70,7 @@ namespace SCUScanner.Pages
 
             float scaleXDraw = (float)(skCanvas.CanvasSize.Width / spareViewModel.OrgImageWidth);// / imgViewer.Bounds.Width;// * 100 / OrgImageWidth;
             float scaleYDraw = (float)(skCanvas.CanvasSize.Height / spareViewModel.OrgImageHeight);// / imgViewer.Bounds.Height;// * 100 / OrgImageHeight;
-            
+            if (App.analizeSpare.CSVParser.Parts == null || App.analizeSpare.CSVParser.Parts.Count == 0) return;
             foreach (Part part in App.analizeSpare.CSVParser.Parts)
             {
 

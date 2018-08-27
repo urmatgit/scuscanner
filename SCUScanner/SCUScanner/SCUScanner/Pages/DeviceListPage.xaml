@@ -63,8 +63,8 @@
                                         <Label Text="{Binding Rssi, StringFormat='RSSI: {0}'}" Grid.Row="0" Grid.Column="2" TextColor="Red" />
                                         <Label Text="{Binding Address}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
                                         <Button Margin="0"   Grid.Row="2"     Grid.Column="2"    Text="{Binding ConnectButtonText}"
-                                                Command="{Binding BindingContext.ConnectCommand,Source={x:Reference Name=DevicePage}}"
-                               CommandParameter="{Binding}"
+                                                Command="{Binding ConnectCommand}"
+                               
                                            BackgroundColor="Green"    TextColor="White" HeightRequest="40"  />
                                     </Grid>
                                 

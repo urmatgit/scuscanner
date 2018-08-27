@@ -5,11 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Windows.Input;
 
 namespace SCUScanner.ViewModels
 {
    public class DeviceListItemViewModel:BaseViewModel
     {
+        public ICommand ConnectCommand { get; protected set; }
+        public event EventHandler OnClickDevice;
         public IDevice Device { get; private set; }
 
         public Guid Id => Device.Id;
@@ -37,6 +40,11 @@ namespace SCUScanner.ViewModels
         {
             Device = device;
             Update(device);
+            ConnectCommand = ReactiveCommand.Create(() =>
+            {
+                if (OnClickDevice != null)
+                    OnClickDevice(this, new EventArgs());
+            });
         }
         public bool flgManualChangeName { get; set; } = false;
         public void UpdateButtonText()

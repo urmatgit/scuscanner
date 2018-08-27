@@ -145,6 +145,7 @@ namespace SCUScanner.Services
         }
         private string GetFileNameFromSerialNo(string serial)
         {
+            if (serial.Length < 15) return serial;
             return serial.Substring(0, 15);
            
         }

@@ -297,7 +297,7 @@ box only visible on factory version</value>
     <value>Сканировать QR код </value>
   </data>
   <data name="ManualNotFoundText" xml:space="preserve">
-    <value>Руководство не найдено</value>
+    <value>файл не найден</value>
   </data>
   <data name="NoInternetConOrErrorText" xml:space="preserve">
     <value>Нет доступа в Интернет или ошибка подключения. Открываю локальную копию руководства</value>

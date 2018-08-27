@@ -29,7 +29,8 @@ namespace SCUScanner.Helpers
             //if (index_ <= 0)
             //    index_ = serial.Length;
             //result = serial.Substring(0, index_).ToUpper();
-            result = serial.Substring(0, 15);
+           
+            result =serial.Length<15?serial:  serial.Substring(0, 15);
             result = $"{result}({lang}).pdf";
             return result;
         }

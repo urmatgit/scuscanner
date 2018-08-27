@@ -458,6 +458,7 @@ namespace SCUScanner.ViewModels
                 {
                    await  Adapter.StopScanningForDevicesAsync();
                     UpdateIsScanning();
+
                 }
                 else if (kod == "ConnectedTabPage")
                 {
@@ -538,7 +539,12 @@ namespace SCUScanner.ViewModels
                 }
                 else
                 {
-                    Devices.Add(new DeviceListItemViewModel(device));
+                    var vmdevice = new DeviceListItemViewModel(device);
+                    vmdevice.OnClickDevice += (s, e) =>
+                    {
+                        ConnectCommand.Execute(s);
+                    };
+                    Devices.Add(vmdevice);
                 }
             });
         }
@@ -672,6 +678,10 @@ namespace SCUScanner.ViewModels
                 if (deviceItem == null)
                 {
                     deviceItem = new DeviceListItemViewModel(device);
+                    deviceItem.OnClickDevice += (s, e) =>
+                    {
+                        ConnectCommand.Execute(s as DeviceListItemViewModel);
+                    };
                     Devices.Add(deviceItem);
                     
                 }
@@ -1276,6 +1286,8 @@ namespace SCUScanner.ViewModels
         }
         private async Task<bool> WriteValueAsync(string value, bool showloading = true)
         {
+        //    return true;
+
             bool result = false;
          
             try
