@@ -447,7 +447,7 @@ namespace SCUScanner.ViewModels
                         }
                         OnOpenFirst = false;
                     }
-                    else if (kod== "WriteTabPage")
+                    else if (kod== "WriteTabPage" && ScuData!=null)
                     {
                         BroadcastIdentityPlaceholder = ScuData.ID;
                         AlarmHoursToWritePlaceholder =ScuData.H==0?"":  ScuData.H.ToString();
@@ -472,7 +472,7 @@ namespace SCUScanner.ViewModels
                    await  StopUpdates();
                     SettingsBase.OperatorName = OperatorName;
                 }
-                else if (kod == "WriteTabPage")
+                else if (kod == "WriteTabPage" && ScuData != null)
                 {
                     BroadcastIdentityPlaceholder = ScuData.ID;
                     AlarmHoursToWritePlaceholder = ScuData.H == 0 ? "" : ScuData.H.ToString();
