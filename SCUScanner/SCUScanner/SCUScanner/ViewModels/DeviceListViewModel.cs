@@ -449,10 +449,10 @@ namespace SCUScanner.ViewModels
                     }
                     else if (kod== "WriteTabPage")
                     {
-                        BroadcastIdentityPlaceholder = BroadcastIdentity;
-                        AlarmHoursToWritePlaceholder = AlarmLevel;
-                        AlarmLevelPlaceHolder = AlarmLevel;
-                        CutOffPlaceholder = cutOff;
+                        BroadcastIdentityPlaceholder = ScuData.ID;
+                        AlarmHoursToWritePlaceholder =ScuData.H==0?"":  ScuData.H.ToString();
+                        AlarmLevelPlaceHolder = ScuData.A == 0 ? "" : ScuData.A.ToString(); ;
+                        CutOffPlaceholder = ScuData.COpc==0?"":ScuData.COpc.ToString();
                     }
                 }
             }
@@ -474,10 +474,10 @@ namespace SCUScanner.ViewModels
                 }
                 else if (kod == "WriteTabPage")
                 {
-                    BroadcastIdentityPlaceholder = BroadcastIdentity;
-                    AlarmHoursToWritePlaceholder = AlarmLevel;
-                    AlarmLevelPlaceHolder = AlarmLevel;
-                    CutOffPlaceholder = cutOff;
+                    BroadcastIdentityPlaceholder = ScuData.ID;
+                    AlarmHoursToWritePlaceholder = ScuData.H == 0 ? "" : ScuData.H.ToString();
+                    AlarmLevelPlaceHolder = ScuData.Apc == 0 ? "" : ScuData.Apc.ToString(); ;
+                    CutOffPlaceholder = ScuData.COpc == 0 ? "" : ScuData.COpc.ToString();
                 }
             }
             base.OnDeactivate();
