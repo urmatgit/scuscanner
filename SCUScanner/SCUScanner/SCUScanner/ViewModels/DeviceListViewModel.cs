@@ -1099,9 +1099,9 @@ namespace SCUScanner.ViewModels
             set
             {
                 string str = Resources["BroadcastIdentityText"];
-                if (!string.IsNullOrEmpty(BroadcastIdentity))
+                if (!string.IsNullOrEmpty(value))
                 {
-                    str = BroadcastIdentity;
+                    str = value;
                 }
                 this.RaiseAndSetIfChanged(ref broadcastIdentityPlaceholder, str);
             }
