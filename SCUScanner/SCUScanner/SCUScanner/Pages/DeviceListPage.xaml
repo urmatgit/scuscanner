@@ -217,8 +217,8 @@
                     </Entry>
                     <Label IsVisible="{Binding IsFactoryVerion}" Grid.Column="0" Grid.Row="9" x:Name="SerialNumberErrorMessage" TextColor="Red" FontAttributes="Italic" FontSize="Small"/>
                     <Button IsVisible="{Binding IsFactoryVerion}" Grid.Column="1" Grid.Row="8" CommandParameter="SN" Text="{Binding Resources[SendButtonText]}" Command="{Binding WriteCommnad}"   BackgroundColor="Green"    TextColor="White" />
-                
-                <Label Grid.Column="0" Grid.Row="10" Text="{Binding Resources[SetSerialNumberInfoText]}"  />
+
+                    <Label IsVisible="{Binding IsFactoryVerion}"  Grid.Column="0" Grid.Row="10" Text="{Binding Resources[SetSerialNumberInfoText]}"  />
                 <!--<Button Grid.Column="0"  Grid.Row="11"   Text="{Binding Resources[SendButtonText]}"  
                     Command="{Binding SendCommand}"  BackgroundColor="Green"    TextColor="White"/>-->
             </Grid>
