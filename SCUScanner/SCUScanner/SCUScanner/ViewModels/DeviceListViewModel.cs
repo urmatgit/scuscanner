@@ -447,6 +447,13 @@ namespace SCUScanner.ViewModels
                         }
                         OnOpenFirst = false;
                     }
+                    else if (kod== "WriteTabPage")
+                    {
+                        BroadcastIdentityPlaceholder = BroadcastIdentity;
+                        AlarmHoursToWritePlaceholder = AlarmLevel;
+                        AlarmLevelPlaceHolder = AlarmLevel;
+                        CutOffPlaceholder = cutOff;
+                    }
                 }
             }
         }
@@ -464,7 +471,13 @@ namespace SCUScanner.ViewModels
                 {
                    await  StopUpdates();
                     SettingsBase.OperatorName = OperatorName;
-                    
+                }
+                else if (kod == "WriteTabPage")
+                {
+                    BroadcastIdentityPlaceholder = BroadcastIdentity;
+                    AlarmHoursToWritePlaceholder = AlarmLevel;
+                    AlarmLevelPlaceHolder = AlarmLevel;
+                    CutOffPlaceholder = cutOff;
                 }
             }
             base.OnDeactivate();
