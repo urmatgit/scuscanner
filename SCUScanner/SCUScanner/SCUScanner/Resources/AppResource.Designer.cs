@@ -413,6 +413,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Local image not found!!!.
+        /// </summary>
+        internal static string IsImageNotFoundText {
+            get {
+                return ResourceManager.GetString("IsImageNotFoundText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to length must be up to {0} characters.
         /// </summary>
         internal static string LengthMustBeText {

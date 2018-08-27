@@ -48,6 +48,12 @@ namespace SCUScanner.ViewModels
             get => isHasCart;
             set => this.RaiseAndSetIfChanged(ref isHasCart, value);
         }
+        bool _IsImageNotFound = false;
+       public bool IsImageNotFound
+        {
+            get => _IsImageNotFound;
+            set => this.RaiseAndSetIfChanged(ref _IsImageNotFound, value);
+        }
         private ImageSource imageSpare;
         public ImageSource ImageSpare
         {
@@ -143,6 +149,7 @@ namespace SCUScanner.ViewModels
         {
             CartCount = App.analizeSpare.vmCarts.TotalSum().ToString();
             base.OnActivate(kod);
+            
         }
 
         #region Properties

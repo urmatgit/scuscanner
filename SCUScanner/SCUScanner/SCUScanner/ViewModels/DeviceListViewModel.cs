@@ -265,7 +265,10 @@ namespace SCUScanner.ViewModels
             Adapter.DeviceDisconnected += OnDeviceDisconnected;
             Adapter.DeviceConnectionLost += OnDeviceConnectionLost;
             // quick and dirty :>
-
+            BroadcastIdentityPlaceholder = "";
+            AlarmHoursToWritePlaceholder = "";
+            CutOffPlaceholder = "";
+            AlarmLevelPlaceHolder = "";
             //Adapter.DeviceConnected += (sender, e) => Adapter.DisconnectDeviceAsync(e.Device);
 
         }
@@ -1075,7 +1078,7 @@ namespace SCUScanner.ViewModels
                 string str = Resources["BroadcastIdentityText"];
                 if (!string.IsNullOrEmpty(BroadcastIdentity))
                 {
-                    str = value;
+                    str = BroadcastIdentity;
                 }
                 this.RaiseAndSetIfChanged(ref broadcastIdentityPlaceholder, str);
             }
@@ -1145,6 +1148,12 @@ namespace SCUScanner.ViewModels
         {
             get => setSerialNumber;
             set => this.RaiseAndSetIfChanged(ref setSerialNumber, value);
+        }
+        private bool _IsFactoryVerion = false;
+        public bool IsFactoryVerion
+        {
+            get => _IsFactoryVerion;
+            set => this.RaiseAndSetIfChanged(ref _IsFactoryVerion, value);
         }
         public string LastJsonForShare { get; private set; }
 

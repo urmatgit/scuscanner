@@ -54,7 +54,7 @@ namespace SCUScanner.Models
         bool showPartNumber = false;
         public bool ShowPartNumber
         {
-            get => AppSettings.GetValueOrDefault(nameof(ShowPartNumber), true);
+            get => AppSettings.GetValueOrDefault(nameof(ShowPartNumber), false);
             set
             {
                 if (AppSettings.AddOrUpdateValue(nameof(ShowPartNumber), value))

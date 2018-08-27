@@ -206,6 +206,7 @@ namespace SCUScanner.Pages
             _SKCanvas.Clear(SKColors.Transparent);
             if (File.Exists(App.analizeSpare.LocalImagePath))
             {
+                spareViewModel.IsImageNotFound = false;
                 SKBitmap sourceBitmap = SKBitmap.Decode(App.analizeSpare.LocalImagePath);
 
                 Debug.WriteLine($"Image info -{sourceBitmap.Info.Width}-{sourceBitmap.Info.Height}");
@@ -217,6 +218,10 @@ namespace SCUScanner.Pages
                     FilterQuality = SKFilterQuality.High
                 };
                 _SKCanvas.DrawBitmap(sourceBitmap, e.Info.Rect, paint);
+            }
+            else
+            {
+                spareViewModel.IsImageNotFound = true;
             }
             //spareViewModel.SKViewDexX =(skCanvas.CanvasSize.Width /imgViewer.Width);
             //spareViewModel.SKViewDexY =(skCanvas.CanvasSize.Height / imgViewer.Height);
