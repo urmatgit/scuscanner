@@ -56,10 +56,9 @@ namespace SCUScanner.Pages
 
         private void NavigationBarView_OnOptionOK(object sender, EventArgsShowBorderChange e)
         {
-            if(e.OldValue!=e.NewValue)
+            if(e.OldBorderValue!=e.NewBorderValue || e.OldNumberValue!=e.NewNumberValue)
             {
-                DrawPartBorder(e.NewValue);
-
+                DrawPartBorder(e.NewBorderValue);
             }
         }
 
@@ -85,18 +84,15 @@ namespace SCUScanner.Pages
                 //absLayout.Children.Add(button, part.Rect);
                 SKColor sKColor = SKColors.Blue;
                 SKColor textColor = SKColors.Brown;
+                float x = (float)(part.OrgRect.Left * scaleXDraw);
+                float y = (float)(part.OrgRect.Top * scaleYDraw);
+                SKRect sKRect = new SKRect(x, y, (float)(part.OrgRect.Right * scaleXDraw), (float)(part.OrgRect.Bottom * scaleYDraw));
                 if (Models.Settings.Current.ShowPartBoder)
                 {
-                    //   sKColor = SKColors.Transparent;
-                    // textColor = SKColors.Transparent;
-
-                    float x = (float)(part.OrgRect.Left * scaleXDraw);
-                    float y =(float)(part.OrgRect.Top * scaleYDraw);
-                    SKRect sKRect = new SKRect(x, y, (float)(part.OrgRect.Right * scaleXDraw), (float)(part.OrgRect.Bottom * scaleYDraw));
-                    
-                    _SKCanvas.DrawRect(sKRect, new SKPaint() { Color = sKColor, Style = SKPaintStyle.Stroke });
-                    _SKCanvas.DrawText(part.PartNumber, new SKPoint() { X = sKRect.Left, Y = sKRect.Top }, new SKPaint() { Color = textColor, Style = SKPaintStyle.Stroke });
+                   _SKCanvas.DrawRect(sKRect, new SKPaint() { Color = sKColor, Style = SKPaintStyle.Stroke });
                 }
+                if (Models.Settings.Current.ShowPartNumber)
+                    _SKCanvas.DrawText(part.PartNumber, new SKPoint() { X = sKRect.Left, Y = sKRect.Top }, new SKPaint() { Color = textColor, Style = SKPaintStyle.Stroke });
                 if (!IsPartAdded)
                     part.ReSize(scaleX, scaleY);
             }
@@ -110,14 +106,7 @@ namespace SCUScanner.Pages
             skCanvas.InvalidateSurface();
 
 
-            //    AddButtons();
-            //foreach(PartButton button in  absLayout.Children.Where(c=>c is PartButton))
-            //{
-            //    if (draw)
-            //        button.DrawBorder();
-            //    else
-            //        button.RemoveBorder();
-            //}
+            
         }
         private   void Button_OnLongPressed(object sender, EventArgs e)
         {

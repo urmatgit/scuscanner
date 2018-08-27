@@ -206,10 +206,10 @@ Turn On Bluetooth and press </value>
     <value>Note</value>
   </data>
   <data name="ConnectedDeviceCaptionText" xml:space="preserve">
-    <value>Connected Device</value>
+    <value>Device</value>
   </data>
   <data name="DeviceSettingsCaptionText" xml:space="preserve">
-    <value>Device Settings</value>
+    <value>Settings</value>
   </data>
   <data name="NearbyDevicesCaptionText" xml:space="preserve">
     <value>Nearby Devices</value>
@@ -221,16 +221,16 @@ Turn On Bluetooth and press </value>
     <value>Download manual</value>
   </data>
   <data name="AlarmHoursText" xml:space="preserve">
-    <value>Alarm hours</value>
+    <value>Alarm {0} hours</value>
   </data>
   <data name="AlarmLevelText" xml:space="preserve">
-    <value>Alarm level %</value>
+    <value>Alarm level {0}%</value>
   </data>
   <data name="BroadcastIdentityText" xml:space="preserve">
     <value>Broadcast identity</value>
   </data>
   <data name="CutOffText" xml:space="preserve">
-    <value>Cut off %</value>
+    <value>Cut off {0}%</value>
   </data>
   <data name="SendButtonText" xml:space="preserve">
     <value>Send</value>
@@ -351,7 +351,7 @@ box only visible on factory version</value>
     <value>Add to order</value>
   </data>
   <data name="SettingPartBorderText" xml:space="preserve">
-    <value>Show part border</value>
+    <value>Show boundaries</value>
   </data>
   <data name="SelectPartText" xml:space="preserve">
     <value>Select part</value>
@@ -367,5 +367,8 @@ box only visible on factory version</value>
   </data>
   <data name="UseExistingListText" xml:space="preserve">
     <value>Use existing list</value>
+  </data>
+  <data name="ShowPartNumText" xml:space="preserve">
+    <value>Show part number</value>
   </data>
 </root>

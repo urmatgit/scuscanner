@@ -20,7 +20,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <!--Text="{local:Translate ContinuousScanText}}"-->
-                <Label  Grid.Column="0" Grid.Row="0" Text="{Binding Resources[SettingPartBorderText]}" VerticalTextAlignment="Center" />
+                <Label  Grid.Column="0" Grid.Row="0" Text="{Binding Resources[ContinuousScanText]}" VerticalTextAlignment="Center" />
                 <Switch BindingContext="{Binding SettingsBase}" Grid.Column="1" Grid.Row="0" IsToggled="{Binding AutoScan}"/>
                 
                 <Label Grid.Column="0" Grid.Row="1" Text="{Binding Resources[ManualScanText]}" VerticalTextAlignment="Center"/>

@@ -203,7 +203,7 @@
     <value>Примечание</value>
   </data>
   <data name="ConnectedDeviceCaptionText" xml:space="preserve">
-    <value>Подключенное</value>
+    <value>Устройство</value>
   </data>
   <data name="DeviceSettingsCaptionText" xml:space="preserve">
     <value>Параметры</value>
@@ -221,16 +221,16 @@
     <value>Статус</value>
   </data>
   <data name="AlarmHoursText" xml:space="preserve">
-    <value>Alarm hours</value>
+    <value>Alarm {0} hours</value>
   </data>
   <data name="AlarmLevelText" xml:space="preserve">
-    <value>Alarm level %</value>
+    <value>Alarm level {0}%</value>
   </data>
   <data name="BroadcastIdentityText" xml:space="preserve">
     <value>Идентификатор устройства</value>
   </data>
   <data name="CutOffText" xml:space="preserve">
-    <value>Cut Off %</value>
+    <value>Cut Off {0}%</value>
   </data>
   <data name="SendButtonText" xml:space="preserve">
     <value>Записать</value>

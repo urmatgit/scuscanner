@@ -14,8 +14,10 @@ namespace SCUScanner.Helpers
 {
     public class EventArgsShowBorderChange: EventArgs
     {
-        public bool OldValue { get; set; }
-        public bool NewValue { get; set; }
+        public bool OldBorderValue { get; set; }
+        public bool NewBorderValue { get; set; }
+        public bool OldNumberValue { get; set; }
+        public bool NewNumberValue { get; set; }
     }
    public static class Utils
     {

@@ -70,7 +70,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alarm hours.
+        ///   Looks up a localized string similar to Alarm {0} hours.
         /// </summary>
         internal static string AlarmHoursText {
             get {
@@ -79,7 +79,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alarm level %.
+        ///   Looks up a localized string similar to Alarm level {0}%.
         /// </summary>
         internal static string AlarmLevelText {
             get {
@@ -179,7 +179,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connected Device.
+        ///   Looks up a localized string similar to Device.
         /// </summary>
         internal static string ConnectedDeviceCaptionText {
             get {
@@ -224,7 +224,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cut off %.
+        ///   Looks up a localized string similar to Cut off {0}%.
         /// </summary>
         internal static string CutOffText {
             get {
@@ -278,7 +278,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Device Settings.
+        ///   Looks up a localized string similar to Settings.
         /// </summary>
         internal static string DeviceSettingsCaptionText {
             get {
@@ -702,7 +702,7 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show part border.
+        ///   Looks up a localized string similar to Show boundaries.
         /// </summary>
         internal static string SettingPartBorderText {
             get {
@@ -743,6 +743,15 @@ namespace SCUScanner.Resources {
         internal static string SharePartTitle {
             get {
                 return ResourceManager.GetString("SharePartTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show part number.
+        /// </summary>
+        internal static string ShowPartNumText {
+            get {
+                return ResourceManager.GetString("ShowPartNumText", resourceCulture);
             }
         }
         

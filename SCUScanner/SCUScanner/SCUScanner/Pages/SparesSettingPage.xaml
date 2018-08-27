@@ -11,12 +11,28 @@
     </ContentPage.Padding>
     <ContentPage.Content>
         <StackLayout HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Transparent">
-            <StackLayout Orientation="Horizontal">
-                <Label   Text="{Binding Resources[SettingPartBorderText]}" VerticalTextAlignment="Center" />
-                <Switch BindingContext="{Binding SettingsBase}"  IsToggled="{Binding ShowPartBoder}"/>
-            </StackLayout>
+            <Grid VerticalOptions="Center" HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+            
+                <Label  Grid.Column="0" Grid.Row="0"  Text="{Binding Resources[SettingPartBorderText]}" VerticalTextAlignment="Center" />
+            <Switch  Grid.Column="1" Grid.Row="0" BindingContext="{Binding SettingsBase}"  IsToggled="{Binding ShowPartBoder}"/>
 
-            <Button x:Name="dismissButton" Text="{Binding Resources[OkText]}" Clicked="OnDismissButtonClicked" BackgroundColor="Green" TextColor="White" />
+
+
+            <Label  Grid.Column="0" Grid.Row="1"   Text="{Binding Resources[ShowPartNumText]}" VerticalTextAlignment="Center" />
+            <Switch Grid.Column="1" Grid.Row="1"  BindingContext="{Binding SettingsBase}"  IsToggled="{Binding ShowPartNumber}"/>
+
+            <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Center"  x:Name="dismissButton" Text="{Binding Resources[OkText]}" Clicked="OnDismissButtonClicked" BackgroundColor="Green" TextColor="White" MinimumWidthRequest="50" WidthRequest="150" />
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

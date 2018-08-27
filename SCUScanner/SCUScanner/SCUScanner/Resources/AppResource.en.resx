@@ -203,10 +203,10 @@ Turn On Bluetooth and press </value>
     <value>Note</value>
   </data>
   <data name="ConnectedDeviceCaptionText" xml:space="preserve">
-    <value>Connected device</value>
+    <value>Device</value>
   </data>
   <data name="DeviceSettingsCaptionText" xml:space="preserve">
-    <value>Device Settings</value>
+    <value>Settings</value>
   </data>
   <data name="NearbyDevicesCaptionText" xml:space="preserve">
     <value>Nearby Devices</value>
@@ -221,16 +221,16 @@ Turn On Bluetooth and press </value>
     <value>Status</value>
   </data>
   <data name="AlarmHoursText" xml:space="preserve">
-    <value>Alarm hours</value>
+    <value>Alarm {0} hours</value>
   </data>
   <data name="AlarmLevelText" xml:space="preserve">
-    <value>Alarm level %</value>
+    <value>Alarm level {0}%</value>
   </data>
   <data name="BroadcastIdentityText" xml:space="preserve">
     <value>Broadcast identity</value>
   </data>
   <data name="CutOffText" xml:space="preserve">
-    <value>Cut Off %</value>
+    <value>Cut Off {0}%</value>
   </data>
   <data name="SendButtonText" xml:space="preserve">
     <value>Send</value>

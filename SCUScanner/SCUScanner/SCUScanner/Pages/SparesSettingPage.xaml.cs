@@ -22,12 +22,15 @@ namespace SCUScanner.Pages
             BindingContext = new BaseViewModel();
             OnOptionOK = onOptionOK;
             eventArg = new EventArgsShowBorderChange();
-            eventArg.OldValue = Models.Settings.Current.ShowPartBoder;
+            eventArg.OldBorderValue = Models.Settings.Current.ShowPartBoder;
+            eventArg.OldNumberValue = Models.Settings.Current.ShowPartNumber;
+
         }
 
         private async void OnDismissButtonClicked(object sender, EventArgs e)
         {
-            eventArg.NewValue= Models.Settings.Current.ShowPartBoder;
+            eventArg.NewBorderValue= Models.Settings.Current.ShowPartBoder;
+            eventArg.NewNumberValue = Models.Settings.Current.ShowPartNumber;
             OnOptionOK?.Invoke(sender, eventArg);
             await Navigation.PopModalAsync();
         }

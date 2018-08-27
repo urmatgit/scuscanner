@@ -51,6 +51,21 @@ namespace SCUScanner.Models
                 }
             }
         }
+        bool showPartNumber = false;
+        public bool ShowPartNumber
+        {
+            get => AppSettings.GetValueOrDefault(nameof(ShowPartNumber), true);
+            set
+            {
+                if (AppSettings.AddOrUpdateValue(nameof(ShowPartNumber), value))
+                {
+                    //SetProperty(ref original, value);
+                    //OnPropertyChanged("ManualScan");
+                    this.RaiseAndSetIfChanged(ref this.showPartNumber, value);
+                    //   ManualScan = !this.scanmode;
+                }
+            }
+        }
         /// <summary>
         /// if false =Continuouse, true -manual
         /// </summary>

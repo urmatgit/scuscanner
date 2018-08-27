@@ -128,7 +128,7 @@ namespace SCUScanner.ViewModels
             {
                 App.SerialNumber = sn;
             });
-
+            
             
             //if (Device.iOS == Device.RuntimePlatform)
             //    IsStateOn = true;
@@ -1065,6 +1065,22 @@ namespace SCUScanner.ViewModels
 
 
         #region Write to device
+        private string broadcastIdentityPlaceholder;
+
+        public string BroadcastIdentityPlaceholder
+        {
+            get => broadcastIdentityPlaceholder;
+            set
+            {
+                string str = Resources["BroadcastIdentityText"];
+                if (!string.IsNullOrEmpty(BroadcastIdentity))
+                {
+                    str = value;
+                }
+                this.RaiseAndSetIfChanged(ref broadcastIdentityPlaceholder, str);
+            }
+        }
+
         private string broadcastIdentity;
 
         public string BroadcastIdentity
@@ -1072,18 +1088,52 @@ namespace SCUScanner.ViewModels
             get => broadcastIdentity;
             set => this.RaiseAndSetIfChanged(ref broadcastIdentity, value);
         }
+        private string _AlarmLevelPlaceHolder;
+        public string AlarmLevelPlaceHolder
+        {
+            get => _AlarmLevelPlaceHolder;
+            set  {
+                string str = string.Format(Resources["AlarmLevelText"],value);
+
+                this.RaiseAndSetIfChanged(ref _AlarmLevelPlaceHolder, str);
+            }
+
+        }
+        
         private string alarmLevel;
         public string AlarmLevel
         {
             get => alarmLevel;
             set => this.RaiseAndSetIfChanged(ref alarmLevel, value);
         }
+        private string cutOffPlaceholder;
+        public string CutOffPlaceholder
+        {
+            get => cutOffPlaceholder;
+            set
+            {
+                string str = string.Format(Resources["CutOffText"], value);
+                this.RaiseAndSetIfChanged(ref cutOffPlaceholder,str);
+            }
+        }
+
         private string cutOff;
         public string CutOff
         {
             get => cutOff;
             set => this.RaiseAndSetIfChanged(ref cutOff, value);
         }
+        private string alarmHoursToWritePlaceholder;
+        public string AlarmHoursToWritePlaceholder
+        {
+            get => alarmHoursToWritePlaceholder;
+            set
+            {
+                string str = string.Format(Resources["AlarmHoursText"], value);
+                this.RaiseAndSetIfChanged(ref alarmHoursToWritePlaceholder, str);
+            }
+        }
+
         private string alarmHoursToWrite;
         public string AlarmHoursToWrite
         {
@@ -1135,28 +1185,42 @@ namespace SCUScanner.ViewModels
                                 }
                                 //ConnectCommand.Execute(SelectedDevice);
                             }
+                            BroadcastIdentityPlaceholder = BroadcastIdentity;
+                            BroadcastIdentity = "";
                         }
                     }
                     break;//BroadcastIdentity ID
                 case "AL":
                     if (!string.IsNullOrEmpty(AlarmLevel))
                     {
-                       if (await WriteValueAsync($"^{AlarmLevel}"))
-                        _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
+                        if (await WriteValueAsync($"^{AlarmLevel}"))
+                        {
+                            AlarmLevelPlaceHolder = AlarmLevel;
+                            AlarmLevel = "";
+                            _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
+                        }
                     }
                     break;//larmLevel
                 case "CF":
                     if (!string.IsNullOrEmpty(CutOff))
                     {
-                       if (await WriteValueAsync($"@{CutOff}"))
-                        _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
+                        if (await WriteValueAsync($"@{CutOff}"))
+                        {
+                            CutOffPlaceholder = CutOff;
+                            CutOff = "";
+                            _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
+                        }
                     }
                         break;//CutOff
                 case "AH":
                     if (!string.IsNullOrEmpty(AlarmHoursToWrite))
                     {
                         if (await WriteValueAsync($"~{AlarmHoursToWrite.PadLeft(4, '0')}"))
-                        _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
+                        {
+                            AlarmHoursToWritePlaceholder = AlarmHoursToWrite;
+                            AlarmHoursToWrite = "";
+                            _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
+                        }
                     }
                         break;//AlarmHours
                 case "SN":
@@ -1193,7 +1257,10 @@ namespace SCUScanner.ViewModels
                             }
                         }
                         if (res)
+                        {
+                            SetSerialNumber = "";
                             _deviceListPage.CurrentPage = _deviceListPage.ConnectDeviceTab;
+                        }
                     }
                     break;//SerialNumber
             }
