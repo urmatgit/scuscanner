@@ -50,13 +50,14 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARMv7, ARMv7s, ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer: urmat2g@gmail.com (A2PW44G33F)</CodesignKey>
+    <CodesignKey>iPhone Distribution: Maxim Osipenko (GSHESUSNEG)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>
     </CodesignEntitlements>
     <BuildIpa>true</BuildIpa>
     <IpaMetadata>Info.plist</IpaMetadata>
-    <CodesignProvision>iOS Team Provisioning Profile: Home.CentriClean</CodesignProvision>
+    <CodesignProvision>
+    </CodesignProvision>
     <IpaIncludeArtwork>false</IpaIncludeArtwork>
     <MtouchSdkVersion>11.4</MtouchSdkVersion>
     <CodesignExtraArgs />
@@ -68,11 +69,12 @@
     <OutputPath>bin\iPhone\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <MtouchArch>ARM64</MtouchArch>
+    <MtouchArch>ARMv7, ARMv7s, ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer: urmat2g@gmail.com (A2PW44G33F)</CodesignKey>
+    <CodesignKey>iPhone Distribution: Maxim Osipenko (GSHESUSNEG)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>iOS Team Provisioning Profile: home.TestKey</CodesignProvision>
+    <CodesignProvision>New_13devices</CodesignProvision>
+    <BuildIpa>true</BuildIpa>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
@@ -83,7 +85,7 @@
     <ConsolePause>False</ConsolePause>
     <MtouchArch>ARMv7, ARMv7s, ARM64</MtouchArch>
     <BuildIpa>True</BuildIpa>
-    <CodesignProvision>New_6devices</CodesignProvision>
+    <CodesignProvision>New_8devices</CodesignProvision>
     <CodesignKey>iPhone Distribution: Maxim Osipenko (GSHESUSNEG)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <IpaMetadata>Info.plist</IpaMetadata>

@@ -58,6 +58,6 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Can we use your camera</string>
 	<key>CFBundleIdentifier</key>
-	<string>Home.CentriClean</string>
+	<string>com.chestersw.CentriClean</string>
 </dict>
 </plist>
