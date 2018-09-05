@@ -21,7 +21,9 @@ namespace SCUScanner.iOS.Controls
 
             if (Control == null)
             {
-                SetNativeControl(new UIWebView());
+                var webView = new UIWebView(Frame);
+                webView.AutoresizingMask = UIViewAutoresizing.All;
+                SetNativeControl(webView);
             }
             if (e.OldElement != null)
             {
@@ -34,7 +36,12 @@ namespace SCUScanner.iOS.Controls
                 string fileName = customWebView.Uri;// Path.Combine(NSBundle.MainBundle.BundlePath, string.Format("Content/{0}", WebUtility.UrlEncode(customWebView.Uri)));
                 Control.LoadRequest(new NSUrlRequest(new NSUrl(fileName, false)));
                 Control.ScalesPageToFit = true;
+                 
             }
+        }
+        public override SizeRequest GetDesiredSize(double widthConstraint, double heightConstraint)
+        {
+            return new SizeRequest(Size.Zero, Size.Zero);
         }
     }
 }
