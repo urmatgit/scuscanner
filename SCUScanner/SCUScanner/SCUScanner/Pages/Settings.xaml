@@ -18,6 +18,7 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <!--Text="{local:Translate ContinuousScanText}}"-->
                 <Label  Grid.Column="0" Grid.Row="0" Text="{Binding Resources[ContinuousScanText]}" VerticalTextAlignment="Center" />
@@ -39,6 +40,11 @@
 
                 <Label Grid.Column="0" Grid.Row="3" Text="{Binding Resources[DebugModeText]}" VerticalTextAlignment="Center"/>
                 <Switch BindingContext="{Binding SettingsBase}" Grid.Column="1" Grid.Row="3" IsToggled="{Binding ShowDebugJson}"/>
+                
+                
+                <Label Grid.Column="0" Grid.Row="4" Text="Show serial number" VerticalTextAlignment="Center"/>
+                <Switch BindingContext="{Binding SettingsBase}" Grid.Column="1" Grid.Row="4" IsToggled="{Binding ShowSerialNumber}"/>
+
             </Grid>
             
             
