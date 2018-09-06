@@ -40,9 +40,9 @@
 
                 <Label Grid.Column="0" Grid.Row="3" Text="{Binding Resources[DebugModeText]}" VerticalTextAlignment="Center"/>
                 <Switch BindingContext="{Binding SettingsBase}" Grid.Column="1" Grid.Row="3" IsToggled="{Binding ShowDebugJson}"/>
-                
-                
-                <Label Grid.Column="0" Grid.Row="4" Text="Show serial number" VerticalTextAlignment="Center"/>
+
+
+                <Label Grid.Column="0" Grid.Row="4" Text="{Binding Resources[ShowSerialNumberText]}" VerticalTextAlignment="Center"/>
                 <Switch BindingContext="{Binding SettingsBase}" Grid.Column="1" Grid.Row="4" IsToggled="{Binding ShowSerialNumber}"/>
 
             </Grid>

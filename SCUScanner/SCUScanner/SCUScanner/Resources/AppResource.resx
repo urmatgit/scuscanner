@@ -374,4 +374,7 @@ box only visible on factory version</value>
   <data name="IsImageNotFoundText" xml:space="preserve">
     <value>Local image not found!!!</value>
   </data>
+  <data name="ShowSerialNumberText" xml:space="preserve">
+    <value>Show serial number</value>
+  </data>
 </root>

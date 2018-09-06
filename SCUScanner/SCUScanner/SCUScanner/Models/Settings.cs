@@ -43,7 +43,7 @@ namespace SCUScanner.Models
             get => AppSettings.GetValueOrDefault(nameof(ShowSerialNumber), false);
             set
             {
-                var original = ShowDSerialNumber;
+                var original = ShowSerialNumber;
                 if (AppSettings.AddOrUpdateValue(nameof(ShowSerialNumber), value))
                 {
                     this.RaiseAndSetIfChanged(ref this.showSerialNumber, value);

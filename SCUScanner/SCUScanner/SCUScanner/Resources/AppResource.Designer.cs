@@ -765,6 +765,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show serial number.
+        /// </summary>
+        internal static string ShowSerialNumberText {
+            get {
+                return ResourceManager.GetString("ShowSerialNumberText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spares.
         /// </summary>
         internal static string SparesText {
