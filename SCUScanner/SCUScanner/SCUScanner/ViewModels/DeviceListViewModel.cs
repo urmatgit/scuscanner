@@ -417,6 +417,7 @@ namespace SCUScanner.ViewModels
             UpdateIsScanning();
             UpdateScanText(IsRefreshing);
             UpdateStateText();
+            IsFactoryVerion=SettingsBase.ShowSerialNumber;
             if (IsStateOn && !string.IsNullOrEmpty(kod))
             {
                 if (kod == "MainTabPage") {
