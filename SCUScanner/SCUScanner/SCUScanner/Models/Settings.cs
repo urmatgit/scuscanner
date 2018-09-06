@@ -36,6 +36,21 @@ namespace SCUScanner.Models
                 }
             }
         }
+        //
+         bool showSerialNumber = false;
+        public bool ShowSerialNumber
+        {
+            get => AppSettings.GetValueOrDefault(nameof(ShowSerialNumber), false);
+            set
+            {
+                var original = ShowDSerialNumber;
+                if (AppSettings.AddOrUpdateValue(nameof(ShowSerialNumber), value))
+                {
+                    this.RaiseAndSetIfChanged(ref this.showSerialNumber, value);
+                }
+            }
+        }
+        
         bool showPartBorder = true;
         public bool ShowPartBoder
         {
