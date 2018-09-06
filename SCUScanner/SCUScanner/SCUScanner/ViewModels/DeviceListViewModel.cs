@@ -451,7 +451,7 @@ namespace SCUScanner.ViewModels
                     {
                         BroadcastIdentityPlaceholder = ScuData.ID;
                         AlarmHoursToWritePlaceholder =ScuData.H==0?"":  ScuData.H.ToString();
-                        AlarmLevelPlaceHolder = ScuData.A == 0 ? "" : ScuData.A.ToString(); ;
+                        AlarmLevelPlaceHolder = ScuData.Apc == 0 ? "" : ScuData.Apc.ToString(); 
                         CutOffPlaceholder = ScuData.COpc==0?"":ScuData.COpc.ToString();
                     }
                 }
@@ -476,7 +476,7 @@ namespace SCUScanner.ViewModels
                 {
                     BroadcastIdentityPlaceholder = ScuData.ID;
                     AlarmHoursToWritePlaceholder = ScuData.H == 0 ? "" : ScuData.H.ToString();
-                    AlarmLevelPlaceHolder = ScuData.Apc == 0 ? "" : ScuData.Apc.ToString(); ;
+                    AlarmLevelPlaceHolder = ScuData.Apc == 0 ? "" : ScuData.Apc.ToString();
                     CutOffPlaceholder = ScuData.COpc == 0 ? "" : ScuData.COpc.ToString();
                 }
             }
