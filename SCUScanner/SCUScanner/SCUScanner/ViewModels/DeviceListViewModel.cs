@@ -175,6 +175,7 @@ namespace SCUScanner.ViewModels
                         SelectedDevice = o;
                         PreviewColor = Color.White;
                         Name = SelectedDevice.Name;
+                        Thread.Sleep(100);
                         await OpenConnectedPage(o);
 
 
@@ -460,7 +461,9 @@ namespace SCUScanner.ViewModels
                     }
                     else if (kod== "WriteTabPage" && ScuData!=null)
                     {
+                        Debug.WriteLine("ScuData");
                         BroadcastIdentityPlaceholder = ScuData.ID;
+                        Debug.WriteLine($"{BroadcastIdentityPlaceholder}-{ScuData.ID}");
                         AlarmHoursToWritePlaceholder =ScuData.H==0?"":  ScuData.H.ToString();
                         AlarmLevelPlaceHolder = ScuData.Apc == 0 ? "" : ScuData.Apc.ToString(); 
                         CutOffPlaceholder = ScuData.COpc==0?"":ScuData.COpc.ToString();
@@ -540,7 +543,7 @@ namespace SCUScanner.ViewModels
                     //Mvx.Trace(ex.Message);
                     await _userDialogs.AlertAsync($"Failed to update RSSI for {connectedDevice.Name}");
                 }
-
+                Debug.WriteLine($"device- {connectedDevice.Name} added");
                 AddOrUpdateDevice(connectedDevice);
             }
 
@@ -559,7 +562,8 @@ namespace SCUScanner.ViewModels
                 var vm = Devices.FirstOrDefault(d => d.Device.Id == device.Id);
                 if (vm != null)
                 {
-                    vm.Update();
+                    vm.Update(device);
+                    Debug.WriteLine($"vm.Update(device);");
                 }
                 else
                 {
@@ -609,7 +613,7 @@ namespace SCUScanner.ViewModels
                     //{
                     //    autoConnect = true;
                     //}
-                    await Adapter.ConnectToDeviceAsync(device.Device, new ConnectParameters(autoConnect: autoConnect, forceBleTransport: false), tokenSource.Token);
+                    await Adapter.ConnectToDeviceAsync(device.Device, new ConnectParameters(autoConnect: autoConnect, forceBleTransport: true), tokenSource.Token);
                 }
 
                 _userDialogs.Toast($"{SettingsBase.Resources["ConnectStatusText"]}  {device.Name}.");
@@ -692,7 +696,8 @@ namespace SCUScanner.ViewModels
                     progress.Show();
 
                     device = await Adapter.ConnectToKnownDeviceAsync(selectedDevice.Id , new ConnectParameters(autoConnect: false, forceBleTransport: false), tokenSource.Token);
-
+                 //   await Adapter.ConnectToDeviceAsync(selectedDevice.Device, new ConnectParameters(autoConnect: false, forceBleTransport: true), tokenSource.Token);
+                    Debug.WriteLine($"ConnectToPreviousDeviceAsync- {device.Name}");
                 }
 
                 _userDialogs.Toast($"{SettingsBase.Resources["ConnectStatusText"]}  {device.Name}.");
@@ -1199,9 +1204,11 @@ namespace SCUScanner.ViewModels
 
                     if (!string.IsNullOrEmpty(BroadcastIdentity))
                     {
-                       if(await WriteValueAsync($"!{BroadcastIdentity}"))
+                        Debug.WriteLine($"write- {BroadcastIdentity}");
+                        if (await WriteValueAsync($"!{BroadcastIdentity}"))
                         {
-                            int duration = 8;
+                            Debug.WriteLine($"writed- {BroadcastIdentity}");
+                            int duration = 10;
                             SelectedDevice.Name = BroadcastIdentity;
                             SelectedDevice.flgManualChangeName = true;
                             await DisconnectDevice(SelectedDevice, false);
@@ -1219,13 +1226,13 @@ namespace SCUScanner.ViewModels
                             //await TryStartScanning(true);
                             if (SelectedDevice != null)
                             {
-
-                                if (await ConnectToPreviousDeviceAsync(SelectedDevice))
-                                {
-                                    Name = SelectedDevice.Name;
-                                    IsConnected = true;
-                                    await OpenConnectedPage(SelectedDevice);
-                                }
+                                ConnectCommand.Execute(SelectedDevice);
+                                //if (await ConnectToPreviousDeviceAsync(SelectedDevice))
+                                //{
+                                //    Name = SelectedDevice.Name;
+                                //    IsConnected = true;
+                                //    await OpenConnectedPage(SelectedDevice);
+                                //}
                                 //ConnectCommand.Execute(SelectedDevice);
                             }
                             BroadcastIdentityPlaceholder = BroadcastIdentity;
