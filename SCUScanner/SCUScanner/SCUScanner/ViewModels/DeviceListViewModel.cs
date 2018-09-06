@@ -148,7 +148,17 @@ namespace SCUScanner.ViewModels
             {
                 if (!IsStateOn) return;
                 //                 var selecte = o;
-               
+                var devs=from d in Devices
+                         where d!=o && d.IsConnected
+                         select d;
+                 if (devs!=null && devs.Count>0){
+                     foreach(var d in  devs){
+                         await DisconnectDevice(d,false);
+                         //d.IsConnected=false;
+                         //d.UpdateButtonText();
+                     }
+                   }
+                
                 if (o.IsConnected)
                 {
 
