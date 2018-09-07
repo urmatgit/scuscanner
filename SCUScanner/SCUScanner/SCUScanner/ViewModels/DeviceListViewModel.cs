@@ -613,7 +613,13 @@ namespace SCUScanner.ViewModels
                     //{
                     //    autoConnect = true;
                     //}
-                    await Adapter.ConnectToDeviceAsync(device.Device, new ConnectParameters(autoConnect: autoConnect, forceBleTransport: true), tokenSource.Token);
+                    try{
+                        await Adapter.ConnectToDeviceAsync(device.Device, new ConnectParameters(autoConnect: autoConnect, forceBleTransport: true), tokenSource.Token);
+                    } catch (DeviceConnectionException ex)
+                        {
+                        resultConnection= false;
+                        Debug.WriteLine($"{device.Name} ConnectToDeviceAsync error-{ex.Message}");
+                        }
                 }
 
                 _userDialogs.Toast($"{SettingsBase.Resources["ConnectStatusText"]}  {device.Name}.");
