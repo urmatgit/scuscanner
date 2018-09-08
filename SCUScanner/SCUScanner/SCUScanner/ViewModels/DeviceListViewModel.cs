@@ -446,10 +446,11 @@ namespace SCUScanner.ViewModels
                     ScanText = "";
                     if (kod == "ConnectedTabPage")
                     {
+                        
                         if (LastCharForUpdate != null && !OnOpenFirst)
                         {
                             StartUpdates(LastCharForUpdate);
-                            TimerAlarm.Enabled = true;
+                           
                         }
                         else
                         {
@@ -457,6 +458,7 @@ namespace SCUScanner.ViewModels
                             var con = IsConnected;
                             //IsConnected = false;
                         }
+                        TimerAlarm.Enabled = true;
                         OnOpenFirst = false;
                     }
                     else if (kod== "WriteTabPage" && ScuData!=null)
@@ -615,7 +617,7 @@ namespace SCUScanner.ViewModels
                     //}
                     try{
                         await Adapter.ConnectToDeviceAsync(device.Device, new ConnectParameters(autoConnect: autoConnect, forceBleTransport: true), tokenSource.Token);
-                    } catch (DeviceConnectionException ex)
+                    } catch(Exception ex)  //(DeviceConnectionException ex)
                         {
                         resultConnection= false;
                         Debug.WriteLine($"{device.Name} ConnectToDeviceAsync error-{ex.Message}");
@@ -683,7 +685,7 @@ namespace SCUScanner.ViewModels
         }
         private async Task<bool> ConnectToPreviousDeviceAsync(DeviceListItemViewModel selectedDevice )
         {
-            IDevice device;
+            IDevice device=null;
             bool result = true;
             try
             {
@@ -700,31 +702,40 @@ namespace SCUScanner.ViewModels
                 using (var progress = _userDialogs.Progress(config))
                 {
                     progress.Show();
-
+                    try { 
                     device = await Adapter.ConnectToKnownDeviceAsync(selectedDevice.Id , new ConnectParameters(autoConnect: false, forceBleTransport: false), tokenSource.Token);
                  //   await Adapter.ConnectToDeviceAsync(selectedDevice.Device, new ConnectParameters(autoConnect: false, forceBleTransport: true), tokenSource.Token);
                     Debug.WriteLine($"ConnectToPreviousDeviceAsync- {device.Name}");
-                }
-
-                _userDialogs.Toast($"{SettingsBase.Resources["ConnectStatusText"]}  {device.Name}.");
-
-                AddOrUpdateDevice(device);
-                var deviceItem = Devices.FirstOrDefault(d => d.Device.Id == device.Id);
-                if (deviceItem == null)
-                {
-                    deviceItem = new DeviceListItemViewModel(device);
-                    deviceItem.OnClickDevice += (s, e) =>
+                    }
+                    catch (Exception ex)  //(DeviceConnectionException ex)
                     {
-                        ConnectCommand.Execute(s as DeviceListItemViewModel);
-                    };
-                    Devices.Add(deviceItem);
-                    
+                        
+                        Debug.WriteLine($"{selectedDevice.Name} ConnectToDeviceAsync error-{ex.Message}");
+                    }
                 }
-                else
+
+                _userDialogs.Toast($"{SettingsBase.Resources["ConnectStatusText"]}  {selectedDevice.Name}.");
+                if (device != null)
                 {
-                    deviceItem.Update(device);
+                    AddOrUpdateDevice(device);
+                    var deviceItem = Devices.FirstOrDefault(d => d.Device.Id == device.Id);
+                    if (deviceItem == null)
+                    {
+                        deviceItem = new DeviceListItemViewModel(device);
+                        deviceItem.OnClickDevice += (s, e) =>
+                        {
+                            ConnectCommand.Execute(s as DeviceListItemViewModel);
+                        };
+                        Devices.Add(deviceItem);
+
+                    }
+                    else
+                    {
+                        deviceItem.Update(device);
+                    }
+                    SelectedDevice = deviceItem;
                 }
-                SelectedDevice = deviceItem;
+                
             }
             catch (Exception ex)
             {
@@ -1232,13 +1243,13 @@ namespace SCUScanner.ViewModels
                             //await TryStartScanning(true);
                             if (SelectedDevice != null)
                             {
-                                ConnectCommand.Execute(SelectedDevice);
-                                //if (await ConnectToPreviousDeviceAsync(SelectedDevice))
-                                //{
-                                //    Name = SelectedDevice.Name;
-                                //    IsConnected = true;
-                                //    await OpenConnectedPage(SelectedDevice);
-                                //}
+                                // ConnectCommand.Execute(SelectedDevice);
+                                if (await ConnectToPreviousDeviceAsync(SelectedDevice))
+                                {
+                                    Name = SelectedDevice.Name;
+                                    IsConnected = true;
+                                    await OpenConnectedPage(SelectedDevice);
+                                }
                                 //ConnectCommand.Execute(SelectedDevice);
                             }
                             BroadcastIdentityPlaceholder = BroadcastIdentity;
@@ -1323,7 +1334,8 @@ namespace SCUScanner.ViewModels
         }
         private async Task<bool> WriteValueAsync(string value, bool showloading = true)
         {
-        //    return true;
+            Thread.Sleep(1000);
+            return true;
 
             bool result = false;
          
