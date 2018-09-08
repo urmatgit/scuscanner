@@ -5,6 +5,7 @@ using Plugin.BLE;
 using Plugin.BLE.Abstractions;
 using Plugin.BLE.Abstractions.Contracts;
 using Plugin.BLE.Abstractions.EventArgs;
+using Plugin.BLE.Abstractions.Exceptions;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using Plugin.Settings;
@@ -617,7 +618,7 @@ namespace SCUScanner.ViewModels
                     //}
                     try{
                         await Adapter.ConnectToDeviceAsync(device.Device, new ConnectParameters(autoConnect: autoConnect, forceBleTransport: true), tokenSource.Token);
-                    } catch(Exception ex)  //(DeviceConnectionException ex)
+                    } catch( DeviceConnectionException ex)
                         {
                         resultConnection= false;
                         Debug.WriteLine($"{device.Name} ConnectToDeviceAsync error-{ex.Message}");
@@ -707,7 +708,7 @@ namespace SCUScanner.ViewModels
                  //   await Adapter.ConnectToDeviceAsync(selectedDevice.Device, new ConnectParameters(autoConnect: false, forceBleTransport: true), tokenSource.Token);
                     Debug.WriteLine($"ConnectToPreviousDeviceAsync- {device.Name}");
                     }
-                    catch (Exception ex)  //(DeviceConnectionException ex)
+                    catch (DeviceConnectionException ex)
                     {
                         
                         Debug.WriteLine($"{selectedDevice.Name} ConnectToDeviceAsync error-{ex.Message}");
