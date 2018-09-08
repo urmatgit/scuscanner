@@ -1334,8 +1334,8 @@ namespace SCUScanner.ViewModels
         }
         private async Task<bool> WriteValueAsync(string value, bool showloading = true)
         {
-            Thread.Sleep(1000);
-            return true;
+            //Thread.Sleep(1000);
+            //return true;
 
             bool result = false;
          
