@@ -23,9 +23,10 @@ namespace SCUScanner.Droid
                 ToolbarResource = Resource.Layout.Toolbar;
                 Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity = this;
                 CrossCurrentActivity.Current.Activity = this;
-                base.OnCreate(bundle);
-
-                global::Xamarin.Forms.Forms.Init(this, bundle);
+            
+            base.OnCreate(bundle);
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, bundle);
+            global::Xamarin.Forms.Forms.Init(this, bundle);
                 UserDialogs.Init(this);
                 ZXing.Net.Mobile.Forms.Android.Platform.Init();
                 MR.Gestures.Android.Settings.LicenseKey = "CB2F-LQLC-HAY5-7DMG-DSZZ-FAEX-RF5D-3RYN-FE74-4RN3-NVVD-34LH-DEMV";

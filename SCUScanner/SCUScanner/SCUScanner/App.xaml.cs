@@ -46,8 +46,8 @@ namespace SCUScanner
             InitializeComponent();
             Dialogs = UserDialogs.Instance;
             //BleAdapter = CrossBleAdapter.Current;
-
-            if (Device.RuntimePlatform != Device.WinPhone)
+            
+             if (Device.RuntimePlatform != Device.WinPhone)
             {
                 if (!string.IsNullOrEmpty(Settings.Current.SelectedLang))
                 {
