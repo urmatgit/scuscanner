@@ -170,6 +170,7 @@ namespace SCUScanner.ViewModels
                 }
                 else
                 {
+                    Thread.Sleep(100);
                     IsConnected = await ConnectDeviceAsync(o, false);
                     IsVisibleScanText = IsConnected;
                     if (IsConnected)
@@ -451,11 +452,14 @@ namespace SCUScanner.ViewModels
                         
                         if (LastCharForUpdate != null && !OnOpenFirst)
                         {
+                            Debug.WriteLine("LastCharForUpdate "+ SelectedDevice.Name);
+                          //  await LoadServices(SelectedDevice);
                             StartUpdates(LastCharForUpdate);
                            
                         }
                         else
                         {
+                            Debug.WriteLine("else  if (LastCharForUpdate != null && !OnOpenFirst)");
                             var seletec = SelectedDevice;
                             var con = IsConnected;
                             //IsConnected = false;
@@ -608,7 +612,7 @@ namespace SCUScanner.ViewModels
                     OnCancel = tokenSource.Cancel
                 };
                 //
-                
+
                 using (var progress = _userDialogs.Progress(config))
                 {
                     progress.Show();
@@ -617,13 +621,28 @@ namespace SCUScanner.ViewModels
                     //{
                     //    autoConnect = true;
                     //}
-                    try{
-                        await Adapter.ConnectToDeviceAsync(device.Device, new ConnectParameters(autoConnect: autoConnect, forceBleTransport: true), tokenSource.Token);
-                    } catch( DeviceConnectionException ex)
+                    //Xamarin.Forms.Device.BeginInvokeOnMainThread(new Action(async () =>
+                    //{
+                        try
                         {
-                        resultConnection= false;
-                        Debug.WriteLine($"{device.Name} ConnectToDeviceAsync error-{ex.Message}");
+                            await Adapter.ConnectToDeviceAsync(device.Device, new ConnectParameters(autoConnect: autoConnect, forceBleTransport: false), tokenSource.Token);
                         }
+                        catch (DeviceConnectionException ex)
+                        {
+                            resultConnection = false;
+                            Debug.WriteLine($"{device.Name} ConnectToDeviceAsync error-{ex.Message}");
+                            Thread.Sleep(100);
+                            try
+                            {
+                                await Adapter.ConnectToDeviceAsync(device.Device, new ConnectParameters(autoConnect: autoConnect, forceBleTransport: false), tokenSource.Token);
+                            }
+                            catch (DeviceConnectionException ex1)
+                            {
+                                Debug.WriteLine($"ex1 {device.Name} ConnectToDeviceAsync error-{ex1.Message}");
+                            }
+                        }
+                 //   }));
+                    
                 }
 
                 _userDialogs.Toast($"{SettingsBase.Resources["ConnectStatusText"]}  {device.Name}.");
@@ -704,18 +723,33 @@ namespace SCUScanner.ViewModels
                 using (var progress = _userDialogs.Progress(config))
                 {
                     progress.Show();
-                    try { 
-                    device = await Adapter.ConnectToKnownDeviceAsync(selectedDevice.Id , new ConnectParameters(autoConnect: false, forceBleTransport: false), tokenSource.Token);
-                 //   await Adapter.ConnectToDeviceAsync(selectedDevice.Device, new ConnectParameters(autoConnect: false, forceBleTransport: true), tokenSource.Token);
-                    Debug.WriteLine($"ConnectToPreviousDeviceAsync- {device.Name}");
-                    }
-                    catch (DeviceConnectionException ex)
-                    {
-                        
-                        Debug.WriteLine($"{selectedDevice.Name} ConnectToDeviceAsync error-{ex.Message}");
-                    }
-                }
+                    //Xamarin.Forms.Device.BeginInvokeOnMainThread(new Action(async () =>
+                    //{
+                        try
+                        {
+                            device = await Adapter.ConnectToKnownDeviceAsync(selectedDevice.Id, new ConnectParameters(autoConnect: false, forceBleTransport: false), tokenSource.Token);
+                            //   await Adapter.ConnectToDeviceAsync(selectedDevice.Device, new ConnectParameters(autoConnect: false, forceBleTransport: true), tokenSource.Token);
+                            Debug.WriteLine($"ConnectToPreviousDeviceAsync- {device.Name}");
+                        }
+                        catch (DeviceConnectionException ex)
+                        {
 
+                            Debug.WriteLine($"{selectedDevice.Name} ConnectToKnownDeviceAsync error-{ex.Message}");
+                            Thread.Sleep(100);
+                            try
+                            {
+                                device = await Adapter.ConnectToKnownDeviceAsync(selectedDevice.Id, new ConnectParameters(autoConnect: false, forceBleTransport: false), tokenSource.Token);
+                            }
+                            catch (DeviceConnectionException ex1)
+                            {
+
+                                Debug.WriteLine($"ex1 {selectedDevice.Name} ConnectToKnownDeviceAsync error-{ex1.Message}");
+                            }
+                        }
+                 //   }));
+                    
+                
+                }
                 _userDialogs.Toast($"{SettingsBase.Resources["ConnectStatusText"]}  {selectedDevice.Name}.");
                 if (device != null)
                 {
@@ -753,14 +787,18 @@ namespace SCUScanner.ViewModels
         {
             try
             {
-              // _userDialogs.ShowLoading("Discovering services...");
-
+                // _userDialogs.ShowLoading("Discovering services...");
+                //if (Device.Android == Device.RuntimePlatform && Plugin.DeviceInfo.CrossDeviceInfo.Current.VersionNumber.Major >= 8)
+                //{
+                //    Debug.WriteLine("Android version " + Plugin.DeviceInfo.CrossDeviceInfo.Current.VersionNumber.Major.ToString());
+                //    Thread.Sleep(30000);
+                //}
                 var Services = await device.Device.GetServicesAsync();
                 var SCUServices = Services.Where(s => s.Id.ToString() == GlobalConstants.UUID_MLDP_PRIVATE_SERVICE || s.Id.ToString() == GlobalConstants.UUID_TANSPARENT_PRIVATE_SERVICE);
                 //mldpDataCharacteristic, transparentTxDataCharacteristic, transparentRxDataCharacteristic;
                 foreach (var service in SCUServices)
                 {
-                    Debug.WriteLine(service.Id.ToString());
+                    Debug.WriteLine("Service-"+ service.Id.ToString());
                     transparentTxDataCharacteristic = await service.GetCharacteristicAsync(Guid.Parse(GlobalConstants.UUID_TRANSPARENT_TX_PRIVATE_CHAR));
                     if (transparentRxDataCharacteristic != null)
                     {
@@ -780,6 +818,7 @@ namespace SCUScanner.ViewModels
                     var _mldpDataCharacteristic = await service.GetCharacteristicAsync(Guid.Parse(GlobalConstants.UUID_MLDP_DATA_PRIVATE_CHAR));
                     if (_mldpDataCharacteristic != null && mldpDataCharacteristic == null)
                     {
+                        Debug.WriteLine($"_mldpDataCharacteristic.CanUpdate-{_mldpDataCharacteristic.CanUpdate}");
                         if (_mldpDataCharacteristic.CanUpdate)
                         {
                             // mldpDataCharacteristic.ValueUpdated
@@ -802,6 +841,7 @@ namespace SCUScanner.ViewModels
         ICharacteristic LastCharForUpdate { get; set; }
         private async void StartUpdates(ICharacteristic characteristic)
         {
+           
             try
             {
                 _updatesStarted = true;
@@ -821,8 +861,8 @@ namespace SCUScanner.ViewModels
 
                 characteristic.ValueUpdated -= Characteristic_ValueUpdated;
                 characteristic.ValueUpdated += Characteristic_ValueUpdated;
-                
-                 characteristic.StartUpdatesAsync();
+                Debug.WriteLine($"Run -characteristic.StartUpdatesAsync();");
+                await characteristic.StartUpdatesAsync();
                 LastCharForUpdate = characteristic;
                 _userDialogs.Toast($"Start updates");
                 
@@ -1227,7 +1267,7 @@ namespace SCUScanner.ViewModels
                         if (await WriteValueAsync($"!{BroadcastIdentity}"))
                         {
                             Debug.WriteLine($"writed- {BroadcastIdentity}");
-                            int duration = 10;
+                            int duration = 30;
                             SelectedDevice.Name = BroadcastIdentity;
                             SelectedDevice.flgManualChangeName = true;
                             await DisconnectDevice(SelectedDevice, false);
@@ -1241,23 +1281,37 @@ namespace SCUScanner.ViewModels
                                     dialog.PercentComplete += step;
                                 }
                             }
-                            
-                            //await TryStartScanning(true);
-                            if (SelectedDevice != null)
+                            if (SelectedDevice.IsConnected)
                             {
-                                // ConnectCommand.Execute(SelectedDevice);
-                                if (await ConnectToPreviousDeviceAsync(SelectedDevice))
-                                {
-                                    Name = SelectedDevice.Name;
-                                    IsConnected = true;
-                                    if (Device.Android == Device.RuntimePlatform && Plugin.DeviceInfo.CrossDeviceInfo.Current.VersionNumber.Major>=8)
-                                    {
-                                        Thread.Sleep(30000);
-                                    }
-                                    await OpenConnectedPage(SelectedDevice);
-                                }
-                                //ConnectCommand.Execute(SelectedDevice);
+
+                                await DisconnectDevice(SelectedDevice,false);
+                                
+                                    SelectedDevice = null;
                             }
+                            SelectedDevice = null;
+                            //await TryStartScanning(true);
+                            //if (SelectedDevice != null)
+                            //{
+                            //    // ConnectCommand.Execute(SelectedDevice);
+
+                            //    if (await ConnectToPreviousDeviceAsync(SelectedDevice))
+                            //    {
+                            //        Name = SelectedDevice.Name;
+                            //        IsConnected = true;
+                            //        if (Device.Android == Device.RuntimePlatform && Plugin.DeviceInfo.CrossDeviceInfo.Current.VersionNumber.Major >= 8)
+                            //        {
+                            //            Debug.WriteLine("Android version " + Plugin.DeviceInfo.CrossDeviceInfo.Current.VersionNumber.Major.ToString());
+                            //            Thread.Sleep(100);
+                            //        }
+                            //        await OpenConnectedPage(SelectedDevice);
+                            //    }
+                            //    //ConnectCommand.Execute(SelectedDevice);
+                            //}
+                            Device.BeginInvokeOnMainThread(() =>
+                            {
+                                _deviceListPage.CurrentPage = _deviceListPage.DeviceListTab;
+                            });
+
                             BroadcastIdentityPlaceholder = BroadcastIdentity;
                             BroadcastIdentity = "";
                         }
