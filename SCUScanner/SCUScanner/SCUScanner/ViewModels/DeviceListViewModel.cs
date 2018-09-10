@@ -862,7 +862,7 @@ namespace SCUScanner.ViewModels
                 characteristic.ValueUpdated -= Characteristic_ValueUpdated;
                 characteristic.ValueUpdated += Characteristic_ValueUpdated;
                 Debug.WriteLine($"Run -characteristic.StartUpdatesAsync();");
-                await characteristic.StartUpdatesAsync();
+                characteristic.StartUpdatesAsync();
                 LastCharForUpdate = characteristic;
                 _userDialogs.Toast($"Start updates");
                 
@@ -1267,7 +1267,7 @@ namespace SCUScanner.ViewModels
                         if (await WriteValueAsync($"!{BroadcastIdentity}"))
                         {
                             Debug.WriteLine($"writed- {BroadcastIdentity}");
-                            int duration = 30;
+                            int duration = 8;
                             SelectedDevice.Name = BroadcastIdentity;
                             SelectedDevice.flgManualChangeName = true;
                             await DisconnectDevice(SelectedDevice, false);
@@ -1288,29 +1288,29 @@ namespace SCUScanner.ViewModels
                                 
                                     SelectedDevice = null;
                             }
-                            SelectedDevice = null;
+                            //SelectedDevice = null;
                             //await TryStartScanning(true);
-                            //if (SelectedDevice != null)
-                            //{
-                            //    // ConnectCommand.Execute(SelectedDevice);
+                            if (SelectedDevice != null)
+                            {
+                                // ConnectCommand.Execute(SelectedDevice);
 
-                            //    if (await ConnectToPreviousDeviceAsync(SelectedDevice))
-                            //    {
-                            //        Name = SelectedDevice.Name;
-                            //        IsConnected = true;
+                                if (await ConnectToPreviousDeviceAsync(SelectedDevice))
+                                {
+                                    Name = SelectedDevice.Name;
+                                    IsConnected = true;
                             //        if (Device.Android == Device.RuntimePlatform && Plugin.DeviceInfo.CrossDeviceInfo.Current.VersionNumber.Major >= 8)
                             //        {
                             //            Debug.WriteLine("Android version " + Plugin.DeviceInfo.CrossDeviceInfo.Current.VersionNumber.Major.ToString());
                             //            Thread.Sleep(100);
                             //        }
-                            //        await OpenConnectedPage(SelectedDevice);
-                            //    }
+                                    await OpenConnectedPage(SelectedDevice);
+                                }
                             //    //ConnectCommand.Execute(SelectedDevice);
-                            //}
-                            Device.BeginInvokeOnMainThread(() =>
-                            {
-                                _deviceListPage.CurrentPage = _deviceListPage.DeviceListTab;
-                            });
+                            }
+                            //Device.BeginInvokeOnMainThread(() =>
+                           // {
+                            ///    _deviceListPage.CurrentPage = _deviceListPage.DeviceListTab;
+                            //});
 
                             BroadcastIdentityPlaceholder = BroadcastIdentity;
                             BroadcastIdentity = "";
