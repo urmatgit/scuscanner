@@ -377,4 +377,7 @@ box only visible on factory version</value>
   <data name="ShowSerialNumberText" xml:space="preserve">
     <value>Show serial number</value>
   </data>
+  <data name="DeletedText" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
 </root>

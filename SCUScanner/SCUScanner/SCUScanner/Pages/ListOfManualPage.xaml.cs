@@ -20,7 +20,7 @@ namespace SCUScanner.Pages
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new ListOfManualViewModel();
+            BindingContext = viewModel = new ListOfManualViewModel(Navigation);
 
 
            

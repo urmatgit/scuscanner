@@ -1,17 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SCUScanner.Pages.ListOfManualPage">
+             x:Class="SCUScanner.Pages.ListOfManualPage"
+             x:Name="manual">
   <ListView x:Name="MyListView"
             ItemsSource="{Binding Items}"
-            ItemTapped="Handle_ItemTapped"
+       
             CachingStrategy="RecycleElement">
             
     <!--Built in Cells-->
-    <ListView.ItemTemplate>
-        <DataTemplate>
-            <TextCell Text="{Binding .}" />
-        </DataTemplate>
+        <ListView.ItemTemplate >
+            <DataTemplate>
+                <ViewCell >
+                    <StackLayout Orientation="Horizontal">
+                        <Image Margin="5,0,5,0"  Source="delete64.png"  WidthRequest="24" HeightRequest="24"  HorizontalOptions="Center" VerticalOptions="Center">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BindingContext.DeleteCommand, Source={x:Reference Name=manual}}" CommandParameter="{Binding . }" NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+
+                        </Image>
+                        <Label Text="{Binding file}" VerticalOptions="Center"  HorizontalOptions="Start">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer  Command="{Binding BindingContext.LabelCommand, Source={x:Reference Name=manual}}" CommandParameter="{Binding . }" NumberOfTapsRequired="1" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
     </ListView.ItemTemplate>
     
     <!--Custom View Cells-->

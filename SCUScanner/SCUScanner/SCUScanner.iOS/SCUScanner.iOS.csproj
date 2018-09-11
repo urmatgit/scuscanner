@@ -292,4 +292,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\ShoppingCartClear.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\delete24.png" />
+  </ItemGroup>
 </Project>
