@@ -12,19 +12,27 @@
         <ListView.ItemTemplate >
             <DataTemplate>
                 <ViewCell >
-                    <StackLayout Orientation="Horizontal">
-                        <Image Margin="5,0,5,0"  Source="delete64.png"  WidthRequest="24" HeightRequest="24"  HorizontalOptions="Center" VerticalOptions="Center">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="32"/>
+                        </Grid.ColumnDefinitions>
+                        
+                    
+                    
+                        
+                        <Label Margin="5,0,0,0" Grid.Column="0" Text="{Binding file}" VerticalOptions="Center"  HorizontalOptions="Start">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer  Command="{Binding BindingContext.LabelCommand, Source={x:Reference Name=manual}}" CommandParameter="{Binding . }" NumberOfTapsRequired="1" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Image  Grid.Column="1" Margin="5,0,5,0"  Source="delete64.png"  WidthRequest="24" HeightRequest="24"  HorizontalOptions="Center" VerticalOptions="Center">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding BindingContext.DeleteCommand, Source={x:Reference Name=manual}}" CommandParameter="{Binding . }" NumberOfTapsRequired="1" />
                             </Image.GestureRecognizers>
 
                         </Image>
-                        <Label Text="{Binding file}" VerticalOptions="Center"  HorizontalOptions="Start">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer  Command="{Binding BindingContext.LabelCommand, Source={x:Reference Name=manual}}" CommandParameter="{Binding . }" NumberOfTapsRequired="1" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </StackLayout>
+                    </Grid>
                 </ViewCell>
             </DataTemplate>
     </ListView.ItemTemplate>
