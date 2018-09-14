@@ -16,7 +16,7 @@ namespace SCUScanner.Helpers
 
         public static int WaitingForReconnecting { get; internal set; } = 10000;
         public const string FtpHost = "ftp://35.227.40.251";
-        public const int FtpPort = 5901;
+        public const int FtpPort = 21;
         //public const string FtpHost = "ftp://ftp.chester.ru";
     }
 }
