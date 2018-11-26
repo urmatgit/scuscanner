@@ -337,4 +337,7 @@ Turn On Bluetooth and press </value>
   <data name="DebugModeText" xml:space="preserve">
     <value>Debug mode</value>
   </data>
+  <data name="PrivacyPolicyText" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
 </root>

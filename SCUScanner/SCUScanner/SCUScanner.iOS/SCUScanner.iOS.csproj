@@ -295,4 +295,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\delete24.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\PrivacyPolicy.png" />
+  </ItemGroup>
 </Project>
