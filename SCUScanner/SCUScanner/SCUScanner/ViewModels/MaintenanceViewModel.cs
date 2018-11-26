@@ -42,12 +42,14 @@ namespace SCUScanner.ViewModels
             if (status != PermissionStatus.Granted)
             {
 
+                 if (Device.Android == Device.RuntimePlatform)
+                    {
                 string infoText = SettingsBase.Resources["InfoPermissionLocationText"];
-                if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Camera))
+                //if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Camera))
                 {
-                    await App.Dialogs.AlertAsync(infoText, "Info", "OK");
+                    await App.Dialogs.AlertAsync(infoText, "Need camera", "OK");
                 }
-
+                     }
                 var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
                 //Best practice to always check that the key ca
                 if (results.ContainsKey(Permission.Camera))

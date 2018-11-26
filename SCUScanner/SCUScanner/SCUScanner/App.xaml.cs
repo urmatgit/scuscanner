@@ -79,9 +79,10 @@ namespace SCUScanner
             {
                 
                 string infoText = Settings.Current.Resources["InfoPermissionLocationText"];
-                if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
+                //var result = await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location);
+                //if (result)
                 {
-                       await App.Dialogs.AlertAsync(infoText, "Info", "OK");
+                       await App.Dialogs.AlertAsync(infoText, "Need location", "OK");
                 }
 
                 var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
