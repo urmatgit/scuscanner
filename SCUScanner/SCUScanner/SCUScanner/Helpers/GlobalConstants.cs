@@ -19,7 +19,7 @@ namespace SCUScanner.Helpers
         public const int FtpPort = 21;
         //public const string FtpHost = "ftp://ftp.chester.ru";
 
-        public const bool FactoryMode = true;
+        public const bool FactoryMode = false;
         //if this property is empty, then the language is set from location of the phone location
         public const string HardDefaultLang = "en";
     }

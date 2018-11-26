@@ -14,7 +14,7 @@ using System.Text;
 using Xamarin.Forms;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
-
+using SCUScanner.Helpers;
 
 namespace SCUScanner
 {
@@ -49,7 +49,7 @@ namespace SCUScanner
             
              if (Device.RuntimePlatform != Device.WinPhone)
             {
-                  if ( !string.IsNullOrEmpty(GlobalConstants.HardDefaultLang){
+                  if ( !string.IsNullOrEmpty(GlobalConstants.HardDefaultLang)){
                     Settings.Current.SelectedLang=GlobalConstants.HardDefaultLang;
                 }
                 if (!string.IsNullOrEmpty(Settings.Current.SelectedLang))

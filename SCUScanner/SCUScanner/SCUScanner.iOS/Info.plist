@@ -54,10 +54,10 @@
 		<string>bluetooth-peripheral</string>
 	</array>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>SCUScanner BLE connector</string>
+	<string>SCUScanner BLE connector(Custom)</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Can we use your camera</string>
+	<string>Can we use your camera(Custom)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.chestersw.CentriClean</string>
+	<string>Home.CentriClean</string>
 </dict>
 </plist>

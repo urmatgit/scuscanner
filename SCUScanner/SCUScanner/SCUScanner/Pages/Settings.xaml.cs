@@ -15,10 +15,12 @@ namespace SCUScanner.Pages
 	{
 		public Settings ()
 		{
-			InitializeComponent();
+            var vm= new SettingViewModel(Navigation);
+            InitializeComponent();
             //Application.Current.MainPage as MasterDetailPage
-            BindingContext = new SettingViewModel(Navigation);
-
+            BindingContext = vm;
+            swShowDebug.IsVisible = vm.FactoryMode;
+            swShowSerial.IsVisible = vm.FactoryMode;
         }
 	}
 }

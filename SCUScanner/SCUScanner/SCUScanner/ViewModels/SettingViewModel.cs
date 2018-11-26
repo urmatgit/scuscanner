@@ -1,4 +1,5 @@
-﻿using SCUScanner.Helpers;
+﻿using ReactiveUI;
+using SCUScanner.Helpers;
 using SCUScanner.Models;
 using SCUScanner.Pages;
 using System;
@@ -28,15 +29,17 @@ namespace SCUScanner.ViewModels
         {
             Navigation = NavPage;
             SelectLangCommnad = new Command(OpenSettingsLanguagePage);
+            FactoryMode = GlobalConstants.FactoryMode;
                                 //new Command(OpenSettingsLanguagePage);
             Debug.WriteLine("SelectLangCommnad created");
         }
+        private bool factoryMode;
         public bool FactoryMode
         {
-            get
-            {
-                return GlobalConstants.FactoryMode;
-            }
+            get => this.factoryMode;
+            set => this.RaiseAndSetIfChanged(ref this.factoryMode, value);
+            
+
         }
         //public  bool ScanMode
         //{
