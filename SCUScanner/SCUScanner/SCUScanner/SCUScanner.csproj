@@ -55,6 +55,8 @@
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.0.1" />
     <PackageReference Include="FluentFTP" Version="19.2.2" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.11.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.11.0" />
     <PackageReference Include="MR.Gestures" Version="1.5.4" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Plugin.BLE" Version="2.0.0-pre1" />

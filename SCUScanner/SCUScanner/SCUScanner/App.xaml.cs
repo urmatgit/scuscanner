@@ -15,6 +15,8 @@ using Xamarin.Forms;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using SCUScanner.Helpers;
+using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Analytics;
 
 namespace SCUScanner
 {
@@ -96,16 +98,27 @@ namespace SCUScanner
 
         protected override  async void OnStart()
         {
+             Microsoft.AppCenter.AppCenter.Start("android=82686a65-4e4f-4c25-a3cc-d287b9d89815;" +
+
+                  "ios=18a7f9ac-841c-40d4-a3cc-618a8544ef56;",
+                  typeof(Analytics), typeof(Crashes));
+           await Analytics.SetEnabledAsync(true);
+            await Crashes.SetEnabledAsync(true);
+            Analytics.TrackEvent("App Start");
 
             if (Device.Android == Device.RuntimePlatform)
             {
 
-               
+
                 await CheckLocationPermission();
-               
+
             }
             else
+            {
                 App.IsAccessToBle = true;
+                
+            }
+            
            await   Database.CreateTable();
             // Handle when your app starts
             //if (BleAdapter.Status == AdapterStatus.PoweredOff )

@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using FluentFTP;
+using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using Plugin.BLE;
 using Plugin.BLE.Abstractions;
@@ -355,7 +356,10 @@ namespace SCUScanner.ViewModels
                 case BluetoothState.Unknown:
                     return "Unknown BLE state.";
                 case BluetoothState.Unavailable:
-                    return "BLE is not available on this device.";
+                    {
+                    //    Crashes. TrackError(new Exception("BLE is not available on this device."));
+                        return "BLE is not available on this device.";
+                    }
                 case BluetoothState.Unauthorized:
                     return "You are not allowed to use BLE.";
                 case BluetoothState.TurningOn:
