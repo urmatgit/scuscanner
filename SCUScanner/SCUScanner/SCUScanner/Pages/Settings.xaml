@@ -27,7 +27,7 @@
                 <Label Grid.Column="0" Grid.Row="1" Text="{Binding Resources[ManualScanText]}" VerticalTextAlignment="Center"/>
                 <Switch BindingContext="{Binding SettingsBase}" Grid.Column="1" Grid.Row="1" IsToggled="{Binding ManualScan}"/>
 
-                <StackLayout Grid.Column="0" Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2" >
+                <StackLayout Grid.Column="0" Grid.Row="2" Orientation="Horizontal" Grid.ColumnSpan="2"    Visible="{Binding FactoryMode}">
                     <Label  Text="{Binding Resources[SelectedLanguageCodeText]}"  VerticalTextAlignment="Center">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding SelectLangCommnad}"/>
@@ -36,14 +36,14 @@
                     <Label  BindingContext="{Binding Settings}" Text="{Binding SelectedLang}" VerticalTextAlignment="Center" />
                 </StackLayout>
 
-                <Button Grid.Column="1" Grid.Row="2" Command="{Binding SelectLangCommnad}" Text=">" VerticalOptions="Center"/>
+                <Button Grid.Column="1" Grid.Row="2" Command="{Binding SelectLangCommnad}" Text=">" VerticalOptions="Center" Visible="{Binding FactoryMode}"/>
 
-                <Label Grid.Column="0" Grid.Row="3" Text="{Binding Resources[DebugModeText]}" VerticalTextAlignment="Center"/>
-                <Switch BindingContext="{Binding SettingsBase}" Grid.Column="1" Grid.Row="3" IsToggled="{Binding ShowDebugJson}"/>
+                <Label Grid.Column="0" Grid.Row="3" Text="{Binding Resources[DebugModeText]}" VerticalTextAlignment="Center" Visible="{Binding FactoryMode}"/>
+                <Switch BindingContext="{Binding SettingsBase}" Grid.Column="1" Grid.Row="3" IsToggled="{Binding ShowDebugJson}" Visible="{Binding FactoryMode}"/>
 
 
-                <Label Grid.Column="0" Grid.Row="4" Text="{Binding Resources[ShowSerialNumberText]}" VerticalTextAlignment="Center"/>
-                <Switch BindingContext="{Binding SettingsBase}" Grid.Column="1" Grid.Row="4" IsToggled="{Binding ShowSerialNumber}"/>
+                <Label Grid.Column="0" Grid.Row="4" Text="{Binding Resources[ShowSerialNumberText]}" VerticalTextAlignment="Center" Visible="{Binding FactoryMode}"/>
+                <Switch BindingContext="{Binding SettingsBase}" Grid.Column="1" Grid.Row="4" IsToggled="{Binding ShowSerialNumber}" Visible="{Binding FactoryMode}"/>
 
             </Grid>
             

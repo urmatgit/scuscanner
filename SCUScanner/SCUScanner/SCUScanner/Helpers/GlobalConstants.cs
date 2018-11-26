@@ -18,5 +18,8 @@ namespace SCUScanner.Helpers
         public const string FtpHost = "ftp://35.227.40.251";
         public const int FtpPort = 21;
         //public const string FtpHost = "ftp://ftp.chester.ru";
+
+        public const bool FactoryMode = true;
     }
+
 }

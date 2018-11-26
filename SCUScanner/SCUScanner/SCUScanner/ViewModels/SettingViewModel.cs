@@ -1,4 +1,5 @@
-﻿using SCUScanner.Models;
+﻿using SCUScanner.Helpers;
+using SCUScanner.Models;
 using SCUScanner.Pages;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,13 @@ namespace SCUScanner.ViewModels
             SelectLangCommnad = new Command(OpenSettingsLanguagePage);
                                 //new Command(OpenSettingsLanguagePage);
             Debug.WriteLine("SelectLangCommnad created");
+        }
+        public bool FactoryMode
+        {
+            get
+            {
+                return GlobalConstants.FactoryMode;
+            }
         }
         //public  bool ScanMode
         //{
