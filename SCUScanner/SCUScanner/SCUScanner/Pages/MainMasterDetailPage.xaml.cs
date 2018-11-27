@@ -105,7 +105,13 @@ namespace SCUScanner.Pages
                     
                         CurrentPage = (Page)Activator.CreateInstance(type, filename);
                     }
-                    else
+                    else if (item.TargetType.Name == typeof(PrivacyPolicyPage).Name){
+                           Device.OpenUri(new Uri(GlobalConstants.PrivacyPolicyLink));
+                           IsPresented = false;
+                            MasterPage.ListView.SelectedItem = null;
+                            return;
+                           
+                    }else
                         CurrentPage = (Page)Activator.CreateInstance(type);
                     CurrentPage.Title = item.Title;
                 }

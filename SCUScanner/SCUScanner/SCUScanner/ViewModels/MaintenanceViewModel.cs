@@ -44,10 +44,10 @@ namespace SCUScanner.ViewModels
 
                  if (Device.Android == Device.RuntimePlatform)
                     {
-                string infoText = SettingsBase.Resources["InfoPermissionLocationText"];
+                string infoText = SettingsBase.Resources["InfoPermissionCameraText"];
                 //if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Camera))
                 {
-                    await App.Dialogs.AlertAsync(infoText, "Need camera", "OK");
+                    await App.Dialogs.AlertAsync(infoText, SettingsBase.Resources["NeedPermissionText"],   SettingsBase.Resources["OkText"]);
                 }
                      }
                 var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);

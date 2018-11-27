@@ -420,7 +420,17 @@ namespace SCUScanner.Resources {
                 return ResourceManager.GetString("InfoPermissionLocationText", resourceCulture);
             }
         }
-        
+        NeedPermissionText
+        internal static string NeedPermissionText {
+            get {
+                return ResourceManager.GetString("NeedPermissionText", resourceCulture);
+            }
+        }
+        internal static string InfoPermissionCameraText {
+            get {
+                return ResourceManager.GetString("InfoPermissionCameraText", resourceCulture);
+            }
+        }
         /// <summary>
         ///   Looks up a localized string similar to Local image not found!!!.
         /// </summary>

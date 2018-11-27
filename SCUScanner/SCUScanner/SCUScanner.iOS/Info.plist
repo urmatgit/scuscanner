@@ -54,9 +54,9 @@
 		<string>bluetooth-peripheral</string>
 	</array>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>SCUScanner BLE connector(Custom)</string>
+	<string>To access the hardware identifiers of nearby external devices via Bluetooth and Wi-Fi scans, your app needs Bluetooth and  Wi-Fi</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Can we use your camera(Custom)</string>
+	<string>CentriClean needs to access your Camera to scan barcodes. Please allow access to Camera</string>
 	<key>CFBundleIdentifier</key>
 	<string>Home.CentriClean</string>
 </dict>

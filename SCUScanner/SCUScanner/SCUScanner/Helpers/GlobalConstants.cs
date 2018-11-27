@@ -22,6 +22,7 @@ namespace SCUScanner.Helpers
         public const bool FactoryMode = false;
         //if this property is empty, then the language is set from location of the phone location
         public const string HardDefaultLang = "en";
+        public const string PrivacyPolicyLink="http://chester-sw.com/privacy-policy-centriclean.html";
     }
 
 }
