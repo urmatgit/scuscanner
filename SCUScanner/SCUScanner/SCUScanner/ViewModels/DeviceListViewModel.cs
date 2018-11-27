@@ -357,7 +357,7 @@ namespace SCUScanner.ViewModels
                     return "Unknown BLE state.";
                 case BluetoothState.Unavailable:
                     {
-                    //    Crashes. TrackError(new Exception("BLE is not available on this device."));
+                        Crashes. TrackError(new Exception("BLE is not available on this device."));
                         return "BLE is not available on this device.";
                     }
                 case BluetoothState.Unauthorized:

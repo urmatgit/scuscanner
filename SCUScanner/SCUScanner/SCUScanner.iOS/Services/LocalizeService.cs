@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using Microsoft.AppCenter.Crashes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

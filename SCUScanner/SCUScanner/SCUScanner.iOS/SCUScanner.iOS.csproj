@@ -304,4 +304,5 @@
   <ItemGroup>
     <BundleResource Include="Resources\PrivacyPolicy.png" />
   </ItemGroup>
+  <ItemGroup />
 </Project>

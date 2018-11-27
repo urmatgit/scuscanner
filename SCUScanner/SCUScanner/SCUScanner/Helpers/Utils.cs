@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using FluentFTP;
+using Microsoft.AppCenter.Crashes;
 using SCUScanner.Models;
 using System;
 using System.Collections.Generic;

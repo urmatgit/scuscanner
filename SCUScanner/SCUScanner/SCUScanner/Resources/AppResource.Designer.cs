@@ -420,7 +420,7 @@ namespace SCUScanner.Resources {
                 return ResourceManager.GetString("InfoPermissionLocationText", resourceCulture);
             }
         }
-        NeedPermissionText
+        
         internal static string NeedPermissionText {
             get {
                 return ResourceManager.GetString("NeedPermissionText", resourceCulture);

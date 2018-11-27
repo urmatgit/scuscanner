@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using FluentFTP;
+using Microsoft.AppCenter.Crashes;
 using SCUScanner.Helpers;
 using SCUScanner.Models;
 using SCUScanner.ViewModels;
@@ -62,7 +63,7 @@ namespace SCUScanner.Services
                 }
                 catch (Exception er)
                 {
-                     Crashes.TrackError(ex, new Dictionary<string,string>{
+                     Crashes.TrackError(er, new Dictionary<string,string>{
                     { "Class", "AnalizeSpare" },
                     { "functions", "ReadCSV" },
                     { "Issue", $"FtpClient({GlobalConstants.FtpHost})"}
@@ -214,7 +215,7 @@ namespace SCUScanner.Services
                                     }
                                     catch (Exception er)
                                     {
-                                    Crashes.TrackError(ex, new Dictionary<string,string>{
+                                    Crashes.TrackError(er, new Dictionary<string,string>{
                                         { "Class", "AnalizeSpare" },
                                         { "functions", "DownLoad" },
                                         { "Issue", $"Delete({tmpFileName})"}
