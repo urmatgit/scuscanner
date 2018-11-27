@@ -62,6 +62,11 @@ namespace SCUScanner.Services
                 }
                 catch (Exception er)
                 {
+                     Crashes.TrackError(ex, new Dictionary<string,string>{
+                    { "Class", "AnalizeSpare" },
+                    { "functions", "ReadCSV" },
+                    { "Issue", $"FtpClient({GlobalConstants.FtpHost})"}
+                    });
                     ErrorConnect = true;
                     await App.Dialogs.AlertAsync(Settings.Current.Resources["NoInternetConOrErrorText"]);
 
@@ -209,7 +214,11 @@ namespace SCUScanner.Services
                                     }
                                     catch (Exception er)
                                     {
-
+                                    Crashes.TrackError(ex, new Dictionary<string,string>{
+                                        { "Class", "AnalizeSpare" },
+                                        { "functions", "DownLoad" },
+                                        { "Issue", $"Delete({tmpFileName})"}
+                                        });
                                     }
                                     App.Dialogs.Toast($"{Settings.Current.Resources["DownloadedText"]}- {filename}");
                                     //    }
@@ -218,6 +227,11 @@ namespace SCUScanner.Services
                                 catch (Exception ex)
                                 {
 
+                                Crashes.TrackError(ex, new Dictionary<string,string>{
+                                        { "Class", "AnalizeSpare" },
+                                        { "functions", "DownLoad" },
+                                        { "Issue", $"DownloadFileAsync({remotefilename})"}
+                                        });
                                     App.Dialogs.Toast($"{filename}: {ex.ToString()}");
                                     //await App.Dialogs.AlertAsync(ex.ToString());
 
@@ -250,6 +264,11 @@ namespace SCUScanner.Services
             }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex, new Dictionary<string,string>{
+                                        { "Class", "AnalizeSpare" },
+                                        { "functions", "DownLoad" },
+                                        { "Issue", Settings.Current.Resources["NoInternetConOrErrorText"]}
+                                        });
                 ErrorConnect = true;
                 await App.Dialogs.AlertAsync(Settings.Current.Resources["NoInternetConOrErrorText"]);
                 filenamepath = "";

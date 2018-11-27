@@ -127,6 +127,11 @@ namespace SCUScanner.ViewModels
                                  }
                                  catch (Exception er)
                                  {
+                                     Crashes.TrackError(er, new Dictionary<string,string>{
+                                    { "Class", "ScanResultViewModel" },
+                                    { "functions", "SendCommand" },
+                                        { "Issue", $"{er.Message}"}
+                                    });
                                      dialog.Hide();
                                      ReConnectIfOk = false;
                                      await App.Dialogs.AlertAsync(er.Message);

@@ -77,7 +77,11 @@ namespace SCUScanner.Helpers
                                         }
                                         catch (Exception er)
                                         {
-
+                                            Crashes.TrackError(er, new Dictionary<string,string>{
+                                            { "Class", "Utils" },
+                                            { "functions", "DownloadManual" },
+                                            { "Issue", $"File.Delete({tmpFileName})"}
+                                            });
                                         }
                                     }
                                 }
@@ -86,6 +90,11 @@ namespace SCUScanner.Helpers
                             {
                                 progressDialog.Hide();
                                 App.Dialogs.HideLoading();
+                                Crashes.TrackError(ex, new Dictionary<string,string>{
+                    { "Class", "Utils" },
+                    { "functions", "DownloadManual" },
+                    { "Issue", $"DownloadFileAsync(/manuals/{filename}), copy "}
+                    });
                                 await App.Dialogs.AlertAsync(ex.ToString());
 
                             }

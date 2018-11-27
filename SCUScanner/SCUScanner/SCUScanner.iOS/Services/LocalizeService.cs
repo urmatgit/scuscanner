@@ -26,9 +26,14 @@ namespace SCUScanner.iOS.Services
             {
                 ci = new System.Globalization.CultureInfo(netLanguage);
             }
-            catch
+            catch (Exception ex)
             {
                 ci = new System.Globalization.CultureInfo(prefLanguage);
+                 Crashes.TrackError(ex, new Dictionary<string,string>{
+                    { "Class", "LocalizeService" },
+                    { "function", "GetCurrentCultureInfo" },
+                    { "Issue", $" {netLanguage}" }
+                    });
             }
             return ci;
         }
