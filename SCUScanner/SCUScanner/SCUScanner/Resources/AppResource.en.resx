@@ -188,9 +188,9 @@ Turn On Bluetooth and press </value>
     <value>Stop scan</value>
   </data>
   <data name="InfoPermissionLocationText" xml:space="preserve">
-    <value>To access the hardware identifiers of nearby external devices via Bluetooth and Wi-Fi scans, your app needs ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION permissions</value>
+    <value>CentriClean needs permission for Location services to access hardware identifiers of nearby devices via Bluetooth. Please allow access in the next screen</value>
   </data>
-   <data name="InfoPermissionCameraText" xml:space="preserve">
+  <data name="InfoPermissionCameraText" xml:space="preserve">
     <value>CentriClean needs to access your Camera to scan barcodes. Please allow access in the next screen</value>
   </data>
   <data name="LocationNameText" xml:space="preserve">
