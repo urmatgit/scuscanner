@@ -366,4 +366,7 @@
       <Visible>false</Visible>
     </ImageAsset>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_information_black_36dp.png" />
+  </ItemGroup>
 </Project>
