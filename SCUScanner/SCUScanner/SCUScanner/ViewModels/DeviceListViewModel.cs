@@ -803,6 +803,7 @@ namespace SCUScanner.ViewModels
                 foreach (var service in SCUServices)
                 {
                     Debug.WriteLine("Service-"+ service.Id.ToString());
+
                     transparentTxDataCharacteristic = await service.GetCharacteristicAsync(Guid.Parse(GlobalConstants.UUID_TRANSPARENT_TX_PRIVATE_CHAR));
                     if (transparentRxDataCharacteristic != null)
                     {

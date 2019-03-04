@@ -20,10 +20,13 @@ namespace SCUScanner.Pages
         {
             InitializeComponent();
             BindingContext= dataDivicesListViewModel = new DataDivicesListViewModel(Navigation);
-
+           
             filterText.TextChanged += FilterText_TextChanged;
             filterText.Text = dataDivicesListViewModel.SettingsBase.DeviceFilter;
         }
+
+        
+
         protected override void OnDisappearing()
         {
             dataDivicesListViewModel.SettingsBase.DeviceFilter = filterText.Text;
@@ -54,6 +57,25 @@ namespace SCUScanner.Pages
         {
             base.OnAppearing();
             dataDivicesListViewModel.OnActivate();
+        }
+
+       
+
+        private void selectcommand(object sender, EventArgs e)
+        {
+
+            var item=((TappedEventArgs)e).Parameter as DevicesItem;
+            if (item!=null)
+                dataDivicesListViewModel.SelectCommand.Execute(item);
+        }
+
+        
+
+        private async void imageClick(object sender, EventArgs e)
+        {
+            var item = ((TappedEventArgs)e).Parameter as DevicesItem;
+            if (item != null)
+                await Navigation.PushAsync(new MaintenancePage(item.SerialNo));
         }
         //async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         //{

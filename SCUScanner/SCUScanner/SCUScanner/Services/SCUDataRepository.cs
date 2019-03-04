@@ -30,8 +30,15 @@ namespace SCUScanner.Services
         }
         public async Task<List<DevicesItem>> GetDevicesItem()
         {
-            
+#if DEBUG
+            var devList = new List<DevicesItem>();
+            devList.Add(new DevicesItem() { id = 1, SerialNo = "0001", UnitName = "test1" });
+            devList.Add(new DevicesItem() { id = 2, SerialNo = "0002", UnitName = "test2" });
+            devList.Add(new DevicesItem() { id = 3, SerialNo = "0003", UnitName = "test3" });
+            return devList; 
+#else
             return await database.QueryAsync<DevicesItem>("Select id, UnitName, SerialNo from SCUItem group by UnitName,SerialNo order by UnitName", "");
+#endif
         }
         public async Task<SCUItem> GetItemAsync(int id)
         {

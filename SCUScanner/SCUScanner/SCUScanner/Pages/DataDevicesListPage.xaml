@@ -19,35 +19,46 @@
             </SearchBar.HeightRequest>
         </SearchBar>
 
-
-    <controls:sfListViewEx x:Name="DataDevicesListView"
+        <!--ItemClickCommand="{Binding SelectCommand}"-->
+        <controls:sfListViewEx x:Name="DataDevicesListView"
             ItemsSource="{Binding DevicesItems}"
-             ItemClickCommand="{Binding SelectCommand}"
-            ItemSize="80"
-          >
             
-    <!--Built in Cells-->
-        <!--<controls:ListViewEx.ItemTemplate>
+            ItemSize="80"   
+          >
+
+            <!--Built in Cells-->
+            <!--<controls:ListViewEx.ItemTemplate>
         <DataTemplate>
             <TextCell Text="{Binding .}" />
         </DataTemplate>
     </controls:ListViewEx.ItemTemplate>-->
-    
-    <!--Custom View Cells-->
 
-        <controls:sfListViewEx.ItemTemplate>
-      <DataTemplate>
-        <ViewCell>
-          <StackLayout Margin="20,5,5,5" Padding="5"  >
-            <Label Text="{Binding UnitName}"  FontSize="Large" FontAttributes="Bold"
+            <!--Custom View Cells-->
+
+            <controls:sfListViewEx.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Margin="20,5,5,5">
+                            <Image Source="{Binding ImageInfo}" WidthRequest="36" HeightRequest="36" VerticalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer  Tapped="imageClick" CommandParameter="{Binding .}" />
+                                </Image.GestureRecognizers>
+                               </Image>
+
+                            <StackLayout Padding="5" HorizontalOptions="FillAndExpand" >
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer  Tapped="selectcommand" CommandParameter="{Binding .}"  />
+                                </StackLayout.GestureRecognizers>
+                                <Label Text="{Binding UnitName}"  FontSize="Large" FontAttributes="Bold"
                     />
-            <Label Text="{Binding SerialNo}" FontSize="Small"
+                                <Label Text="{Binding SerialNo}" FontSize="Small"
                    />
-          </StackLayout>
-        </ViewCell>
-      </DataTemplate>
-    </controls:sfListViewEx.ItemTemplate>
-    
-  </controls:sfListViewEx>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </controls:sfListViewEx.ItemTemplate>
+
+        </controls:sfListViewEx>
     </StackLayout>
 </ContentPage>

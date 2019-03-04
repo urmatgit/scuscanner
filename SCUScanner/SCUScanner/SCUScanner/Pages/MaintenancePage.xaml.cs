@@ -17,11 +17,12 @@ namespace SCUScanner.Pages
 	{
         MaintenanceViewModel maintenanceViewModel;
         
-        public MaintenancePage ()
+        public MaintenancePage (string serial="")
 		{
 			InitializeComponent ();
             BindingContext = maintenanceViewModel = new MaintenanceViewModel(Navigation);
             bScanQR.Clicked += BScanQR_Clicked;
+            eSerialNumber.Text = serial;
 //#if DEBUG
 //            eSerialNumber.Text = "MP60002-0100100";
 //#endif

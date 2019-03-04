@@ -30,8 +30,13 @@ namespace SCUScanner.Droid
                 UserDialogs.Init(this);
                 ZXing.Net.Mobile.Forms.Android.Platform.Init();
                 MR.Gestures.Android.Settings.LicenseKey = "CB2F-LQLC-HAY5-7DMG-DSZZ-FAEX-RF5D-3RYN-FE74-4RN3-NVVD-34LH-DEMV";
-
+            try
+            {
                 LoadApplication(new App());
+            }catch (Exception er)
+            {
+                var mess = er.Message;
+            }
            
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

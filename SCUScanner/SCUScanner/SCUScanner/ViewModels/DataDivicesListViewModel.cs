@@ -20,6 +20,7 @@ namespace SCUScanner.ViewModels
         {
             Navigation = navigation;
             DevicesItems = new ObservableCollection<DevicesItem>();
+            
             SelectCommand = ReactiveCommand.CreateFromTask<DevicesItem> (async (x) =>
           //  SelectCommand=ReactiveCommand.Create<DevicesItem>((x)=>
             {
@@ -27,7 +28,7 @@ namespace SCUScanner.ViewModels
                 {
                     //await Navigation.PopAsync();
                    
-                       await  Navigation.PushAsync(new SCUItemsListPage(x.UnitName,x.SerialNo));
+                       await  Navigation.PushAsync(new SCUItemsListPage(x?.UnitName,x?.SerialNo));
                    
                 }//);
                 //await App.Dialogs.AlertAsync($"Selected click - {x.UnitName}" );
