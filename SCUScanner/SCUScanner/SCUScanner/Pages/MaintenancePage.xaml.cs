@@ -16,8 +16,17 @@ namespace SCUScanner.Pages
 	public partial class MaintenancePage : ContentPage
 	{
         MaintenanceViewModel maintenanceViewModel;
-        
-        public MaintenancePage (string serial="")
+        public MaintenancePage()
+        {
+            InitializeComponent();
+            BindingContext = maintenanceViewModel = new MaintenanceViewModel(Navigation);
+            bScanQR.Clicked += BScanQR_Clicked;
+            eSerialNumber.Text = "";
+            //#if DEBUG
+            //            eSerialNumber.Text = "MP60002-0100100";
+            //#endif
+        }
+        public MaintenancePage (string serial)
 		{
 			InitializeComponent ();
             BindingContext = maintenanceViewModel = new MaintenanceViewModel(Navigation);
