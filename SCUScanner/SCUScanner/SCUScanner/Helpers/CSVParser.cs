@@ -22,12 +22,18 @@ namespace SCUScanner.Helpers
                 ReadAndParcePart(path);
             
             Debug.WriteLine($"Parts-{Parts.Count}");
+            }
+            catch (Exception ex)
+            {
+                App.Dialogs.Alert(ex.Message, Settings.Current.Resources["CSVParseError"]);
+            }
+            try { 
             ReadAndParceEmail(emailpath);
             Debug.WriteLine($"Emails-{Emails.Count}");
             }
             catch (Exception ex)
             {
-                App.Dialogs.AlertAsync(ex.Message,Settings.Current.Resources["CSVParseError"]);
+                App.Dialogs.Alert(ex.Message,Settings.Current.Resources["CSVParseError"]);
             }
 
         }
