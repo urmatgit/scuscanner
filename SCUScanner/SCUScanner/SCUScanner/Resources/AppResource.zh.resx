@@ -163,4 +163,7 @@
   <data name="StopScanText" xml:space="preserve">
     <value>停止</value>
   </data>
+  <data name="CSVParseError" xml:space="preserve">
+    <value>CSV文件解析错误</value>
+  </data>
 </root>

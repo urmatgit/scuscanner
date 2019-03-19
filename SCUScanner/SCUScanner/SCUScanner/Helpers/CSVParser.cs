@@ -17,10 +17,18 @@ namespace SCUScanner.Helpers
         public List<Email> Emails { get; private set; } = new List<Email>();
         public CSVParser(string path, string emailpath)
         {
-            ReadAndParcePart(path);
+            try
+            {
+                ReadAndParcePart(path);
+            
             Debug.WriteLine($"Parts-{Parts.Count}");
             ReadAndParceEmail(emailpath);
             Debug.WriteLine($"Emails-{Emails.Count}");
+            }
+            catch (Exception ex)
+            {
+                App.Dialogs.AlertAsync(ex.Message,Settings.Current.Resources["CSVParseError"]);
+            }
 
         }
         private void ReadAndParceEmail(string path)
@@ -41,6 +49,7 @@ namespace SCUScanner.Helpers
         }
         private Email FromLineEmailCSV(string l)
         {
+            Debug.WriteLine(l);
             string[] values = l.Split(',');
             Email email = new Email();
             email.BB = values[0];
@@ -49,6 +58,7 @@ namespace SCUScanner.Helpers
         }
         private Part FromLinePartCSV(string l)
         {
+            Debug.WriteLine(l);
             string[] values = l.Split(',');
             Part part = new Part();
             part.ID = Convert.ToInt32(values[0]);

@@ -338,4 +338,7 @@ box only visible on factory version</value>
   <data name="DebugModeText" xml:space="preserve">
     <value>Режим отладки</value>
   </data>
+  <data name="CSVParseError" xml:space="preserve">
+    <value>Ошибка разбора CSV файла</value>
+  </data>
 </root>

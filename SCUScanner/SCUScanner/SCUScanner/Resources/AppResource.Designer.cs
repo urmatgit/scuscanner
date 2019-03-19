@@ -224,6 +224,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CSV file parsing error.
+        /// </summary>
+        internal static string CSVParseError {
+            get {
+                return ResourceManager.GetString("CSVParseError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cut off {0}%.
         /// </summary>
         internal static string CutOffText {
@@ -413,6 +422,15 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CentriClean needs to access your Camera to scan barcodes. Please allow access in the next screen.
+        /// </summary>
+        internal static string InfoPermissionCameraText {
+            get {
+                return ResourceManager.GetString("InfoPermissionCameraText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To access the hardware identifiers of nearby external devices via Bluetooth and Wi-Fi scans, your app must now have the ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION permissions.
         /// </summary>
         internal static string InfoPermissionLocationText {
@@ -421,16 +439,6 @@ namespace SCUScanner.Resources {
             }
         }
         
-        internal static string NeedPermissionText {
-            get {
-                return ResourceManager.GetString("NeedPermissionText", resourceCulture);
-            }
-        }
-        internal static string InfoPermissionCameraText {
-            get {
-                return ResourceManager.GetString("InfoPermissionCameraText", resourceCulture);
-            }
-        }
         /// <summary>
         ///   Looks up a localized string similar to Local image not found!!!.
         /// </summary>
@@ -518,6 +526,15 @@ namespace SCUScanner.Resources {
         internal static string NearbyDevicesCaptionText {
             get {
                 return ResourceManager.GetString("NearbyDevicesCaptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Need permission.
+        /// </summary>
+        internal static string NeedPermissionText {
+            get {
+                return ResourceManager.GetString("NeedPermissionText", resourceCulture);
             }
         }
         

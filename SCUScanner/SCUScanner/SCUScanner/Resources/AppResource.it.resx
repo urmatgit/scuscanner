@@ -160,4 +160,7 @@ Attivare il Bluetooth e premere</value>
   <data name="StopScanText" xml:space="preserve">
     <value>Fermare</value>
   </data>
+  <data name="CSVParseError" xml:space="preserve">
+    <value>Errori di analisi file CSV</value>
+  </data>
 </root>

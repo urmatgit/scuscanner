@@ -389,4 +389,7 @@ box only visible on factory version</value>
   <data name="PrivacyPolicyText" xml:space="preserve">
     <value>Privacy Policy</value>
   </data>
+  <data name="CSVParseError" xml:space="preserve">
+    <value>CSV file parsing error</value>
+  </data>
 </root>

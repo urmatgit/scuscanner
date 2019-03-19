@@ -160,4 +160,7 @@ Activar Bluetooth y pulse</value>
   <data name="StopScanText" xml:space="preserve">
     <value>Detener</value>
   </data>
+  <data name="CSVParseError" xml:space="preserve">
+    <value>Errores de análisis de archivos CSV</value>
+  </data>
 </root>

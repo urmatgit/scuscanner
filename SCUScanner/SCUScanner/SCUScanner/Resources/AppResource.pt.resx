@@ -160,4 +160,7 @@ Ligue o Bluetooth e prima</value>
   <data name="StopScanText" xml:space="preserve">
     <value>Parar</value>
   </data>
+  <data name="CSVParseError" xml:space="preserve">
+    <value>Erros de processamento de ficheiros CSV</value>
+  </data>
 </root>
