@@ -44,12 +44,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Docs\Help%28en%291.pdf" />
     <None Remove="Docs\Help(en).pdf" />
     <None Remove="Docs\MP60002_0100100.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Docs\Help%28en%29.pdf" />
+    <EmbeddedResource Include="Docs\Help%28en%29.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -91,9 +94,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Docs\Help%28en%29.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Update="Pages\CartsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

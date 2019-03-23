@@ -94,14 +94,17 @@ namespace SCUScanner.Pages
                     if (item.TargetType.Name == typeof(WebViewPageCS).Name)
                     {
                         var WorkDir = DependencyService.Get<ISQLite>().GetWorkManualDir();
-                        string filename = "Help(en).pdf";
+                        string filename = GlobalConstants.HelpFileName;// "Help(en).pdf";
                         filename = System.IO.Path.Combine(WorkDir, filename);
-                        if (!System.IO.File.Exists(filename)) {
-                            if (ResourceLoader.SaveResourceToFile(WorkDir, "SCUScanner.Docs.Help(en).pdf",System.IO.Path.GetFileName(filename)))
+                        if (System.IO.File.Exists(filename))
+                        {
+                            System.IO.File.Delete(filename);
+                        }
+                            if (ResourceLoader.SaveResourceToFile(WorkDir, $"SCUScanner.Docs.{GlobalConstants.HelpFileName}",System.IO.Path.GetFileName(filename)))
                             {
 
                             }
-                          }
+                          //}
                     
                         CurrentPage = (Page)Activator.CreateInstance(type, filename);
                     }
