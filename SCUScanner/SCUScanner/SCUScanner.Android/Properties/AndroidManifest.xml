@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.iow.centriclean" android:installLocation="auto" android:versionName="0.9.08" android:versionCode="8">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.iow.centriclean" android:installLocation="auto" android:versionName="0.9.09" android:versionCode="9">
 	<uses-sdk android:minSdkVersion="23" android:targetSdkVersion="27" />
 	<application android:label="CentriClean" android:icon="@drawable/icon_big"></application>
 	<uses-permission android:name="android.permission.BLUETOOTH" />
