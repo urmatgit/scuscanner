@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>CentriClean</string>
 	<key>CFBundleVersion</key>
-	<string>1.04</string>
+	<string>1.05</string>
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>Icon-60@2x</string>
