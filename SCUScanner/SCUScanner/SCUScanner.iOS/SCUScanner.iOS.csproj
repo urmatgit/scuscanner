@@ -369,4 +369,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\information.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\delete64.png" />
+  </ItemGroup>
 </Project>
