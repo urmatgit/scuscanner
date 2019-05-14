@@ -126,6 +126,11 @@ namespace SCUScanner.Helpers
             }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex, new Dictionary<string,string>{
+                                            { "Class", "Utils" },
+                                            { "functions", "DownloadManual" },
+                                            { "Issue", $"Ftp ConnectAsync({GlobalConstants.FtpHost}:{GlobalConstants.FtpPort})"}
+                                            });
                 progressDialog.Hide();
                 App.Dialogs.HideLoading();
                 await App.Dialogs.AlertAsync(Settings.Current.Resources["NoInternetConOrErrorText"]);
