@@ -1268,6 +1268,7 @@ namespace SCUScanner.ViewModels
 
                     if (!string.IsNullOrEmpty(BroadcastIdentity))
                     {
+                        BroadcastIdentity=BroadcastIdentity.PadRight(6, ' ');
                         Debug.WriteLine($"write- {BroadcastIdentity}");
                         if (await WriteValueAsync($"!{BroadcastIdentity}"))
                         {

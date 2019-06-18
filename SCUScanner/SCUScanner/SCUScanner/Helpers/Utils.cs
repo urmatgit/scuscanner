@@ -67,7 +67,7 @@ namespace SCUScanner.Helpers
                             {
                                 using (var cancelSrc = new CancellationTokenSource())
                                 {
-                                    using (App.Dialogs.Loading(Settings.Current.Resources["DownloadText"], cancelSrc.Cancel, Settings.Current.Resources["CancelText"]))
+                                    using (App.Dialogs.Loading(Settings.Current.Resources["DownloadWaitText"], cancelSrc.Cancel, Settings.Current.Resources["CancelText"]))
                                     {
                                         string tmpFileName = filenamelocal + DateTime.Now.Second.ToString();
                                         dowloaded = await client.DownloadFileAsync(tmpFileName, $"/manuals/{filename}", true);
@@ -126,6 +126,11 @@ namespace SCUScanner.Helpers
             }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex, new Dictionary<string,string>{
+                                            { "Class", "Utils" },
+                                            { "functions", "DownloadManual" },
+                                            { "Issue", $"Ftp ConnectAsync({GlobalConstants.FtpHost}:{GlobalConstants.FtpPort})"}
+                                            });
                 progressDialog.Hide();
                 App.Dialogs.HideLoading();
                 await App.Dialogs.AlertAsync(Settings.Current.Resources["NoInternetConOrErrorText"]);
