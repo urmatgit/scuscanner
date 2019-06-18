@@ -22,6 +22,7 @@ namespace SCUScanner.Services
     {
         private const string CSVPath = "csv";
         private const string EmailsPath = "brandemails";
+        private const string EmailsFile = "brandsalesemail.csv";
         private const string ThumpPath = "thumbnails";
         private const string ImagesPath = "images";
         private const string FtpHost = "ftp://ftp.chester.ru";
@@ -76,7 +77,7 @@ namespace SCUScanner.Services
             var filename = GetFileNameFromSerialNo(_serialnumber);
             string path = await DownLoad(CSVPath, $"{filename}.csv",client);
             
-            string emailpath = await DownLoad(EmailsPath, $"brandemails.csv", client);
+            string emailpath = await DownLoad(EmailsPath, EmailsFile, client);
             //if (ErrorConnect)
             //    LocalImagePath = "SCUScanner.img.MP60002_0100100.png";
             //else 
