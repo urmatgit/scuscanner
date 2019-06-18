@@ -104,8 +104,10 @@ namespace SCUScanner.Pages
                             {
 
                             }
-                          //}
-                    
+                        //}
+                        DependencyService.Get<IOpenPDF>().OpenPdf(filename);
+                        MasterPage.ListView.SelectedItem = null;
+                        return;
                         CurrentPage = (Page)Activator.CreateInstance(type, filename);
                     }
                     else if (item.TargetType.Name == typeof(PrivacyPolicyPage).Name){
