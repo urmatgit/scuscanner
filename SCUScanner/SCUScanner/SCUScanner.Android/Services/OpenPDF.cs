@@ -35,24 +35,8 @@ namespace SCUScanner.Droid.Services
             }
             catch (Exception e)
             {
-                
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Application.Context);
-                    AlertDialog alert = builder.Create();
-
-                    alert.SetTitle("No Application Found");
-                    alert.SetMessage("Download one from Android Market?");
-                    alert.Window.SetType(Android.Views.WindowManagerTypes.Toast);
-                    alert.SetButton("Yes, Please", (sender, args) =>
-                    {
-                        Intent marketIntent = new Intent(Intent.ActionView);
-                        marketIntent.SetData(Android.Net.Uri.Parse("market://details?id=com.adobe.reader"));
-                        Application.Context.StartActivity(marketIntent);
-                    });
-                    alert.SetButton("No, Thanks", (sender, args) =>
-                     {
-                     });
-                    alert.Show();
-                
+                var activity = (MainActivity)Xamarin.Forms.Forms.Context;
+                activity.openPDF(); 
                 //  Toast.MakeText(Application.Context, "No Application Available to View PDF", ToastLength.Short).Show();
             }
         }
