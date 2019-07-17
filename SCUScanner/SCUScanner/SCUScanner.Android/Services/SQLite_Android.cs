@@ -30,8 +30,10 @@ namespace SCUScanner.Droid.Services
 
         public string GetWorkManualDir()
         {
-            var workdir= System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
-            workdir = Path.Combine(workdir, "scuscanner");
+
+
+            var workdir = Android.App.Application.Context.FilesDir+ "/scuscanner"; //System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
+          //  workdir = Path.Combine(workdir, "scuscanner");
             if (!Directory.Exists(workdir))
                 Directory.CreateDirectory(workdir);
             return workdir;

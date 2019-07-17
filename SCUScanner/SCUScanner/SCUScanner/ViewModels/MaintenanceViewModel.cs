@@ -93,8 +93,10 @@ namespace SCUScanner.ViewModels
                      progress.Show();
                      await Utils.DownloadManual<string>(SerialNumber.ToUpper(), SettingsBase.SelectedLangKod.ToLower(),progress, async (o) =>
                      {
-                         WebViewPageCS webViewPageCS = new WebViewPageCS(o);
-                         await Navigation.PushAsync(webViewPageCS);
+                         DependencyService.Get<IOpenPDF>().OpenPdf(o);
+
+                         //WebViewPageCS webViewPageCS = new WebViewPageCS(o);
+                         //await Navigation.PushAsync(webViewPageCS);
                      });
                  }
                 
