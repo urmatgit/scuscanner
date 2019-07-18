@@ -24,7 +24,7 @@ namespace SCUScanner.Droid.Services
         // return null;
     public class OpenPDF : IOpenPDF
     {
-         public void OpenPdf(string filePath)
+         public void OpenPdf4(string filePath)
     {
 
     // var bytes = File.ReadAllBytes(filePath);
@@ -80,7 +80,54 @@ namespace SCUScanner.Droid.Services
         }
         }
 
+public async Task OpenPdf(string filename)
+{
+try
+{
+var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+if (status != PermissionStatus.Granted)
+{
+if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
+{
+await Application.Current.MainPage.DisplayAlert("Need storage", "To view files this application needs permissions to access storage.", "OK");
+}
 
+                        var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
+                        //Best practice to always check that the key exists
+                        if (results.ContainsKey(Permission.Storage))
+                            status = results[Permission.Storage];
+                    }
+
+                    if (status == PermissionStatus.Granted)
+                    {
+                        var file = new Java.IO.File(Path.Combine(CurrentContext.FilesDir.Path, filename));
+                        Android.Net.Uri uri = FileProvider.GetUriForFile(CurrentContext, CurrentContext.PackageName+".fileprovider", file);
+
+                        Intent intent = new Intent(Intent.ActionView);
+                        intent.SetDataAndType(uri, "application/pdf");
+                        intent.AddFlags(ActivityFlags.GrantReadUriPermission | ActivityFlags.GrantWriteUriPermission);
+                        intent.AddFlags(ActivityFlags.NewTask | ActivityFlags.NoHistory);
+
+                        // Trying to allow writing to the external app ...
+                        var resInfoList = CurrentContext.PackageManager.QueryIntentActivities(intent, PackageInfoFlags.MatchDefaultOnly);
+                        foreach (var resolveInfo in resInfoList)
+                        {
+                            var packageName = resolveInfo.ActivityInfo.PackageName;
+                            CurrentContext.GrantUriPermission(packageName, uri, ActivityFlags.GrantWriteUriPermission | ActivityFlags.GrantPrefixUriPermission | ActivityFlags.GrantReadUriPermission);
+
+                        }
+                        CurrentContext.StartActivity(intent);
+                    }
+                    else if (status != PermissionStatus.Unknown)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Storage Denied", "Can not access storage on this device, try again.", "OK");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(CurrentContext, "No Application Available to View PDF", ToastLength.Short).Show();
+                }
+            }
         public void OpenPdf2(string filePath)
         {
             Android.Net.Uri uri = Android.Net.Uri.Parse("file://" + filePath);
