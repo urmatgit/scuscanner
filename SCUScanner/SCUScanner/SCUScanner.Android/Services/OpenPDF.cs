@@ -15,7 +15,13 @@ using SCUScanner.Helpers;
 [assembly: Xamarin.Forms.Dependency(typeof(OpenPDF))]
 namespace SCUScanner.Droid.Services
 {
+        // using Uri = Android.Net.Uri;
 
+        // Intent intent = new Intent(Intent.ActionView);
+        // intent.SetDataAndType(Uri.Parse("file:///" + PathToFile(filename)), "application/pdf");
+        // intent.SetFlags(ActivityFlags.ClearTop);
+        // Forms.Context.StartActivity(intent);
+        // return null;
     public class OpenPDF : IOpenPDF
     {
          public void OpenPdf(string filePath)
@@ -64,7 +70,7 @@ namespace SCUScanner.Droid.Services
         try
         {
             Application.Context.StartActivity(intent);
-            Application.Context.StartActivity(Intent.CreateChooser(intent, "Open pdf file"));
+            //Application.Context.StartActivity(Intent.CreateChooser(intent, "Open pdf file"));
         }
         catch (Exception)
         {
