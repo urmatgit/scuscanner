@@ -19,7 +19,7 @@
     </activity>
     <service android:name="md5dcb6eccdc824e0677ffae8ccdde42930.KeepAliveService" />
     <activity android:configChanges="keyboardHidden|orientation|screenLayout" android:label="Scanner" android:name="md5bb098716dd46c8e113564e6b42b7cde9.ZxingActivity" />
-    <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="2147483647" android:authorities="CentriClean.CentriClean.mono.MonoRuntimeProvider.__mono_init__"  android:grantUriPermissions="true"/>
+    <provider android:name="android.support.v4.content.FileProvider" android:exported="false" android:initOrder="2147483647" android:authorities="CentriClean.CentriClean.fileprovider"  android:grantUriPermissions="true">
     <!--suppress ExportedReceiver-->
     <receiver android:name="mono.android.Seppuku">
       <intent-filter>
@@ -30,7 +30,9 @@
 	 <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
                            android:resource="@xml/file_paths"></meta-data>
     <meta-data android:name="android.support.VERSION" android:value="25.4.0" />
+  </provider>
   </application>
+   
   <!--this is necessary for Android v6+ to get the device name and address-->
   <!--<uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />-->
 </manifest>

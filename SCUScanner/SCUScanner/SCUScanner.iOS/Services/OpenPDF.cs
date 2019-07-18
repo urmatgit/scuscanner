@@ -13,7 +13,7 @@ namespace CentriClean.Services
 {
     public class OpenPDF : IOpenPDF
     {
-        public void OpenPdf(string filePath)
+        public void OpenPdf(string filePath, string needPermission = "", string notPermisson = "", string noApplication = "")
         {
             FileInfo fi = new FileInfo(filePath);
 

@@ -30,13 +30,13 @@ namespace SCUScanner.Droid.Services
 
         public string GetWorkManualDir()
         {
+           // return  global::Android.App.Application.Context.GetExternalFilesDir(null).AbsolutePath;
 
-
-            var workdir = Android.App.Application.Context.FilesDir+ "/scuscanner"; //System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
-          //  workdir = Path.Combine(workdir, "scuscanner");
-            if (!Directory.Exists(workdir))
-                Directory.CreateDirectory(workdir);
-            return workdir;
+            var workdir = Android.App.Application.Context.FilesDir  ; //System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
+            //                                                                        //  workdir = Path.Combine(workdir, "scuscanner");
+            ////if (!Directory.Exists(workdir))
+            ////    Directory.CreateDirectory(workdir);
+            return workdir.Path;
         }
         public Xamarin.Forms.Size GetImageOrgSize(string path)
         {

@@ -166,4 +166,13 @@
   <data name="CSVParseError" xml:space="preserve">
     <value>CSV文件解析错误</value>
   </data>
+  <data name="needPermission" xml:space="preserve">
+    <value>要查看文件，这个应用程序需要访问存储的权限。</value>
+  </data>
+  <data name="noApplication" xml:space="preserve">
+    <value>没有应用程序可用于查看PDF</value>
+  </data>
+  <data name="notPermisson" xml:space="preserve">
+    <value>无法访问此设备上的存储，请重试。</value>
+  </data>
 </root>

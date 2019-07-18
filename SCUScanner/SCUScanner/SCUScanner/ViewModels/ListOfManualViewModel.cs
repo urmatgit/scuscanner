@@ -53,8 +53,9 @@ namespace SCUScanner.ViewModels
                 if (File.Exists(file))
                 {
                  
-                    WebViewPageCS webViewPageCS = new WebViewPageCS(file);
-                    await Navigation.PushAsync(webViewPageCS);
+                      DependencyService.Get<IOpenPDF>().OpenPdf(file, needPermission:  Resources["needPermission"], notPermisson:  Resources["notPermisson"], noApplication:  Resources["noApplication"]);
+                    //WebViewPageCS webViewPageCS = new WebViewPageCS(file);
+                    //await Navigation.PushAsync(webViewPageCS);
 
                 }
             });

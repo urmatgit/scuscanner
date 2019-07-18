@@ -163,4 +163,13 @@ Activar Bluetooth y pulse</value>
   <data name="CSVParseError" xml:space="preserve">
     <value>Errores de análisis de archivos CSV</value>
   </data>
+  <data name="needPermission" xml:space="preserve">
+    <value>Para ver archivos esta aplicación necesita permisos para acceder al almacenamiento.</value>
+  </data>
+  <data name="noApplication" xml:space="preserve">
+    <value>No hay ninguna Aplicación Disponible para Ver PDF</value>
+  </data>
+  <data name="notPermisson" xml:space="preserve">
+    <value>No se puede acceder a almacenamiento en este dispositivo, intente de nuevo.</value>
+  </data>
 </root>

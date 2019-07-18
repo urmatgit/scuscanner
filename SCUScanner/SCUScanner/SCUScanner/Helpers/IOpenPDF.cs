@@ -6,6 +6,6 @@ namespace SCUScanner.Helpers
 {
     public interface IOpenPDF
     {
-           void OpenPdf(string filePath);
+           void OpenPdf(string filePath,string needPermission="",string notPermisson="",string noApplication="");
     }
 }

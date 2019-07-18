@@ -166,4 +166,13 @@ Schalten Sie Bluetooth und drücken Sie</value>
   <data name="CSVParseError" xml:space="preserve">
     <value>CSV - Datei analysiert Fehler</value>
   </data>
+  <data name="needPermission" xml:space="preserve">
+    <value>Um Dateien anzuzeigen, benötigt diese Anwendung Berechtigungen für den Zugriff auf Speicher.</value>
+  </data>
+  <data name="noApplication" xml:space="preserve">
+    <value>Keine Anwendung verfügbar, um PDF Anzuzeigen</value>
+  </data>
+  <data name="notPermisson" xml:space="preserve">
+    <value>Kann nicht auf Speicher auf diesem Gerät zugreifen, versuchen Sie es erneut.</value>
+  </data>
 </root>

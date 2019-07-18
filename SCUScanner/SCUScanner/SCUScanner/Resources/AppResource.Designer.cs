@@ -19,7 +19,7 @@ namespace SCUScanner.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class AppResource {
@@ -530,11 +530,29 @@ namespace SCUScanner.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To view files this application needs permissions to access storage..
+        /// </summary>
+        internal static string needPermission {
+            get {
+                return ResourceManager.GetString("needPermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Need permission.
         /// </summary>
         internal static string NeedPermissionText {
             get {
                 return ResourceManager.GetString("NeedPermissionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Application Available to View PDF.
+        /// </summary>
+        internal static string noApplication {
+            get {
+                return ResourceManager.GetString("noApplication", resourceCulture);
             }
         }
         
@@ -571,6 +589,15 @@ namespace SCUScanner.Resources {
         internal static string NoteText {
             get {
                 return ResourceManager.GetString("NoteText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can not access storage on this device, try again..
+        /// </summary>
+        internal static string notPermisson {
+            get {
+                return ResourceManager.GetString("notPermisson", resourceCulture);
             }
         }
         

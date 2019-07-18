@@ -346,4 +346,13 @@ Turn On Bluetooth and press </value>
   <data name="CSVParseError" xml:space="preserve">
     <value>CSV file parsing error</value>
   </data>
+  <data name="needPermission" xml:space="preserve">
+    <value>To view files this application needs permissions to access storage.</value>
+  </data>
+  <data name="noApplication" xml:space="preserve">
+    <value>No Application Available to View PDF</value>
+  </data>
+  <data name="notPermisson" xml:space="preserve">
+    <value>Can not access storage on this device, try again.</value>
+  </data>
 </root>

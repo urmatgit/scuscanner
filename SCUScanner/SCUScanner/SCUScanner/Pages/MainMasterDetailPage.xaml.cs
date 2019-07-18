@@ -105,7 +105,7 @@ namespace SCUScanner.Pages
 
                             }
                         //}
-                        DependencyService.Get<IOpenPDF>().OpenPdf(filename);
+                        DependencyService.Get<IOpenPDF>().OpenPdf(filename,needPermission: settings.Resources["needPermission"],notPermisson: settings.Resources["notPermisson"], noApplication: settings.Resources["noApplication"]);
                         MasterPage.ListView.SelectedItem = null;
                         return;
                         CurrentPage = (Page)Activator.CreateInstance(type, filename);

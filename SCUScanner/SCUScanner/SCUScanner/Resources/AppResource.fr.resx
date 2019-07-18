@@ -163,4 +163,13 @@ Activer Bluetooth et appuyez sur</value>
   <data name="CSVParseError" xml:space="preserve">
     <value>Erreurs D'analyse de fichier CSV</value>
   </data>
+  <data name="needPermission" xml:space="preserve">
+    <value>Pour visualiser les fichiers, Cette application a besoin de permissions pour accéder au stockage.</value>
+  </data>
+  <data name="noApplication" xml:space="preserve">
+    <value>Aucune demande Disponible pour voir PDF</value>
+  </data>
+  <data name="notPermisson" xml:space="preserve">
+    <value>Ne peut pas accéder au stockage sur cet appareil, essayer à nouveau.</value>
+  </data>
 </root>

@@ -163,4 +163,13 @@ Ligue o Bluetooth e prima</value>
   <data name="CSVParseError" xml:space="preserve">
     <value>Erros de processamento de ficheiros CSV</value>
   </data>
+  <data name="needPermission" xml:space="preserve">
+    <value>Para ver os ficheiros, esta aplicação necessita de permissões para aceder ao armazenamento.</value>
+  </data>
+  <data name="noApplication" xml:space="preserve">
+    <value>Nenhuma aplicação disponível para ver PDF</value>
+  </data>
+  <data name="notPermisson" xml:space="preserve">
+    <value>Não é possível acessar o armazenamento neste dispositivo, tente novamente.</value>
+  </data>
 </root>
