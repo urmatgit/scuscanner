@@ -63,13 +63,16 @@ namespace SCUScanner.Droid.Services
 
         try
         {
-            Application.Context.StartActivity(intent);
+          //  Application.Context.StartActivity(intent);
+            Application.Context.StartActivity(Intent.CreateChooser(intent, "Open pdf file"));
         }
         catch (Exception)
         {
             Toast.MakeText(Xamarin.Forms.Forms.Context, "No Application Available to View PDF", ToastLength.Short).Show();
         }
         }
+
+
         public void OpenPdf2(string filePath)
         {
             Android.Net.Uri uri = Android.Net.Uri.Parse("file://" + filePath);
