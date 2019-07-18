@@ -1,7 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.iow.centriclean" android:installLocation="auto" android:versionName="0.9.11" android:versionCode="11">
 	<uses-sdk android:minSdkVersion="23" android:targetSdkVersion="27" />
-	<application android:label="CentriClean" android:icon="@drawable/icon_big"></application>
+	<application android:label="CentriClean" android:icon="@drawable/icon_big">
+	<provider android:name="android.support.v4.content.FileProvider"
+                        android:authorities="${applicationId}.fileprovider"
+                        android:exported="false"
+                        android:grantUriPermissions="true">             
+                <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+                           android:resource="@xml/file_paths"></meta-data>
+              </provider>
+	</application>
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 	<!--this is necessary for Android v6+ to get the device name and address-->
@@ -9,4 +17,5 @@
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.CAMERA" />
 	<!--<uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />-->
+	 
 </manifest>
