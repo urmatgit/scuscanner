@@ -21,7 +21,7 @@ namespace SCUScanner.Droid.Services
          public void OpenPdf(string filePath)
     {
 
-     var bytes = File.ReadAllBytes(filePath);
+    // var bytes = File.ReadAllBytes(filePath);
 
         //Copy the private file's data to the EXTERNAL PUBLIC location
         string externalStorageState = global::Android.OS.Environment.ExternalStorageState;
@@ -50,10 +50,10 @@ namespace SCUScanner.Droid.Services
             application = "*/*";
             break;
         }
-        var externalPath = global::Android.OS.Environment.ExternalStorageDirectory.Path + "/report" + extension;
-        System.IO.File.WriteAllBytes(externalPath, bytes);
+        // var externalPath = global::Android.OS.Environment.ExternalStorageDirectory.Path + "/report" + extension;
+        // System.IO.File.WriteAllBytes(externalPath, bytes);
 
-        Java.IO.File file = new Java.IO.File(externalPath); 
+        Java.IO.File file = new Java.IO.File(filePath); 
         file.SetReadable(true);
         //Android.Net.Uri uri = Android.Net.Uri.Parse("file://" + filePath);
         Android.Net.Uri uri =  Android.Net.Uri.FromFile(file);
