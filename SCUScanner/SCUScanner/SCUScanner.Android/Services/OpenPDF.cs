@@ -18,55 +18,57 @@ namespace SCUScanner.Droid.Services
 
     public class OpenPDF : IOpenPDF
     {
-        
-        public void OpenPdf(string filePath){
-// var bytes = File.ReadAllBytes(filePath);
+         public void OpenPdf(string filePath)
+    {
 
-//             //Copy the private file's data to the EXTERNAL PUBLIC location
-//             string externalStorageState = global::Android.OS.Environment.ExternalStorageState;
-//             var externalPath = global::Android.OS.Environment.ExternalStorageDirectory.Path + "/" + global::Android.OS.Environment.DirectoryDownloads + "/" + System.IO.Path.GetFileName(filePath);
-//             File.WriteAllBytes(externalPath, bytes);
+     var bytes = File.ReadAllBytes(filePath);
 
-            Java.IO.File file = new Java.IO.File(filePath);
-            file.SetReadable(true);
+        //Copy the private file's data to the EXTERNAL PUBLIC location
+        string externalStorageState = global::Android.OS.Environment.ExternalStorageState;
+        string application = "";
 
-            string application = "";
-            string extension = Path.GetExtension(filePath);
+        string extension = System.IO.Path.GetExtension (filePath);
 
-            // get mimeTye
-            switch (extension.ToLower())
-            {
-                case ".txt":
-                    application = "text/plain";
-                    break;
-                case ".doc":
-                case ".docx":
-                    application = "application/msword";
-                    break;
-                case ".pdf":
-                    application = "application/pdf";
-                    break;
-                case ".xls":
-                case ".xlsx":
-                    application = "application/vnd.ms-excel";
-                    break;
-                case ".jpg":
-                case ".jpeg":
-                case ".png":
-                    application = "image/jpeg";
-                    break;
-                default:
-                    application = "*/*";
-                    break;
-            }
+        switch (extension.ToLower()) {
+        case ".doc":
+        case ".docx":
+            application = "application/msword";
+            break;
+        case ".pdf":
+            application = "application/pdf";
+            break;
+        case ".xls":
+        case ".xlsx":
+            application = "application/vnd.ms-excel";
+            break;
+        case ".jpg":
+        case ".jpeg":
+        case ".png":
+            application = "image/jpeg";
+            break;
+        default:
+            application = "*/*";
+            break;
+        }
+        var externalPath = global::Android.OS.Environment.ExternalStorageDirectory.Path + "/report" + extension;
+        System.IO.File.WriteAllBytes(externalPath, bytes);
 
-            //Android.Net.Uri uri = Android.Net.Uri.Parse("file://" + filePath);
-            Android.Net.Uri uri = Android.Net.Uri.FromFile(file);
-            Intent intent = new Intent(Intent.ActionView);
-            intent.SetDataAndType(uri, application);
-            intent.SetFlags(ActivityFlags.ClearWhenTaskReset | ActivityFlags.NewTask);
+        Java.IO.File file = new Java.IO.File(externalPath); 
+        file.SetReadable(true);
+        //Android.Net.Uri uri = Android.Net.Uri.Parse("file://" + filePath);
+        Android.Net.Uri uri =  Android.Net.Uri.FromFile(file);
+        Intent intent = new Intent(Intent.ActionView);
+        intent.SetDataAndType(uri, application);
+        intent.SetFlags(ActivityFlags.ClearWhenTaskReset | ActivityFlags.NewTask);
 
-            Forms.Context.StartActivity(intent);
+        try
+        {
+            Application.Context.StartActivity(intent);
+        }
+        catch (Exception)
+        {
+            Toast.MakeText(Xamarin.Forms.Forms.Context, "No Application Available to View PDF", ToastLength.Short).Show();
+        }
         }
         public void OpenPdf2(string filePath)
         {
