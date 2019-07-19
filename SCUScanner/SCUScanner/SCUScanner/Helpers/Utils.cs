@@ -103,8 +103,9 @@ namespace SCUScanner.Helpers
                     { "functions", "DownloadManual" },
                     { "Issue", $"DownloadFileAsync(/manuals/{filename}), copy "}
                     });
-                                await App.Dialogs.AlertAsync(ex.ToString());
-
+                            //    await App.Dialogs.AlertAsync(ex.ToString());
+                                await App.Dialogs.AlertAsync(Settings.Current.Resources["ErrorOnDownload"]);
+                            
                             }
                             //if (dowloaded || File.Exists(filename))
                             //{
