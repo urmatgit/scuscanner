@@ -207,7 +207,7 @@ namespace SCUScanner.Services
                                     //    {
                                     string tmpFileName = Path.Combine(filenamepath, filename + DateTime.Now.Second.ToString());
 
-                                    dowloaded = await client.DownloadFileAsync(tmpFileName, $"{remotefilename}", true);
+                                    dowloaded = await client.DownloadFileAsync(tmpFileName, $"{remotefilename}", FtpLocalExists.Overwrite);
 
                                     File.Copy(tmpFileName, resultfilepath, true);
                                     try
@@ -322,7 +322,7 @@ namespace SCUScanner.Services
                                     //    using (App.Dialogs.Loading(Settings.Current.Resources["DownloadWaitText"], cancelSrc.Cancel, Settings.Current.Resources["CancelText"]))
                                     //    {
                                     string tmpFileName = Path.Combine(filenamepath, filename + DateTime.Now.Second.ToString());
-                                    dowloaded = await client.DownloadFileAsync(tmpFileName, $"{remotefilename}", true);
+                                    dowloaded = await client.DownloadFileAsync(tmpFileName, $"{remotefilename}", FtpLocalExists.Overwrite);
                                  
                                     //if (File.Exists(filenlocal))
                                     //    File.Delete(filenlocal);

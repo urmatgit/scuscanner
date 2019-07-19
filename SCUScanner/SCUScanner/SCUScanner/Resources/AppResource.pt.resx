@@ -172,4 +172,7 @@ Ligue o Bluetooth e prima</value>
   <data name="notPermisson" xml:space="preserve">
     <value>Não é possível acessar o armazenamento neste dispositivo, tente novamente.</value>
   </data>
+  <data name="ErrorOnDownload" xml:space="preserve">
+    <value>Erro ao carregar o ficheiro do servidor ftp; por favor tente de novo</value>
+  </data>
 </root>

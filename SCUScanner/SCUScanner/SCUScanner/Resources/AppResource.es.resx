@@ -172,4 +172,7 @@ Activar Bluetooth y pulse</value>
   <data name="notPermisson" xml:space="preserve">
     <value>No se puede acceder a almacenamiento en este dispositivo, intente de nuevo.</value>
   </data>
+  <data name="ErrorOnDownload" xml:space="preserve">
+    <value>Error al cargar el archivo desde el servidor ftp, por favor inténtelo de nuevo</value>
+  </data>
 </root>

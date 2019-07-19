@@ -175,4 +175,7 @@
   <data name="notPermisson" xml:space="preserve">
     <value>无法访问此设备上的存储，请重试。</value>
   </data>
+  <data name="ErrorOnDownload" xml:space="preserve">
+    <value>从ftp服务器加载文件错误，请重试</value>
+  </data>
 </root>

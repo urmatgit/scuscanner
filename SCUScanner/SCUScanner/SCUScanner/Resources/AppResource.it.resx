@@ -172,4 +172,7 @@ Attivare il Bluetooth e premere</value>
   <data name="notPermisson" xml:space="preserve">
     <value>Impossibile accedere allo storage su questo dispositivo, riprovare.</value>
   </data>
+  <data name="ErrorOnDownload" xml:space="preserve">
+    <value>Errore nel caricare il file dal server ftp, riprovare</value>
+  </data>
 </root>

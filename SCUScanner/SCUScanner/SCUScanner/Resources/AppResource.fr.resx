@@ -172,4 +172,7 @@ Activer Bluetooth et appuyez sur</value>
   <data name="notPermisson" xml:space="preserve">
     <value>Ne peut pas accéder au stockage sur cet appareil, essayer à nouveau.</value>
   </data>
+  <data name="ErrorOnDownload" xml:space="preserve">
+    <value>Chargement du fichier d'erreur à partir du serveur ftp, veuillez réessayer</value>
+  </data>
 </root>

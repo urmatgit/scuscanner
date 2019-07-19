@@ -38,7 +38,7 @@ namespace SCUScanner.Helpers
         public static async Task  DownloadManual<TParam>(string serial,string kod, IProgressDialog progressDialog, Func<string, Task> navigate)
         {
              var  WorkDir = DependencyService.Get<ISQLite>().GetWorkManualDir();
-             var tmpWorkDir=WorkDir = Path.Combine(WorkDir, "tmp");
+             var tmpWorkDir= Path.Combine(WorkDir, "tmp");
             if (!Directory.Exists(tmpWorkDir))
             {
                 Directory.CreateDirectory(tmpWorkDir);
@@ -77,7 +77,7 @@ namespace SCUScanner.Helpers
                                     {
                                         //string tmpFileName = filenamelocal + DateTime.Now.Second.ToString();
                                         string tmpFileName =Path.Combine(tmpWorkDir,filename +Guid.NewGuid().ToString());
-                                        dowloaded = await client.DownloadFileAsync(tmpFileName, $"/manuals/{filename}", true);
+                                        dowloaded = await client.DownloadFileAsync(tmpFileName, $"/manuals/{filename}", FtpLocalExists.Overwrite );
                                         File.Copy(tmpFileName, filenamelocal, true);
                                         try
                                         {

@@ -175,4 +175,7 @@ Schalten Sie Bluetooth und drücken Sie</value>
   <data name="notPermisson" xml:space="preserve">
     <value>Kann nicht auf Speicher auf diesem Gerät zugreifen, versuchen Sie es erneut.</value>
   </data>
+  <data name="ErrorOnDownload" xml:space="preserve">
+    <value>Fehler beim laden der Datei vom ftp-server, bitte versuchen Sie es erneut</value>
+  </data>
 </root>
