@@ -401,4 +401,8 @@ box only visible on factory version</value>
   <data name="notPermisson" xml:space="preserve">
     <value>Can not access storage on this device, try again.</value>
   </data>
+  <data name="ErrorOnDownload" xml:space="preserve">
+    <value>Error loading file from ftp server, please try again</value>
+  </data>
+  
 </root>

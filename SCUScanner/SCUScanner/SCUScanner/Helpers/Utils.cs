@@ -38,11 +38,17 @@ namespace SCUScanner.Helpers
         public static async Task  DownloadManual<TParam>(string serial,string kod, IProgressDialog progressDialog, Func<string, Task> navigate)
         {
              var  WorkDir = DependencyService.Get<ISQLite>().GetWorkManualDir();
+             var tmpWorkDir=WorkDir = Path.Combine(WorkDir, "tmp");
+            if (!Directory.Exists(tmpWorkDir))
+            {
+                Directory.CreateDirectory(tmpWorkDir);
+            }
             WorkDir = Path.Combine(WorkDir, "manuals");
             if (!Directory.Exists(WorkDir))
             {
                 Directory.CreateDirectory(WorkDir);
             }
+            
             string filename = Utils.GetFileNameFromSerialNo(serial, kod);
 
             var filenamelocal = Path.Combine(WorkDir,  filename);
@@ -69,7 +75,8 @@ namespace SCUScanner.Helpers
                                 {
                                     using (App.Dialogs.Loading(Settings.Current.Resources["DownloadWaitText"], cancelSrc.Cancel, Settings.Current.Resources["CancelText"]))
                                     {
-                                        string tmpFileName = filenamelocal + DateTime.Now.Second.ToString();
+                                        //string tmpFileName = filenamelocal + DateTime.Now.Second.ToString();
+                                        string tmpFileName =Path.Combine(tmpWorkDir,filename +Guid.NewGuid().ToString());
                                         dowloaded = await client.DownloadFileAsync(tmpFileName, $"/manuals/{filename}", true);
                                         File.Copy(tmpFileName, filenamelocal, true);
                                         try
