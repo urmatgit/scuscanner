@@ -350,7 +350,7 @@ box only visible on factory version</value>
   <data name="notPermisson" xml:space="preserve">
     <value>Не удается получить доступ к памяти на этом устройстве, повторите попытку.</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
+  <data name="ErrorOnDownload" xml:space="preserve">
+    <value>Ошибка при загрузке файла из ftp сервера, попробуйте еще раз</value>
   </data>
 </root>
