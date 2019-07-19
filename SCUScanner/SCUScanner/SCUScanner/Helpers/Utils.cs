@@ -52,7 +52,7 @@ namespace SCUScanner.Helpers
             string filename = Utils.GetFileNameFromSerialNo(serial, kod);
 
             var filenamelocal = Path.Combine(WorkDir,  filename);
-            FtpClient client = new FtpClient(GlobalConstants.FtpHost,GlobalConstants.FtpPort, new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)"));
+            FtpClient client = new FtpClient(GlobalConstants.FtpHost,GlobalConstants.FtpPort, new NetworkCredential(GlobalConstants.FtpUser,GlobalConstants.FtpPassword));
             try
             {
 

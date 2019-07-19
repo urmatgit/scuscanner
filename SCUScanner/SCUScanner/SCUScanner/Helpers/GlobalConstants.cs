@@ -15,8 +15,13 @@ namespace SCUScanner.Helpers
         public  static string UUID_TRANSPARENT_RX_PRIVATE_CHAR = "49535343-8841-43f4-a8d4-ecbe34729bb3"; //Characteristic for Transparent Data to BM module, properties - write, write no response
 
         public static int WaitingForReconnecting { get; internal set; } = 10000;
+        /// <summary>
+        /// FTP 
+        /// </summary>
         public const string FtpHost = "ftp://35.227.40.251";
         public const int FtpPort = 21;
+        internal const string FtpUser = "centri_clean";
+        internal const string FtpPassword = "AQHg8t)AQHg8t)";
         //public const string FtpHost = "ftp://ftp.chester.ru";
 
         public const bool FactoryMode = false;
