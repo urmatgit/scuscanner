@@ -49,7 +49,7 @@ namespace SCUScanner
             Dialogs = UserDialogs.Instance;
             //BleAdapter = CrossBleAdapter.Current;
             
-             if (Device.RuntimePlatform != Device.WinPhone)
+             if (Device.RuntimePlatform != Device.UWP )
             {
                   if ( !string.IsNullOrEmpty(GlobalConstants.HardDefaultLang)){
                     Settings.Current.SelectedLang=GlobalConstants.HardDefaultLang;
@@ -92,6 +92,21 @@ namespace SCUScanner
                 if (results.ContainsKey(Permission.Location))
                     status = results[Permission.Location];
                 
+            }
+              status = CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage).Result;
+            if (status != PermissionStatus.Granted)
+            {
+                if (CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage).Result)
+                {
+
+                 
+                    await App.Dialogs.AlertAsync(Settings.Current.Resources["needPermission"], Settings.Current.Resources["NeedPermissionText"], Settings.Current.Resources["OkText"]);
+                }
+
+               var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
+                ////Best practice to always check that the key exists
+                if (results.ContainsKey(Permission.Storage))
+                    status = results[Permission.Storage];
             }
             IsAccessToBle = true;
         }

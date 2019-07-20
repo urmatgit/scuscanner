@@ -99,10 +99,10 @@ namespace SCUScanner.Droid.Services
                         Toast.MakeText(Xamarin.Forms.Forms.Context, needPermission, ToastLength.Short).Show();
                     }
 
-                    var results = CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage).Result;
-                    //Best practice to always check that the key exists
-                    if (results.ContainsKey(Permission.Storage))
-                        status = results[Permission.Storage];
+                    //var results = CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage).Result;
+                    ////Best practice to always check that the key exists
+                    //if (results.ContainsKey(Permission.Storage))
+                    //    status = results[Permission.Storage];
                 }
                 var CurrentContext = Xamarin.Forms.Forms.Context;
                 if (status == PermissionStatus.Granted)
