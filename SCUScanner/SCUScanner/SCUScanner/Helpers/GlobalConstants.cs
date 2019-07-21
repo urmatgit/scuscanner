@@ -18,10 +18,13 @@ namespace SCUScanner.Helpers
         /// <summary>
         /// FTP 
         /// </summary>
-        public const string FtpHost = "ftp://35.227.40.251";
+//        public const string FtpHost = "ftp://35.227.40.251";
+        public const string FtpHost = "ftp://ftp.chester.ru";
         public const int FtpPort = 21;
-        internal const string FtpUser = "centri_clean";
-        internal const string FtpPassword = "AQHg8t)AQHg8t)";
+ //       internal const string FtpUser = "centri_clean";
+ //       internal const string FtpPassword = "AQHg8t)AQHg8t)";
+        internal const string FtpUser = "chesterr_urmat";
+        internal const string FtpPassword = "Scuscanner2018";
         //public const string FtpHost = "ftp://ftp.chester.ru";
 
         public const bool FactoryMode = false;
