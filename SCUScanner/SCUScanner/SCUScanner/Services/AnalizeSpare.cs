@@ -59,7 +59,7 @@ namespace SCUScanner.Services
             {
                 try
                 {
-                    client = new FtpClient(GlobalConstants.FtpHost, GlobalConstants.FtpPort, new NetworkCredential("centri_clean", "AQHg8t)AQHg8t)"));
+                    client = new FtpClient(GlobalConstants.FtpHost, GlobalConstants.FtpPort, new NetworkCredential(GlobalConstants.FtpUser, GlobalConstants.FtpPassword));
 
                 }
                 catch (Exception er)
