@@ -19,12 +19,12 @@
 		</activity>
 		<service android:name="md5dcb6eccdc824e0677ffae8ccdde42930.KeepAliveService" />
 		<activity android:configChanges="keyboardHidden|orientation|screenLayout" android:label="Scanner" android:name="md5bb098716dd46c8e113564e6b42b7cde9.ZxingActivity" />
-		<provider android:name="android.support.v4.content.FileProvider" android:exported="false" android:initOrder="2147483647" android:authorities="CentriClean.CentriClean.fileprovider" android:grantUriPermissions="true">
+		<provider android:name="android.support.v4.content.FileProvider" android:exported="false" android:initOrder="2147483647" android:authorities="com.iow.centriclean.fileprovider" android:grantUriPermissions="true">
 			<!--suppress ExportedReceiver-->
 			<receiver android:name="mono.android.Seppuku">
 				<intent-filter>
 					<action android:name="mono.android.intent.action.SEPPUKU" />
-					<category android:name="mono.android.intent.category.SEPPUKU.CentriClean.CentriClean" />
+					<category android:name="mono.android.intent.category.SEPPUKU.com.iow.centriclean" />
 				</intent-filter>
 			</receiver>
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
