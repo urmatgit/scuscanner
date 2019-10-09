@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>CentriClean</string>
 	<key>CFBundleVersion</key>
-	<string>1.06</string>
+	<string>1.07</string>
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>Icon-60@2x</string>
@@ -70,11 +70,11 @@
 	<string>CentriClean needs to access your Camera to scan barcodes. Please allow access to Camera</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Needs Calendar Permission</string>
-  <key>NSLocationAlwaysUsageDescription</key>
-  <string>Access to location needed for Bluetooth Low Energy operations</string>
-  <key>NSLocationWhenInUseUsageDescription</key>
-  <string>Access to location needed for Bluetooth Low Energy operations</string>
-  <key>CFBundleIdentifier</key>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Access to location needed for Bluetooth Low Energy operations</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Access to location needed for Bluetooth Low Energy operations</string>
+	<key>CFBundleIdentifier</key>
 	<string>com.iow.centriclean</string>
 	<key>XSAppIconAssets</key>
 	<string>Media.xcassets/AppIcons.appiconset</string>
