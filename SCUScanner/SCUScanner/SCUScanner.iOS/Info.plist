@@ -66,6 +66,8 @@
 	</array>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>To access the hardware identifiers of nearby external devices via Bluetooth and Wi-Fi scans, your app needs Bluetooth and  Wi-Fi</string>
+  <key>NSBluetoothAlwaysUsageDescription</key>
+  <string>To access the hardware identifiers of nearby external devices via Bluetooth and Wi-Fi scans, your app needs Bluetooth and  Wi-Fi</string> 
 	<key>NSCameraUsageDescription</key>
 	<string>CentriClean needs to access your Camera to scan barcodes. Please allow access to Camera</string>
 	<key>NSCalendarsUsageDescription</key>
