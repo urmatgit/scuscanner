@@ -47,35 +47,39 @@
                             <Grid >
                             <Grid.RowDefinitions>
                                     <RowDefinition Height="25" />
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="50"/> <!--TO DO Set image height-->
                                     <RowDefinition Height="1"></RowDefinition>
                                 </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20*"/> <!--TO DO Set image width-->
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                                <Image  Source="minus64.png" Grid.Row="0" Grid.Column="0" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center">
+
+                                <Image  Source="minus64.png" Grid.Row="0" Grid.Column="1" WidthRequest="24" HeightRequest="24" HorizontalOptions="Center" VerticalOptions="Center">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding DecCommand}" NumberOfTapsRequired="1" />
                                     </Image.GestureRecognizers>
                                 </Image>
-                                <Image  Source="plus64.png" Grid.Row="0" Grid.Column="2" WidthRequest="24" HeightRequest="24"  HorizontalOptions="Center" VerticalOptions="Center">
+                                <Image  Source="plus64.png" Grid.Row="0" Grid.Column="3" WidthRequest="24" HeightRequest="24"  HorizontalOptions="Center" VerticalOptions="Center">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding IncCommand}" NumberOfTapsRequired="1" />
                                     </Image.GestureRecognizers>
                                     
                                 </Image>
-                                <Label Text="{Binding PartCount}" Font="16" FontAttributes="Bold" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"></Label>
+                                <Label Text="{Binding PartCount}" Font="16" FontAttributes="Bold" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center"></Label>
 
-                            <Image Grid.Row="1" Grid.Column="0"     Source="{Binding Thump}"></Image>
-                                <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Part.PartInfo}"    VerticalTextAlignment="Center" HorizontalTextAlignment="Start"></Label>
+                                <!--Image-->
+                                <Image Grid.Row="0" Grid.Column="0"  Grid.RowSpan="2"    Source="{Binding Thump}"></Image>
+                            
+                                <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding Part.PartInfo}"    VerticalTextAlignment="Center" HorizontalTextAlignment="Start"></Label>
                                 <!--<StackLayout   Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal" >
                                     <Label Text="{Binding Part.PartNumber}"   ></Label>
                                 <Label Text="," ></Label>
                                     <Label Text="{Binding Part.PartName}"  ></Label>
                             </StackLayout>-->
-                                <BoxView BackgroundColor="Red" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="0" />
+                                <BoxView BackgroundColor="Red" Grid.ColumnSpan="4" Grid.Row="2" Grid.Column="0" />
                                 <!--<Label  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">
                                 <Label.Text>
                                     < Multi StringFormat="{}{0},  {1}">
