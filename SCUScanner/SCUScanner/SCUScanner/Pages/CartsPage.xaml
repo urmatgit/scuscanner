@@ -15,7 +15,6 @@
             <Grid Grid.Row="0" Style="{StaticResource SpareCaption}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <!--<Button Text="Clear" Grid.Column="0" HorizontalOptions ="Start" Command="{Binding ClearCommand}"></Button>-->
