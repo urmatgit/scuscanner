@@ -7,13 +7,14 @@ using System.IO;
 using System.Net;
 using System.Text;
 using UIKit;
+using WebKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(CustomWebView), typeof(CustomWebViewRenderer))]
 namespace SCUScanner.iOS.Controls
 {
-    public class CustomWebViewRenderer : ViewRenderer<CustomWebView, UIWebView>
+    public class CustomWebViewRenderer : ViewRenderer<CustomWebView, WKWebView>
     {
         protected override void OnElementChanged(ElementChangedEventArgs<CustomWebView> e)
         {
@@ -21,7 +22,7 @@ namespace SCUScanner.iOS.Controls
 
             if (Control == null)
             {
-                var webView = new UIWebView(Frame);
+                var webView = new WKWebView(Frame,new WKWebViewConfiguration());
                 webView.AutoresizingMask = UIViewAutoresizing.All;
                 SetNativeControl(webView);
             }
@@ -35,7 +36,7 @@ namespace SCUScanner.iOS.Controls
                 //string fileName = Path.Combine(NSBundle.MainBundle.BundlePath, string.Format("Content/{0}", WebUtility.UrlEncode(customWebView.Uri)));
                 string fileName = customWebView.Uri;// Path.Combine(NSBundle.MainBundle.BundlePath, string.Format("Content/{0}", WebUtility.UrlEncode(customWebView.Uri)));
                 Control.LoadRequest(new NSUrlRequest(new NSUrl(fileName, false)));
-                Control.ScalesPageToFit = true;
+                //Control.ScalesPageToFit = true;
                  
             }
         }
