@@ -109,6 +109,7 @@
     <Compile Include="Controls\CustomWebViewRenderer.cs" />
     <Compile Include="Controls\ExtendedTabbedPageRenderer.cs" />
     <Compile Include="Controls\CustomLabelRenderer.cs" />
+    <Compile Include="Controls\NoBackSwipeRenderer.cs" />
     <Compile Include="Controls\PlaceholderEditorRenderer.cs" />
     <Compile Include="Effects\ClearEntryEffect.cs" />
     <Compile Include="Main.cs" />
