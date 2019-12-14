@@ -50,7 +50,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARMv7, ARMv7s, ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer: urmat2g@gmail.com (A2PW44G33F)</CodesignKey>
+    <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>
     </CodesignEntitlements>
@@ -59,7 +59,7 @@
     <CodesignProvision>
     </CodesignProvision>
     <IpaIncludeArtwork>false</IpaIncludeArtwork>
-    <MtouchSdkVersion>11.4</MtouchSdkVersion>
+    <MtouchSdkVersion>13.2</MtouchSdkVersion>
     <CodesignExtraArgs />
     <CodesignResourceRules />
   </PropertyGroup>

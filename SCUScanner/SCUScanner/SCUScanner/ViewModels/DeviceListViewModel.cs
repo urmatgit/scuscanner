@@ -139,7 +139,10 @@ namespace SCUScanner.ViewModels
                 IsStateOn = _bluetoothLe.IsOn;
             IsRefreshing = IsStateOn && Adapter.IsScanning;
             ScanToggleCommand = ReactiveCommand.Create(() => TryStartScanning(true));
-            StopScanCommand = ReactiveCommand.Create(() => StopScan());
+            StopScanCommand = ReactiveCommand.Create(() => {
+                StopScan();
+               
+            });
             DisconnectCommand = ReactiveCommand.CreateFromTask(async () =>
             {
 
@@ -410,14 +413,20 @@ namespace SCUScanner.ViewModels
             //RaisePropertyChanged(nameof(StateText));
             //TryStartScanning();
         }
-        private void StopScan()
+        private   void StopScan()
         {
+            Adapter.StopScanningForDevicesAsync();
             if (_cancellationTokenSource != null)
             {
                 _cancellationTokenSource.Cancel();
                 CleanupCancellationToken();
-                IsRefreshing = Adapter.IsScanning;
+                
             }
+              Adapter.StopScanningForDevicesAsync();
+          
+            Debug.WriteLine($"Stop clicked {DateTime.Now}");
+            UpdateIsScanning();
+            
 
         }
 
