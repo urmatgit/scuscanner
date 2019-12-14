@@ -948,7 +948,7 @@ namespace SCUScanner.ViewModels
                         HRS = ScuData.H;
                         Warning = ScuData.W;
 
-                        var tmpNewColor = ChangeStatusColor(RPM, Warning, AlarmLimit);
+                        var tmpNewColor = ChangeStatusColor(RPM, Warning, AlarmLimit,HRS);
                         if (PreviewColor != tmpNewColor)
                         {
                             try
@@ -1000,8 +1000,17 @@ namespace SCUScanner.ViewModels
 
 
         }
-        private Color ChangeStatusColor(int s, int? w, int? a)
+        /// <summary>
+        /// Change status color
+        /// ChangeStatusColor(RPM, Warning, AlarmLimit)
+        /// </summary>
+        /// <param name="s">S-speed</param>
+        /// <param name="w">Warning</param>
+        /// <param name="a">Alarm</param>
+        /// <returns></returns>
+        private Color ChangeStatusColor(int s, int? w, int? a,int hrs)
         {
+            if (hrs <= 0) return Color.Red;
             if (s > w) return Color.Green;
             if (a < s && s <= w) return Color.Yellow;
             if (s <= a) return Color.Red;
