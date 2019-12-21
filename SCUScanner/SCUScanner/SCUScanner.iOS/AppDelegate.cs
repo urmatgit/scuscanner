@@ -90,7 +90,9 @@ namespace SCUScanner.iOS
 
                 }
             }
+#pragma warning disable CS0168 // The variable 'genEx' is declared but never used
             catch (Exception genEx)
+#pragma warning restore CS0168 // The variable 'genEx' is declared but never used
             {
                 return null;
             }

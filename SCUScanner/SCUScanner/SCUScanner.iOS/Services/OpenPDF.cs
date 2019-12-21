@@ -11,19 +11,31 @@ using UIKit;
 [assembly: Xamarin.Forms.Dependency(typeof(OpenPDF))]
 namespace CentriClean.Services
 {
+    
+
     public class OpenPDF : IOpenPDF
     {
+         
+
         public void OpenPdf(string filePath, string needPermission = "", string notPermisson = "", string noApplication = "")
         {
             FileInfo fi = new FileInfo(filePath);
-
-            QLPreviewController previewController = new QLPreviewController();
-            previewController.DataSource = new PDFPreviewControllerDataSource(fi.FullName, fi.Name);
-
             UINavigationController controller = FindNavigationController();
             if (controller != null)
-                controller.PresentViewController(previewController, true, null);
+            {
+                UINavigationBar.Appearance.TintColor = UIColor.Black;
+                UINavigationBar.Appearance.TitleTextAttributes = new UIStringAttributes() { ForegroundColor = UIColor.Black };
+                QLPreviewController previewController = new QLPreviewController();
+                previewController.DataSource = new PDFPreviewControllerDataSource(fi.FullName, fi.Name);
+                controller.PresentViewController(previewController, true, ()=>
+                {
+                    UINavigationBar.Appearance.TintColor = UIColor.White;
+                    UINavigationBar.Appearance.TitleTextAttributes = new UIStringAttributes() { ForegroundColor = UIColor.White };
+                });
+                
+            }
         }
+
         private UINavigationController FindNavigationController()
         {
             foreach (var window in UIApplication.SharedApplication.Windows)
@@ -57,10 +69,11 @@ namespace CentriClean.Services
             return null;
         }
 
-        
 
-      
+
+
     }
+    
     public class PDFItem : QLPreviewItem
     {
         string title;
@@ -92,7 +105,7 @@ namespace CentriClean.Services
             this.url = url;
             this.filename = filename;
         }
-
+        
         //public override QLPreviewItem GetPreviewItem(QLPreviewController controller, int index)
         //{
         //    return new PDFItem(filename, url);
