@@ -77,7 +77,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Access to location needed for Bluetooth Low Energy operations</string>
 	<key>CFBundleIdentifier</key>
-	<string>home.CentriClean</string>
+	<string>com.iow.centriclean</string>
 	<key>XSAppIconAssets</key>
 	<string>Media.xcassets/AppIcons.appiconset</string>
 </dict>

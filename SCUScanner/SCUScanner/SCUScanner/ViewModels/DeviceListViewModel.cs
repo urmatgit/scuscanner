@@ -48,6 +48,7 @@ namespace SCUScanner.ViewModels
         private bool IsStopClick = false;
         private bool IsLoading = true;
         private bool showSourceJson;
+        private event EventHandler OnAddedDeviceToList;
         public bool ShowSourceJson
         {
             get => showSourceJson;
@@ -96,6 +97,7 @@ namespace SCUScanner.ViewModels
 
         public DeviceListViewModel(DeviceListPage deviceListPage, IBluetoothLE bluetoothLe, IAdapter adapter, IUserDialogs userDialogs, ISettings settings, INavigation navigation)
         {
+
             Navigation = navigation;
             TimerAlarm = new System.Timers.Timer();
             TimerAlarm.Interval = 500;
@@ -290,7 +292,28 @@ namespace SCUScanner.ViewModels
             AlarmLevelPlaceHolder = "";
             //Adapter.DeviceConnected += (sender, e) => Adapter.DisconnectDeviceAsync(e.Device);
 
+            OnAddedDeviceToList += DeviceListViewModel_OnAddedDeviceToList;
         }
+
+        private void DeviceListViewModel_OnAddedDeviceToList(object sender, EventArgs e)
+        {
+            var deviceVM = sender as DeviceListItemViewModel;
+            if (deviceVM?.Name==BroadcastIdentity  && IsAutoConnect )
+            {
+                BroadcastIdentity = "";
+                try
+                {
+                    ConnectCommand.Execute(deviceVM);
+                    Debug.WriteLine($"Auto connect ( after change broadcast)- {IsConnected}");
+                }
+                finally
+                {
+                    IsAutoConnect = false;
+                    
+                }
+            }
+        }
+
         bool OnOpenFirst = false; //block run update on first onactived
         private async Task OpenConnectedPage(DeviceListItemViewModel selecteddevice)
         {
@@ -594,7 +617,10 @@ namespace SCUScanner.ViewModels
                     {
                         ConnectCommand.Execute(s);
                     };
+
                     Devices.Add(vmdevice);
+                   // DeviceListItemViewModel
+                    OnAddedDeviceToList?.Invoke(vmdevice,new EventArgs());
                 }
             });
         }
@@ -1278,6 +1304,7 @@ namespace SCUScanner.ViewModels
             set => this.RaiseAndSetIfChanged(ref _IsFactoryVerion, value);
         }
         public string LastJsonForShare { get; private set; }
+        public bool IsAutoConnect { get; private set; } = false;
 
         private async Task WriteToDevice(string kod)
         {
@@ -1285,7 +1312,7 @@ namespace SCUScanner.ViewModels
             {
                 case "BI":
 
-                    if (!string.IsNullOrEmpty(BroadcastIdentity))
+                 if (!string.IsNullOrEmpty(BroadcastIdentity))
                     {
                         BroadcastIdentity=BroadcastIdentity.PadRight(6, ' ');
                         Debug.WriteLine($"write- {BroadcastIdentity}");
@@ -1315,7 +1342,10 @@ namespace SCUScanner.ViewModels
                             }
                             //SelectedDevice = null;
                             //await TryStartScanning(true);
-                            if (SelectedDevice != null)
+                            StopScan();
+                            IsAutoConnect = true;
+                            await TryStartScanning(true);
+                            if (false && SelectedDevice != null)
                             {
                                 // ConnectCommand.Execute(SelectedDevice);
 
@@ -1323,22 +1353,23 @@ namespace SCUScanner.ViewModels
                                 {
                                     Name = SelectedDevice.Name;
                                     IsConnected = true;
-                            //        if (Device.Android == Device.RuntimePlatform && Plugin.DeviceInfo.CrossDeviceInfo.Current.VersionNumber.Major >= 8)
-                            //        {
-                            //            Debug.WriteLine("Android version " + Plugin.DeviceInfo.CrossDeviceInfo.Current.VersionNumber.Major.ToString());
-                            //            Thread.Sleep(100);
-                            //        }
+                                    //        if (Device.Android == Device.RuntimePlatform && Plugin.DeviceInfo.CrossDeviceInfo.Current.VersionNumber.Major >= 8)
+                                    //        {
+                                    //            Debug.WriteLine("Android version " + Plugin.DeviceInfo.CrossDeviceInfo.Current.VersionNumber.Major.ToString());
+                                    //            Thread.Sleep(100);
+                                    //        }
+
                                     await OpenConnectedPage(SelectedDevice);
                                 }
-                            //    //ConnectCommand.Execute(SelectedDevice);
+                                //    //ConnectCommand.Execute(SelectedDevice);
                             }
                             //Device.BeginInvokeOnMainThread(() =>
-                           // {
+                            // {
                             ///    _deviceListPage.CurrentPage = _deviceListPage.DeviceListTab;
                             //});
 
                             BroadcastIdentityPlaceholder = BroadcastIdentity;
-                            BroadcastIdentity = "";
+                            //BroadcastIdentity = "";
                         }
                     }
                     break;//BroadcastIdentity ID

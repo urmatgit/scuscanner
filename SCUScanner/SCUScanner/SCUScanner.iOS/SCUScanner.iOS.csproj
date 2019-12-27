@@ -29,6 +29,9 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <CodesignProvision>
     </CodesignProvision>
+    <CodesignExtraArgs />
+    <CodesignResourceRules />
+    <CodesignEntitlements />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -50,14 +53,12 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARMv7, ARMv7s, ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Maxim Osipenko (64U638JM7X)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignEntitlements>
-    </CodesignEntitlements>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <BuildIpa>true</BuildIpa>
     <IpaMetadata>Info.plist</IpaMetadata>
-    <CodesignProvision>
-    </CodesignProvision>
+    <CodesignProvision>IOW_Dev_Test_23122019</CodesignProvision>
     <IpaIncludeArtwork>false</IpaIncludeArtwork>
     <MtouchSdkVersion>13.2</MtouchSdkVersion>
     <CodesignExtraArgs />
@@ -71,9 +72,9 @@
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARMv7, ARMv7s, ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Distribution: IOW Group Ltd (3KN3CV4LWC)</CodesignKey>
+    <CodesignKey>iPhone Developer: Maxim Osipenko (64U638JM7X)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>IOW_centriclean_distribution</CodesignProvision>
+    <CodesignProvision>IOW_Dev_Test_23122019</CodesignProvision>
     <BuildIpa>true</BuildIpa>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
