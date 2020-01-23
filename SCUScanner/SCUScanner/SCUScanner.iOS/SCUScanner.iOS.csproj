@@ -110,7 +110,6 @@
     <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Controls\CustomWebViewRenderer.cs" />
     <Compile Include="Controls\ExtendedTabbedPageRenderer.cs" />
     <Compile Include="Controls\CustomLabelRenderer.cs" />
     <Compile Include="Controls\NoBackSwipeRenderer.cs" />

@@ -13,14 +13,14 @@ namespace SCUScanner.Pages
 	{
 		public WebViewPageCS (string pdfFile)
 		{
-			Content = new StackLayout {
-				Children = {
-                    new CustomWebView {
-                    Uri = pdfFile,
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
-                    VerticalOptions = LayoutOptions.FillAndExpand
-                } }
-			};
+			//Content = new StackLayout {
+			//	Children = {
+   //                 new CustomWebView {
+   //                 Uri = pdfFile,
+   //                 HorizontalOptions = LayoutOptions.FillAndExpand,
+   //                 VerticalOptions = LayoutOptions.FillAndExpand
+   //             } }
+			//};
 		}
          
     }

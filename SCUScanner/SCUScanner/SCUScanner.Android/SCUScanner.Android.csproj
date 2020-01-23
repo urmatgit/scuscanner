@@ -112,7 +112,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\CustomWebViewRenderer.cs" />
     <Compile Include="Controls\PlacehoderEditorRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
