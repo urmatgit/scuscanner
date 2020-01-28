@@ -4,7 +4,7 @@
              x:Class="SCUScanner.Pages.PrivacyPolicyPage">
     <ContentPage.Content>
         <StackLayout>
-            <WebView />
+            <Label Text=""/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
