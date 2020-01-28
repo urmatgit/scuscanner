@@ -34,9 +34,7 @@ namespace SCUScanner.Pages
             string filename = e.Item as string;
             filename = Path.Combine(viewModel.WorkManualDir, filename+".pdf");
             DependencyService.Get<IOpenPDF>().OpenPdf(filename);
-            //WebViewPageCS webViewPageCS = new WebViewPageCS(filename);
-            //await Navigation.PushAsync(webViewPageCS);
-
+            
             //await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
 
             //Deselect Item

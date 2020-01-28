@@ -23,6 +23,7 @@
     <Compile Remove="Pages\MainTabbedPage.xaml.cs" />
     <Compile Remove="Pages\ScanBluetoothPage.xaml.cs" />
     <Compile Remove="Pages\TestListViewPage.xaml.cs" />
+    <Compile Remove="Pages\Views\CustomWebView.cs" />
     <Compile Remove="ViewModels\ConnectedDeviceViewModel.cs" />
     <Compile Remove="ViewModels\DeviceSettingViewModel.cs" />
     <Compile Remove="ViewModels\DevicesViewModel.cs" />

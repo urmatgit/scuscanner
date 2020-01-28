@@ -107,11 +107,7 @@ namespace SCUScanner.Helpers
                                 await App.Dialogs.AlertAsync(Settings.Current.Resources["ErrorOnDownload"]);
                             
                             }
-                            //if (dowloaded || File.Exists(filename))
-                            //{
-                            //    WebViewPageCS webViewPageCS = new WebViewPageCS(filename);
-                            //    await Navigation.PushAsync(webViewPageCS);
-                            //}
+                            
 
                         }
                         else
@@ -150,8 +146,7 @@ namespace SCUScanner.Helpers
                 if (File.Exists(filenamelocal))
                 {
                    await navigate(filenamelocal);
-                    //WebViewPageCS webViewPageCS = new WebViewPageCS(filenamelocal);
-                    //await Navigation.PushAsync(webViewPageCS);
+                    
                 }
             }
         }
