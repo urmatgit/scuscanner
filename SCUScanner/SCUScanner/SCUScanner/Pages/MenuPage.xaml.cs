@@ -27,6 +27,7 @@ namespace SCUScanner.Pages
 
              viewModel = new MenuPageViewModel();
 
+
             viewModel.MenuItems = CreateMenuItems();
                 //new ObservableCollection<MasterDetailPageMenuItem>(
                 //    new[]

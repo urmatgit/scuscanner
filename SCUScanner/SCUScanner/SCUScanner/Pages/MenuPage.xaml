@@ -4,7 +4,8 @@
              x:Class="SCUScanner.Pages.MenuPage"
              Icon="hamburger.png"
              Title="Master" >
-  <StackLayout>
+    
+    <StackLayout>
         
         <ListView x:Name="MenuItemsListView"
               SeparatorVisibility="None"
@@ -16,21 +17,39 @@
         <Grid BackgroundColor="#211e1e" >
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="*"/>
+           <ColumnDefinition Width="48"/>
+                        <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
           </Grid.ColumnDefinitions>
           <Grid.RowDefinitions>
-           
-            <RowDefinition Height="80"/>
-            <RowDefinition Height="Auto"/>
+
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
             <RowDefinition Height="10"/>
           </Grid.RowDefinitions>
-          <Label
-              Grid.Column="1"
+                    <Image 
+                          Grid.Column="1"
+                            Grid.Row="1"
+                         Aspect="Fill"
+                        HeightRequest="48"
+                        Source="{Binding IconSource}" >
+
+                    </Image>
+                    <Label
+                         VerticalTextAlignment="Center"
+              Grid.Column="2"
               Grid.Row="1"
               Text="CentriСlean" TextColor="White"
-              Style="{DynamicResource SubtitleStyle}"/>
-        </Grid>
+                        >
+                        <Label.FontSize>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On  Platform="Android" Value="24"></On>
+                                <On  Platform="iOS" Value="22"></On>
+                            </OnPlatform>
+                        </Label.FontSize>
+                        
+                    </Label>
+                </Grid>
       </ListView.Header>
       <ListView.ItemTemplate>
         <DataTemplate>
