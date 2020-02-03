@@ -24,7 +24,7 @@ namespace SCUScanner.ViewModels
         public ICommand ScanQRCommand { get; }
         public ICommand DownloadManualCommand { get; }
         private string serialnumber;
-        private bool cameraPermission = false;
+        private bool cameraPermission = true;
         public bool CameraPermission
         {
             get => cameraPermission;
@@ -36,8 +36,10 @@ namespace SCUScanner.ViewModels
             get => serialnumber;
             set => this.RaiseAndSetIfChanged(ref this.serialnumber, value);
         }
-        private async Task  PermissionCamera()
+        public async Task  PermissionCamera()
         {
+           
+
             var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
             if (status != PermissionStatus.Granted)
             {
@@ -63,7 +65,7 @@ namespace SCUScanner.ViewModels
 
             SerialNumber = App.SerialNumber;// App.mainTabbed?.deviceListViewModel?.SN;;
             //App.SerialNumber = SerialNumber;
-             PermissionCamera();
+           
 
             Navigation = navigation;
             WorkDir = DependencyService.Get<ISQLite>().GetWorkManualDir();
@@ -91,17 +93,17 @@ namespace SCUScanner.ViewModels
                  using (var progress = App.Dialogs.Progress(config))
                  {
                      progress.Show();
-                     await Utils.DownloadManual<string>(SerialNumber.ToUpper(), SettingsBase.SelectedLangKod.ToLower(),progress, async (o) =>
-                     {
-                         DependencyService.Get<IOpenPDF>().OpenPdf(o, needPermission: Resources["needPermission"], notPermisson: Resources["notPermisson"], noApplication: Resources["noApplication"]);
+                     await Utils.DownloadManual<string>(SerialNumber.ToUpper(), SettingsBase.SelectedLangKod.ToLower(), progress, async (o) =>
+                      {
+                          DependencyService.Get<IOpenPDF>().OpenPdf(o, needPermission: Resources["needPermission"], notPermisson: Resources["notPermisson"], noApplication: Resources["noApplication"]);
 
-                         //WebViewPageCS webViewPageCS = new WebViewPageCS(o);
-                         //await Navigation.PushAsync(webViewPageCS);
-                     });
+                          //WebViewPageCS webViewPageCS = new WebViewPageCS(o);
+                          //await Navigation.PushAsync(webViewPageCS);
+                      });
                  }
-                
-               
-             }, this.WhenAnyValue(x=>x.CameraPermission));
+
+
+             });//, this.WhenAnyValue(true));// x.CameraPermission));
             
         }
         private void DownLoadManual()

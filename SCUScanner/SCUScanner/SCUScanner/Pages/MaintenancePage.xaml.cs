@@ -68,6 +68,9 @@ namespace SCUScanner.Pages
         }
         private async void BScanQR_Clicked(object sender, EventArgs e)
         {
+
+              await maintenanceViewModel.PermissionCamera();
+            if (!maintenanceViewModel.CameraPermission) return;
             var scanPage = new ZXingScannerPage();
             
             scanPage.OnScanResult += (result) => {
