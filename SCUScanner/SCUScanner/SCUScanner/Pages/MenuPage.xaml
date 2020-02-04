@@ -18,6 +18,7 @@
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
            <ColumnDefinition Width="48"/>
+                        <ColumnDefinition Width="5"/>
                         <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
           </Grid.ColumnDefinitions>
@@ -37,7 +38,7 @@
                     </Image>
                     <Label
                          VerticalTextAlignment="Center"
-              Grid.Column="2"
+              Grid.Column="3"
               Grid.Row="1"
               Text="CentriСlean" TextColor="White"
                         >

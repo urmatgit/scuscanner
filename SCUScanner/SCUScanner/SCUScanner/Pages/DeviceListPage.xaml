@@ -25,7 +25,7 @@
                      
                 </Grid.RowDefinitions>
                 <StackLayout BackgroundColor="#FF6969" Padding="10" IsVisible="{Binding IsStateOn, Converter={StaticResource InverseBoolean}}">
-                    <Label Text="{Binding StateText}" FontSize="18" HorizontalTextAlignment="Center"></Label>
+                    <Label Text="{Binding StateText}" Font="None,18" HorizontalTextAlignment="Center"></Label>
                 </StackLayout>
                 <syncfusion:LoadMoreIndicator Grid.Row="1" HeightRequest="30" Color="Red" IsRunning="{Binding IsRefreshing}" IsVisible="{Binding IsRefreshing}" VerticalOptions="Center"/>
                 <controls:sfListViewEx Grid.Row="2" ItemsSource="{Binding Devices}"  
@@ -59,7 +59,7 @@
                                             <ColumnDefinition Width="150" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" FontAttributes="Bold" FontSize="15" />
+                                        <Label Text="{Binding Name}" Grid.Row="0" Grid.Column="0" Font="Bold,15" />
                                         <Label Text="{Binding Rssi, StringFormat='RSSI: {0}'}" Grid.Row="0" Grid.Column="2" TextColor="Red" />
                                         <Label Text="{Binding Address}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
                                         <Button Margin="0"   Grid.Row="2"     Grid.Column="2"    Text="{Binding ConnectButtonText}"
