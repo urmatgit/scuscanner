@@ -57,28 +57,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Acr.UserDialogs" Version="7.0.1" />
-    <PackageReference Include="FluentFTP" Version="26.0.2" />
-    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.11.0" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.11.0" />
-    <PackageReference Include="MR.Gestures" Version="1.5.4" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Plugin.BLE" Version="2.0.0-pre1" />
+    <PackageReference Include="Acr.UserDialogs" Version="7.0.35" />
+    <PackageReference Include="FluentFTP" Version="30.0.0" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="2.6.4" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="2.6.4" />
+    <PackageReference Include="MR.Gestures" Version="2.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Plugin.BLE" Version="2.1.1" />
     <PackageReference Include="Plugin.DeviceOrientation" Version="1.0.7" />
     <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
     <PackageReference Include="Plugin.Share" Version="7.1.1" />
-    <PackageReference Include="ReactiveUI" Version="8.7.2" />
-    <PackageReference Include="SkiaSharp.Views.Forms" Version="1.60.3" />
+    <PackageReference Include="ReactiveUI" Version="11.1.23" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="1.68.1.1" />
     <PackageReference Include="sqlite-net-standard" Version="1.5.1" />
-    <PackageReference Include="Syncfusion.Licensing" Version="16.2.0.46" />
-    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="16.2.0.46" />
-    <PackageReference Include="Syncfusion.Xamarin.SfGauge" Version="16.2.0.46" />
-    <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="16.2.0.46" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
-    <PackageReference Include="Xam.Plugin.DeviceInfo" Version="4.0.0.13" />
+    <PackageReference Include="Syncfusion.Licensing" Version="17.4.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataGrid" Version="17.4.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.SfGauge" Version="17.4.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="17.4.0.46" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <PackageReference Include="Xam.Plugin.DeviceInfo" Version="4.1.1" />
     <PackageReference Include="Xam.Plugins.Messaging" Version="5.2.0" />
     <PackageReference Include="Xam.Plugins.Settings" Version="4.0.0.3-beta" />
-    <PackageReference Include="Xamarin.Forms" Version="2.5.1.527436" />
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991537" />
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
   </ItemGroup>

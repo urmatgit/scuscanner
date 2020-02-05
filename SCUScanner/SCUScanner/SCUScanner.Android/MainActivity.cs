@@ -20,7 +20,7 @@ namespace SCUScanner.Droid
         protected override void OnCreate(Bundle bundle)
         {
             
-                Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTU2MTFAMzEzNjJlMzIyZTMwR09JdHZ0cmFVakkzKzI4cVRwNS81Y1E1aUNPY21Na3JRd1ZvV2UvVkFSVT0=");
+                Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjA2MDc0QDMxMzcyZTM0MmUzMEtDbnV5VVcxUUp1TnRMRktYNzV3U1p6STJYdkZTZFNacVFYRHo5by9sNFk9");
                 TabLayoutResource = Resource.Layout.Tabbar;
                 ToolbarResource = Resource.Layout.Toolbar;
                 Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity = this;
