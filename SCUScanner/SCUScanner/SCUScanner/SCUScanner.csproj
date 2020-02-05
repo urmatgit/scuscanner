@@ -4,9 +4,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <ApplicationIcon></ApplicationIcon>
     <NeutralLanguage></NeutralLanguage>
-    <AssemblyVersion>1.0.7.0</AssemblyVersion>
-    <FileVersion>1.0.7.0</FileVersion>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>	
+    <AssemblyVersion>1.0.8.0</AssemblyVersion>
+    <FileVersion>1.0.8.0</FileVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Version>1.2.0</Version>	
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
