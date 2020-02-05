@@ -61,7 +61,7 @@
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <EnableProguard>true</EnableProguard>
-    <AndroidSupportedAbis>x86;x86_64;arm64-v8a</AndroidSupportedAbis>
+    <AndroidSupportedAbis>armeabi-v7a;x86;x86_64;arm64-v8a</AndroidSupportedAbis>
     <DefineConstants>__ANDROID__</DefineConstants>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <AndroidPackageFormat>apk</AndroidPackageFormat>

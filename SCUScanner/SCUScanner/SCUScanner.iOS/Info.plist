@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>CentriClean</string>
 	<key>CFBundleVersion</key>
-	<string>191</string>
+	<string>192</string>
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>Icon-60@2x</string>
@@ -81,6 +81,6 @@
 	<key>XSAppIconAssets</key>
 	<string>Media.xcassets/AppIcons.appiconset</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.91</string>
+	<string>1.92</string>
 </dict>
 </plist>
