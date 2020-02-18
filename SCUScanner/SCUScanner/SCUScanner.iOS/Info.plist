@@ -65,11 +65,13 @@
 		<string>bluetooth-peripheral</string>
 	</array>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>To access the hardware identifiers of nearby external devices via Bluetooth and Wi-Fi scans, your app needs Bluetooth and  Wi-Fi</string>
+	<string>To access the hardware identifiers of nearby Centrifugal Oil Separators and connect via Bluetooth your app needs Bluetooth</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>To access the hardware identifiers of nearby external devices via Bluetooth and Wi-Fi scans, your app needs Bluetooth and  Wi-Fi</string>
+	<string>To access the hardware identifiers of nearby Centrifugal Oil Separators and connect via Bluetooth your app needs Bluetooth</string>
 	<key>NSCameraUsageDescription</key>
-	<string>CentriClean needs to access your Camera to scan barcodes. Please allow access to Camera</string>
+	<string>CentriClean needs to access your Camera to scan barcodes.
+   Centrifugal Oil Separators have labels with QR-codes. By scanning such a label you can obtain serial number without connecting to a unit.
+   Please allow access to Camera</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Needs Calendar Permission</string>
 	<key>NSLocationAlwaysUsageDescription</key>
