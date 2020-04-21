@@ -1,4 +1,5 @@
 ﻿using SCUScanner.Models;
+using SCUScanner.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +14,10 @@ namespace SCUScanner.ViewModels
     {
         public ObservableCollection<MasterDetailPageMenuItem> MenuItems { get; set; }
         public string IconSource { get; set; }
+        public string AppVersion
+        {
+            get;  private set;
+        }
         public MenuPageViewModel():base()
         {
             //Icon-Small.png for ios
@@ -20,8 +25,10 @@ namespace SCUScanner.ViewModels
                 IconSource = "icon.png";
             else
                 IconSource = "Icon-Small.png";
+            AppVersion = DependencyService.Get<ILocalizeService>().AppVersion;
         }
-
+        
+         
         //#region INotifyPropertyChanged Implementation
         //public event PropertyChangedEventHandler PropertyChanged;
         //void OnPropertyChanged([CallerMemberName] string propertyName = "")

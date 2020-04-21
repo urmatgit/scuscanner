@@ -14,7 +14,7 @@
                   SeparatorColor="Black"
                   >
       <ListView.Header>
-        <Grid BackgroundColor="#211e1e" >
+        <Grid BackgroundColor="#211e1e" Padding="0">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
            <ColumnDefinition Width="48"/>
@@ -22,33 +22,48 @@
                         <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
           </Grid.ColumnDefinitions>
-          <Grid.RowDefinitions>
+          <Grid.RowDefinitions >
 
-                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="6"/>
                         <RowDefinition Height="Auto"/>
-            <RowDefinition Height="10"/>
+                        <RowDefinition Height="14" />
+                        <RowDefinition Height="6"/>
           </Grid.RowDefinitions>
                     <Image 
                           Grid.Column="1"
                             Grid.Row="1"
+                            Grid.RowSpan="2"
                          Aspect="Fill"
                         HeightRequest="48"
                         Source="{Binding IconSource}" >
 
                     </Image>
-                    <Label
-                         VerticalTextAlignment="Center"
+                    <Label Margin="0"  Padding="0"
+                         VerticalTextAlignment="End" 
               Grid.Column="3"
               Grid.Row="1"
               Text="CentriСlean" TextColor="White"
                         >
                         <Label.FontSize>
                             <OnPlatform x:TypeArguments="x:Double">
-                                <On  Platform="Android" Value="24"></On>
-                                <On  Platform="iOS" Value="22"></On>
+                                <On  Platform="Android" Value="22"></On>
+                                <On  Platform="iOS" Value="20"></On>
                             </OnPlatform>
                         </Label.FontSize>
                         
+                    </Label>
+                    <Label
+                         VerticalTextAlignment="Start" Margin="0"   Padding="0"
+              Grid.Column="3"
+              Grid.Row="2"
+              Text="{Binding  AppVersion}" TextColor="White">
+                        <Label.FontSize>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On  Platform="Android" Value="12"></On>
+                                <On  Platform="iOS" Value="10"></On>
+                            </OnPlatform>
+                        </Label.FontSize>
+
                     </Label>
                 </Grid>
       </ListView.Header>

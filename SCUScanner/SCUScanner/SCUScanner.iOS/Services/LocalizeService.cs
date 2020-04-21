@@ -13,6 +13,14 @@ namespace SCUScanner.iOS.Services
 {
     public class LocalizeService : SCUScanner.Services.ILocalizeService
     {
+        public string AppVersion
+        {
+            get
+            {
+                return NSBundle.MainBundle.ObjectForInfoDictionary("CFBundleShortVersionString").ToString();
+            }
+        }
+
         public CultureInfo GetCurrentCultureInfo()
         {
             var netLanguage = "en";

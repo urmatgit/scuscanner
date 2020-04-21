@@ -9,5 +9,6 @@ namespace SCUScanner.Services
     {
         CultureInfo GetCurrentCultureInfo();
         CultureInfo SetLocale(string ci);
+        string AppVersion { get; }
     }
 }

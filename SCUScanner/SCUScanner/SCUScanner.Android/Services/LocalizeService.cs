@@ -16,6 +16,13 @@ namespace SCUScanner.Droid.Services
 {
     public class LocalizeService : SCUScanner.Services.ILocalizeService
     {
+        public string AppVersion {
+            get
+            {
+                return Application.Context.ApplicationContext.PackageManager.GetPackageInfo(Application.Context.ApplicationContext.PackageName, 0).VersionName;
+            }
+        }
+
         public CultureInfo GetCurrentCultureInfo()
         {
             var androidLocale = Java.Util.Locale.Default;
@@ -33,5 +40,6 @@ namespace SCUScanner.Droid.Services
             }
             return cultureINfor;
         }
+        
     }
 }
