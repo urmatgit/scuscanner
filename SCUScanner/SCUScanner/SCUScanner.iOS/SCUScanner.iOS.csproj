@@ -73,7 +73,7 @@
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARMv7, ARMv7s, ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Distribution: IOW Group Ltd (3KN3CV4LWC)</CodesignKey>
+    <CodesignKey>iPhone Distribution</CodesignKey>
     <CodesignEntitlements>
     </CodesignEntitlements>
     <CodesignProvision>IOW_centriclean_distribution_MaxMac</CodesignProvision>
@@ -81,6 +81,7 @@
     <IpaMetadata>Info.plist</IpaMetadata>
     <CodesignExtraArgs />
     <CodesignResourceRules />
+    <MtouchExtraArgs>--optimize=experimental-xforms-product-type</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
