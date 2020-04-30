@@ -60,7 +60,7 @@
                         <Label.FontSize>
                             <OnPlatform x:TypeArguments="x:Double">
                                 <On  Platform="Android" Value="12"></On>
-                                <On  Platform="iOS" Value="10"></On>
+                                <On  Platform="iOS" Value="12"></On>
                             </OnPlatform>
                         </Label.FontSize>
 
